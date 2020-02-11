@@ -1,0 +1,11 @@
+this is the time of the animation frames
+
+Stand   0-30  loop
+punch1  31-45
+punch2  46-64
+punch3  65-84
+damageD 85-95
+damageU 96-105
+jump    106-135
+run     136-163  loop
+fall    164-197
