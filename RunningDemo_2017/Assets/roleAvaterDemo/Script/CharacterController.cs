@@ -80,7 +80,7 @@ public class UCharacterController {
         float downup = Input.GetAxis("Vertical");
         bool isfire = Input.GetButton("Fire1");
        
-        bool isUpdataState = roleState.updataRoleControl(leftright, downup, isfire); //改变角色动作态状
+        bool isUpdataState = roleState.updataRoleControl(leftright, downup, isfire); //改变角色动作状态
 
         if ((leftright != 0.0f) || (downup != 0.0f)) //角色是否有位移
         {
