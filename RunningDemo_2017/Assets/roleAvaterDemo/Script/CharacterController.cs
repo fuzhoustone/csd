@@ -87,15 +87,33 @@ public class UCharacterController {
             rolePosCamer.updateRolePosWorld(leftright, downup); //改变角色位置及朝向, 基于世界坐标
 
             //rolePosCamer.updateRolePos(tmpv,h); //改变角色位置, 基于roleControl， 暂不考虑
-            
+
 
             //判断并取消破坏物件判定，之后的考虑
-            
+
             //更改摄像机位置， 基于人的世界坐标
-            if ((leftright != 0.0f) || (downup != 0.0f))
-            {
-                rolePosCamer.updateCamerChartPos(roleInstance.transform, leftright, downup);  //摄像机判断并跟随
-            }
+            //   rolePosCamer.updateCamerChartPos(roleInstance.transform, leftright, downup);  //摄像机判断并跟随
+            //rolePosCamer.moveCamerWSADWorldPosFromControlMat(leftright, downup);
         }
+
+        
+        //摄相机平行场景 上下左右移动
+        float camerleftRight = Input.GetAxis("HorizontalCamer");
+        float camerDownUp = Input.GetAxis("VerticalCamer");
+        if ((camerleftRight != 0.0f) || (camerDownUp != 0.0f)) {
+            rolePosCamer.moveCamerWSADWorldPosFromControlMat(camerleftRight, camerDownUp);
+        }
+
+        //计算摄相机是否要进行旋转
+        float camerRotationY = Input.GetAxis("CamerRotationY");
+        if (camerRotationY != 0.0f) {
+            rolePosCamer.rolationCamer(camerRotationY);
+        }
+
+        float camerScale = Input.GetAxis("CamerScale");
+        if (camerScale != 0.0f) {
+            rolePosCamer.scaleCamer(camerScale);
+        }
+        
     }
 }

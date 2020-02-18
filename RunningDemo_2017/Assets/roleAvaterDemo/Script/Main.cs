@@ -197,50 +197,15 @@ public class Main : MonoBehaviour {
         if (GUI.Button(new Rect(Screen.width - btnWidth, 0, btnWidth, btnHeight), "getState"))
         {
             App.Game.character.roleState.printRoleState();
-            /*
-            AvaterAnimationController  aniControl = character.roleInstance.GetComponent<AvaterAnimationController>();
-            if(aniControl != null)
-                aniControl.printRoleState();
-*/
-            /*
-            if (character.animationState == 0)
-            {
-                character.PlayAttack();
-            }
-            else
-            {
-                character.PlayStand();
-            }*/
         }
-        /*
-              //if (GUI.Button(new Rect(Screen.width - btnWidth, 0, btnWidth, btnHeight),character.animationState == 0 ? "Attack" : "Stand"))
-              if (GUI.Button(new Rect(Screen.width - btnWidth, 0, btnWidth, btnHeight), "Attack"))
-              {
-                  if (character.animationState == 0)
-                  {
-                      character.PlayAttack();
-                  }else
-                  {
-                      character.PlayStand();
-                  }
-              }
 
-                      if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY, btnWidth, btnHeight),character.rotate ? "Static" : "Rotate"))
-                      {
-                          if (character.rotate)
-                          {
-                              character.rotate = false;
-                          }else
-                          {
-                              character.rotate = true;
-                          }
-                      }
-
-                      if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), combine ? "Merge materials(√)" : "Merge materials"))
-                      {
-                          combine = !combine;
-                      }
-                      */
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY, btnWidth, btnHeight), "rolateCamer"))
+        {
+            App.Game.character.rolePosCamer.testrolationCamer();
+          
+          
+        }
+        
 
     }
 
