@@ -101,7 +101,9 @@ public class UCharacterController {
         float camerleftRight = Input.GetAxis("HorizontalCamer");
         float camerDownUp = Input.GetAxis("VerticalCamer");
         if ((camerleftRight != 0.0f) || (camerDownUp != 0.0f)) {
-            rolePosCamer.moveCamerWSADWorldPosFromControlMat(camerleftRight, camerDownUp);
+           // rolePosCamer.moveCamerWSADWorldPosFromControlMat(camerleftRight, camerDownUp);
+            rolePosCamer.moveCamerWSADWorldPosFromCamerControlMat(camerleftRight, camerDownUp);
+            
         }
 
         //计算摄相机是否要进行旋转

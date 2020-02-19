@@ -54,7 +54,7 @@ public class RolePosAndCamerMgr  {
     private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform)
     {
         cameraTransform = pCameraTransform;
-       // mainCamer = pCameraTransform.GetComponent<Camera>();
+        mainCamer = pCameraTransform.GetComponent<Camera>();
 
         roleTranform = pRoleTranform;
      //   mainCamera = cameraTransform.GetComponent<Camera>();
@@ -149,7 +149,8 @@ public class RolePosAndCamerMgr  {
 
 
     public void testrolationCamer() {
-        scaleCamer(-0.1f);
+        //scaleCamer(-0.1f);
+        resetCamerPosFromRole();
     }
 
 
@@ -157,6 +158,7 @@ public class RolePosAndCamerMgr  {
     public void scaleCamer(float scale) {
         float scaleParam = 1.0f;
         scaleParam += scale / 60.0f;
+        //限制拉进拉远的最值
         if (scaleParam < 0.1f)
             scaleParam = 0.1f;
         if (scaleParam > 5.0f)
@@ -203,6 +205,39 @@ public class RolePosAndCamerMgr  {
 
     }
 
+
+    //复原摄像机，让摄像机矩离人背后一段矩离角度
+    public void resetCamerPosFromRole() {
+        
+        //构建 人物坐标系->世界坐标系变换矩阵
+        Matrix4x4 tmpCamerMat = Matrix4x4.TRS(roleTranform.transform.position, Quaternion.Euler(roleTranform.transform.localEulerAngles), Vector3.one);
+
+        //设置人物坐标系下摄像机坐标
+        float tmpX = 0.0f;
+        float tmpY = 5.0f;
+        float tmpZ = -5.0f;
+        Vector3 tmpPos = new Vector3(tmpX, tmpY, tmpZ);
+
+        //摄像机坐标转成世界坐标
+        Vector3 newPos = tmpCamerMat.MultiplyPoint(tmpPos);
+
+        cameraTransform.transform.position = newPos;
+        //摄像机朝向人物
+        cameraTransform.LookAt(roleTranform.transform);
+    }
+
+    public void moveCamerWSADWorldPosFromCamerControlMat(float leftright, float downup) {
+        //WS 对应Z轴正负，    AD对应X轴 负正
+        Vector3 tmpPos = new Vector3(leftright * moveVSpeed / 30, 0, downup * moveVSpeed / 30);
+
+        //人物旋转Y轴角度自由，其它方向不能超过正负180度产生翻转
+        //构建以平行于世界坐标的坐标系矩阵, 此坐标系原点为摄像机坐标，x与z轴与世界坐标系相同，只有y轴角度按摄像机计算，
+        Matrix4x4 tmpCamerMat = Matrix4x4.TRS(cameraTransform.transform.position, Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0),Vector3.one);
+
+        Vector3 newPos = tmpCamerMat.MultiplyPoint(tmpPos);
+        cameraTransform.transform.position = newPos;
+    }
+
     //摄相机上下左右移动，用矩阵换算的方式
     public void moveCamerWSADWorldPosFromControlMat(float leftright, float downup)
     {
@@ -215,6 +250,7 @@ public class RolePosAndCamerMgr  {
         Vector3 nowPos = cameraTransform.transform.position;
         Vector3 newPos = new Vector3(nowPos.x + pMove.x, nowPos.y + pMove.y, nowPos.z + pMove.z);
         cameraTransform.transform.position = newPos;
+        
     }
 
     //人物坐标计算，用矩阵换算的方式
