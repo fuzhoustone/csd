@@ -114,9 +114,9 @@ public class stairWay : MonoBehaviour
         {
             rotationY = 270.0f;
         }
-       
 
-        GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x +0.5f, staticStair.y, staticStair.z+0.5f), Quaternion.identity);
+        // GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x +0.5f, staticStair.y, staticStair.z+0.5f), Quaternion.identity);
+        GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x, staticStair.y, staticStair.z), Quaternion.identity);
         go.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
     }
 

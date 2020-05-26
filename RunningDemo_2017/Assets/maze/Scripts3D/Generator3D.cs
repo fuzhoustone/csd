@@ -120,6 +120,7 @@ public class Generator3D : MonoBehaviour {
         PathfindHallways(); //走廊，过道寻路生成
 
         createPlance(); //生成房间
+        
         createHallWayLst(); //生成过道间
 
         createStairsLst(); //生成楼梯色块
@@ -129,6 +130,7 @@ public class Generator3D : MonoBehaviour {
         hideAllStairs();
 
         drawLinePath();
+        
 
     }
     void OnGUI()
@@ -157,7 +159,7 @@ public class Generator3D : MonoBehaviour {
         }
         i++;
         
-/*
+
         if (GUI.Button(new Rect(Screen.width - btnWidth*2, btnHeight * i, btnWidth, btnHeight), "hideAllCube"))
         {
             hideAllCube();
@@ -170,7 +172,7 @@ public class Generator3D : MonoBehaviour {
 
         }
         i++;
-        */
+       
         if (GUI.Button(new Rect(Screen.width - btnWidth*2, btnHeight * i, btnWidth, btnHeight), "hideAllStairs"))
         {
             hideAllStairs();
@@ -425,9 +427,10 @@ public class Generator3D : MonoBehaviour {
         { 
             pathVector tmpPath = pathLst[i];
 
-            Vector3 sour = new Vector3(tmpPath.sourVector.x + 0.5f, tmpPath.sourVector.y + 0.5f, tmpPath.sourVector.z + 0.5f);
-            Vector3 dest = new Vector3(tmpPath.destVector.x + 0.5f, tmpPath.destVector.y + 0.5f, tmpPath.destVector.z + 0.5f);
-
+            //Vector3 sour = new Vector3(tmpPath.sourVector.x + 0.5f, tmpPath.sourVector.y + 0.5f, tmpPath.sourVector.z + 0.5f);
+            //Vector3 dest = new Vector3(tmpPath.destVector.x + 0.5f, tmpPath.destVector.y + 0.5f, tmpPath.destVector.z + 0.5f);
+            Vector3 sour = new Vector3(tmpPath.sourVector.x , tmpPath.sourVector.y + 0.5f, tmpPath.sourVector.z );
+            Vector3 dest = new Vector3(tmpPath.destVector.x , tmpPath.destVector.y + 0.5f, tmpPath.destVector.z );
 
             GameObject obj1 = creatLineFlag(sour, "dl sour" + i.ToString());
             obj1.transform.LookAt(dest);
@@ -442,8 +445,9 @@ public class Generator3D : MonoBehaviour {
             lineDebugLst.Add(obj1);
             //lineDebugLst.Add(obj2);
 
-            Debug.DrawLine(tmpPath.sourVector + new Vector3(0.5f, 0.5f, 0.5f), tmpPath.destVector + new Vector3(0.5f, 0.5f, 0.5f), Color.red, 100, false);
 
+            //Debug.DrawLine(tmpPath.sourVector + new Vector3(0.5f, 0.5f, 0.5f), tmpPath.destVector + new Vector3(0.5f, 0.5f, 0.5f), Color.red, 100, false);
+            Debug.DrawLine(tmpPath.sourVector + new Vector3(0.0f, 0.5f, 0.0f), tmpPath.destVector + new Vector3(0.0f, 0.5f, 0.0f), Color.red, 100, false);
             //break;
         }
     }

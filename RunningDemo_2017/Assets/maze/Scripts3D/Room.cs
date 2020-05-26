@@ -63,7 +63,8 @@ public class Room : MonoBehaviour
         int worldPosY = bounds.position.y;
         int worldPosZ = bounds.position.z + posZ;
 
-        GameObject go = Instantiate(planePrefab, new Vector3(worldPosX + 0.5f, worldPosY, worldPosZ + 0.5f), Quaternion.identity);
+        //GameObject go = Instantiate(planePrefab, new Vector3(worldPosX + 0.5f, worldPosY, worldPosZ + 0.5f), Quaternion.identity);
+        GameObject go = Instantiate(planePrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity);
         go.GetComponent<MeshRenderer>().material = material;
         return go;
     }
@@ -88,7 +89,11 @@ public class Room : MonoBehaviour
         int worldPosY = bounds.position.y + posY;
         int worldPosZ = bounds.position.z + posZ;
 
-        GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX, worldPosY, worldPosZ), Quaternion.identity);
+        float offsetX = 0.5f;
+        float offsetY = 0.5f;
+
+        //GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX+ offsetX, worldPosY, worldPosZ+ offsetY), Quaternion.identity);
+        GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity);
         go.transform.eulerAngles = new Vector3(rotationX, rotationY, rotationZ);
         return go;
     }
@@ -181,17 +186,20 @@ public class Room : MonoBehaviour
     */
     public void makeTopBottomWall(bool isSetWallIndex = true) {
         GameObject tmpWallObj = null;
+        //x正轴朝右，z正轴朝上， 默认在左边，  只需旋转Y轴， 下面的墙需旋转270度， 上面90度
         for (int x = 0; x < bounds.size.x; x++)
         {
             int z = 0;  //下面的墙
-            tmpWallObj = makeWall(x + 1, 0, z, 90.0f, 0.0f, 0.0f);   //X轴90度, X+1, 
+            //tmpWallObj = makeWall(x + 1, 0, z, 90.0f, 0.0f, 0.0f);   //X轴90度, X+1, 将无用
+            tmpWallObj = makeWall(x, 0, z, 0.0f, 270.0f, 0.0f);   //下面的墙需旋转270度, 
 
-            if(isSetWallIndex)
+            if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Bottom);
             //flagWallPos(tmpWallObj, x,0,z, WallPos.Bottom);
 
             z = bounds.size.z - 1;  //上面的墙
-            tmpWallObj = makeWall(x, 0, z + 1, 90.0f, 0, 180.0f);     //X轴90度, X+1, 
+            //tmpWallObj = makeWall(x, 0, z + 1, 90.0f, 0, 180.0f);     //X轴90度, X+1, 将无用
+            tmpWallObj = makeWall(x, 0, z, 0.0f, 90.0f, 0.0f);     //上面90度
 
             if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Top);
@@ -201,17 +209,20 @@ public class Room : MonoBehaviour
 
     public void makeLeftRightWall(bool isSetWallIndex = true) {
         GameObject tmpWallObj = null;
+
+        //x正轴朝右，z正轴朝上， 默认在左边，  只需旋转Y轴， 左边的墙需旋转0度， 右边的墙180度
         for (int z = 0; z < bounds.size.z; z++)
         {
             int x = 0;  //左边的墙
-            tmpWallObj = makeWall(x, 1, z, 0, 180.0f, 90.0f);
+            //tmpWallObj = makeWall(x, 1, z, 0, 180.0f, 90.0f);
+            tmpWallObj = makeWall(x, 0, z, 0.0f, 0.0f, 0.0f);
 
             if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Left);
-            //flagWallPos(tmpWallObj, x, 0, z, WallPos.Left);
 
             x = bounds.size.x - 1;  //右边的墙
-            tmpWallObj = makeWall(x + 1, 1, z + 1, 0.0f, 0.0f, 90.0f);
+            //tmpWallObj = makeWall(x + 1, 1, z + 1, 0.0f, 0.0f, 90.0f);
+            tmpWallObj = makeWall(x, 0, z, 0.0f, 180.0f, 0.0f);
 
             if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Right);
