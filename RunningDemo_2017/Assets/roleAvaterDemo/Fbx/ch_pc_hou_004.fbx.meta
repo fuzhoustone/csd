@@ -1,132 +1,361 @@
 fileFormatVersion: 2
 guid: b7004be54f2f64a33aad5fdf782d884f
-timeCreated: 1466846954
-licenseType: Pro
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: Bip001
-    100002: Bip001 Head
-    100004: Bip001 L Calf
-    100006: Bip001 L Clavicle
-    100008: Bip001 L Finger0
-    100010: Bip001 L Foot
-    100012: Bip001 L Forearm
-    100014: Bip001 L Hand
-    100016: Bip001 L Thigh
-    100018: Bip001 L Toe0
-    100020: Bip001 L UpperArm
-    100022: Bip001 Neck
-    100024: Bip001 Pelvis
-    100026: Bip001 R Calf
-    100028: Bip001 R Clavicle
-    100030: Bip001 R Finger0
-    100032: Bip001 R Foot
-    100034: Bip001 R Forearm
-    100036: Bip001 R Hand
-    100038: Bip001 R Thigh
-    100040: Bip001 R Toe0
-    100042: Bip001 R UpperArm
-    100044: Bip001 Spine
-    100046: Bip001 Spine1
-    100048: Bip001 Tail
-    100050: Bip001 Tail1
-    100052: Bip001 Tail2
-    100054: Bip001 Tail3
-    100056: Bip001 Xtra01
-    100058: Bone_root01
-    100060: Bone_root02
-    100062: //RootNode
-    100064: ch_pc_hou_004_jiao
-    100066: ch_pc_hou_004_shen
-    100068: ch_pc_hou_004_shou
-    100070: ch_pc_hou_004_tou
-    100072: fx_chest
-    100074: fx_clavicle_l
-    100076: fx_clavicle_r
-    100078: fx_foot_l
-    100080: fx_foot_r
-    100082: fx_hand_l
-    100084: fx_hand_r
-    100086: fx_top
-    100088: weapon_hand_l
-    100090: weapon_hand_r
-    400000: Bip001
-    400002: Bip001 Head
-    400004: Bip001 L Calf
-    400006: Bip001 L Clavicle
-    400008: Bip001 L Finger0
-    400010: Bip001 L Foot
-    400012: Bip001 L Forearm
-    400014: Bip001 L Hand
-    400016: Bip001 L Thigh
-    400018: Bip001 L Toe0
-    400020: Bip001 L UpperArm
-    400022: Bip001 Neck
-    400024: Bip001 Pelvis
-    400026: Bip001 R Calf
-    400028: Bip001 R Clavicle
-    400030: Bip001 R Finger0
-    400032: Bip001 R Foot
-    400034: Bip001 R Forearm
-    400036: Bip001 R Hand
-    400038: Bip001 R Thigh
-    400040: Bip001 R Toe0
-    400042: Bip001 R UpperArm
-    400044: Bip001 Spine
-    400046: Bip001 Spine1
-    400048: Bip001 Tail
-    400050: Bip001 Tail1
-    400052: Bip001 Tail2
-    400054: Bip001 Tail3
-    400056: Bip001 Xtra01
-    400058: Bone_root01
-    400060: Bone_root02
-    400062: //RootNode
-    400064: ch_pc_hou_004_jiao
-    400066: ch_pc_hou_004_shen
-    400068: ch_pc_hou_004_shou
-    400070: ch_pc_hou_004_tou
-    400072: fx_chest
-    400074: fx_clavicle_l
-    400076: fx_clavicle_r
-    400078: fx_foot_l
-    400080: fx_foot_r
-    400082: fx_hand_l
-    400084: fx_hand_r
-    400086: fx_top
-    400088: weapon_hand_l
-    400090: weapon_hand_r
-    4300000: ch_pc_hou_004_tou
-    4300002: ch_pc_hou_004_shen
-    4300004: ch_pc_hou_004_jiao
-    4300006: ch_pc_hou_004_shou
-    9500000: //RootNode
-    11100000: //RootNode
-    13700000: ch_pc_hou_004_jiao
-    13700002: ch_pc_hou_004_shen
-    13700004: ch_pc_hou_004_shou
-    13700006: ch_pc_hou_004_tou
+  serializedVersion: 19300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Bip001
+  - first:
+      1: 100002
+    second: Bip001 Head
+  - first:
+      1: 100004
+    second: Bip001 L Calf
+  - first:
+      1: 100006
+    second: Bip001 L Clavicle
+  - first:
+      1: 100008
+    second: Bip001 L Finger0
+  - first:
+      1: 100010
+    second: Bip001 L Foot
+  - first:
+      1: 100012
+    second: Bip001 L Forearm
+  - first:
+      1: 100014
+    second: Bip001 L Hand
+  - first:
+      1: 100016
+    second: Bip001 L Thigh
+  - first:
+      1: 100018
+    second: Bip001 L Toe0
+  - first:
+      1: 100020
+    second: Bip001 L UpperArm
+  - first:
+      1: 100022
+    second: Bip001 Neck
+  - first:
+      1: 100024
+    second: Bip001 Pelvis
+  - first:
+      1: 100026
+    second: Bip001 R Calf
+  - first:
+      1: 100028
+    second: Bip001 R Clavicle
+  - first:
+      1: 100030
+    second: Bip001 R Finger0
+  - first:
+      1: 100032
+    second: Bip001 R Foot
+  - first:
+      1: 100034
+    second: Bip001 R Forearm
+  - first:
+      1: 100036
+    second: Bip001 R Hand
+  - first:
+      1: 100038
+    second: Bip001 R Thigh
+  - first:
+      1: 100040
+    second: Bip001 R Toe0
+  - first:
+      1: 100042
+    second: Bip001 R UpperArm
+  - first:
+      1: 100044
+    second: Bip001 Spine
+  - first:
+      1: 100046
+    second: Bip001 Spine1
+  - first:
+      1: 100048
+    second: Bip001 Tail
+  - first:
+      1: 100050
+    second: Bip001 Tail1
+  - first:
+      1: 100052
+    second: Bip001 Tail2
+  - first:
+      1: 100054
+    second: Bip001 Tail3
+  - first:
+      1: 100056
+    second: Bip001 Xtra01
+  - first:
+      1: 100058
+    second: Bone_root01
+  - first:
+      1: 100060
+    second: Bone_root02
+  - first:
+      1: 100062
+    second: //RootNode
+  - first:
+      1: 100064
+    second: ch_pc_hou_004_jiao
+  - first:
+      1: 100066
+    second: ch_pc_hou_004_shen
+  - first:
+      1: 100068
+    second: ch_pc_hou_004_shou
+  - first:
+      1: 100070
+    second: ch_pc_hou_004_tou
+  - first:
+      1: 100072
+    second: fx_chest
+  - first:
+      1: 100074
+    second: fx_clavicle_l
+  - first:
+      1: 100076
+    second: fx_clavicle_r
+  - first:
+      1: 100078
+    second: fx_foot_l
+  - first:
+      1: 100080
+    second: fx_foot_r
+  - first:
+      1: 100082
+    second: fx_hand_l
+  - first:
+      1: 100084
+    second: fx_hand_r
+  - first:
+      1: 100086
+    second: fx_top
+  - first:
+      1: 100088
+    second: weapon_hand_l
+  - first:
+      1: 100090
+    second: weapon_hand_r
+  - first:
+      4: 400000
+    second: Bip001
+  - first:
+      4: 400002
+    second: Bip001 Head
+  - first:
+      4: 400004
+    second: Bip001 L Calf
+  - first:
+      4: 400006
+    second: Bip001 L Clavicle
+  - first:
+      4: 400008
+    second: Bip001 L Finger0
+  - first:
+      4: 400010
+    second: Bip001 L Foot
+  - first:
+      4: 400012
+    second: Bip001 L Forearm
+  - first:
+      4: 400014
+    second: Bip001 L Hand
+  - first:
+      4: 400016
+    second: Bip001 L Thigh
+  - first:
+      4: 400018
+    second: Bip001 L Toe0
+  - first:
+      4: 400020
+    second: Bip001 L UpperArm
+  - first:
+      4: 400022
+    second: Bip001 Neck
+  - first:
+      4: 400024
+    second: Bip001 Pelvis
+  - first:
+      4: 400026
+    second: Bip001 R Calf
+  - first:
+      4: 400028
+    second: Bip001 R Clavicle
+  - first:
+      4: 400030
+    second: Bip001 R Finger0
+  - first:
+      4: 400032
+    second: Bip001 R Foot
+  - first:
+      4: 400034
+    second: Bip001 R Forearm
+  - first:
+      4: 400036
+    second: Bip001 R Hand
+  - first:
+      4: 400038
+    second: Bip001 R Thigh
+  - first:
+      4: 400040
+    second: Bip001 R Toe0
+  - first:
+      4: 400042
+    second: Bip001 R UpperArm
+  - first:
+      4: 400044
+    second: Bip001 Spine
+  - first:
+      4: 400046
+    second: Bip001 Spine1
+  - first:
+      4: 400048
+    second: Bip001 Tail
+  - first:
+      4: 400050
+    second: Bip001 Tail1
+  - first:
+      4: 400052
+    second: Bip001 Tail2
+  - first:
+      4: 400054
+    second: Bip001 Tail3
+  - first:
+      4: 400056
+    second: Bip001 Xtra01
+  - first:
+      4: 400058
+    second: Bone_root01
+  - first:
+      4: 400060
+    second: Bone_root02
+  - first:
+      4: 400062
+    second: //RootNode
+  - first:
+      4: 400064
+    second: ch_pc_hou_004_jiao
+  - first:
+      4: 400066
+    second: ch_pc_hou_004_shen
+  - first:
+      4: 400068
+    second: ch_pc_hou_004_shou
+  - first:
+      4: 400070
+    second: ch_pc_hou_004_tou
+  - first:
+      4: 400072
+    second: fx_chest
+  - first:
+      4: 400074
+    second: fx_clavicle_l
+  - first:
+      4: 400076
+    second: fx_clavicle_r
+  - first:
+      4: 400078
+    second: fx_foot_l
+  - first:
+      4: 400080
+    second: fx_foot_r
+  - first:
+      4: 400082
+    second: fx_hand_l
+  - first:
+      4: 400084
+    second: fx_hand_r
+  - first:
+      4: 400086
+    second: fx_top
+  - first:
+      4: 400088
+    second: weapon_hand_l
+  - first:
+      4: 400090
+    second: weapon_hand_r
+  - first:
+      43: 4300000
+    second: ch_pc_hou_004_tou
+  - first:
+      43: 4300002
+    second: ch_pc_hou_004_shen
+  - first:
+      43: 4300004
+    second: ch_pc_hou_004_jiao
+  - first:
+      43: 4300006
+    second: ch_pc_hou_004_shou
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: ch_pc_hou_004_jiao
+  - first:
+      137: 13700002
+    second: ch_pc_hou_004_shen
+  - first:
+      137: 13700004
+    second: ch_pc_hou_004_shou
+  - first:
+      137: 13700006
+    second: ch_pc_hou_004_tou
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #0
+    second: {fileID: 2100000, guid: 994333ce8938d4e1fb5a70f3ee808643, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #1
+    second: {fileID: 2100000, guid: f02a02aecc2e54ee0a6d88d80b339f70, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #2
+    second: {fileID: 2100000, guid: 348aa21779fed456485e50a2bf39ce25, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material #3
+    second: {fileID: 2100000, guid: 27392f5ba6e65495490db410c296afd8, type: 2}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -134,13 +363,23 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -150,9 +389,14 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -162,11 +406,16 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

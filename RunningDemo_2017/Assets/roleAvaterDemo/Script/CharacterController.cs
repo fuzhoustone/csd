@@ -109,9 +109,17 @@ public class UCharacterController {
         //计算摄相机是否要进行旋转
         float camerRotationY = Input.GetAxis("CamerRotationY");
         if (camerRotationY != 0.0f) {
-            rolePosCamer.rolationCamer(camerRotationY);
+            rolePosCamer.rolationCamerY(camerRotationY);
         }
 
+        float camerRotationZ = Input.GetAxis("CamerRotationZ");
+        if (camerRotationZ != 0.0f)
+        {
+            rolePosCamer.rolationFromRoleZ(camerRotationZ);
+        }
+
+
+        //人物拉进拉远
         float camerScale = Input.GetAxis("CamerScale");
         if (camerScale != 0.0f) {
             rolePosCamer.scaleCamer(camerScale);

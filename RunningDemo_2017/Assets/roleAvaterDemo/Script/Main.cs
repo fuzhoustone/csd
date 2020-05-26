@@ -93,6 +93,8 @@ public class Main : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+       // Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("weapon"), LayerMask.GetMask("weapon", "attackBox"));
+        //这种方法。第一个参数是带设置的Layer，第二个参数是可以与该Layer发生碰撞的Mask.运行一下，我们就看到碰撞矩阵发生了变化。
         initData();
         createRole();
         isStart = true;
@@ -199,13 +201,22 @@ public class Main : MonoBehaviour {
             App.Game.character.roleState.printRoleState();
         }
 
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY, btnWidth, btnHeight), "rolateCamer"))
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY, btnWidth, btnHeight), "镜头复原"))
         {
-            App.Game.character.rolePosCamer.testrolationCamer();
+            App.Game.character.rolePosCamer.resetCamerPosFromRole();
           
           
         }
-        
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "test1"))
+        {
+            App.Game.character.rolePosCamer.test();
+        }
+
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "test2"))
+        {
+            //App.Game.character.rolePosCamer.test(0, 3.0f);
+        }
+
 
     }
 

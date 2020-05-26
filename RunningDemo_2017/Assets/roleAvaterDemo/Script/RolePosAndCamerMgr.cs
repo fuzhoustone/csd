@@ -44,6 +44,9 @@ public class RolePosAndCamerMgr  {
     //世界坐标->wsad控制的坐标系的轩换矩阵
     private Matrix4x4 controlMat;
 
+    //人物参照点坐标系的Y轴旋转角度
+    private float roleRotatY = 90.0f;
+
     //摄相机缩放参数
     //public float scaleParam = 1.0f;
 
@@ -101,7 +104,7 @@ public class RolePosAndCamerMgr  {
         // 最大速度
          maxVSpeed = 10.0f;
         // 最小速度
-         minVSpeed = 5.0f;
+         minVSpeed = 7.0f;
 
         //鼠标点击时，移动的速度
          clickMoveSpeed = 0.1f;
@@ -111,15 +114,20 @@ public class RolePosAndCamerMgr  {
 
         //摄相机缩放参数    
         //scaleParam = 1.0f;
+        roleRotatY = 90.0f;
+
 
         setCameraAndTrans(pCameraTransform, pRoleTranform);
 
-        roleTranform.transform.position = new Vector3(5, 0.125f, -5);
+        roleTranform.transform.position = new Vector3(5, 0.005f, -5);
         roleTranform.eulerAngles = new Vector3(0, 90, 0);
 
+        resetCamerPosFromRole();
         //控制坐标系初始化
-        initControlCoordinateSystem();
-        cameraTransform.LookAt(roleTranform.transform);
+        //initControlCoordinateSystem();
+        //cameraTransform.LookAt(roleTranform.transform);
+
+
     }
 
     /*
@@ -142,15 +150,18 @@ public class RolePosAndCamerMgr  {
 
     //世界坐标系 -》 控制坐标系，主要涉及转向的计算 
     private void initControlCoordinateSystem() {
-        Vector3 tmpPos = new Vector3(0, 0, 0);
-        controlMat = Matrix4x4.TRS(tmpPos, Quaternion.Euler(0, 90, 0), Vector3.one); //不能受角色朝向影响
+        // Vector3 tmpPos = new Vector3(0, 0, 0);
+        //controlMat = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.Euler(0, 90, 0), Vector3.one); //不能受角色朝向影响
+        controlMat = Matrix4x4.TRS(roleTranform.transform.position, Quaternion.Euler(roleTranform.eulerAngles), Vector3.one); //不能受角色朝向影响
+        roleRotatY = roleTranform.eulerAngles.y;
 
     }
 
 
-    public void testrolationCamer() {
+    public void test() {
         //scaleCamer(-0.1f);
-        resetCamerPosFromRole();
+        // resetCamerPosFromRole();
+        rolationFromRoleZ(1.0f);
     }
 
 
@@ -181,21 +192,44 @@ public class RolePosAndCamerMgr  {
 
     }
 
+    //摄相机绕着人物旋转， 角度始终lookat人物
+    public void rolationFromRoleZ(float rolation) {
+
+
+         //构建 参照点坐标系->世界坐标系变换矩阵，涉及平移， 摄像机的世界坐标旋转角度
+         Matrix4x4 tmpMat2 = Matrix4x4.TRS(roleTranform.transform.position, Quaternion.Euler(0,cameraTransform.eulerAngles.y, 0), Vector3.one);
+         //计算出摄相机 在参照点坐标系中的点
+         Vector3 tmpCamer = tmpMat2.inverse.MultiplyPoint(cameraTransform.transform.position);
+
+         //参照点坐标系进行旋转
+         tmpMat2.SetTRS(roleTranform.transform.position, Quaternion.Euler(rolation, cameraTransform.eulerAngles.y, 0), Vector3.one);
+
+         //利用 变换矩阵，计算机摄相机在世界坐标中的新点
+         Vector3 newPos = tmpMat2.MultiplyPoint(tmpCamer);
+
+         cameraTransform.transform.position = newPos;
+         
+        //摄相机朝向人物
+        cameraTransform.LookAt(roleTranform.transform);
+
+    }
+
     //摄相机绕着参照点旋转， 角度始终lookat人物并非参照点
-    public void rolationCamer(float rolation) {
+    public void rolationCamerY(float rolation) {
         //先确定参照点的世界坐标， 参照点的X和Z为人物坐标，Y轴的值为摄相机的值
         Vector3 tmpRolatVect = new Vector3(roleTranform.transform.position.x, cameraTransform.transform.position.y, roleTranform.transform.position.z);
-
-        //构建 参照点旋转度数后的坐标系->世界坐标系变换矩阵，平移及旋转角度, 
-        Matrix4x4 tmpMat = Matrix4x4.TRS(tmpRolatVect, Quaternion.Euler(0, rolation, 0), Vector3.one);
-
+       
         //构建 参照点坐标系->世界坐标系变换矩阵，只涉及平移
         Matrix4x4 tmpMat2 = Matrix4x4.TRS(tmpRolatVect, Quaternion.Euler(0, 0, 0), Vector3.one);
+
         //计算出摄相机 在参照点坐标系中的点
         Vector3 tmpCamer = tmpMat2.inverse.MultiplyPoint(cameraTransform.transform.position);
 
-        //利用 平移旋转的变换矩阵，计算机摄相机在世界坐标中的新点
-        Vector3 newPos = tmpMat.MultiplyPoint(tmpCamer);
+        //参照点坐标系进行旋转
+        tmpMat2.SetTRS(tmpRolatVect, Quaternion.Euler(0, rolation, 0), Vector3.one);
+
+        //利用 变换矩阵，计算机摄相机在世界坐标中的新点
+        Vector3 newPos = tmpMat2.MultiplyPoint(tmpCamer);
 
         cameraTransform.transform.position = newPos;
 
@@ -214,8 +248,8 @@ public class RolePosAndCamerMgr  {
 
         //设置人物坐标系下摄像机坐标
         float tmpX = 0.0f;
-        float tmpY = 5.0f;
-        float tmpZ = -5.0f;
+        float tmpY = 10.0f;
+        float tmpZ = -10.0f;
         Vector3 tmpPos = new Vector3(tmpX, tmpY, tmpZ);
 
         //摄像机坐标转成世界坐标
@@ -224,8 +258,14 @@ public class RolePosAndCamerMgr  {
         cameraTransform.transform.position = newPos;
         //摄像机朝向人物
         cameraTransform.LookAt(roleTranform.transform);
+
+        //人物移动朝向修改
+        initControlCoordinateSystem();
+        //controlMat = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.Euler(roleTranform.transform.eulerAngles), Vector3.one); //不能受角色朝向影响
     }
 
+    
+    //摄相机上下左右移动，用矩阵换算的方式，基于当前镜头方向
     public void moveCamerWSADWorldPosFromCamerControlMat(float leftright, float downup) {
         //WS 对应Z轴正负，    AD对应X轴 负正
         Vector3 tmpPos = new Vector3(leftright * moveVSpeed / 30, 0, downup * moveVSpeed / 30);
@@ -238,7 +278,7 @@ public class RolePosAndCamerMgr  {
         cameraTransform.transform.position = newPos;
     }
 
-    //摄相机上下左右移动，用矩阵换算的方式
+    //摄相机上下左右移动，用矩阵换算的方式,将不再使用
     public void moveCamerWSADWorldPosFromControlMat(float leftright, float downup)
     {
         //WS 对应Z轴正负，    AD对应X轴 负正
@@ -256,18 +296,23 @@ public class RolePosAndCamerMgr  {
     //人物坐标计算，用矩阵换算的方式
     public void updateRoleWorldPosFromControlMat(float leftright, float downup) {
         //WS 对应Z轴正负，    AD对应X轴 负正
-        Vector3 tmpPos = new Vector3(leftright * moveVSpeed/30, 0, downup * moveVSpeed/30);
+        Vector3 tmpPos = new Vector3(leftright * moveVSpeed * Time.deltaTime, 0, downup * moveVSpeed * Time.deltaTime);
         
-        Vector3 newMatPos = controlMat.MultiplyPoint(tmpPos);
-        Vector3 pMove = newMatPos - new Vector3(0, 0, 0);
+        //人物坐标系，并非人物当前位置及旋转，以镜头复原时的人物坐标及角度为参照
 
+        //人物移动后的坐标转为世界坐标系
+        Vector3 newMatPos = controlMat.MultiplyPoint(tmpPos);
+
+        Vector3 posZero = controlMat.MultiplyPoint(new Vector3(0,0,0)); //人物坐标系原点转为世界坐标系
+
+        Vector3 pMove = newMatPos - posZero; //人物偏移的世界坐标
+        
         Vector3 nowPos = roleTranform.transform.position;
         Vector3 newPos = new Vector3(nowPos.x + pMove.x, nowPos.y + pMove.y, nowPos.z + pMove.z);
         
         roleTranform.transform.position = newPos;
-
-       // initControlCoordinateSystem();
-
+        
+        //roleTranform.transform.position = newMatPos;
     }
 
     //人物坐标计算，用直接用xyz换算
@@ -298,7 +343,8 @@ public class RolePosAndCamerMgr  {
         tmpPos2D.x = downup;
         tmpPos2D.y = leftright;
 
-        float tmpRotat = 90.0f;
+        float tmpRotat = roleRotatY;
+        
         float rotal = calRoleRotation(tmpPos2D, tmpRotat); //获得角色绕Y轴旋转朝向， 
 
         
@@ -308,46 +354,6 @@ public class RolePosAndCamerMgr  {
 
         
     }
-
-    //角色与摄像机的变换矩阵关系
-    private Vector3 CamerFromRole;
-
-    //受角色的坐标变更影响， 摄相机坐标位置调整, pOffSet，角色坐标的偏移值
-    public void updateCamerPosFromRolePos(Vector3 pOffSet) {
-        
-    }
-
-
-    //根据摄像机按键操作pOffSet，修改摄像机的位置,同时修改变换矩阵 计算CamerFromRole
-    private void updateCamerVector3FormRoleControl(Vector3 pOffSet) {
-
-    }
-
-    //根据摄相机与人的变换矩阵关系，以及人物的位移， 刷新修改摄像机的位置
-    private void updateCamerPosFromCamerVector3(Vector3 pOffSet) {
-
-    }
-
-    //根据当前的摄相机位置朝向及人物位置，设置摄相机与人的变换矩阵初始值
-    private void setCamerVector3FromCamerAndRole() {
-        //cameraTransform  摄像机transform
-        //roleTranform     角色transform
-        //计算CamerFromRole  角色 -》 摄像机的变换矩阵关系
-        //  Matrix4x4 pmatri = new Matrix4x4();
-
-        //世界坐标转换 以摄相机为中心矩阵关系
-        Matrix4x4 camerMatrix = mainCamer.worldToCameraMatrix;
-
-        //摄相机中的点，转换为世界坐标的矩阵关系
-        Matrix4x4 worldcamerMatrix = mainCamer.cameraToWorldMatrix;
-
-        
-        //
-        //Camera.worldToCameraMatrix
-    }
-
-
-
 
     //用roleControl的控制人物移动，暂时不用
     public void updateRolePos(float h, float tmpv)
@@ -505,6 +511,7 @@ public class RolePosAndCamerMgr  {
         {
             res = res - 360.0f;
         }
+        
 
         return res;
 

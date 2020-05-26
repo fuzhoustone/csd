@@ -15,10 +15,12 @@ public class RoleStateMgr
     private Animation m_animationController = null;
     // public CharacterController roleControl = null;
 
+    private roleState oldRoleState = roleState.init;
+
     public void initData(GameObject paraObj) {
         paraObj.GetComponent<Rigidbody>().freezeRotation = true;
         m_animationController = paraObj.GetComponent<Animation>();
-
+        oldRoleState = roleState.stand;
         changeRoleState(roleState.stand);
 
         // state = stateStand;
@@ -75,6 +77,7 @@ public class RoleStateMgr
             case roleState.attack:
                 {
                     m_animationController.wrapMode = WrapMode.Once;
+                   // App.Game.character.roleInstance.GetComponent<attcakStartEnd>().attackStart();
                     m_animationController.PlayQueued("attack1");
                     m_animationController.PlayQueued("attack2");
                     m_animationController.PlayQueued("attack3");
@@ -191,8 +194,10 @@ public class RoleStateMgr
 
         roleState lHopeState = getHopeState(h, tmpv, isfire);
 
-        if (lState != lHopeState)
+        if ((lState != lHopeState) 
+            && (oldRoleState != lHopeState))  //避免重复执行
         {
+            oldRoleState = lHopeState;
             changeRoleState(lHopeState);
         }
         

@@ -24,7 +24,7 @@ public class attcakStartEnd : MonoBehaviour {
         string pFlagStr = "str";
         string msg = "flag" + pFlagStr + ":" + pFlagInt.ToString();
         //Debug.LogWarning("flag" + pFlagStr + ":" + pFlagInt.ToString());
-        Debug.LogWarning(msg);
+       // Debug.LogWarning(msg);
 
         if (pFlagInt == 1)
         {
@@ -37,7 +37,7 @@ public class attcakStartEnd : MonoBehaviour {
         if (res != isInAttack)
         {
             isInAttack = res;
-            Debug.LogWarning(msg);
+           // Debug.Log(msg);
         }
     }
 
