@@ -27,6 +27,8 @@ public class stairWay : MonoBehaviour
     private Vector3Int PlaceStairs4; //楼梯的终点位置
 
     private int nameIndex; //名字序号
+
+    const string csStairWayName = "UpDownHill";
     //private Vector3Int PlaceStairsAir; //空中的格子
 
 
@@ -81,8 +83,8 @@ public class stairWay : MonoBehaviour
         //makeHillPlace(PlaceStairs4);
 
         //生成墙
-        makeHillWall(PlaceStairs1, "UpDownHill" + nameIndex.ToString() + "_1_");
-        makeHillWall(PlaceStairs4, "UpDownHill" + nameIndex.ToString() + "_4_");
+        makeHillWall(PlaceStairs1, csStairWayName + nameIndex.ToString() + "_1_");
+        makeHillWall(PlaceStairs4, csStairWayName + nameIndex.ToString() + "_4_");
         //makeHillWall(PlaceStairsAir);
     }
 
@@ -152,11 +154,11 @@ public class stairWay : MonoBehaviour
         // GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x +0.5f, staticStair.y, staticStair.z+0.5f), Quaternion.identity);
         GameObject go1 = Instantiate(hillPrefab, new Vector3(PlaceStairs1.x, PlaceStairs1.y, PlaceStairs1.z), Quaternion.identity);
         go1.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
-        go1.name = "UpDownHill" + nameIndex.ToString() + "_1_";
+        go1.name = csStairWayName + nameIndex.ToString() + "_1_";
 
         GameObject go4 = Instantiate(hillPrefab, new Vector3(PlaceStairs4.x, PlaceStairs4.y, PlaceStairs4.z), Quaternion.identity);
         go4.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
-        go4.name = "UpDownHill" + nameIndex.ToString() + "_4_";
+        go4.name = csStairWayName + nameIndex.ToString() + "_4_";
     }
 
     //生成铺上坡或下坡的墙, 输入 路径的前后坐标, 当前色块的坐标
