@@ -7,15 +7,9 @@ using Graphs;
 public class HallWay : Room
 {
     //public HallWay preHallWay;
-    public HallWay(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid) : base(location, size, pPlaneObj, pWallObj, pMaterial, pGrid)
+    public HallWay(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex) : base(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex)
     {
-        pos = location;
-        bounds = new BoundsInt(location, size);
-        planePrefab = pPlaneObj;
-        wallPrefab = pWallObj;
-        material = pMaterial;
-
-        placeGrid = pGrid;
+        roomName = "HallWay";
     }
 
     /*

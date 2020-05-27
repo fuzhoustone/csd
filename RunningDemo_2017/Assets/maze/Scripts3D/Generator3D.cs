@@ -94,6 +94,8 @@ public class Generator3D : MonoBehaviour {
     //List<Vector3Int> hallWayLst;
 
     List<stairVector> stairsLst;
+
+    int roomIndex = 0;
     //add end
 
     void Start() {
@@ -209,6 +211,7 @@ public class Generator3D : MonoBehaviour {
 
         //生成房间
     void PlaceRooms() {
+        //int roomIndex = 0; //add by csd
         for (int i = 0; i < roomCount; i++) {
             Vector3Int location = new Vector3Int( //给个随机的位置
                 random.Next(0, size.x),
@@ -223,9 +226,9 @@ public class Generator3D : MonoBehaviour {
             );
 
             bool add = true;
-            Room newRoom = new Room(location, roomSize,planePrefab, wallPrefab, roomPlaceMaterial, placeGrid);
+            Room newRoom = new Room(location, roomSize,planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex);
             //Room buffer = new Room(location + new Vector3Int(-1, 0, -1), roomSize + new Vector3Int(2, 0, 2));
-            Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null); 
+            Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null,0); 
 
             foreach (var room in rooms) { //判断房间区间是否可以加入
                 if (Room.Intersect(room, buffer)) { //intersect里有个!, 若返回 true，说明无法添加
@@ -243,6 +246,7 @@ public class Generator3D : MonoBehaviour {
             if (add) { //可新建房间
                 rooms.Add(newRoom);
                 PlaceRoom(newRoom.bounds.position, newRoom.bounds.size);
+                roomIndex++;
 
                 foreach (var pos in newRoom.bounds.allPositionsWithin) { //一个房间 占用有多个坐标，全部记录下, 房间与坐标的索引关系需创建
                     grid[pos] = CellType.Room;
@@ -582,9 +586,11 @@ public class Generator3D : MonoBehaviour {
                 Vector3Int vect3Num4 = prev + verticalOffset+ horizontalOffset * 2;
 
                 //生成楼梯，并拆掉1，4色块相近的墙
-                stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4);
+                stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex);
                 tmpWay.makeStairWay();
-                
+                roomIndex++;
+
+
             }
         }
     }
@@ -710,9 +716,11 @@ public class Generator3D : MonoBehaviour {
                         bool isCreate = grid.getDataIsCreate(pos);
                         if (isCreate == false)
                         {
-                            HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid);
+                            HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex);
                             hallways.Add(newHallWay);
                             grid.setGridDataObj(newHallWay, pos);
+
+                            roomIndex++;
                            // grid.setDataIsCreate(pos,true);
                         }
                         //add end

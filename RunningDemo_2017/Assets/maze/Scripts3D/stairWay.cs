@@ -26,6 +26,7 @@ public class stairWay : MonoBehaviour
     private Vector3Int PlaceStairs1; //楼梯的起始
     private Vector3Int PlaceStairs4; //楼梯的终点位置
 
+    private int nameIndex; //名字序号
     //private Vector3Int PlaceStairsAir; //空中的格子
 
 
@@ -39,7 +40,7 @@ public class stairWay : MonoBehaviour
     public stairWay(GameObject pWallObj, isRoomFunc pCallBack,
                     GameObject pUpHill, GameObject pDownHill,
                    Vector3Int pPrev, Vector3Int pCurrent,
-                   Vector3Int pPlaceStairs1,Vector3Int pPlaceStairs2, Vector3Int pPlaceStairs3, Vector3Int pPlaceStairs4)
+                   Vector3Int pPlaceStairs1,Vector3Int pPlaceStairs2, Vector3Int pPlaceStairs3, Vector3Int pPlaceStairs4, int pNameIndex)
     {
 
         wallPrefab = pWallObj;
@@ -70,6 +71,7 @@ public class stairWay : MonoBehaviour
             Debug.LogError("stairWay error y is same");
         }
 
+        nameIndex = pNameIndex;
     }
 
     
@@ -79,8 +81,8 @@ public class stairWay : MonoBehaviour
         //makeHillPlace(PlaceStairs4);
 
         //生成墙
-        makeHillWall(PlaceStairs1);
-        makeHillWall(PlaceStairs4);
+        makeHillWall(PlaceStairs1, "UpDownHill" + nameIndex.ToString() + "_1_");
+        makeHillWall(PlaceStairs4, "UpDownHill" + nameIndex.ToString() + "_4_");
         //makeHillWall(PlaceStairsAir);
     }
 
@@ -150,22 +152,26 @@ public class stairWay : MonoBehaviour
         // GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x +0.5f, staticStair.y, staticStair.z+0.5f), Quaternion.identity);
         GameObject go1 = Instantiate(hillPrefab, new Vector3(PlaceStairs1.x, PlaceStairs1.y, PlaceStairs1.z), Quaternion.identity);
         go1.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
+        go1.name = "UpDownHill" + nameIndex.ToString() + "_1_";
 
         GameObject go4 = Instantiate(hillPrefab, new Vector3(PlaceStairs4.x, PlaceStairs4.y, PlaceStairs4.z), Quaternion.identity);
         go4.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
+        go4.name = "UpDownHill" + nameIndex.ToString() + "_4_";
     }
 
     //生成铺上坡或下坡的墙, 输入 路径的前后坐标, 当前色块的坐标
-    private void makeHillWall(Vector3Int staticStair)
+    private void makeHillWall(Vector3Int staticStair, string pName)
     {
-        Room tmpRoom = new Room(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null);
+        Room tmpRoom = new Room(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null, 0);
+        //tmpRoom.roomName = pName;
+        
         if (prev.x == current.x)
         {  //x值相同，z值不同， 只生成left,right的墙
-            tmpRoom.makeLeftRightWall(false);
+            tmpRoom.makeStairLeftRightWall(pName);
         }
         else if (prev.z == current.z)
         { //x值不同，z值相同,  只生成top,bottom的墙
-            tmpRoom.makeTopBottomWall(false);
+            tmpRoom.makeStairTopBottomWall(pName);
         }
     }
 

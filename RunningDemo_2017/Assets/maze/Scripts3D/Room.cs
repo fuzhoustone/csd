@@ -26,12 +26,21 @@ public class Room : MonoBehaviour
     //private Grid3D<GameObject> placeLst;
 
     public Grid3D<placeWall> placeGrid; //外部传入的placeGrid
+
+    public int nameIndex; //名字区分
+
+    public int placeIndex; //地板区分
+
+    public string roomName; //地板名字
+
     // private Grid3D<GameObject> wallLst;
     public Room() {
-
+        nameIndex = 0;
+        placeIndex = 0;
+        roomName = "UpDownHill";
     }
 
-    public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid)
+    public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex)
     {
         pos = location;
         bounds = new BoundsInt(location, size);
@@ -41,10 +50,15 @@ public class Room : MonoBehaviour
 
         placeGrid = pGrid;
 
+        nameIndex = pNameIndex;
+
+        placeIndex = 0;
+
+        roomName = "room";
        // placeLst = new Grid3D<GameObject>(size, Vector3Int.zero);
-       
-       //add end
-     
+
+        //add end
+
     }
 
     /*
@@ -70,6 +84,9 @@ public class Room : MonoBehaviour
         //GameObject go = Instantiate(planePrefab, new Vector3(worldPosX + 0.5f, worldPosY, worldPosZ + 0.5f), Quaternion.identity);
         GameObject go = Instantiate(planePrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity);
         go.GetComponent<MeshRenderer>().material = material;
+        go.name = roomName+ nameIndex.ToString()+"_"+placeIndex.ToString();
+
+        placeIndex++;
         return go;
     }
     //铺地板
@@ -93,8 +110,8 @@ public class Room : MonoBehaviour
         int worldPosY = bounds.position.y + posY;
         int worldPosZ = bounds.position.z + posZ;
 
-        float offsetX = 0.5f;
-        float offsetY = 0.5f;
+        //float offsetX = 0.5f;
+        //float offsetY = 0.5f;
 
         //GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX+ offsetX, worldPosY, worldPosZ+ offsetY), Quaternion.identity);
         GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity);
@@ -137,12 +154,21 @@ public class Room : MonoBehaviour
     private void setWallIndex(GameObject wallObj, Vector3Int placePos, WallPos tmpWallPos) {
         placeWall tmpSpaceWall = placeGrid[placePos]; //获得地块对象
         if (tmpSpaceWall != null) {
+            
             switch (tmpWallPos)
             {
-                case WallPos.Top: { tmpSpaceWall.topWall = wallObj; } break;
-                case WallPos.Bottom: { tmpSpaceWall.bottomWall = wallObj; } break;
-                case WallPos.Left: { tmpSpaceWall.leftWall = wallObj; } break;
-                case WallPos.Right: { tmpSpaceWall.rightWall = wallObj; } break;
+                case WallPos.Top: { tmpSpaceWall.topWall = wallObj;
+                        wallObj.name = tmpSpaceWall.gameObject.name + "Top";
+                    } break;
+                case WallPos.Bottom: { tmpSpaceWall.bottomWall = wallObj;
+                        wallObj.name = tmpSpaceWall.gameObject.name + "Bottom";
+                    } break;
+                case WallPos.Left: { tmpSpaceWall.leftWall = wallObj;
+                        wallObj.name = tmpSpaceWall.gameObject.name + "Left";
+                    } break;
+                case WallPos.Right: { tmpSpaceWall.rightWall = wallObj;
+                        wallObj.name = tmpSpaceWall.gameObject.name + "Right";
+                    } break;
                     // default: { } break;
 
             }
@@ -189,26 +215,48 @@ public class Room : MonoBehaviour
     }
 
     */
-    public void makeTopBottomWall(bool isSetWallIndex = true) {
+    //传入所属地块的唯一性名字
+    public void makeStairTopBottomWall(string pName) {
+        GameObject tmpWallObj = null;
+        int x = 0;
+        int z = 0;  //下面的墙
+        tmpWallObj = makeWall(x, 0, z, 0.0f, 270.0f, 0.0f);   //下面的墙需旋转270度, 
+        tmpWallObj.name = pName + "Bottom";
+
+        z = bounds.size.z - 1;  //上面的墙
+        tmpWallObj = makeWall(x, 0, z, 0.0f, 90.0f, 0.0f);     //上面90度
+        tmpWallObj.name = pName + "Top";
+    }
+
+    //传入所属地块的唯一性名字
+    public void makeStairLeftRightWall(string pName) {
+        GameObject tmpWallObj = null;
+        int x = 0;  //左边的墙
+        int z = 0;
+        tmpWallObj = makeWall(x, 0, z, 0.0f, 0.0f, 0.0f);
+        tmpWallObj.name = pName + "Left";
+
+        x = bounds.size.x - 1;  //右边的墙
+        tmpWallObj = makeWall(x, 0, z, 0.0f, 180.0f, 0.0f);
+        tmpWallObj.name = pName + "Right";
+    }
+
+    public void makeTopBottomWall() {
         GameObject tmpWallObj = null;
         //x正轴朝右，z正轴朝上， 默认在左边，  只需旋转Y轴， 下面的墙需旋转270度， 上面90度
         for (int x = 0; x < bounds.size.x; x++)
         {
             int z = 0;  //下面的墙
-            //tmpWallObj = makeWall(x + 1, 0, z, 90.0f, 0.0f, 0.0f);   //X轴90度, X+1, 将无用
             tmpWallObj = makeWall(x, 0, z, 0.0f, 270.0f, 0.0f);   //下面的墙需旋转270度, 
 
-            if (isSetWallIndex)
+           // if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Bottom);
-            //flagWallPos(tmpWallObj, x,0,z, WallPos.Bottom);
 
             z = bounds.size.z - 1;  //上面的墙
-            //tmpWallObj = makeWall(x, 0, z + 1, 90.0f, 0, 180.0f);     //X轴90度, X+1, 将无用
             tmpWallObj = makeWall(x, 0, z, 0.0f, 90.0f, 0.0f);     //上面90度
 
-            if (isSetWallIndex)
+          //  if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Top);
-            // flagWallPos(tmpWallObj, x, 0, z, WallPos.Top);
         }
     }
 
@@ -219,19 +267,17 @@ public class Room : MonoBehaviour
         for (int z = 0; z < bounds.size.z; z++)
         {
             int x = 0;  //左边的墙
-            //tmpWallObj = makeWall(x, 1, z, 0, 180.0f, 90.0f);
             tmpWallObj = makeWall(x, 0, z, 0.0f, 0.0f, 0.0f);
 
-            if (isSetWallIndex)
+           // if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Left);
 
             x = bounds.size.x - 1;  //右边的墙
-            //tmpWallObj = makeWall(x + 1, 1, z + 1, 0.0f, 0.0f, 90.0f);
             tmpWallObj = makeWall(x, 0, z, 0.0f, 180.0f, 0.0f);
 
-            if (isSetWallIndex)
+           // if (isSetWallIndex)
                 setWallIndex(tmpWallObj, new Vector3Int(pos.x + x, pos.y, pos.z + z), WallPos.Right);
-            //  flagWallPos(tmpWallObj, x, 0, z, WallPos.Right);
+            
         }
     }
 
@@ -240,44 +286,5 @@ public class Room : MonoBehaviour
     {
         makeTopBottomWall();
         makeLeftRightWall();
-
-        /*
-
-        GameObject tmpWallObj = null;
-        //Y轴作为俯视， 左手坐标系， X向右
-        //铺上下面的墙
-        for (int x = 0; x < bounds.size.x; x++)
-        {
-            int z = 0;  //下面的墙
-            tmpWallObj = makeWall(x + 1, 0, z, 90.0f, 0.0f, 0.0f);   //X轴90度, X+1, 
-
-            setWallIndex(tmpWallObj, new Vector3Int(this.pos.x + x, this.pos.y, this.pos.z + z), WallPos.Bottom);
-            //flagWallPos(tmpWallObj, x,0,z, WallPos.Bottom);
-
-            z = bounds.size.z -1;  //上面的墙
-            tmpWallObj = makeWall(x, 0, z + 1, 90.0f, 0, 180.0f);     //X轴90度, X+1, 
-
-            setWallIndex(tmpWallObj, new Vector3Int(this.pos.x + x, this.pos.y, this.pos.z + z), WallPos.Top);
-           // flagWallPos(tmpWallObj, x, 0, z, WallPos.Top);
-        }
-
-        //铺左右的墙
-        for (int z = 0; z < bounds.size.z; z++)
-        {
-            int x = 0;  //左边的墙
-            tmpWallObj = makeWall(x, 1, z, 0, 180.0f, 90.0f);
-
-            setWallIndex(tmpWallObj, new Vector3Int(this.pos.x + x, this.pos.y, this.pos.z + z), WallPos.Left);
-            //flagWallPos(tmpWallObj, x, 0, z, WallPos.Left);
-
-            x = bounds.size.x -1;  //右边的墙
-            tmpWallObj = makeWall(x + 1, 1, z + 1, 0.0f, 0.0f, 90.0f);
-
-            setWallIndex(tmpWallObj, new Vector3Int(this.pos.x + x, this.pos.y, this.pos.z + z), WallPos.Right);
-            //  flagWallPos(tmpWallObj, x, 0, z, WallPos.Right);
-        }
-
-
-        */
     }
 }
