@@ -5,7 +5,9 @@ using Random = System.Random;
 using Graphs;
 
 public class Generator3D : MonoBehaviour {
-    enum CellType {
+
+    enum CellType
+    {
         None,
         Room,
         Hallway,
@@ -246,7 +248,7 @@ public class Generator3D : MonoBehaviour {
                     grid[pos] = CellType.Room;
                     //add by csd
                     grid.setGridDataObj(newRoom, pos);
-                    grid.setDataIsCreate(pos, true);
+                    //grid.setDataIsCreate(pos, true);
                     //add end
                 }
             }
@@ -453,10 +455,9 @@ public class Generator3D : MonoBehaviour {
     }
 
     //一个接一个的隐藏
-    private int hideIndex = 118;
+   // private int hideIndex = 99;
     public void hideHallWay()
     {
-       // if(hideIndex < pathLst.Count)
         for (int hideIndex = 0; hideIndex< pathLst.Count; hideIndex++)
         {
             pathVector tmpPath = pathLst[hideIndex];
@@ -464,7 +465,7 @@ public class Generator3D : MonoBehaviour {
            
         }
 
-       //  hideIndex++;
+     //    hideIndex++;
     }
 
     public void hideLinePath() {
@@ -522,6 +523,19 @@ public class Generator3D : MonoBehaviour {
 
     }
 
+    //输入三维坐标，返回是否有个房间
+    private bool isRoomByPos(Vector3Int pos, out placeWall pPlaceWall) {
+        bool res = false;
+        pPlaceWall = null;
+        if (isRoomOrHillWay(pos)) { //过道 或 房间
+            //Room pRoom = grid.getGridDataObj(pos);
+            pPlaceWall = placeGrid[pos];
+            res = true;
+        }
+
+        return res;
+    }
+
     private void createStairs(Vector3Int current, Vector3Int prev, bool needCal) {
         var delta = current - prev;
         if (delta.y != 0)
@@ -566,8 +580,11 @@ public class Generator3D : MonoBehaviour {
                 Vector3Int vect3Num2 = prev + horizontalOffset * 2;
                 Vector3Int vect3Num3 = prev + verticalOffset+ horizontalOffset;
                 Vector3Int vect3Num4 = prev + verticalOffset+ horizontalOffset * 2;
-                stairWay tmpWay = new stairWay(wallPrefab,upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4);
+
+                //生成楼梯，并拆掉1，4色块相近的墙
+                stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4);
                 tmpWay.makeStairWay();
+                
             }
         }
     }
@@ -696,7 +713,7 @@ public class Generator3D : MonoBehaviour {
                             HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid);
                             hallways.Add(newHallWay);
                             grid.setGridDataObj(newHallWay, pos);
-                            grid.setDataIsCreate(pos,true);
+                           // grid.setDataIsCreate(pos,true);
                         }
                         //add end
                     }

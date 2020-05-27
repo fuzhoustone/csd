@@ -27,7 +27,7 @@ public class Grid3D<T> {
     }
 
     //add by csd
-    public void setDataIsCreate(Vector3Int pos,bool value) {
+    private void setDataIsCreate(Vector3Int pos,bool value) {
         dataIsCreate[GetIndex(pos)] = value;
     }
     public bool getDataIsCreate(Vector3Int pos) {
@@ -36,6 +36,7 @@ public class Grid3D<T> {
 
     public void setGridDataObj(Room obj, Vector3Int pos) {
         dataObjLst[GetIndex(pos)] = obj;
+        this.setDataIsCreate(pos, true);
     }
 
     public Room getGridDataObj(Vector3Int pos) {

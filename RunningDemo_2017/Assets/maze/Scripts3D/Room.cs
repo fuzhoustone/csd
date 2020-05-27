@@ -27,6 +27,10 @@ public class Room : MonoBehaviour
 
     public Grid3D<placeWall> placeGrid; //外部传入的placeGrid
     // private Grid3D<GameObject> wallLst;
+    public Room() {
+
+    }
+
     public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid)
     {
         pos = location;
@@ -104,29 +108,30 @@ public class Room : MonoBehaviour
         placeGrid[tmpPos] = placeObj;
     }
 
-   
+
+
     /*
     private void flagPlacePos(GameObject pObj, int x, int y, int z)
     {
         Vector3Int tmpPos = new Vector3Int(x, y, z);
         placeLst[tmpPos] = pObj;
     }
-    
-    //获得每一个地板对应的墙, 传入相对坐标, 后续不再使用
-    public placeWall getSpaceWall(Vector3Int tmpPos) {
+     */
+    //获得地板对应的墙
+    public placeWall getSpaceWall() {
         placeWall tmpSpaceWall = null;
-        if (placeLst[tmpPos] != null)
+        if (placeGrid[pos] != null)
         {
-            tmpSpaceWall = placeLst[tmpPos].GetComponent<placeWall>();
+            tmpSpaceWall = placeGrid[pos].GetComponent<placeWall>();
             return tmpSpaceWall;
         }
         else {
-            string msg = "getSpaceWall not find plance pos:" + DebugMsg.instance.Msg(tmpPos);
+            string msg = "getSpaceWall not find plance pos:" + DebugMsg.instance.Msg(pos);
             Debug.LogError(msg);
         }
         return tmpSpaceWall;
     }
-    */
+   
 
     //设置墙与地板的索引，输入 墙的对象，地块的世界坐标，墙在地板中的位置
     private void setWallIndex(GameObject wallObj, Vector3Int placePos, WallPos tmpWallPos) {
