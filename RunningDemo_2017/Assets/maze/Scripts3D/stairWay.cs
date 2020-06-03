@@ -28,6 +28,8 @@ public class stairWay : MonoBehaviour
 
     private int nameIndex; //名字序号
 
+    private GameObject parentObj;
+
     const string csStairWayName = "UpDownHill";
     //private Vector3Int PlaceStairsAir; //空中的格子
 
@@ -42,7 +44,8 @@ public class stairWay : MonoBehaviour
     public stairWay(GameObject pWallObj, isRoomFunc pCallBack,
                     GameObject pUpHill, GameObject pDownHill,
                    Vector3Int pPrev, Vector3Int pCurrent,
-                   Vector3Int pPlaceStairs1,Vector3Int pPlaceStairs2, Vector3Int pPlaceStairs3, Vector3Int pPlaceStairs4, int pNameIndex)
+                   Vector3Int pPlaceStairs1,Vector3Int pPlaceStairs2, Vector3Int pPlaceStairs3, Vector3Int pPlaceStairs4, 
+                   int pNameIndex, GameObject pParentObj)
     {
 
         wallPrefab = pWallObj;
@@ -56,6 +59,8 @@ public class stairWay : MonoBehaviour
 
         PlaceStairs1 = pPlaceStairs1;
         PlaceStairs4 = pPlaceStairs4;
+        parentObj = pParentObj;
+
         //上坡1和4色块, 空中为3色块，无需处理的实心为2色块
         //下坡1和4色块，空中为2色块，无需处理的实心为3色块
         if (prev.y < current.y) //上坡
@@ -152,11 +157,11 @@ public class stairWay : MonoBehaviour
         }
 
         // GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x +0.5f, staticStair.y, staticStair.z+0.5f), Quaternion.identity);
-        GameObject go1 = Instantiate(hillPrefab, new Vector3(PlaceStairs1.x, PlaceStairs1.y, PlaceStairs1.z), Quaternion.identity);
+        GameObject go1 = Instantiate(hillPrefab, new Vector3(PlaceStairs1.x, PlaceStairs1.y, PlaceStairs1.z), Quaternion.identity, parentObj.transform);
         go1.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
         go1.name = csStairWayName + nameIndex.ToString() + "_1_";
 
-        GameObject go4 = Instantiate(hillPrefab, new Vector3(PlaceStairs4.x, PlaceStairs4.y, PlaceStairs4.z), Quaternion.identity);
+        GameObject go4 = Instantiate(hillPrefab, new Vector3(PlaceStairs4.x, PlaceStairs4.y, PlaceStairs4.z), Quaternion.identity, parentObj.transform);
         go4.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
         go4.name = csStairWayName + nameIndex.ToString() + "_4_";
     }
@@ -164,7 +169,7 @@ public class stairWay : MonoBehaviour
     //生成铺上坡或下坡的墙, 输入 路径的前后坐标, 当前色块的坐标
     private void makeHillWall(Vector3Int staticStair, string pName)
     {
-        Room tmpRoom = new Room(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null, 0);
+        Room tmpRoom = new Room(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null, 0, parentObj);
         //tmpRoom.roomName = pName;
         
         if (prev.x == current.x)

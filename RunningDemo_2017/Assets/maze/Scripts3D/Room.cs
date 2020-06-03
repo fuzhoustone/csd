@@ -33,6 +33,7 @@ public class Room : MonoBehaviour
 
     public string roomName; //地板名字
 
+    private GameObject parentObj;
     // private Grid3D<GameObject> wallLst;
     public Room() {
         nameIndex = 0;
@@ -40,7 +41,7 @@ public class Room : MonoBehaviour
         roomName = "UpDownHill";
     }
 
-    public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex)
+    public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
     {
         pos = location;
         bounds = new BoundsInt(location, size);
@@ -52,9 +53,12 @@ public class Room : MonoBehaviour
 
         nameIndex = pNameIndex;
 
+        parentObj = pParentObj;
+
         placeIndex = 0;
 
         roomName = "room";
+
        // placeLst = new Grid3D<GameObject>(size, Vector3Int.zero);
 
         //add end
@@ -82,7 +86,7 @@ public class Room : MonoBehaviour
         int worldPosZ = bounds.position.z + posZ;
 
         //GameObject go = Instantiate(planePrefab, new Vector3(worldPosX + 0.5f, worldPosY, worldPosZ + 0.5f), Quaternion.identity);
-        GameObject go = Instantiate(planePrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity);
+        GameObject go = Instantiate(planePrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity, parentObj.transform);
         go.GetComponent<MeshRenderer>().material = material;
         go.name = roomName+ nameIndex.ToString()+"_"+placeIndex.ToString();
 
@@ -114,7 +118,7 @@ public class Room : MonoBehaviour
         //float offsetY = 0.5f;
 
         //GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX+ offsetX, worldPosY, worldPosZ+ offsetY), Quaternion.identity);
-        GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity);
+        GameObject go = Instantiate(wallPrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity, parentObj.transform);
         go.transform.eulerAngles = new Vector3(rotationX, rotationY, rotationZ);
         return go;
     }

@@ -58,7 +58,16 @@ public class Generator3D : MonoBehaviour {
 
     [SerializeField]
     public GameObject downHillPrefab = null; //下坡资源
-    
+
+    [SerializeField]
+    public GameObject cubeParent = null;  //色块的父节点
+
+    [SerializeField]
+    public GameObject mazeParent = null; //地板，墙的父节点
+
+    [SerializeField]
+    public GameObject pathParent = null; //路径的父节点
+
     //add by csd end
 
     Random random;
@@ -235,7 +244,7 @@ public class Generator3D : MonoBehaviour {
             );
 
             bool add = true;
-            Room newRoom = new Room(location, roomSize,planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex);
+            Room newRoom = new Room(location, roomSize,planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
             //Room buffer = new Room(location + new Vector3Int(-1, 0, -1), roomSize + new Vector3Int(2, 0, 2));
             Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null,0); 
 
@@ -430,7 +439,7 @@ public class Generator3D : MonoBehaviour {
 
 
     private GameObject creatLineFlag(Vector3 pos, string pName) {
-        GameObject obj = Instantiate(linePrefab, pos, Quaternion.identity);
+        GameObject obj = Instantiate(linePrefab, pos, Quaternion.identity, pathParent.transform);
         obj.name = pName;
 
         return obj;
@@ -599,7 +608,7 @@ public class Generator3D : MonoBehaviour {
                 Vector3Int vect3Num4 = prev + verticalOffset+ horizontalOffset * 2;
 
                 //生成楼梯，并拆掉1，4色块相近的墙
-                stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex);
+                stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, mazeParent);
                 tmpWay.makeStairWay();
                 roomIndex++;
 
@@ -729,7 +738,7 @@ public class Generator3D : MonoBehaviour {
                         bool isCreate = grid.getDataIsCreate(pos);
                         if (isCreate == false)
                         {
-                            HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex);
+                            HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
                             hallways.Add(newHallWay);
                             grid.setGridDataObj(newHallWay, pos);
 
@@ -763,11 +772,11 @@ public class Generator3D : MonoBehaviour {
     }
 
     private void PlaceCube(Vector3Int location, Vector3Int size, Material material, string cubeName = "cube") {
-        GameObject go = Instantiate(cubePrefab, location, Quaternion.identity);
+        GameObject go = Instantiate(cubePrefab, location, Quaternion.identity, cubeParent.transform);
         go.GetComponent<Transform>().localScale = size;
         go.GetComponent<MeshRenderer>().material = material;
         go.name = cubeName;
-
+        
         //add by csd begin
         if (cubeName == "cube")
         {

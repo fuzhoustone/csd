@@ -7,7 +7,7 @@ using Graphs;
 public class HallWay : Room
 {
     //public HallWay preHallWay;
-    public HallWay(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex) : base(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex)
+    public HallWay(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj) : base(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj)
     {
         roomName = "HallWay";
     }
