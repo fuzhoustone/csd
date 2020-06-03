@@ -68,7 +68,7 @@ public class Main : MonoBehaviour {
         feet_list[DEFAULT_FEET] = true;
     }
 
-    private void createRole() {
+    private void createRole(Vector3 pPos) {
         // create an avatar
         character = App.Game.CharacterMgr.Generatecharacter(
             "ch_pc_hou",
@@ -80,9 +80,15 @@ public class Main : MonoBehaviour {
             combine);
 
         App.Game.gameManager = this.gameManager;
-       // App.Game.character = this.character;
-        character.initData(cameraTransform, character.roleInstance.transform);
-     //   App.Game.character.rolePosCamer.setCameraAndTrans(cameraTransform, character.roleInstance.transform);
+        // App.Game.character = this.character;
+
+        character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+        character.initData(cameraTransform, character.roleInstance.transform, pPos);
+
+        isStart = true;
+
+       //   App.Game.character.rolePosCamer.setCameraAndTrans(cameraTransform, character.roleInstance.transform);
 
         //App.Game.character.roleInstance = App.Game.character.roleChangeColorWeaponMgr.roleInstance;
         //App.Game.CharacterMgr
@@ -96,10 +102,14 @@ public class Main : MonoBehaviour {
        // Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("weapon"), LayerMask.GetMask("weapon", "attackBox"));
         //这种方法。第一个参数是带设置的Layer，第二个参数是可以与该Layer发生碰撞的Mask.运行一下，我们就看到碰撞矩阵发生了变化。
         initData();
-        createRole();
-        isStart = true;
+        //update by csd
+        //createRole(new Vector3(5, 0.005f, -5));
+        //isStart = true;
+        //update end
     }
 	
+    
+
 	// Update is called once per frame
 	void Update () {
         if (isStart) {
@@ -198,7 +208,7 @@ public class Main : MonoBehaviour {
 
         if (GUI.Button(new Rect(Screen.width - btnWidth, 0, btnWidth, btnHeight), "getState"))
         {
-            App.Game.character.roleState.printRoleState();
+            App.Game.character.mainRoleState.printRoleState();
         }
 
         if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY, btnWidth, btnHeight), "镜头复原"))
@@ -207,13 +217,19 @@ public class Main : MonoBehaviour {
           
           
         }
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "test1"))
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "createRole"))
         {
-            App.Game.character.rolePosCamer.test();
+            Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
+            if (tmpMaze != null)
+                createRole(tmpMaze.firstPos);
+            else
+                createRole(new Vector3(5, 0.005f, -5));
+            //App.Game.character.rolePosCamer.test();
         }
 
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "test2"))
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "test"))
         {
+            App.Game.character.test();
             //App.Game.character.rolePosCamer.test(0, 3.0f);
         }
 

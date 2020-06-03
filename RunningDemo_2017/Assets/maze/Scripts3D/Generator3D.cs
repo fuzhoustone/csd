@@ -96,7 +96,11 @@ public class Generator3D : MonoBehaviour {
     List<stairVector> stairsLst;
 
     int roomIndex = 0;
+
+    [SerializeField]
+    public Vector3Int firstPos = Vector3Int.zero;
     //add end
+
 
     void Start() {
         random = new Random(0);
@@ -134,10 +138,15 @@ public class Generator3D : MonoBehaviour {
         hideAllStairs();
 
         drawLinePath();
-        
+        hideHallWay();
 
     }
+
+#if debug_maze
     void OnGUI()
+#else
+    private void noUseGUI()
+#endif
     {
 
         float btnWidth = 100.0f;
@@ -146,14 +155,14 @@ public class Generator3D : MonoBehaviour {
 
         int i = 0;
 
-        /*
+        
         if (GUI.Button(new Rect(Screen.width - btnWidth*2, btnHeight * i, btnWidth, btnHeight), "drawLine"))
         {
             drawLinePath();
                
         }
         i++;
-        */
+        
 
         if (GUI.Button(new Rect(Screen.width - btnWidth * 2, btnHeight * i, btnWidth, btnHeight), "hideHallWay"))
         {
@@ -187,7 +196,7 @@ public class Generator3D : MonoBehaviour {
         //创建房间
         i = 0;
 
-        /*
+        
         if (GUI.Button(new Rect(Screen.width - btnWidth, btnHeight * i, btnWidth, btnHeight), "createPlance"))
         {
             createPlance();
@@ -199,17 +208,17 @@ public class Generator3D : MonoBehaviour {
             createHallWayLst();
         }
         i++;
-        */
+        
 
         if (GUI.Button(new Rect(Screen.width - btnWidth, btnHeight * i, btnWidth, btnHeight), "createStairsLst"))
         {
             createStairsLst();
         }
         i++;
-
+        
     }
 
-        //生成房间
+    //生成房间
     void PlaceRooms() {
         //int roomIndex = 0; //add by csd
         for (int i = 0; i < roomCount; i++) {
@@ -466,7 +475,11 @@ public class Generator3D : MonoBehaviour {
         {
             pathVector tmpPath = pathLst[hideIndex];
             judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector);
-           
+
+            if (hideIndex == 0) {
+                firstPos = tmpPath.sourVector;
+            }
+            
         }
 
      //    hideIndex++;
