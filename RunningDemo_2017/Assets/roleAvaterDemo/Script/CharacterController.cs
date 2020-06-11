@@ -44,7 +44,7 @@ public class UCharacterController {
     //检查是否要跳跃
     private jumpColider jumpCheck;
 
-    public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos) {
+    public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
         App.Game.character = this;
         mainRoleState = new RoleStateMgr();
         mainRoleState.initData(roleInstance);
@@ -55,7 +55,7 @@ public class UCharacterController {
         jumpCheck.isUse = false;
 
         rolePosCamer = new RolePosAndCamerMgr();
-        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos);
+        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas);
         
 
         //计算跳跃的加速度
@@ -120,7 +120,7 @@ public class UCharacterController {
         mainRoleState.isJumpDownTouch = true;
         oldY = 0;
         Rigidbody roleRigid = roleInstance.transform.GetComponent<Rigidbody>();
-        roleRigid.constraints = RigidbodyConstraints.None; //启用自由落体
+        roleRigid.constraints = RigidbodyConstraints.FreezeRotation; //启用自由落体
     }
 
     private bool isUseGrav = false;
@@ -184,7 +184,7 @@ public class UCharacterController {
                 if (jumpCheck.isUse == false) { //开始下降，启用自由落体
                     jumpCheck.isUse = true;
                     Rigidbody roleRigid = roleInstance.transform.GetComponent<Rigidbody>();
-                    roleRigid.constraints = RigidbodyConstraints.None; //启用自由落体
+                    roleRigid.constraints = RigidbodyConstraints.FreezeRotation; //启用自由落体
                     
                 }
                 /*

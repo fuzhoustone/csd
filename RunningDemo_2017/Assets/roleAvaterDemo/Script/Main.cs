@@ -27,7 +27,10 @@ public class Main : MonoBehaviour {
 
     // 摄像机位置
     public Transform cameraTransform;
-    
+
+    //UI画布
+    public Canvas roleCanvas;
+
     // 游戏管理器，场景管理器
     public GameManager gameManager;
     private bool isStart = false;
@@ -84,7 +87,7 @@ public class Main : MonoBehaviour {
 
         character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        character.initData(cameraTransform, character.roleInstance.transform, pPos);
+        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas);
 
         isStart = true;
 

@@ -68,6 +68,14 @@ public class Generator3D : MonoBehaviour {
     [SerializeField]
     public GameObject pathParent = null; //路径的父节点
 
+    [SerializeField]
+    public GameObject monsterPrefab = null; //怪物的预制
+
+    [SerializeField]
+    public Transform camerTransform = null; //主摄像机
+
+    [SerializeField]
+    public Transform canvasTransform = null; //画布
     //add by csd end
 
     Random random;
@@ -149,6 +157,7 @@ public class Generator3D : MonoBehaviour {
         drawLinePath();
         hideHallWay();
 
+        addTestMonster(firstPos);
     }
 
 #if debug_maze
@@ -489,9 +498,19 @@ public class Generator3D : MonoBehaviour {
                 firstPos = tmpPath.sourVector;
             }
             
+
+
         }
 
      //    hideIndex++;
+    }
+
+    private void addTestMonster(Vector3 pPos) {
+        GameObject go = Instantiate(monsterPrefab, pPos, Quaternion.identity);
+        roleProperty tmpPro =  go.GetComponent<roleProperty>();
+        tmpPro.testInitData(camerTransform, canvasTransform);
+        //go.GetComponent<MeshRenderer>().material = material;
+        //go.name = roomName + nameIndex.ToString() + "_" + placeIndex.ToString();
     }
 
     public void hideLinePath() {
@@ -877,19 +896,6 @@ public class Generator3D : MonoBehaviour {
     }
 
 
-
-    /*
-private void setHideWallByX(int pPosY, int pPosZ, Room pLeft, Room pRight)
-{
-   // int pPosY = pLeft.pos.y;
-    placeWall pLeftWallObj = pLeft.getSpaceWall(new Vector3Int(pLeft.bounds.size.x-1, pPosY, pPosZ - pLeft.pos.z));
-    pLeftWallObj.rightWall.SetActive(false);
-
-    placeWall pRightWallObj = pRight.getSpaceWall(new Vector3Int(0, pPosY, pPosZ - pRight.pos.z));
-    pRightWallObj.leftWall.SetActive(false);
-}
-
-    */
     //判断两个相交的地块之间哪面墙要敲掉, 发现相交时返回true
     //源地板，  目标地板
     private bool judgePlaceDelWall(Vector3Int sourPos, Vector3Int destPos) {

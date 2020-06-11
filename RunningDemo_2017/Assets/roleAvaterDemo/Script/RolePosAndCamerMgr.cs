@@ -52,6 +52,9 @@ public class RolePosAndCamerMgr  {
     //拉进拉远的速度
     private const float csScale = 1.0f;
 
+    private const float csMaxScale = 5.0f;
+    private const float csMinScale = 0.4f;
+
     //摄像机与人物默认的矩离
     private const float csDefaultCamerPosX = 0.0f;
     private const float csDefaultCamerPosY = 1.0f;  //10.0f
@@ -79,7 +82,9 @@ public class RolePosAndCamerMgr  {
     private float roleRotatY = 90.0f;
 
     //摄相机缩放参数
-    //public float scaleParam = 1.0f;
+    public float scaleCamerParam = 1.0f;
+
+    private Canvas roleCanvas = null;
 
     public void setInitPosRota() {
 
@@ -110,7 +115,7 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos) {
+    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
         roleControl = paraObj.GetComponent<CharacterController>();
 
         // 摄像机距离人物的距离
@@ -151,8 +156,8 @@ public class RolePosAndCamerMgr  {
         //s=0.5*a*t*t  a= s/0.5/t/t 
         //jumpA = csJumpHeight / 0.5f / csJumpUpOrDownTime / csJumpUpOrDownTime;
         //jumpTimeAdd = 0.0f;
-
-
+        scaleCamerParam = 1.0f;
+        roleCanvas = pCanvas;
         setCameraAndTrans(pCameraTransform, pRoleTranform);
 
         roleTranform.transform.position = pPos;
@@ -164,7 +169,7 @@ public class RolePosAndCamerMgr  {
         //cameraTransform.LookAt(roleTranform.transform);
     }
 
-
+   
 
     /*
      
@@ -201,16 +206,43 @@ public class RolePosAndCamerMgr  {
         //rolationFromRoleZ(1.0f);
     }
 
+    private void scaleCanvas() {
+        roleCanvas.scaleFactor = 1.0f / scaleCamerParam;
+    }
 
+    //private float scaleParam = 1.0f;
     //摄相机对着人物拉进拉远
     public void scaleCamer(float scale, float pDeltaTime) {
         float scaleParam = 1.0f;
         scaleParam += scale * csScale * pDeltaTime;
+
+        float tmpScale = scaleParam * scaleCamerParam;
+        if (tmpScale < csMinScale)
+        {
+           // tmpScale = csMinScale;
+            scaleParam = csMinScale / scaleCamerParam;
+            scaleCamerParam = csMinScale;
+            Debug.LogWarning("scaleCamer min value:"+ scaleParam.ToString());
+        }
+        else if (tmpScale > csMaxScale)
+        {
+            //tmpScale = 5.0f;
+            scaleParam = csMaxScale / scaleCamerParam;
+            scaleCamerParam = csMaxScale;
+            Debug.LogWarning("scaleCamer max value" + scaleParam.ToString());
+        }
+        else {
+            scaleCamerParam = tmpScale;
+        }
+
         //限制拉进拉远的最值
+        /*
         if (scaleParam < 0.1f)
             scaleParam = 0.1f;
         if (scaleParam > 5.0f)
             scaleParam = 5.0f;
+*/
+
 
         //先确定人物的坐标系 ->世界坐标系平移矩阵
         Matrix4x4 tmpMat = Matrix4x4.TRS(roleTranform.transform.position, Quaternion.Euler(0, 0, 0), Vector3.one);
@@ -227,6 +259,7 @@ public class RolePosAndCamerMgr  {
 
         cameraTransform.LookAt(roleTranform.transform);
 
+        scaleCanvas();
     }
 
     //摄相机绕着人物旋转， 角度始终lookat人物
@@ -298,6 +331,10 @@ public class RolePosAndCamerMgr  {
 
         //人物移动朝向修改
         initControlCoordinateSystem();
+
+        //摄像机缩放比例
+        scaleCamerParam = 1.0f;
+        scaleCanvas();
         //controlMat = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.Euler(roleTranform.transform.eulerAngles), Vector3.one); //不能受角色朝向影响
     }
 
@@ -380,20 +417,18 @@ public class RolePosAndCamerMgr  {
        // offsetY = 0.0f;
         updateRoleWorldPosFromControlMat(leftright, downup, pDelayTime, offsetY);
 
-        //再修改朝向
-        Vector2 tmpPos2D = new Vector2();
-        tmpPos2D.x = downup;
-        tmpPos2D.y = leftright;
+        if ((leftright != 0.0f) || (downup != 0.0f)) //朝向未发生改变
+        {
+            //再修改朝向
+            Vector2 tmpPos2D = new Vector2();
+            tmpPos2D.x = downup;
+            tmpPos2D.y = leftright;
 
-        float tmpRotat = roleRotatY;
-        
-        float rotal = calRoleRotation(tmpPos2D, tmpRotat); //获得角色绕Y轴旋转朝向， 
-
-        
-
-        Vector3 tmpEulerAngles = new Vector3(roleTranform.transform.eulerAngles.x, rotal, roleTranform.transform.eulerAngles.z);
-        roleTranform.eulerAngles = tmpEulerAngles;
-
+            float tmpRotat = roleRotatY;
+            float rotal = calRoleRotation(tmpPos2D, tmpRotat); //获得角色绕Y轴旋转朝向， 
+            Vector3 tmpEulerAngles = new Vector3(roleTranform.transform.eulerAngles.x, rotal, roleTranform.transform.eulerAngles.z);
+            roleTranform.eulerAngles = tmpEulerAngles;
+        }
         
     }
 
