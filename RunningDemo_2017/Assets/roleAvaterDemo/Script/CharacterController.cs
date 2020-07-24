@@ -70,16 +70,6 @@ public class UCharacterController {
           isStart = true;
     }
 
-    /*
-    public void setJumpDownRigidBody() {
-        Rigidbody roleRigid = roleInstance.transform.GetComponent<Rigidbody>();
-
-        float g = 98.1f;
-        roleRigid.AddForce(Vector3.up * g * (roleRigid.mass));
-       
-    }
-       */ 
-
 	public void ChangeHeadEquipment (string equipment,bool combine = false)
 	{
         if (roleChangeColorWeaponMgr != null)
@@ -211,6 +201,7 @@ public class UCharacterController {
             Rigidbody roleRigid = roleInstance.transform.GetComponent<Rigidbody>();
 
             roleRigid.constraints = RigidbodyConstraints.FreezePositionY;
+            roleRigid.freezeRotation = true;
             oldY = 0.0f; // jumpStartY;
         }
         

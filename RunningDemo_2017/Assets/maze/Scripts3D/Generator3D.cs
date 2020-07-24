@@ -144,20 +144,27 @@ public class Generator3D : MonoBehaviour {
         CreateHallways(); //创建走廊，过道
         PathfindHallways(); //走廊，过道寻路生成
 
+
         createPlance(); //生成房间
-        
+       
+#if !TESTPATH
         createHallWayLst(); //生成过道间
 
         createStairsLst(); //生成楼梯色块
-
+#endif
+        
         hideAllCube();
         hideAllHallway();
         hideAllStairs();
-
+        
+#if !TESTPATH
         drawLinePath();
-        hideHallWay();
 
-        addTestMonster(firstPos);
+        hideHallWay(); //隐藏墙壁
+#endif  
+        
+      //  addTestMonster(firstPos);
+        
     }
 
 #if debug_maze
@@ -492,7 +499,9 @@ public class Generator3D : MonoBehaviour {
         for (int hideIndex = 0; hideIndex< pathLst.Count; hideIndex++)
         {
             pathVector tmpPath = pathLst[hideIndex];
+            
             judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector);
+            
 
             if (hideIndex == 0) {
                 firstPos = tmpPath.sourVector;
@@ -529,8 +538,15 @@ public class Generator3D : MonoBehaviour {
         //int i = 0;
         Room tmpRoom = rooms[i];
         tmpRoom.makeAllPlane();  //铺房间
-
-        tmpRoom.makeAllWall();  //铺墙
+            if (i == 0)
+            {
+                firstPos = tmpRoom.pos;
+               // break;
+            }
+            //break;
+#if !TESTPATH
+            tmpRoom.makeAllWall();  //铺墙
+#endif
         }
     }
 
