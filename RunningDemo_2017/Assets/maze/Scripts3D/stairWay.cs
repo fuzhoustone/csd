@@ -96,16 +96,23 @@ public class stairWay : MonoBehaviour
     //生成上坡或下坡的地板,输入当前色块的坐标
     private void makeHillPlace()
     {
-        GameObject hillPrefab = null;
+       // GameObject hillPrefab = null;
+        GameObject hill1Prefab = null;
+        GameObject hill4Prefab = null;
         float rotationY = 0.0f;
 
         if (isUpHill)
         { //上坡
-            hillPrefab = upHillPrefab;
+           // hillPrefab = upHillPrefab;
+            hill1Prefab = upHillPrefab;
+            hill4Prefab = downHillPrefab;
+
         }
         else 
         { //下坡
-            hillPrefab = downHillPrefab;
+          //  hillPrefab = downHillPrefab;
+            hill1Prefab = downHillPrefab;
+            hill4Prefab = upHillPrefab;
         }
 
 
@@ -157,12 +164,12 @@ public class stairWay : MonoBehaviour
         }
 
         // GameObject go = Instantiate(hillPrefab, new Vector3(staticStair.x +0.5f, staticStair.y, staticStair.z+0.5f), Quaternion.identity);
-        GameObject go1 = Instantiate(hillPrefab, new Vector3(PlaceStairs1.x, PlaceStairs1.y, PlaceStairs1.z), Quaternion.identity, parentObj.transform);
+        GameObject go1 = Instantiate(hill1Prefab, new Vector3(PlaceStairs1.x, PlaceStairs1.y, PlaceStairs1.z), Quaternion.identity, parentObj.transform);
         go1.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
         go1.name = csStairWayName + nameIndex.ToString() + "_1_";
 
-        GameObject go4 = Instantiate(hillPrefab, new Vector3(PlaceStairs4.x, PlaceStairs4.y, PlaceStairs4.z), Quaternion.identity, parentObj.transform);
-        go4.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
+        GameObject go4 = Instantiate(hill4Prefab, new Vector3(PlaceStairs4.x, PlaceStairs4.y, PlaceStairs4.z), Quaternion.identity, parentObj.transform);
+        go4.transform.eulerAngles = new Vector3(0.0f, rotationY + 180.0f, 0.0f);
         go4.name = csStairWayName + nameIndex.ToString() + "_4_";
     }
 
