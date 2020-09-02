@@ -33,35 +33,40 @@ public class Main : MonoBehaviour {
 
     // 游戏管理器，场景管理器
     public GameManager gameManager;
+    private bool isInit = false;
     private bool isStart = false;
 
     //总的角色控制类，控制角色换肤，动作，
-    public UCharacterController character = null;  
+    public UCharacterController character = null;
 
-    private readonly string[] index = new string[]{ "004", "006", "008" };
+    private readonly string[] index = new string[] { "004", "006", "008" };
     /// <summary>
     /// Config default equipment informations.
     /// </summary>
 	private const int DEFAULT_WEAPON = 0;
     private const int DEFAULT_HEAD = 0;//2;
-	private const int DEFAULT_CHEST = 0;
-	private const int DEFAULT_HAND = 0;
+    private const int DEFAULT_CHEST = 0;
+    private const int DEFAULT_HAND = 0;
     private const int DEFAULT_FEET = 0;//1;
     private const bool DEFAULT_COMBINEMATERIAL = true;
-    
+
     /// <summary>
     /// Use this for GUI display.
     /// </summary>
-	public bool combine = DEFAULT_COMBINEMATERIAL;
-	private bool[] weapon_list = new bool[3];
-	private bool[] head_list = new bool[3];
-	private bool[] chest_list = new bool[3];
-	private bool[] hand_list = new bool[3];
-	private bool[] feet_list = new bool[3];
+    public bool combine = DEFAULT_COMBINEMATERIAL;
+    private bool[] weapon_list = new bool[3];
+    private bool[] head_list = new bool[3];
+    private bool[] chest_list = new bool[3];
+    private bool[] hand_list = new bool[3];
+    private bool[] feet_list = new bool[3];
 
     /// <summary>
     /// The avatar in the scene.
     /// </summary>
+
+    public bool getIsInit() {
+        return isInit;
+    }
 
     private void initData() {
         weapon_list[DEFAULT_WEAPON] = true;
@@ -69,9 +74,10 @@ public class Main : MonoBehaviour {
         chest_list[DEFAULT_CHEST] = true;
         hand_list[DEFAULT_HAND] = true;
         feet_list[DEFAULT_FEET] = true;
+        isInit = true;
     }
 
-    private void createRole(Vector3 pPos) {
+    public void createRole(Vector3 pPos) {
         // create an avatar
         character = App.Game.CharacterMgr.Generatecharacter(
             "ch_pc_hou",
@@ -91,7 +97,7 @@ public class Main : MonoBehaviour {
 
         isStart = true;
 
-       //   App.Game.character.rolePosCamer.setCameraAndTrans(cameraTransform, character.roleInstance.transform);
+        //   App.Game.character.rolePosCamer.setCameraAndTrans(cameraTransform, character.roleInstance.transform);
 
         //App.Game.character.roleInstance = App.Game.character.roleChangeColorWeaponMgr.roleInstance;
         //App.Game.CharacterMgr
@@ -101,8 +107,8 @@ public class Main : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
-       // Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("weapon"), LayerMask.GetMask("weapon", "attackBox"));
+    void Start() {
+        // Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("weapon"), LayerMask.GetMask("weapon", "attackBox"));
         //这种方法。第一个参数是带设置的Layer，第二个参数是可以与该Layer发生碰撞的Mask.运行一下，我们就看到碰撞矩阵发生了变化。
         initData();
         //update by csd
@@ -110,16 +116,24 @@ public class Main : MonoBehaviour {
         //isStart = true;
         //update end
     }
-	
-    
 
-	// Update is called once per frame
-	void Update () {
+
+
+    // Update is called once per frame
+    void Update() {
         if (isStart) {
             App.Game.Update();
         }
-		
-	}
+
+    }
+
+    private void initRole() {
+        Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
+        if (tmpMaze != null)
+            createRole(tmpMaze.firstPos);
+        else
+            createRole(new Vector3(5, 0.005f, -5));
+    }
 
 	void OnGUI () {
 
@@ -220,6 +234,7 @@ public class Main : MonoBehaviour {
           
           
         }
+        
         if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "createRole"))
         {
             Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
@@ -230,9 +245,10 @@ public class Main : MonoBehaviour {
             //App.Game.character.rolePosCamer.test();
         }
 
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "test"))
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "rolationCamerY"))
         {
-            App.Game.character.test();
+            // App.Game.character.test();
+            App.Game.character.rolePosCamer.rolationCamerY(90.0f, 1.0f/40.0f);
             //App.Game.character.rolePosCamer.test(0, 3.0f);
         }
 

@@ -44,6 +44,9 @@ public class UCharacterController {
     //检查是否要跳跃
     private jumpColider jumpCheck;
 
+    //镜头的虚化
+    private sceneAlphaControl sceneAlpha;
+
     public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
         App.Game.character = this;
         mainRoleState = new RoleStateMgr();
@@ -66,7 +69,7 @@ public class UCharacterController {
         // setJumpDownRigidBody();
         // test();
         //testGrav();
-
+        sceneAlpha = null;
           isStart = true;
     }
 
@@ -130,17 +133,21 @@ public class UCharacterController {
     public void test() {
 
         Debug.LogWarning("update grav" + jumpA.ToString());
-        
-
         //isUseGrav = true;
         //g = g + 9.81f/3.0f;
         //Debug.LogWarning(g.ToString());
-
         //testGrav();
     }
 
     private void updateGravity() {
         Physics.gravity = new Vector3(0, jumpA * -1, 0);
+    }
+
+    private void drawSceneAlpha() {
+        if(sceneAlpha == null)
+            sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
+
+        sceneAlpha.drawSceneAlpha();
     }
 
        public void Update () {
@@ -158,6 +165,9 @@ public class UCharacterController {
         //test();
 
         float offsetY = 0.0f;
+
+#if usejump
+
         if (mainRoleState.getRoleNowState() == RoleStateMgr.roleState.jump) { //跳跃状态中
             mainRoleState.addAllJumpTime(pDeltaTime);
             float allTime = mainRoleState.getAllJumpTime(); //已经跳的时间
@@ -204,14 +214,18 @@ public class UCharacterController {
             roleRigid.freezeRotation = true;
             oldY = 0.0f; // jumpStartY;
         }
-        
+#else
+      //目前不使用跳跃功能
+      mainRoleState.updataRoleControl(leftright, downup, isfire, false);
+
+#endif
 
         if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色是否有位移
         {
             rolePosCamer.updateRolePosWorld(leftright, downup, pDeltaTime, offsetY); //改变角色位置及朝向, 基于世界坐标
 
+            drawSceneAlpha(); //场景虚化处理
             //rolePosCamer.updateRolePos(tmpv,h); //改变角色位置, 基于roleControl， 暂不考虑
-
 
             //判断并取消破坏物件判定，之后的考虑
 
@@ -220,28 +234,30 @@ public class UCharacterController {
             //rolePosCamer.moveCamerWSADWorldPosFromControlMat(leftright, downup);
         }
 
-        
+#if camerdebug        
         //摄相机平行场景 上下左右移动
         float camerleftRight = Input.GetAxis("HorizontalCamer");
         float camerDownUp = Input.GetAxis("VerticalCamer");
         if ((camerleftRight != 0.0f) || (camerDownUp != 0.0f)) {
            // rolePosCamer.moveCamerWSADWorldPosFromControlMat(camerleftRight, camerDownUp);
             rolePosCamer.moveCamerWSADWorldPosFromCamerControlMat(camerleftRight, camerDownUp, pDeltaTime);
-            
         }
-
+#endif
         //计算摄相机是否要进行旋转
         float camerRotationY = Input.GetAxis("CamerRotationY");
         if (camerRotationY != 0.0f) {
             rolePosCamer.rolationCamerY(camerRotationY, pDeltaTime);
+
+            drawSceneAlpha(); //场景虚化处理
         }
 
+#if camerdebug
         float camerRotationZ = Input.GetAxis("CamerRotationZ");
         if (camerRotationZ != 0.0f)
         {
             rolePosCamer.rolationFromRoleZ(camerRotationZ, pDeltaTime);
         }
-
+#endif
 
         //人物拉进拉远
         float camerScale = Input.GetAxis("CamerScale");

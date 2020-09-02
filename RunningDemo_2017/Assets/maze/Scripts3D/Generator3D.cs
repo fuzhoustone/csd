@@ -118,6 +118,11 @@ public class Generator3D : MonoBehaviour {
     public Vector3Int firstPos = Vector3Int.zero;
     //add end
 
+    private bool isInitFinish = false;
+
+    public bool getIsInit() {
+        return isInitFinish;
+    }
 
     void Start() {
         random = new Random(0);
@@ -161,10 +166,11 @@ public class Generator3D : MonoBehaviour {
         drawLinePath();
 
         hideHallWay(); //隐藏墙壁
-#endif  
-        
-      //  addTestMonster(firstPos);
-        
+#endif
+
+
+        //  addTestMonster(firstPos);
+        isInitFinish = true;
     }
 
 #if debug_maze
