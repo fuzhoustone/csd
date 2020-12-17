@@ -6,6 +6,11 @@ public class attcakStartEnd : MonoBehaviour {
 
     public bool isInAttack = false;
 
+    //攻击了一次
+    public void attackOnce() {
+        App.Game.character.monsterSubHp();
+    }
+
     void Start() {
         isInAttack = false;
     }

@@ -235,14 +235,19 @@ public class Main : MonoBehaviour {
           
         }
         
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "createRole"))
+        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "Escape"))
         {
+            /*
             Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
             if (tmpMaze != null)
                 createRole(tmpMaze.firstPos);
             else
                 createRole(new Vector3(5, 0.005f, -5));
+                */
+
             //App.Game.character.rolePosCamer.test();
+            App.Game.character.setRoleInEscape();
+            StartCoroutine(escapeIEn());
         }
 
         if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "rolationCamerY"))
@@ -255,4 +260,20 @@ public class Main : MonoBehaviour {
 
     }
 
+    const float fEscapeTime = 5.0f;
+    IEnumerator escapeIEn()
+    {
+        float time = 0;
+
+        //float fadeLength = 5.0f;
+        while (time < fEscapeTime) // 还需另外设置跳出循环的条件
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        App.Game.character.setRoleNotEscape();
+    }
+
 }
+

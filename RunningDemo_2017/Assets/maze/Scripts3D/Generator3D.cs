@@ -76,7 +76,15 @@ public class Generator3D : MonoBehaviour {
 
     [SerializeField]
     public Transform canvasTransform = null; //画布
+
+    [SerializeField]
+    public Transform monsterManagerTrans = null;  //怪物管理
+
+    //怪物ID索引
+    private int monsterID = 0;
     //add by csd end
+
+
 
     Random random;
     Grid3D<CellType> grid; //三维空间的坐标对应的类型， 多个坐标可能对应1个CellType类型
@@ -106,7 +114,7 @@ public class Generator3D : MonoBehaviour {
         public Vector3Int prevVector { get; set; }
     }
 
-    List<pathVector> pathLst;
+    List<pathVector> pathLst; //寻路的路径点
 
     //List<Vector3Int> hallWayLst;
 
@@ -142,6 +150,7 @@ public class Generator3D : MonoBehaviour {
         hallwayDebugLst = new List<GameObject>();
         stairDebugLst = new List<GameObject>();
         lineDebugLst = new List<GameObject>();
+        monsterID = 0;
         //add by csd end
 
         PlaceRooms();  //生成房间
@@ -520,10 +529,15 @@ public class Generator3D : MonoBehaviour {
      //    hideIndex++;
     }
 
-    private void addTestMonster(Vector3 pPos) {
-        GameObject go = Instantiate(monsterPrefab, pPos, Quaternion.identity);
+
+    private void addMonster(Vector3 pPos) {
+        GameObject go = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
+        go.name = "monster_"+ monsterID.ToString();
+        monsterID++;
+
         roleProperty tmpPro =  go.GetComponent<roleProperty>();
-        tmpPro.testInitData(camerTransform, canvasTransform);
+        tmpPro.InitData(camerTransform, canvasTransform);
+        
         //go.GetComponent<MeshRenderer>().material = material;
         //go.name = roomName + nameIndex.ToString() + "_" + placeIndex.ToString();
     }
@@ -927,17 +941,12 @@ public class Generator3D : MonoBehaviour {
 
         Vector3Int sourPosParent = Vector3Int.zero;
         Vector3Int destPosParent = Vector3Int.zero;
-        if (isRoomOrHillWay(sourPos))
+        if (isRoomOrHillWay(sourPos)) //判断是否为房间或过道
             sourNeed = true;
 
-        if (isRoomOrHillWay(destPos))
+        if (isRoomOrHillWay(destPos)) //判断是否为房间或过道
             destNeed = true;
-        /*
-        if ((grid[sourPos] == CellType.None) || (grid[destPos] == CellType.None)) {
-            Debug.LogError("judgePlaceDelWall ");
-            return res;
-        }
-        */
+     
         if (sourNeed && destNeed)  //判断是否为同一个房间,只有房间和过道才加入， 楼梯的路径点未加入gird
         {
             Room sourRoom = grid.getGridDataObj(sourPos);
@@ -964,41 +973,41 @@ public class Generator3D : MonoBehaviour {
         
         if (isSamePosY)*/
         //if (sourPos.y == destPos.y)
-        {
-            if (sourPos.x == destPos.x)
-            {  //Z轴相交集， X相同的
-                if (sourPos.y == destPos.y) //Y轴相同
+        
+        if (sourPos.x == destPos.x)
+        {  //Z轴相交集， X相同的
+            if (sourPos.y == destPos.y) //Y轴相同
+            {
+                addMonster(sourPos);
+
+                //if (sourPos.z == destPos.z + 1) //sourPos在destPos的上面
+                if (sourPos.z > destPos.z)
                 {
-                    //if (sourPos.z == destPos.z + 1) //sourPos在destPos的上面
-                    if (sourPos.z > destPos.z)
-                    {
-                        setHideWallByZ(sourPos, destPos, sourNeed, destNeed);
-                    }
-                    else //if (sourPos.z + 1 == destPos.z)
-                    {
-                        setHideWallByZ(destPos, sourPos, destNeed, sourNeed);
-                    }
+                    setHideWallByZ(sourPos, destPos, sourNeed, destNeed);
                 }
-               
-                    
-               
+                else //if (sourPos.z + 1 == destPos.z)
+                {
+                    setHideWallByZ(destPos, sourPos, destNeed, sourNeed);
+                }
             }
-            else if (sourPos.z == destPos.z)
-            { //X轴相交集， Z相同的
+        }
+        else if (sourPos.z == destPos.z)
+        { //X轴相交集， Z相同的
+            addMonster(sourPos);
 
-                if(sourPos.x > destPos.x)
-                //if (sourPos.x == destPos.x + 1) //sourPos在destPos的右边
-                {
-                    setHideWallByX(destPos, sourPos, destNeed, sourNeed);
-                }
-                else //if (sourPos.x + 1 == destPos.x)
-                {
-                    setHideWallByX(sourPos, destPos, sourNeed, destNeed);
-                }
-
+            if (sourPos.x > destPos.x)
+            //if (sourPos.x == destPos.x + 1) //sourPos在destPos的右边
+            {
+                setHideWallByX(destPos, sourPos, destNeed, sourNeed);
+            }
+            else //if (sourPos.x + 1 == destPos.x)
+            {
+                setHideWallByX(sourPos, destPos, sourNeed, destNeed);
             }
 
         }
+
+        
 
 
         /*

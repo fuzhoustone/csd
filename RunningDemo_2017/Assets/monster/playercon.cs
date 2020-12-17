@@ -17,15 +17,12 @@ public class playercon : StateMachineBehaviour {
             res = csAttack;
         else if (stateInfo.IsName(csJump))
             res = csJump;
-
         return res;
     }
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        
-        //Debug.Log("OnStateEnter:"+ getStateName(stateInfo));
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -33,17 +30,21 @@ public class playercon : StateMachineBehaviour {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
         
         if (stateInfo.normalizedTime >= 1.0f){ //动画播完时
-            Debug.Log("OnStateUpdate:" + getStateName(stateInfo));
             int  layer = animator.GetLayerIndex("Base Layer");
             string stateName = getStateName(stateInfo);
-            if ((stateName == csRun) || (stateName == csStand))
+            if  (stateName == csStand) //站立完成后，默认继续循环
             {
-                animator.Play(stateName, layer, 0.0f);
+                animator.Play(csStand, layer, 0.0f);  //从第0帧开始播
+                //animator.Play(csStand);
             }
-            else if (stateName == csJump) {
-                animator.SetBool("jump", false);
-                //string newStateName = getStateName();
-                //animator.Play(csStand, layer, 0.0f);
+            else if (stateName == csRun) //跑步完成后，默认站立
+            {
+                animator.Play(csStand, layer, 0.0f);  //从第0帧开始播
+                //animator.Play(csStand);
+            }
+
+            else if (stateName == csJump) { //跳跃完成后，默认用站立
+                animator.Play(csStand);
             }
         }
         
@@ -54,7 +55,9 @@ public class playercon : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         base.OnStateExit(animator, stateInfo, layerIndex);
-      //  Debug.Log("OnStateExit:"+getStateName(stateInfo));
+       // string stateName = getStateName(stateInfo);
+       // if(stateName == csStand)
+       //     Debug.Log("OnStateExit:"+getStateName(stateInfo));
     }
 
 

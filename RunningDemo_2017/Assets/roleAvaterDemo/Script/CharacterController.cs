@@ -15,12 +15,23 @@ public class UCharacterController {
     //角色位置及Camer管理
     public RolePosAndCamerMgr rolePosCamer = null;
 
+    public RoleDamageCal roleDamageManager = null;
+
+    private roleProperty mainPro = null;
+    private GameObject attackMonster = null; //被玩家攻击的怪物
+
     private bool isStart = false;
+
+    private bool roleIsAttack = false; //玩家是否正在攻击中
+    private bool roleIsEscape = false; //玩家逃跑中
+    private bool roleIsDie = false; //玩家死亡
 
     public UCharacterController (int index,string skeleton, string weapon, string head, string chest, string hand, string feet, bool combine = false) {
 
         roleChangeColorWeaponMgr = new RoleChangeColorWeapon(index, skeleton, weapon, head, chest, hand, feet, combine);
         roleInstance = roleChangeColorWeaponMgr.GetRoleInstance();
+       // mainPro = roleInstance.transform.GetComponent<roleProperty>();
+        roleDamageManager = new RoleDamageCal();
         //roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
     }
@@ -59,7 +70,9 @@ public class UCharacterController {
 
         rolePosCamer = new RolePosAndCamerMgr();
         rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas);
-        
+
+        mainPro = roleInstance.transform.GetComponent<roleProperty>();
+        mainPro.InitData(pCameraTransform, pCanvas.transform);
 
         //计算跳跃的加速度
         //s=0.5*a*t*t  a= s/0.5/t/t 
@@ -70,7 +83,15 @@ public class UCharacterController {
         // test();
         //testGrav();
         sceneAlpha = null;
-          isStart = true;
+        attackMonster = null;
+
+        isStart = true;
+
+        roleIsAttack = false;
+        roleIsEscape = false;
+        roleIsDie = false;
+
+        
     }
 
 	public void ChangeHeadEquipment (string equipment,bool combine = false)
@@ -109,6 +130,7 @@ public class UCharacterController {
 
     }
 
+
     private void jumpDownOver() {
         mainRoleState.isJumpDownTouch = true;
         oldY = 0;
@@ -143,6 +165,35 @@ public class UCharacterController {
         Physics.gravity = new Vector3(0, jumpA * -1, 0);
     }
 
+    //设置玩家为攻击状态
+    public void setRoleAttack(GameObject monsterObj) {
+        //玩家UI显示
+        //roleProperty mainPro = roleInstance.transform.GetComponent<roleProperty>();
+        mainPro.showUI();
+
+        attackMonster = monsterObj;
+        Vector3 rolePos = attackMonster.transform.position;
+
+        if (roleIsEscape == false) //玩家不在逃跑中
+        {
+            //玩家朝向怪物
+            Vector3 lookPos = new Vector3(rolePos.x, roleInstance.transform.position.y, rolePos.z);
+            roleInstance.transform.LookAt(rolePos);
+
+            //玩家切换攻击状态
+            mainRoleState.updataRoleControl(0, 0, true, false);
+
+            roleIsAttack = true;
+        }
+    }
+
+    //恢复玩家为不攻击状态
+    public void setRoleIdle() {
+        mainRoleState.updataRoleControl(0, 0, false, false);
+        //roleProperty mainPro = roleInstance.transform.GetComponent<roleProperty>();
+        mainPro.hideUI();
+    }
+
     private void drawSceneAlpha() {
         if(sceneAlpha == null)
             sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
@@ -150,19 +201,84 @@ public class UCharacterController {
         sceneAlpha.drawSceneAlpha();
     }
 
-       public void Update () {
-        if (isStart == false) {
-          //  Debug.Log("game not start characterController");
-            return;
+    public void setRoleInEscape() {
+        roleIsEscape = true;
+    }
+
+    public void setRoleNotEscape() {
+        roleIsEscape = false;
+    }
+    //玩家攻击怪物
+    public void monsterSubHp()
+    {
+        roleProperty monsterPro = attackMonster.transform.GetComponent<roleProperty>();
+        int damage = roleDamageManager.DamageCal(mainPro, monsterPro);
+        monsterPro.SubHpValue(damage);
+
+        if (monsterPro.hp == 0) { //怪物死亡
+            //怪物死亡动画在 monsterAniControl.cs中自行判断处理
+
+            //玩家停止攻击
+            roleIsAttack = false;
+
+            //玩家UI隐藏
+            mainPro.hideUI();
+
+            //玩家强制转为站立状态
+            mainRoleState.playRoleStand();
+            
         }
 
+    }
 
-        float pDeltaTime = Time.deltaTime;
-        float leftright = Input.GetAxis("Horizontal");
-        float downup = Input.GetAxis("Vertical");
-        bool isfire = Input.GetButton("Fire1");
-        bool isSetJump = Input.GetButton("Jump");
+
+    //玩家受到攻击
+    public void roleSubHp(roleProperty attackPro) {
+        int damage = roleDamageManager.DamageCal(attackPro, mainPro);
+        mainPro.SubHpValue(damage);
+
+        if (mainPro.hp == 0) { //玩家死亡
+            roleIsDie = true;
+
+            //怪物停止攻击, 怪物血条保持显示，玩家血条保持显示
+            monsterAniControl attackControl = attackPro.gameObject.transform.GetComponent<monsterAniControl>();
+            attackControl.setStopAttack();
+
+            //玩家播放倒地动画
+            mainRoleState.playRoleDie();
+        }
+    }
+
+       public void Update () {
+         if (isStart == false) {
+              //  Debug.Log("game not start characterController");
+                return;
+         }
+
+        if (roleIsDie) { //玩家死亡不再时行操作
+            return ;
+        }
+
+         float pDeltaTime = Time.deltaTime;
+        
+         float leftright = Input.GetAxis("Horizontal");
+         float downup = Input.GetAxis("Vertical");
+         bool isfire = Input.GetButton("Fire1");
+         bool isSetJump = Input.GetButton("Jump");
         //test();
+
+        if ((roleIsEscape == false)) //不逃跑并正在攻击中
+        {
+            if (roleIsAttack)
+            {
+                leftright = 0.0f;
+                downup = 0.0f;
+                isfire = true;
+            }
+        }
+        else {
+            isfire = false;
+        }
 
         float offsetY = 0.0f;
 
@@ -215,24 +331,25 @@ public class UCharacterController {
             oldY = 0.0f; // jumpStartY;
         }
 #else
-      //目前不使用跳跃功能
-      mainRoleState.updataRoleControl(leftright, downup, isfire, false);
-
+            //目前不使用跳跃功能
+            mainRoleState.updataRoleControl(leftright, downup, isfire, false);
 #endif
 
-        if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色是否有位移
-        {
-            rolePosCamer.updateRolePosWorld(leftright, downup, pDeltaTime, offsetY); //改变角色位置及朝向, 基于世界坐标
+            if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色是否有位移
+            {
+                rolePosCamer.updateRolePosWorld(leftright, downup, pDeltaTime, offsetY); //改变角色位置及朝向, 基于世界坐标
 
-            drawSceneAlpha(); //场景虚化处理
-            //rolePosCamer.updateRolePos(tmpv,h); //改变角色位置, 基于roleControl， 暂不考虑
+                drawSceneAlpha(); //场景虚化处理
+                                  //rolePosCamer.updateRolePos(tmpv,h); //改变角色位置, 基于roleControl， 暂不考虑
 
-            //判断并取消破坏物件判定，之后的考虑
+                //判断并取消破坏物件判定，之后的考虑
 
-            //更改摄像机位置， 基于人的世界坐标
-            //   rolePosCamer.updateCamerChartPos(roleInstance.transform, leftright, downup);  //摄像机判断并跟随
-            //rolePosCamer.moveCamerWSADWorldPosFromControlMat(leftright, downup);
-        }
+                //更改摄像机位置， 基于人的世界坐标
+                //   rolePosCamer.updateCamerChartPos(roleInstance.transform, leftright, downup);  //摄像机判断并跟随
+                //rolePosCamer.moveCamerWSADWorldPosFromControlMat(leftright, downup);
+            }
+
+         
 
 #if camerdebug        
         //摄相机平行场景 上下左右移动
@@ -244,6 +361,7 @@ public class UCharacterController {
         }
 #endif
         //计算摄相机是否要进行旋转
+       
         float camerRotationY = Input.GetAxis("CamerRotationY");
         if (camerRotationY != 0.0f) {
             rolePosCamer.rolationCamerY(camerRotationY, pDeltaTime);
