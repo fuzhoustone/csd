@@ -236,28 +236,19 @@ public class RolePosAndCamerMgr  {
         //获得摄相机在人物坐标系中的默认点
         Vector3 tmpCamer = camerByRoleRefer.referDefPosition;
 
-        //计算摄相机在人物坐标系中的缩放后的相对坐标
+        //计算摄相机在人物坐标系中的缩放后的相对坐标，人物坐标系以人物移动方向为参照
         Vector3 camerNewPosInRole = camerByRoleRefer.referDefPosition * scaleCamerParam;
 
         //先确定人物的坐标系 ->世界坐标系平移矩阵
+        //roleMoveRotat 人物移动方向
         Matrix4x4 tmpMat = Matrix4x4.TRS(roleTranform.position, Quaternion.Euler(roleMoveRotat), Vector3.one);
 
         //计算摄相机在世界坐标系下的坐标
         Vector3 newPos = tmpMat.MultiplyPoint(camerNewPosInRole);
 
-        /*
-        //确定摄相机在人物坐标系中的坐标点
-        Vector3 tmpCamer = tmpMat.inverse.MultiplyPoint(cameraTransform.position);
-        */
-
-        //将摄机机的坐标点， 从 人物坐标系->世界坐标系
-        //Vector3 newPos = tmpMat.MultiplyPoint(tmpCamer);
-        //Vector3 newPos = tmpMat.MultiplyPoint(camerByRoleRefer.referDefPosition);
-        
         cameraTransform.position = newPos;
 
         cameraTransform.LookAt(roleTranform);
-
         //血条等UI大小修改
         scaleCanvas();
     }
