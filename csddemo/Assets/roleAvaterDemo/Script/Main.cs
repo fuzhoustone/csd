@@ -109,8 +109,8 @@ public class Main : MonoBehaviour {
         // tmpAnimaCon.setCamera(cameraTransform, gameManager);
     }
 
-    private void screenAdapt() {
-
+    public void screenAdapt() {
+        //Debug.Log("screenAdapt");
         int ManualWidth = 960;
         int ManualHeight = 640;
         int manualHeight;
@@ -154,7 +154,25 @@ public class Main : MonoBehaviour {
             createRole(new Vector3(5, 0.005f, -5));
     }
 
-	void OnGUI () {
+    public void getStateBtnClick() {
+        App.Game.character.mainRoleState.printRoleState();
+    }
+
+    public void resetCamerClick() {
+        App.Game.character.rolePosCamer.resetCamerPosFromRole();
+    }
+
+    public void roleExcape() {
+        App.Game.character.setRoleInEscape();
+        StartCoroutine(escapeIEn());
+    }
+
+    public void test() {
+        App.Game.character.rolePosCamer.rolationCamerY(90.0f, 1.0f / 40.0f);
+    }
+
+    
+    void OnGUI () {
 
         float btnWidth = 100.0f;
         float btnHeight = 100.0f;
@@ -241,7 +259,7 @@ public class Main : MonoBehaviour {
 			}
 		}
 
-
+        /*
         if (GUI.Button(new Rect(Screen.width - btnWidth, 0, btnWidth, btnHeight), "getState"))
         {
             App.Game.character.mainRoleState.printRoleState();
@@ -256,13 +274,13 @@ public class Main : MonoBehaviour {
         
         if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "Escape"))
         {
-            /*
-            Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
-            if (tmpMaze != null)
-                createRole(tmpMaze.firstPos);
-            else
-                createRole(new Vector3(5, 0.005f, -5));
-                */
+            
+           // Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
+           // if (tmpMaze != null)
+           //     createRole(tmpMaze.firstPos);
+           // else
+           //     createRole(new Vector3(5, 0.005f, -5));
+                
 
             //App.Game.character.rolePosCamer.test();
             App.Game.character.setRoleInEscape();
@@ -275,9 +293,10 @@ public class Main : MonoBehaviour {
             App.Game.character.rolePosCamer.rolationCamerY(90.0f, 1.0f/40.0f);
             //App.Game.character.rolePosCamer.test(0, 3.0f);
         }
-
+        */
 
     }
+
 
     const float fEscapeTime = 5.0f;
     IEnumerator escapeIEn()

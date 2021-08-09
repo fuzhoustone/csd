@@ -41,7 +41,8 @@ public class Room : MonoBehaviour
         roomName = "UpDownHill";
     }
 
-    public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    
+    public void initData(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
     {
         pos = location;
         bounds = new BoundsInt(location, size);
@@ -58,16 +59,44 @@ public class Room : MonoBehaviour
         placeIndex = 0;
 
         roomName = "room";
+    }
 
-       // placeLst = new Grid3D<GameObject>(size, Vector3Int.zero);
+    public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    {
+        initData(location, size, pPlaneObj,  pWallObj,  pMaterial, pGrid,  pNameIndex, pParentObj);
 
-        //add end
+        /*
+        pos = location;
+        bounds = new BoundsInt(location, size);
+        planePrefab = pPlaneObj; //add by csd
+        wallPrefab = pWallObj;
+        material = pMaterial;
 
+        placeGrid = pGrid;
+
+        nameIndex = pNameIndex;
+
+        parentObj = pParentObj;
+
+        placeIndex = 0;
+
+        roomName = "room";
+        */
     }
 
     /*
      //a在b的x,y,z轴的是否不相交
          */
+
+    public static bool IntersectBuff(BoundsInt a, BoundsInt b) {
+        return !((a.position.x >= (b.position.x + b.size.x))
+             || ((a.position.x + a.size.x) <= b.position.x)
+             || (a.position.y >= (b.position.y + b.size.y))
+             || ((a.position.y + a.size.y) <= b.position.y)
+             || (a.position.z >= (b.position.z + b.size.z))
+             || ((a.position.z + a.size.z) <= b.position.z));
+    }
+
     public static bool Intersect(Room a, Room b) //判断b是否与a有交集， 后续考虑取消 !符号
     {
         return !((a.bounds.position.x >= (b.bounds.position.x + b.bounds.size.x)) 

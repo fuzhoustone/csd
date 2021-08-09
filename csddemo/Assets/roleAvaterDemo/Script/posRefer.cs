@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //以参照物为原点的坐标系下的各种属性
-public class PosRefer : MonoBehaviour
+public class PosRefer //: MonoBehaviour
 {
     private const float csDefaultCamerPosX = 0.0f;
     private const float csDefaultCamerPosY = 1.0f;  //9.9

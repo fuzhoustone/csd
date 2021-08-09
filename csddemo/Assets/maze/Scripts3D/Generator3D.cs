@@ -133,7 +133,9 @@ public class Generator3D : MonoBehaviour {
     }
 
     void Start() {
-        random = new Random(0);
+        int ranSeed = System.DateTime.Now.Second;
+        Debug.LogWarning("Random seed:"+ranSeed.ToString());
+        random = new Random(ranSeed);
         grid = new Grid3D<CellType>(size, Vector3Int.zero);
         rooms = new List<Room>();
 
@@ -275,12 +277,19 @@ public class Generator3D : MonoBehaviour {
             );
 
             bool add = true;
-            Room newRoom = new Room(location, roomSize,planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
+
+            Room newRoom = mazeParent.AddComponent<Room>();
+            newRoom.initData(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
+            //Room newRoom = new Room(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
             //Room buffer = new Room(location + new Vector3Int(-1, 0, -1), roomSize + new Vector3Int(2, 0, 2));
-            Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null,0); 
+
+           // Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null,0);
+            BoundsInt buffer = new BoundsInt(location + localOffset, roomSize + sizeOffset);
 
             foreach (var room in rooms) { //判断房间区间是否可以加入
-                if (Room.Intersect(room, buffer)) { //intersect里有个!, 若返回 true，说明无法添加
+                 //if (Room.Intersect(room, buffer)) { //intersect里有个!, 若返回 true，说明无法添加
+                if (Room.IntersectBuff(room.bounds, buffer))
+                { //intersect里有个!, 若返回 true，说明无法添加
                     add = false;
                     break;
                 }
@@ -292,18 +301,27 @@ public class Generator3D : MonoBehaviour {
                 add = false;
             }
 
-            if (add) { //可新建房间
+            if (add)
+            { //可新建房间
                 rooms.Add(newRoom);
                 PlaceRoom(newRoom.bounds.position, newRoom.bounds.size);
                 roomIndex++;
 
-                foreach (var pos in newRoom.bounds.allPositionsWithin) { //一个房间 占用有多个坐标，全部记录下, 房间与坐标的索引关系需创建
+                foreach (var pos in newRoom.bounds.allPositionsWithin)
+                { //一个房间 占用有多个坐标，全部记录下, 房间与坐标的索引关系需创建
                     grid[pos] = CellType.Room;
                     //add by csd
                     grid.setGridDataObj(newRoom, pos);
                     //grid.setDataIsCreate(pos, true);
                     //add end
                 }
+            }
+            else {
+                GameObject.Destroy(newRoom);
+                //mazeParent.Destory(newRoom);
+               // mazeParent.AddComponent
+                //newRoom.Destory();
+
             }
         }
     }
@@ -661,9 +679,11 @@ public class Generator3D : MonoBehaviour {
                 Vector3Int vect3Num2 = prev + horizontalOffset * 2;
                 Vector3Int vect3Num3 = prev + verticalOffset+ horizontalOffset;
                 Vector3Int vect3Num4 = prev + verticalOffset+ horizontalOffset * 2;
-
+                
                 //生成楼梯，并拆掉1，4色块相近的墙
-                stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, mazeParent);
+                stairWay tmpWay = mazeParent.AddComponent<stairWay>();
+                tmpWay.initData(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab, prev, current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, mazeParent);
+                //stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, mazeParent);
                 tmpWay.makeStairWay();
                 roomIndex++;
 
@@ -793,7 +813,10 @@ public class Generator3D : MonoBehaviour {
                         bool isCreate = grid.getDataIsCreate(pos);
                         if (isCreate == false)
                         {
-                            HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
+                            //HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
+                            HallWay newHallWay = mazeParent.AddComponent<HallWay>();
+                            newHallWay.initData(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
+
                             hallways.Add(newHallWay);
                             grid.setGridDataObj(newHallWay, pos);
 
@@ -954,7 +977,7 @@ public class Generator3D : MonoBehaviour {
 
             if (sourRoom.pos == destRoom.pos)
             {
-                Debug.LogWarning("is same place");
+                //Debug.LogWarning("is same place");
                 return false;
             }
         }

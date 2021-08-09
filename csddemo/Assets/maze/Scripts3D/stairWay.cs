@@ -40,6 +40,46 @@ public class stairWay : MonoBehaviour
         
     }
     */
+
+    public void initData(GameObject pWallObj, isRoomFunc pCallBack,
+                    GameObject pUpHill, GameObject pDownHill,
+                   Vector3Int pPrev, Vector3Int pCurrent,
+                   Vector3Int pPlaceStairs1, Vector3Int pPlaceStairs2, Vector3Int pPlaceStairs3, Vector3Int pPlaceStairs4,
+                   int pNameIndex, GameObject pParentObj) {
+
+        wallPrefab = pWallObj;
+        isRoomByPos = pCallBack;
+
+
+        upHillPrefab = pUpHill;
+        downHillPrefab = pDownHill;
+        prev = pPrev;
+        current = pCurrent;
+
+        PlaceStairs1 = pPlaceStairs1;
+        PlaceStairs4 = pPlaceStairs4;
+        parentObj = pParentObj;
+
+        //上坡1和4色块, 空中为3色块，无需处理的实心为2色块
+        //下坡1和4色块，空中为2色块，无需处理的实心为3色块
+        if (prev.y < current.y) //上坡
+        {
+            isUpHill = true;
+            // PlaceStairsAir = pPlaceStairs3;
+        }
+        else if (prev.y > current.y) //下坡
+        {
+            isUpHill = false;
+            //  PlaceStairsAir = pPlaceStairs2;
+        }
+        else
+        {
+            Debug.LogError("stairWay error y is same");
+        }
+
+        nameIndex = pNameIndex;
+    }
+
     //设置楼梯的参数
     public stairWay(GameObject pWallObj, isRoomFunc pCallBack,
                     GameObject pUpHill, GameObject pDownHill,
@@ -48,6 +88,13 @@ public class stairWay : MonoBehaviour
                    int pNameIndex, GameObject pParentObj)
     {
 
+        initData( pWallObj,  pCallBack,
+                     pUpHill,  pDownHill,
+                    pPrev,  pCurrent,
+                    pPlaceStairs1,  pPlaceStairs2,  pPlaceStairs3,  pPlaceStairs4,
+                    pNameIndex,  pParentObj);
+
+        /*
         wallPrefab = pWallObj;
         isRoomByPos = pCallBack;
        
@@ -79,6 +126,7 @@ public class stairWay : MonoBehaviour
         }
 
         nameIndex = pNameIndex;
+        */
     }
 
     
@@ -120,8 +168,8 @@ public class stairWay : MonoBehaviour
         //Vector3Int currentRoomPos = Vector3Int.zero;
 
 
-        placeWall preRoom = new placeWall();
-        placeWall currentRoom = new placeWall();
+        placeWall preRoom = null; // new placeWall();
+        placeWall currentRoom = null; // new placeWall();
         bool preIsRoom = isRoomByPos(prev, out preRoom);
         bool currentIsRoom = isRoomByPos(current, out currentRoom);
         
@@ -176,9 +224,11 @@ public class stairWay : MonoBehaviour
     //生成铺上坡或下坡的墙, 输入 路径的前后坐标, 当前色块的坐标
     private void makeHillWall(Vector3Int staticStair, string pName)
     {
-        Room tmpRoom = new Room(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null, 0, parentObj);
-        //tmpRoom.roomName = pName;
-        
+
+        //Room tmpRoom = new Room(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null, 0, parentObj);
+        Room tmpRoom = parentObj.AddComponent<Room>();
+        tmpRoom.initData(staticStair, new Vector3Int(1, 1, 1), null, wallPrefab, null, null, 0, parentObj);
+
         if (prev.x == current.x)
         {  //x值相同，z值不同， 只生成left,right的墙
             tmpRoom.makeStairLeftRightWall(pName);
