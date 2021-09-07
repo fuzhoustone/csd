@@ -98,6 +98,8 @@ public class Generator3D : MonoBehaviour {
     List<GameObject> hallwayDebugLst;
     List<GameObject> stairDebugLst;
     List<GameObject> lineDebugLst;
+    public GameObject friendRole; //主角的小弟
+
     //add by csd end
 
     Delaunay3D delaunay;
@@ -155,6 +157,15 @@ public class Generator3D : MonoBehaviour {
         monsterID = 0;
         //add by csd end
 
+        createScene();
+    }
+
+    private void clearScene() {
+        isInitFinish = false;
+
+    }
+
+    private void createScene() {
         PlaceRooms();  //生成房间
         Triangulate(); //三角测量
         CreateHallways(); //创建走廊，过道
@@ -162,23 +173,24 @@ public class Generator3D : MonoBehaviour {
 
 
         createPlance(); //生成房间
-       
+
 #if !TESTPATH
         createHallWayLst(); //生成过道间
 
-        createStairsLst(); //生成楼梯色块
+        createStairsLst(); //生成楼梯
+
+        hideHallWay(); //隐藏墙壁并生成怪物
+
+        #if DebugCube
+                drawLinePath();
+        #endif
 #endif
-        
-        hideAllCube();
+
+        /*
+        hideAllCube();  
         hideAllHallway();
         hideAllStairs();
-        
-#if !TESTPATH
-        drawLinePath();
-
-        hideHallWay(); //隐藏墙壁
-#endif
-
+ */
 
         //  addTestMonster(firstPos);
         isInitFinish = true;
@@ -278,8 +290,19 @@ public class Generator3D : MonoBehaviour {
 
             bool add = true;
 
+
+            GameObject newRoomObj = new GameObject();
+            newRoomObj.transform.SetParent(mazeParent.transform);
+            newRoomObj.name = "room"+ location.x.ToString() + "_" + location.z.ToString() + "_" + location.y.ToString();
+
+            Room newRoom = newRoomObj.AddComponent<Room>();
+            newRoom.initData(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, newRoomObj);
+
+            /*
             Room newRoom = mazeParent.AddComponent<Room>();
             newRoom.initData(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
+            */
+
             //Room newRoom = new Room(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
             //Room buffer = new Room(location + new Vector3Int(-1, 0, -1), roomSize + new Vector3Int(2, 0, 2));
 
@@ -317,9 +340,10 @@ public class Generator3D : MonoBehaviour {
                 }
             }
             else {
-                GameObject.Destroy(newRoom);
+                //GameObject.Destroy(newRoom);
+                GameObject.Destroy(newRoomObj);
                 //mazeParent.Destory(newRoom);
-               // mazeParent.AddComponent
+                // mazeParent.AddComponent
                 //newRoom.Destory();
 
             }
@@ -496,6 +520,10 @@ public class Generator3D : MonoBehaviour {
 
     //路径画线
     public void drawLinePath() {
+#if !DebugCube
+                return ;   
+#endif
+
         for (int i = 0; i < pathLst.Count; i++) 
         { 
             pathVector tmpPath = pathLst[i];
@@ -525,6 +553,8 @@ public class Generator3D : MonoBehaviour {
         }
     }
 
+
+
     //一个接一个的隐藏
    // private int hideIndex = 99;
     public void hideHallWay()
@@ -532,8 +562,12 @@ public class Generator3D : MonoBehaviour {
         for (int hideIndex = 0; hideIndex< pathLst.Count; hideIndex++)
         {
             pathVector tmpPath = pathLst[hideIndex];
-            
-            judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector);
+            bool isMonster = true;
+            if (hideIndex == 0) {
+                isMonster = false;
+            }
+
+            judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector, isMonster);
             
 
             if (hideIndex == 0) {
@@ -548,14 +582,24 @@ public class Generator3D : MonoBehaviour {
     }
 
 
-    private void addMonster(Vector3 pPos) {
-        GameObject go = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
-        go.name = "monster_"+ monsterID.ToString();
+    private void addMonster(Vector3 pPos, bool isMonster) {
+        GameObject tmpMonster = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
+        tmpMonster.name = "monster_"+ monsterID.ToString();
         monsterID++;
 
-        roleProperty tmpPro =  go.GetComponent<roleProperty>();
+        roleProperty tmpPro = tmpMonster.GetComponent<roleProperty>();
         tmpPro.InitData(camerTransform, canvasTransform);
-        
+
+        if (isMonster)
+        {
+            CapsuleCollider tmpColl = tmpMonster.GetComponent<CapsuleCollider>();
+            tmpColl.isTrigger = true;
+        }
+        else {
+            tmpMonster.AddComponent<followRole>();
+            friendRole = tmpMonster;
+        }
+
         //go.GetComponent<MeshRenderer>().material = material;
         //go.name = roomName + nameIndex.ToString() + "_" + placeIndex.ToString();
     }
@@ -679,10 +723,18 @@ public class Generator3D : MonoBehaviour {
                 Vector3Int vect3Num2 = prev + horizontalOffset * 2;
                 Vector3Int vect3Num3 = prev + verticalOffset+ horizontalOffset;
                 Vector3Int vect3Num4 = prev + verticalOffset+ horizontalOffset * 2;
-                
+
                 //生成楼梯，并拆掉1，4色块相近的墙
+                GameObject tmpWayObj = new GameObject("stairWay"+ roomIndex.ToString());
+                tmpWayObj.transform.SetParent(mazeParent.transform);
+                
+                stairWay tmpWay = tmpWayObj.AddComponent<stairWay>();
+                tmpWay.initData(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab, prev, current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, tmpWayObj);
+
+                /*
                 stairWay tmpWay = mazeParent.AddComponent<stairWay>();
                 tmpWay.initData(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab, prev, current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, mazeParent);
+                */
                 //stairWay tmpWay = new stairWay(wallPrefab, isRoomByPos, upHillPrefab, downHillPrefab,prev,current, vect3Num1, vect3Num2, vect3Num3, vect3Num4, roomIndex, mazeParent);
                 tmpWay.makeStairWay();
                 roomIndex++;
@@ -814,8 +866,17 @@ public class Generator3D : MonoBehaviour {
                         if (isCreate == false)
                         {
                             //HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
+                            GameObject newHallWayObj = new GameObject();
+                            newHallWayObj.transform.SetParent(mazeParent.transform);
+                            newHallWayObj.name = "hallway"+ pos.x.ToString() + "_" + pos.z.ToString() + "_" + pos.y.ToString();
+
+                            HallWay newHallWay = newHallWayObj.AddComponent<HallWay>();
+                            newHallWay.initDataHallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
+                            
+                            /*
                             HallWay newHallWay = mazeParent.AddComponent<HallWay>();
                             newHallWay.initData(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
+                            */
 
                             hallways.Add(newHallWay);
                             grid.setGridDataObj(newHallWay, pos);
@@ -850,12 +911,15 @@ public class Generator3D : MonoBehaviour {
     }
 
     private void PlaceCube(Vector3Int location, Vector3Int size, Material material, string cubeName = "cube") {
+#if !DebugCube
+            return;
+#endif
+
         GameObject go = Instantiate(cubePrefab, location, Quaternion.identity, cubeParent.transform);
         go.GetComponent<Transform>().localScale = size;
         go.GetComponent<MeshRenderer>().material = material;
         go.name = cubeName;
-        
-        //add by csd begin
+      
         if (cubeName == "cube")
         {
             cubeDebugLst.Add(go);
@@ -867,7 +931,8 @@ public class Generator3D : MonoBehaviour {
         else if (cubeName == "Stairs") {
             stairDebugLst.Add(go);
         }
-       //add end
+      
+
     }
 
     //房间
@@ -957,7 +1022,7 @@ public class Generator3D : MonoBehaviour {
 
     //判断两个相交的地块之间哪面墙要敲掉, 发现相交时返回true
     //源地板，  目标地板
-    private bool judgePlaceDelWall(Vector3Int sourPos, Vector3Int destPos) {
+    private bool judgePlaceDelWall(Vector3Int sourPos, Vector3Int destPos, bool isMonster) {
         bool res = false;
         bool sourNeed = false; //是否要敲墙
         bool destNeed = false; //是否要敲墙
@@ -1001,7 +1066,7 @@ public class Generator3D : MonoBehaviour {
         {  //Z轴相交集， X相同的
             if (sourPos.y == destPos.y) //Y轴相同
             {
-                addMonster(sourPos);
+                addMonster(sourPos, isMonster);
 
                 //if (sourPos.z == destPos.z + 1) //sourPos在destPos的上面
                 if (sourPos.z > destPos.z)
@@ -1016,7 +1081,7 @@ public class Generator3D : MonoBehaviour {
         }
         else if (sourPos.z == destPos.z)
         { //X轴相交集， Z相同的
-            addMonster(sourPos);
+            addMonster(sourPos, isMonster);
 
             if (sourPos.x > destPos.x)
             //if (sourPos.x == destPos.x + 1) //sourPos在destPos的右边
@@ -1112,5 +1177,69 @@ public class Generator3D : MonoBehaviour {
         */
         return res;
     }
+
+
+    
+
+
+    public void clearAllMonster() {
+        if (monsterManagerTrans.gameObject != null) {
+            delTransformAllChild(monsterManagerTrans);
+        }
+    }
+
+    public void clearAllMaze() {
+        if (mazeParent != null) {
+            delTransformAllChild(mazeParent.transform);
+        }
+    }
+
+    public void clearAllHpUI() {
+        if (canvasTransform.gameObject != null) {
+            delTransformAllChild(canvasTransform);
+        }
+    }
+
+    public void delTransformAllChild(Transform pTran) {
+        int nCount = pTran.childCount;
+        if (nCount > 0)
+        {
+            for (int i = 0; i < nCount; i++)
+            {
+                Transform tmpTran = pTran.GetChild(i);
+                delTransform(tmpTran);
+            }
+
+            GameObject.Destroy(pTran.gameObject);
+        }
+    }
+
+
+    public void delTransform(Transform pTran) {
+        int nCount = pTran.childCount;
+        if (nCount <= 0)
+        {
+            GameObject.Destroy(pTran.gameObject);
+        }
+        else {
+            for (int i = 0; i<nCount; i++)
+            {
+                Transform tmpTran = pTran.GetChild(i);
+                delTransform(tmpTran);
+            }
+
+            GameObject.Destroy(pTran.gameObject);
+        }
+    }
+
+    public void clearRooms() {
+        Debug.LogWarning("clearRooms");
+        foreach (var room in rooms) {
+            delTransform(room.transform);
+        }
+
+        rooms.Clear();
+    }
+
 
 }

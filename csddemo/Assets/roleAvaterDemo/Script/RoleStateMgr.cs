@@ -31,6 +31,8 @@ public class RoleStateMgr
 
     private const string csDie = "attack4";
 
+    private const float csPlaySpeedTime = 0.1f;
+
 
     //跳跃过程中累计的时间
     private float jumpAllTime = 0.0f;
@@ -48,6 +50,13 @@ public class RoleStateMgr
     public void initData(GameObject paraObj) {
         paraObj.GetComponent<Rigidbody>().freezeRotation = true;
         m_animationController = paraObj.GetComponent<Animation>();
+        foreach (AnimationState state in m_animationController)
+        {
+            if ((state.name == csAttack1) || (state.name == csAttack2) || (state.name == csAttackEnd))
+                state.speed = csPlaySpeedTime;
+        }
+
+
         oldRoleState = roleState.stand;
         changeRoleState(roleState.stand);
         clearJumpTime();
@@ -142,6 +151,7 @@ public class RoleStateMgr
                     m_animationController.wrapMode = WrapMode.Once;
                    // App.Game.character.roleInstance.GetComponent<attcakStartEnd>().attackStart();
                     m_animationController.PlayQueued(csAttack1);
+                    
                     m_animationController.PlayQueued(csAttack2);
                     m_animationController.PlayQueued(csAttackEnd);
                    // m_animationController.PlayQueued("attack4");

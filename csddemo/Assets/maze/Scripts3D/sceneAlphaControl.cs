@@ -39,6 +39,13 @@ public class sceneAlphaControl : MonoBehaviour
       //  isCal = false;
     }
 
+    public void clearData() {
+        lastColliderObject.Clear();
+        colliderObject.Clear();
+        needSetObject.Clear();
+
+        isCal = false;
+    }
 
     //判断是否为新的碰撞体，并将旧的碰撞体列表中的相同项设为空
     private bool isNewColliderObject(GameObject pObj) {

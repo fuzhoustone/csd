@@ -42,7 +42,7 @@ public class Room : MonoBehaviour
     }
 
     
-    public void initData(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    public virtual void initData(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
     {
         pos = location;
         bounds = new BoundsInt(location, size);
@@ -59,6 +59,8 @@ public class Room : MonoBehaviour
         placeIndex = 0;
 
         roomName = "room";
+
+        //roomName = "room."+ pos.x.ToString()+"."+ pos.z.ToString()+"." + pos.y.ToString()+"_";
     }
 
     public Room(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)

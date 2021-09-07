@@ -30,7 +30,10 @@ public class SceneStart : MonoBehaviour
         if (sceneIsFinish == false) {
             if ((sceneMaze.getIsInit()) && (roleMain.getIsInit())) {
                 roleMain.createRole(sceneMaze.firstPos);
+
+                sceneMaze.friendRole = roleMain.character.roleInstance; //设置小弟跟随目标
                 
+
                 sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
                 sceneAlpha._target = roleMain.character.roleInstance;
                 

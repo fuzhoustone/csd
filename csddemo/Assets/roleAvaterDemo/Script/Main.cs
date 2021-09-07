@@ -34,6 +34,9 @@ public class Main : MonoBehaviour {
     //UI画布
     public Canvas roleCanvas;
 
+    //开发人员列表UI
+    public GameObject developerUI;
+
     // 游戏管理器，场景管理器
     public GameManager gameManager;
     private bool isInit = false;
@@ -80,6 +83,36 @@ public class Main : MonoBehaviour {
         isInit = true;
     }
 
+    private void roleHide() {
+        if (character != null) {
+            character.roleInstance.SetActive(false);
+            character.rolePause();
+        }
+    }
+
+    private void roleShow() {
+        if (character != null)
+        {
+            character.roleInstance.SetActive(true);
+            character.roleResume();
+        }
+    }
+
+    public void clearScene() {
+        character.clearSceneAlpha(); 
+        roleHide();
+
+        Generator3D gen3D = this.gameObject.GetComponent<Generator3D>();
+        gen3D.clearAllMonster();
+        gen3D.clearAllMaze();
+        gen3D.clearAllHpUI();
+    }
+
+    public void showScene() {
+        roleShow();
+    }
+
+
     public void createRole(Vector3 pPos) {
         // create an avatar
         character = App.Game.CharacterMgr.Generatecharacter(
@@ -109,6 +142,7 @@ public class Main : MonoBehaviour {
         // tmpAnimaCon.setCamera(cameraTransform, gameManager);
     }
 
+    //UI适配
     public void screenAdapt() {
         //Debug.Log("screenAdapt");
         int ManualWidth = 960;
@@ -126,7 +160,9 @@ public class Main : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        screenAdapt();
+        screenAdapt();  
+
+
         // Physics2D.SetLayerCollisionMask(LayerMask.NameToLayer("weapon"), LayerMask.GetMask("weapon", "attackBox"));
         //这种方法。第一个参数是带设置的Layer，第二个参数是可以与该Layer发生碰撞的Mask.运行一下，我们就看到碰撞矩阵发生了变化。
         initData();
@@ -170,6 +206,22 @@ public class Main : MonoBehaviour {
     public void test() {
         App.Game.character.rolePosCamer.rolationCamerY(90.0f, 1.0f / 40.0f);
     }
+
+    public void showDevelopUI()
+    {
+        if (developerUI != null) {
+            developerUI.SetActive(true);
+        }
+    }
+    public void HideDevlopUI() {
+        Debug.Log("HideDevlopUI");
+        if (developerUI != null)
+        {
+            developerUI.SetActive(false);
+        }
+    }
+
+ 
 
     
     void OnGUI () {

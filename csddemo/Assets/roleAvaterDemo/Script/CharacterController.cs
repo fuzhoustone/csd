@@ -94,6 +94,20 @@ public class UCharacterController {
         
     }
 
+    public void rolePause() {
+        isStart = false;
+    }
+
+    public void roleResume() {
+        isStart = true;
+    }
+
+    public void clearSceneAlpha() {
+        if (sceneAlpha != null) {
+            sceneAlpha.clearData();
+        }
+    }
+
 	public void ChangeHeadEquipment (string equipment,bool combine = false)
 	{
         if (roleChangeColorWeaponMgr != null)

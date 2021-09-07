@@ -12,6 +12,22 @@ public class HallWay : Room
         roomName = "HallWay";
     }
 
+    
+    public void initDataHallWay(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    {
+        initData(location,size,pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj);
+        
+        roomName = "HallWay";
+    }
+    
+    /*
+    public override void initData(Vector3Int location, Vector3Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid3D<placeWall> pGrid, int pNameIndex, GameObject pParentObj)
+    {
+        this.initData(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj);
+
+        roomName = "HallWay";
+    }
+    */
     /*
     //估计没用了
     public void calHallwayNoUseWall() {
