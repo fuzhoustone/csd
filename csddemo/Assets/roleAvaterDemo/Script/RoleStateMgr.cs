@@ -1,19 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using stoneState;
 
-public class RoleStateMgr
+public class RoleStateMgr: MonoBehaviour,IbaseANI
 {
-    public enum roleState
-    {
-        init = -1,
-        stand = 0,
-        run = 1,
-        attack = 2,
-        jump = 3,
-        die = 4
-    }
-
     private Animation m_animationController = null;
     // public CharacterController roleControl = null;
 
@@ -40,16 +31,19 @@ public class RoleStateMgr
     //跳跃的完整时间含上升和下降
     private float jumpTime = 0.0f;
 
+    /*
     //下落中是否发生碰撞
     public bool isJumpDownTouch {
          get;
          set;
     }
-        
+     */   
 
     public void initData(GameObject paraObj) {
         paraObj.GetComponent<Rigidbody>().freezeRotation = true;
-        m_animationController = paraObj.GetComponent<Animation>();
+        m_animationController = paraObj.GetComponent<Animation>(); 
+
+        //设置播放速度，实际无效
         foreach (AnimationState state in m_animationController)
         {
             if ((state.name == csAttack1) || (state.name == csAttack2) || (state.name == csAttackEnd))
@@ -59,10 +53,9 @@ public class RoleStateMgr
 
         oldRoleState = roleState.stand;
         changeRoleState(roleState.stand);
-        clearJumpTime();
-        // state = stateStand;
-        //  roleControl = paraObj.GetComponent<CharacterController>();
     }
+
+
     /*
       public void setJumpDownTouch(bool pValue) {
           isJumpDownTouch = pValue;
@@ -72,14 +65,19 @@ public class RoleStateMgr
               return isJumpDownTouch;
           }
        */
-    public void setJumpTime(float pTime) {
+
+
+/*    public void setJumpTime(float pTime) {
         jumpTime = pTime;
     }
-   
+   */
+   /*
     public float getAllJumpTime() {
         return jumpAllTime;
     }
+    */
 
+        /*
     public void addAllJumpTime(float pTime) {
         jumpAllTime = jumpAllTime + pTime;
     }
@@ -88,7 +86,7 @@ public class RoleStateMgr
         jumpAllTime = 0;
         isJumpDownTouch = false;
     }
-
+    */
     /*
         void Start()
         {
@@ -111,15 +109,76 @@ public class RoleStateMgr
         Debug.Log("roleState is:" + pState.ToString());
     }
 
-    public void playRoleDie() {
-        changeRoleState(roleState.die);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="state"></param>
+
+    public void PlayState(roleState state) {
+
+        changeRoleState(state);
     }
 
+
+    public bool isInPlayEntry(roleState stateName) {
+        bool res = false;
+        roleState nowState = getRoleNowState();
+        if (nowState != stateName)
+            res = false;
+        else
+            res = true;
+        return res;
+    }
+
+    /*
+    public bool attackStateEnd() {
+        bool res = false;
+
+        return res;
+    }
+    */
+
+
+
+    public void dieStateEnd() {
+        Debug.LogError("game over");
+    }
+/*
+    public void setToAttack(Vector3 rolePos) { }
+
+    public void setStopAttack() {
+
+    }
+
+    public void setToStand() {
+
+    }
+
+    public bool IsInAttackState() {
+        bool res = false;
+        return res;
+    }
+
+    public bool IsDie() {
+        bool res = false;
+        return res;
+    }
+    */
+    /// <summary>
+    /// /////////////////////////////
+    /// </summary>
+
+/*
+    public void playRoleDie()
+    {
+        changeRoleState(roleState.die);
+    }
+*
     public void playRoleStand() {
         changeRoleState(roleState.stand);
     }
-
-    public void changeRoleState(roleState pState)
+*/
+    private void changeRoleState(roleState pState)
     {
         
         switch (pState)
@@ -158,13 +217,14 @@ public class RoleStateMgr
                  //   Debug.LogWarning("change state to attack");
                 }
                 break;
+                /*
             case roleState.jump: {
                     clearJumpTime();
                     m_animationController.wrapMode = WrapMode.Loop;
                     m_animationController.Play(csJump);
                   //  Debug.LogWarning("change state to jump");
                 }
-                break;
+                break;*/
             case roleState.die: {
                     m_animationController.wrapMode = WrapMode.Once;
                     m_animationController.Play(csDie);
@@ -182,7 +242,7 @@ public class RoleStateMgr
         }
     }
 
-    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump)
+    private roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump)
     {
         roleState nowState = getRoleNowState();
         roleState res = roleState.init;
@@ -194,7 +254,7 @@ public class RoleStateMgr
             return res;
         }
         */
-
+/*
         if (nowState == roleState.jump)
         { //跳跃状态中，累计时间未到不能切换
             res = nowState;
@@ -218,8 +278,8 @@ public class RoleStateMgr
 
             return res;
         }
-
-        else if (nowState == roleState.die) {
+        */
+        if (nowState == roleState.die) {
             res = nowState;
             return res;
         }
@@ -269,7 +329,7 @@ public class RoleStateMgr
         */
     }
 
-    public roleState getRoleNowState()
+    private roleState getRoleNowState()
     { //获得角色当前状态
         roleState res = roleState.stand;
 
@@ -331,12 +391,13 @@ public class RoleStateMgr
     }
 
 
+    /*
     private void setAttackEnd()
     {
         attcakStartEnd pAttackClass = App.Game.character.roleInstance.GetComponent<attcakStartEnd>();
       //  pAttackClass.attackJudge(0);
     }
-
+    */
     
 
     public bool updataRoleControl(float h, float tmpv, bool isfire, bool isJump = false)

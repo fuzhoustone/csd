@@ -2,15 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleDamageCal 
+
+namespace DamageCal
 {
-    //计算伤害
-    public int DamageCal(roleProperty AttPro, roleProperty DefPro) {
-        int damage = 1;
-        if (AttPro.attack > 0)
-            damage = AttPro.attack;
+    public class RoleDamageCal
+    {
+        private static RoleDamageCal _instance = null;
 
-        return damage;
+        public static RoleDamageCal instance {
+            get {
+                if (_instance == null) {
+                    _instance = new RoleDamageCal();
+                }
+
+                return _instance;
+            }
+        }
+        //计算伤害
+        public int DamageCal(roleProperty AttPro, roleProperty DefPro)
+        {
+            int damage = 1;
+            if (AttPro.attack > 0)
+                damage = AttPro.attack;
+
+            return damage;
+        }
+
     }
-
 }

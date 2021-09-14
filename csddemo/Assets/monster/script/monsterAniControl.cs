@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class monsterAniControl : MonoBehaviour
+using stoneState;
+
+public class monsterAniControl : MonoBehaviour, IbaseANI
 {
     const string csStand = "stand";
+    
     const string csRun = "run";
     const string csAttack = "attack1";
     const string csAttack2 = "attack2";
     const string csDie = "die";
-
+    
     const string csInAttack = "InAttack";
     const string csHp = "Hp";
     const string csMainAniLayer = "mainAniLayer";
@@ -34,7 +37,7 @@ public class monsterAniControl : MonoBehaviour
         mAlphaMai = new Material(Shader.Find("Unity Shaders Book/Chapter 7/NormalMapWorldAlpha"));
         isInAttack = false;
 
-        mMonsterPro = this.gameObject.transform.GetComponent<roleProperty>();
+        mMonsterPro = this.transform.GetComponent<roleProperty>();
       
     }
 
@@ -48,9 +51,54 @@ public class monsterAniControl : MonoBehaviour
         return res;
     }
 
+    public void initData(GameObject paraObj) {
+
+    }
+
+    private string getStateStrName(roleState entryName) {
+        string statestr = csStand;
+        switch (entryName)
+        {
+            case roleState.init:
+                {
+                    statestr = csStand;
+                }
+                break;
+            case roleState.stand:
+                {
+                    statestr = csStand;
+                }
+
+                break;
+            case roleState.run:
+                {
+                    statestr = csRun;
+                }
+                break;
+            case roleState.attack:
+                {
+                    statestr = csAttack;
+                }
+                break;
+            case roleState.die:
+                {
+                    statestr = csDie;
+                }
+                break;
+            default:
+                {
+                    statestr = csStand;
+                }
+                break;
+        }
+
+        return statestr;
+    }
+
     //判断当前动画是否正在播， 播至最后一帧或播放其它动画返回false
-    private bool isInPlayEntry(string entryName)
+    public bool isInPlayEntry(roleState stateName)
     {
+        string entryName = getStateStrName(stateName);
         bool res = false;
         AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
         if (info.IsName(entryName))
@@ -72,25 +120,37 @@ public class monsterAniControl : MonoBehaviour
         return res;
     }
 
-    //站立动画播至最后一帧，不改变状态会不停触发
-    public void standStateEnd() {
-        animator.Play(csStand, mainLayer, 0.0f);  //从第0帧开始播
+    public void PlayState(roleState stateName) {
+
+        string state = getStateStrName(stateName);
+        animator.Play(state, mainLayer, 0.0f);  //从第0帧开始播
     }
 
+    /*
+    public bool calAttackHp(roleProperty tmpPro) {
+        bool res = false;
+        res = App.Game.character.SubHp(mMonsterPro, tmpPro);
+        return res;
+    }
+    */
+    /*
     //攻击动画播至最后一帧，不改变状态会不停触发
-    public void attackStateEnd() {
+    public bool attackStateEnd() {
         //计算伤害,并UI显示
-        App.Game.character.roleSubHp(mMonsterPro);
+        bool res = false;
+        res = App.Game.character.roleSubHp(mMonsterPro);
 
-        animator.Play(csAttack, mainLayer, 0.0f);  //从第0帧开始播
+        // animator.Play(csAttack, mainLayer, 0.0f);  //从第0帧开始播
+        return res;
     }
-
+    */
     private void dieFadeOutEnd() {
+        mMonsterPro.hideUI();
         this.gameObject.SetActive(false);
     }
 
     private void StartDieFadeOut() {
-        mMonsterPro.hideUI();
+        
         
 
         Transform body = this.transform.Find("Body");
@@ -130,7 +190,7 @@ public class monsterAniControl : MonoBehaviour
         StartDieFadeOut();
     }
 
-
+    /*
     private void showRoleUI() {
 
 
@@ -143,7 +203,8 @@ public class monsterAniControl : MonoBehaviour
         mainPro.hideUI();
     }
 
-    public void setMonsterToAttack(Vector3 rolePos) {
+    
+    public void setToAttack(Vector3 rolePos) {
         mMonsterPro.showUI(); //自身的UI显示
 
         App.Game.character.setRoleAttack(this.gameObject);
@@ -154,12 +215,12 @@ public class monsterAniControl : MonoBehaviour
 
         animator.SetBool(csInAttack, true);
     }
-
+    
     public void setStopAttack() {
         animator.SetBool(csInAttack, false);
     }
 
-    public void setMonsterToStand() {
+    public void setToStand() {
         mMonsterPro.updateHpValue(mMonsterPro.hpMax);
         mMonsterPro.hideUI();
         hideRoleUI();
@@ -180,9 +241,10 @@ public class monsterAniControl : MonoBehaviour
             res = true;
         return res;
     }
-
+    */
     void Update()
     {
+        /*
         //怪物死亡
         int hp = animator.GetInteger(csHp);
         if (mMonsterPro.hp != hp) {
@@ -198,9 +260,9 @@ public class monsterAniControl : MonoBehaviour
 
             return;
         }
-
+        */
         //怪物存活
-        
+        /*
         // 攻击状态  与 站立状态的变更
         bool isInAttack = IsInAttackState();
         if (isInAttack)
@@ -209,9 +271,8 @@ public class monsterAniControl : MonoBehaviour
                 animator.Play(csAttack);
         }
         else {
-            if (isInState(csStand) == false)
-                animator.Play(csStand, mainLayer, 0.0f);
+         
         }
-        
+        */
     }
 }

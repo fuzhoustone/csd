@@ -136,6 +136,7 @@ public class Generator3D : MonoBehaviour {
 
     void Start() {
         int ranSeed = System.DateTime.Now.Second;
+        ranSeed = 28; //暂用
         Debug.LogWarning("Random seed:"+ranSeed.ToString());
         random = new Random(ranSeed);
         grid = new Grid3D<CellType>(size, Vector3Int.zero);
@@ -594,9 +595,11 @@ public class Generator3D : MonoBehaviour {
         {
             CapsuleCollider tmpColl = tmpMonster.GetComponent<CapsuleCollider>();
             tmpColl.isTrigger = true;
+            tmpMonster.AddComponent<monsterNormalAI>();
         }
         else {
-            tmpMonster.AddComponent<followRole>();
+            followRole tmpFollow = tmpMonster.AddComponent<followRole>();
+            //tmpFollow.mainObj = friendRole;
             friendRole = tmpMonster;
         }
 

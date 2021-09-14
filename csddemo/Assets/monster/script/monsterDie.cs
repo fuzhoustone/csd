@@ -18,7 +18,8 @@ public class monsterDie : monsterStateMachine
         {
             if (stateInfo.normalizedTime >= 1.0f)
             { //动画播完时，开始做淡出动画
-                aniControl.dieStateEnd();
+                aiControl.stateDieEnd();
+               // aniControl.dieStateEnd();
                 isDie = true;
             }
         }

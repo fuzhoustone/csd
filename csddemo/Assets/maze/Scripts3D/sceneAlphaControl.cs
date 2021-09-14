@@ -59,7 +59,9 @@ public class sceneAlphaControl : MonoBehaviour
                 {
                 //lastColliderObject[i] = null;
                     delIndex = i;
+                 #if DebugAlpha
                     Debug.Log("lastColliderObjet remove:"+ lastColliderObject[i].transform.parent.name);
+                #endif
                     res = false;
                     break;
                 }
@@ -131,11 +133,14 @@ public class sceneAlphaControl : MonoBehaviour
                 if ((pObj.layer == wallLayer) && (_tempRenderer != null) )
                 {
                     colliderObject.Add(pObj);  //添加进本次碰撞的列表
-                    Debug.Log("colliderObject Add :" + pObj.transform.parent.name);
-
+#if DebugAlpha
+                        Debug.Log("colliderObject Add :" + pObj.transform.parent.name);
+#endif
                     if (isNewColliderObject(pObj)) {  //是新增的碰撞体
                         needSetObject.Add(pObj);
-                        Debug.Log("needSetObj Add:"+pObj.transform.parent.name);
+#if DebugAlpha
+                            Debug.Log("needSetObj Add:"+pObj.transform.parent.name);
+#endif
                     }
                 }
             }
@@ -162,7 +167,9 @@ public class sceneAlphaControl : MonoBehaviour
 
     //恢复障碍物的透明度
     private void resetMaterialsAlpha(GameObject pObj) {
+        #if DebugAlpha
         Debug.Log("resetMaterialsAlpha :" + pObj.transform.parent.name);
+        #endif
         Renderer tmpRender = pObj.GetComponent<Renderer>();
         if (tmpRender != null)
         {
@@ -173,7 +180,9 @@ public class sceneAlphaControl : MonoBehaviour
     // 修改障碍物的透明度  
     private void SetMaterialsAlpha(GameObject pObj)
     {
+        #if DebugAlpha
         Debug.Log("SetMaterialsAlpha :" + pObj.transform.parent.name);
+        #endif
         Renderer tmpRender = pObj.GetComponent<Renderer>();
         if (tmpRender != null) {
             tmpRender.material = wallHalfAlphaMater;

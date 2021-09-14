@@ -11,8 +11,11 @@ public class monsterStand : monsterStateMachine
 
         if (stateInfo.normalizedTime >= 1.0f)
         { //动画播完时
-            aniControl.standStateEnd();
-            //animator.Play(csStand, mainLayer, 0.0f);  //从第0帧开始播
+          //从AI脚本中获得参数，是否自动转入站立动画
+            if (aiControl != null)
+            {
+                aiControl.stateStandEnd();
+            }
         }
     }
 }

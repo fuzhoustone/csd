@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using DamageCal;
+
 public class UCharacterController {
 
     //角色对象
@@ -15,7 +17,7 @@ public class UCharacterController {
     //角色位置及Camer管理
     public RolePosAndCamerMgr rolePosCamer = null;
 
-    public RoleDamageCal roleDamageManager = null;
+   // public RoleDamageCal roleDamageManager = null;
 
     private roleProperty mainPro = null;
     private GameObject attackMonster = null; //被玩家攻击的怪物
@@ -31,7 +33,7 @@ public class UCharacterController {
         roleChangeColorWeaponMgr = new RoleChangeColorWeapon(index, skeleton, weapon, head, chest, hand, feet, combine);
         roleInstance = roleChangeColorWeaponMgr.GetRoleInstance();
        // mainPro = roleInstance.transform.GetComponent<roleProperty>();
-        roleDamageManager = new RoleDamageCal();
+        //roleDamageManager = new RoleDamageCal();
         //roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
     }
@@ -60,14 +62,16 @@ public class UCharacterController {
 
     public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
         App.Game.character = this;
-        mainRoleState = new RoleStateMgr();
-        mainRoleState.initData(roleInstance);
-        mainRoleState.setJumpTime(csJumpUpTime * 2);
+        //mainRoleState = new RoleStateMgr();
+        mainRoleState = roleInstance.transform.GetComponent<RoleStateMgr>();
 
+        mainRoleState.initData(roleInstance);
+        //mainRoleState.setJumpTime(csJumpUpTime * 2);
+        /*
         jumpCheck = roleInstance.transform.GetComponent<jumpColider>();
         jumpCheck.jumpDownOver = jumpDownOver;
         jumpCheck.isUse = false;
-
+        */
         rolePosCamer = new RolePosAndCamerMgr();
         rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas);
 
@@ -144,14 +148,14 @@ public class UCharacterController {
 
     }
 
-
+    /*
     private void jumpDownOver() {
         mainRoleState.isJumpDownTouch = true;
         oldY = 0;
         Rigidbody roleRigid = roleInstance.transform.GetComponent<Rigidbody>();
         roleRigid.constraints = RigidbodyConstraints.FreezeRotation; //启用自由落体
     }
-
+    */
     private bool isUseGrav = false;
     private float g = 0.0f;
 
@@ -179,35 +183,37 @@ public class UCharacterController {
         Physics.gravity = new Vector3(0, jumpA * -1, 0);
     }
 
-    //设置玩家为攻击状态
-    public void setRoleAttack(GameObject monsterObj) {
-        //玩家UI显示
-        //roleProperty mainPro = roleInstance.transform.GetComponent<roleProperty>();
-        mainPro.showUI();
+    /*
+     //设置玩家为攻击状态
+     public void setRoleAttack(GameObject monsterObj) {
+         //玩家UI显示
+         //roleProperty mainPro = roleInstance.transform.GetComponent<roleProperty>();
+         mainPro.showUI();
 
-        attackMonster = monsterObj;
-        Vector3 rolePos = attackMonster.transform.position;
+         attackMonster = monsterObj;
+         Vector3 rolePos = attackMonster.transform.position;
 
-        if (roleIsEscape == false) //玩家不在逃跑中
-        {
-            //玩家朝向怪物
-            Vector3 lookPos = new Vector3(rolePos.x, roleInstance.transform.position.y, rolePos.z);
-            roleInstance.transform.LookAt(rolePos);
+         if (roleIsEscape == false) //玩家不在逃跑中
+         {
+             //玩家朝向怪物
+             Vector3 lookPos = new Vector3(rolePos.x, roleInstance.transform.position.y, rolePos.z);
+             roleInstance.transform.LookAt(rolePos);
 
-            //玩家切换攻击状态
-            mainRoleState.updataRoleControl(0, 0, true, false);
+             //玩家切换攻击状态
+             mainRoleState.updataRoleControl(0, 0, true, false);
 
-            roleIsAttack = true;
-        }
-    }
+             roleIsAttack = true;
+         }
+     }
 
-    //恢复玩家为不攻击状态
-    public void setRoleIdle() {
-        mainRoleState.updataRoleControl(0, 0, false, false);
-        //roleProperty mainPro = roleInstance.transform.GetComponent<roleProperty>();
-        mainPro.hideUI();
-    }
 
+     //恢复玩家为不攻击状态
+     public void setRoleIdle() {
+         mainRoleState.updataRoleControl(0, 0, false, false);
+         //roleProperty mainPro = roleInstance.transform.GetComponent<roleProperty>();
+         mainPro.hideUI();
+     }
+     */
     private void drawSceneAlpha() {
         if(sceneAlpha == null)
             sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
@@ -222,11 +228,14 @@ public class UCharacterController {
     public void setRoleNotEscape() {
         roleIsEscape = false;
     }
+
+    /*
     //玩家攻击怪物
     public void monsterSubHp()
     {
         roleProperty monsterPro = attackMonster.transform.GetComponent<roleProperty>();
-        int damage = roleDamageManager.DamageCal(mainPro, monsterPro);
+        int damage =  RoleDamageCal.instance.DamageCal(mainPro, monsterPro);
+//        int damage = roleDamageManager.DamageCal(mainPro, monsterPro);
         monsterPro.SubHpValue(damage);
 
         if (monsterPro.hp == 0) { //怪物死亡
@@ -244,25 +253,46 @@ public class UCharacterController {
         }
 
     }
+    */
 
+    public bool SubHp(roleProperty attackPro, roleProperty DefPro) {
+        bool defIsDie = true;
+        //int damage = roleDamageManager.DamageCal(attackPro, DefPro);
+        int damage = RoleDamageCal.instance.DamageCal(attackPro, DefPro);
+        DefPro.SubHpValue(damage);
 
-    //玩家受到攻击
-    public void roleSubHp(roleProperty attackPro) {
-        int damage = roleDamageManager.DamageCal(attackPro, mainPro);
+        if (DefPro.hp == 0) //受击方死亡
+        { 
+            defIsDie = true;
+
+        }
+
+        return defIsDie;
+    }
+    /*
+    //玩家受到攻击, 返回是否继续攻击
+    public bool roleSubHp(roleProperty attackPro) {
+        bool res = true;
+        //int damage = roleDamageManager.DamageCal(attackPro, mainPro);
+        int damage = RoleDamageCal.instance.DamageCal(attackPro, mainPro);
         mainPro.SubHpValue(damage);
 
         if (mainPro.hp == 0) { //玩家死亡
             roleIsDie = true;
 
             //怪物停止攻击, 怪物血条保持显示，玩家血条保持显示
-            monsterAniControl attackControl = attackPro.gameObject.transform.GetComponent<monsterAniControl>();
+            IbaseANI attackControl = attackPro.gameObject.transform.GetComponent<IbaseANI>();
             attackControl.setStopAttack();
 
             //玩家播放倒地动画
             mainRoleState.playRoleDie();
-        }
-    }
 
+            res = false;
+        }
+
+        return res;
+    }
+    */
        public void Update () {
          if (isStart == false) {
               //  Debug.Log("game not start characterController");

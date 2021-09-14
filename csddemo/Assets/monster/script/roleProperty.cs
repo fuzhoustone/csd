@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using stoneState;
 public class roleProperty:MonoBehaviour
 {
     [SerializeField]
@@ -65,7 +66,6 @@ public class roleProperty:MonoBehaviour
         mainCanvas = pCanvasTransform.GetComponent<Canvas>();
 
         createHpUI();
-        
     }
 
     void Update()
@@ -103,8 +103,6 @@ public class roleProperty:MonoBehaviour
         updateHpValue(hp);
     }
     
-    
-
     public void updateHpValue(int value) {
         hp = value;
         if (hp <= hpMax)
@@ -127,13 +125,6 @@ public class roleProperty:MonoBehaviour
     }
 
 
-    //世界坐标系下的偏移坐标
-    private Vector3 calOffSetWorld(Vector3 uiVector3) {
-        Vector3 res = new Vector3(0, 0, 0);
-        Matrix4x4 uiMat = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0,0,0), Vector3.one); 
-
-        return res;
-    }
     /*
      人物
     9，0.264995，16
@@ -146,19 +137,7 @@ public class roleProperty:MonoBehaviour
         1,1,1
 
 */
-    
-        /*
-         1. 构建人物为原点的坐标系
-         2. 假设并调试在人物坐标系下的血条坐标(不是看unity中的transform)
-         
-         */
 
-
-
-        //画点的模型
-    public void drawPoint() {
-        
-    }
 
 
     public void setLineOffset(float x, float y) {

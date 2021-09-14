@@ -10,7 +10,10 @@ public class monsterAttack : monsterStateMachine
 
         if (stateInfo.normalizedTime >= 1.0f)
         { //动画播完时
-            aniControl.attackStateEnd();
+            //aniControl.attackStateEnd();
+            if (aiControl != null) {
+                aiControl.stateAttackEnd();
+            }
             //animator.Play(csAttack, mainLayer, 0.0f);  //从第0帧开始播
         }
     }

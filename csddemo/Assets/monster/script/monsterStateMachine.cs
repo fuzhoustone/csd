@@ -11,11 +11,16 @@ public class monsterStateMachine : StateMachineBehaviour
     private const string csMainAniLayer = "mainAniLayer";
 
     public int mainLayer;
-    public monsterAniControl aniControl;
+    public IbaseANI aniControl;
+
+
+    public baseAI aiControl;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         mainLayer = animator.GetLayerIndex(csMainAniLayer);
         aniControl = animator.gameObject.transform.GetComponent<monsterAniControl>();
+        aiControl = animator.gameObject.transform.GetComponent<baseAI>();
     }
 }
