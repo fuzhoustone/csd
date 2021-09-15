@@ -18,14 +18,18 @@ public interface IbaseANI
 
     void dieStateEnd();
 
+    roleState getRoleNowState();
+
+    roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump);
+    //bool updataRoleControl(float h, float tmpv, bool isfire, bool isJump = false);
 
    // void setToAttack(Vector3 rolePos);
 
-   // void setStopAttack(); 
+    // void setStopAttack(); 
 
-   // void setToStand(); 
+    // void setToStand(); 
 
-  //  bool IsInAttackState(); 
+    //  bool IsInAttackState(); 
 
-   // bool IsDie(); 
+    // bool IsDie(); 
 }

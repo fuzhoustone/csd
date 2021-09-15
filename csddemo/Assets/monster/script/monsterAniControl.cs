@@ -8,12 +8,12 @@ using stoneState;
 public class monsterAniControl : MonoBehaviour, IbaseANI
 {
     const string csStand = "stand";
-    
+
     const string csRun = "run";
     const string csAttack = "attack1";
     const string csAttack2 = "attack2";
     const string csDie = "die";
-    
+
     const string csInAttack = "InAttack";
     const string csHp = "Hp";
     const string csMainAniLayer = "mainAniLayer";
@@ -22,13 +22,13 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     private int mainLayer = -2;
     private bool isInAttack = false;
 
-   // private Material mMaterial = null;
+    // private Material mMaterial = null;
     private Material mAlphaMai = null;
     private roleProperty mMonsterPro = null;
- //   private roleProperty mRolePro = null;
+    //   private roleProperty mRolePro = null;
 
     private UCharacterController charInstance = null;
-    
+
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
         isInAttack = false;
 
         mMonsterPro = this.transform.GetComponent<roleProperty>();
-      
+
     }
 
     //是否处于某个 动画状态（最后一帧播完也算）
@@ -150,8 +150,8 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     }
 
     private void StartDieFadeOut() {
-        
-        
+
+
 
         Transform body = this.transform.Find("Body");
         if (body != null)
@@ -167,7 +167,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     IEnumerator dieFadeOutIEn(Action OnEnd)
     {
         float time = 0;
-        
+
         //float fadeLength = 5.0f;
         while (time < fFadeOutTime) // 还需另外设置跳出循环的条件
         {
@@ -175,7 +175,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
             float colorA = Mathf.InverseLerp(1, 0, time / fFadeOutTime);
             if (mAlphaMai != null)
                 mAlphaMai.SetFloat("_AlphaScale", colorA);
-                //mMaterial.shader
+            //mMaterial.shader
             yield return null;
         }
 
@@ -190,58 +190,17 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
         StartDieFadeOut();
     }
 
-    /*
-    private void showRoleUI() {
-
-
-        roleProperty mainPro = App.Game.character.roleInstance.transform.GetComponent<roleProperty>();
-        mainPro.showUI();
+    //待完成
+    public roleState getRoleNowState() {
+        return roleState.stand;
     }
 
-    private void hideRoleUI() {
-        roleProperty mainPro = App.Game.character.roleInstance.transform.GetComponent<roleProperty>();
-        mainPro.hideUI();
+    //待完成
+    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump) {
+        return roleState.stand;
     }
 
-    
-    public void setToAttack(Vector3 rolePos) {
-        mMonsterPro.showUI(); //自身的UI显示
-
-        App.Game.character.setRoleAttack(this.gameObject);
-        //showRoleUI();
-
-        Vector3 lookPos = new Vector3(rolePos.x, this.transform.position.y, rolePos.z);
-        this.transform.LookAt(rolePos);
-
-        animator.SetBool(csInAttack, true);
-    }
-    
-    public void setStopAttack() {
-        animator.SetBool(csInAttack, false);
-    }
-
-    public void setToStand() {
-        mMonsterPro.updateHpValue(mMonsterPro.hpMax);
-        mMonsterPro.hideUI();
-        hideRoleUI();
-
-        animator.SetBool(csInAttack,false);
-
-    }
-
-    public bool IsInAttackState() {
-        bool res = animator.GetBool(csInAttack);
-        return res;
-    }
-
-    public bool IsDie() {
-        bool res = false;
-        int hp = animator.GetInteger(csHp);
-        if (hp <= 0)
-            res = true;
-        return res;
-    }
-    */
+       
     void Update()
     {
         /*

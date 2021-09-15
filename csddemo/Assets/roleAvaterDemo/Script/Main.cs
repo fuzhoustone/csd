@@ -191,7 +191,7 @@ public class Main : MonoBehaviour {
     }
 
     public void getStateBtnClick() {
-        App.Game.character.mainRoleState.printRoleState();
+  //      App.Game.character.mainRoleState.printRoleState();
     }
 
     public void resetCamerClick() {

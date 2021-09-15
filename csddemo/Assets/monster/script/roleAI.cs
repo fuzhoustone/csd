@@ -7,11 +7,7 @@ using stoneState;
 
 public class roleAI : baseAI
 {
-    public GameObject enemyObj;  //是否有敌人
-    private roleProperty selPro = null;
-
-    private IbaseANI aniCon = null;
-
+    
     public override void stateStandEnd()
     {
         IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
@@ -50,35 +46,40 @@ public class roleAI : baseAI
 
     public override void stateDieStart()
     {
-        if (isState(roleState.die) == false) //死亡动画
+        if (isAIState(roleState.die) == false) //死亡动画
         {
-            PlayState(roleState.die);
+            PlayAIState(roleState.die);
             this.enemyObj = null;
         }
     }
 
-    private bool isState(roleState state)
-    {
-        bool res = false;
-        if (aniCon == null)
-        {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
-        }
-
-        res = aniCon.isInPlayEntry(state);
-
-        return res;
-    }
-
-    //切换动作状态
-    private void PlayState(roleState state)
+    public void updataAIRoleControl(float h, float tmpv, bool isfire, bool isJump = false)
     {
         if (aniCon == null)
         {
             aniCon = this.gameObject.GetComponent<IbaseANI>();
         }
 
-        aniCon.PlayState(state);
+        roleState lState = aniCon.getRoleNowState();
+
+        roleState lHopeState = aniCon.getHopeState(h, tmpv, isfire, isJump); //按键判断是否改变状态
+
+        // bool isChangeToJump = false;
+        if ((lState != lHopeState)
+            && (oldRoleState != lHopeState))  //避免重复执行
+        {
+            //  if (lHopeState == roleState.jump) //切换成跳跃状态
+            //      isChangeToJump = true;
+            oldRoleState = lHopeState;
+            aniCon.PlayState(lHopeState);
+        }
+        //return isChangeToJump;
+
     }
 
+
+    private void Update()
+    {
+
+    }
 }

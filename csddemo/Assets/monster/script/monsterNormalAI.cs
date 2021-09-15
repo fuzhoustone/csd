@@ -6,10 +6,10 @@ using DamageCal;
 using stoneState;
 public class monsterNormalAI : baseAI
 {
-    public GameObject enemyObj;  //是否有敌人
-    private roleProperty selPro = null;
+  //  public GameObject enemyObj;  //是否有敌人
+//    private roleProperty selPro = null;
 
-    private IbaseANI aniCon = null;
+ //   private IbaseANI aniCon = null;
 
     /*
 普通怪物AI： 
@@ -23,8 +23,8 @@ public class monsterNormalAI : baseAI
         警戒->警戒, 警戒->出击（update中轮询）：保持站立动作，并警戒一定范围，后续实现
 		出击->出击, 出击->攻击, 出击->跑回 (update中轮询)：以原始警戒的范围为中心，出现了敌人，开始移动，后续实现
 
-		攻击->攻击(触发制，动作完成判断)：双方相互攻击   OK
-        攻击->待机(触发制，动作完成判断)：OK
+		攻击->攻击(触发制，动作完成判断)：双方相互攻击   
+        攻击->待机(触发制，动作完成判断)：
      */
 
     // Update is called once per frame
@@ -80,13 +80,37 @@ public class monsterNormalAI : baseAI
 
     public override void stateDieStart()
     {
-        if (isState(roleState.die) == false) //死亡动画
+        if (isAIState(roleState.die) == false) //死亡动画
         {
-            PlayState(roleState.die);
+            PlayAIState(roleState.die);
             this.enemyObj = null;
         }
     }
 
+    public override void stateDieEnd()
+    {
+        IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
+        tmpAni.dieStateEnd();
+    }
+
+    private void Update()
+    {
+        if (selfIsLive())
+        {
+            if (isInFight()) //战斗标识中
+            {
+                actToAttack(enemyObj); // 等战斗结束,无需处理
+            }
+            else if (hasEnemy()) //有敌人
+            {
+                actToAttack(enemyObj); //切换攻击状态攻击敌人
+            }
+        }
+    }
+
+
+
+    /*
     private bool isState(roleState state)
     {
         bool res = false;
@@ -110,5 +134,5 @@ public class monsterNormalAI : baseAI
 
         aniCon.PlayState(state);
     }
-
+    */
 }

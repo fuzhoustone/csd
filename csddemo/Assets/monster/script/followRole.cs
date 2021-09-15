@@ -37,14 +37,14 @@ using stoneState;
 public class followRole : baseAI
 {
     public GameObject mainObj;   //跟随的人物
-    public GameObject enemyObj;  //是否有敌人
-    private roleProperty selPro = null;
+   // public GameObject enemyObj;  //是否有敌人
+    
 
-  //  const string csStand = "stand";
-  //  const string csRun = "run";
-  //  const string csAttack = "attack1";
+    //  const string csStand = "stand";
+    //  const string csRun = "run";
+    //  const string csAttack = "attack1";
 
-    //跟随检测范围
+    //跟随检测范围, csFollowStop 必需大于 csFollowMin
     const float csFollowMin = 0.4f;  //触发跟随
     const float csFollowMax = 2.0f;  //矩离太远不跟了
     const float csFollowStop = 0.2f;  //走到指定矩离，不再继续跟随 
@@ -55,7 +55,7 @@ public class followRole : baseAI
     //const float csAttackX = 0.1f;
     //const float csAttackZ = 0.1f;
 
-    private IbaseANI aniCon = null;
+    //private IbaseANI aniCon = null;
 
     public void initData() {
         
@@ -82,7 +82,7 @@ public class followRole : baseAI
             enemyPro.SubHpValue(Hp); //UI显示
             if (enemyPro.hp <= 0) { //死亡
                 baseAI enemyAI = enemyObj.transform.GetComponent<baseAI>();
-                enemyAI.stateDieStart();
+                enemyAI.stateDieStart(); //处理 对方死亡动画及结算
                 this.enemyObj = null;
 
                 //IbaseANI enemyANI = enemyObj.transform.GetComponent<IbaseANI>();
@@ -110,9 +110,9 @@ public class followRole : baseAI
     }
 
     public override void stateDieStart() {
-        if (isState(roleState.die) == false) //死亡动画
+        if (isAIState(roleState.die) == false) //死亡动画
         {
-            PlayState(roleState.die);
+            PlayAIState(roleState.die);
             this.enemyObj = null;
         }
     }
@@ -121,7 +121,7 @@ public class followRole : baseAI
         IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
         tmpAni.dieStateEnd();
     }
-
+    /*
     private bool isState(roleState state) {
         bool res = false;
         if (aniCon == null) {
@@ -132,7 +132,7 @@ public class followRole : baseAI
 
         return res;
     }
-
+   
     //切换动作状态
     private void PlayState(roleState state) {
         if (aniCon == null)
@@ -142,23 +142,23 @@ public class followRole : baseAI
 
         aniCon.PlayState(state);
     }
-
+     */
     //若不是移动动作，动作切换为移动
     private void actToMove() {
-        if (isState(roleState.run) == false) {
-            PlayState(roleState.run);
+        if (isAIState(roleState.run) == false) {
+            PlayAIState(roleState.run);
         }
     }
 
     //若不是站立动作，动作切换为站立
     private void actToStand() {
-        if (isState(roleState.stand) == false)
+        if (isAIState(roleState.stand) == false)
         {
-            PlayState(roleState.stand);
+            PlayAIState(roleState.stand);
         }
     }
 
-
+    /*
     //攻击敌人
     private void actToAttack(GameObject enemy) {
         //自己切换成攻击状态
@@ -173,7 +173,6 @@ public class followRole : baseAI
 
     }
 
-    //待完成，相关的
     private bool hasEnemy() {
         bool res = false;
         if (enemyObj != null) {
@@ -181,8 +180,12 @@ public class followRole : baseAI
         }
         return res;
     }
+    */
+    //待完成，相关的
+
 
     //根据HP判断是否死亡
+    /*
     private bool selfIsLive() {
         bool res = true;
         if (selPro == null) {
@@ -194,7 +197,7 @@ public class followRole : baseAI
 
         return res;
     }
-
+   
     //基本完成
     private bool isInFight() {
         bool res = false;
@@ -207,7 +210,7 @@ public class followRole : baseAI
         return res;
     }
 
-    
+     */
 
     private void Update()
     {
@@ -227,7 +230,7 @@ public class followRole : baseAI
                     float offsetX = 0.0f;
                     float offsetZ = 0.0f;
 
-                    if (isState(roleState.run)) { //当前移动中
+                    if (isAIState(roleState.run)) { //当前移动中
                         if (isStopFollow(ref offsetX, ref offsetZ)) //是否已达到stop距离
                         {
                             Debug.LogWarning("isStopFollow");

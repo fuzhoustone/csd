@@ -6,6 +6,9 @@ using stoneState;
 public class roleProperty:MonoBehaviour
 {
     [SerializeField]
+    public int roleSort = 0; //0是敌人，1是自己人
+
+    [SerializeField]
     public int hpMax;
     [SerializeField]
     public int mpMax;
@@ -53,7 +56,7 @@ public class roleProperty:MonoBehaviour
 
     private const string csHpUI = "Prefabs/hpSlider";
 
-    public void InitData(Transform pCamerTransform, Transform pCanvasTransform) {
+    public void InitData(Transform pCamerTransform, Transform pCanvasTransform, int lRoleSort = 0) {
         //hpMax = 100;
         hp = hpMax;
        // mpMax = 100;
@@ -66,6 +69,8 @@ public class roleProperty:MonoBehaviour
         mainCanvas = pCanvasTransform.GetComponent<Canvas>();
 
         createHpUI();
+
+        roleSort = lRoleSort;
     }
 
     void Update()
@@ -113,9 +118,12 @@ public class roleProperty:MonoBehaviour
 
     public void showUI()
     {
-        hpUI.gameObject.SetActive(true);
-        isShowUI = true;
-        refreshHpSilder();
+        if (hpUI.gameObject.activeSelf == false)
+        {
+            hpUI.gameObject.SetActive(true);
+            isShowUI = true;
+            refreshHpSilder();
+        }
     }
 
     public void hideUI()

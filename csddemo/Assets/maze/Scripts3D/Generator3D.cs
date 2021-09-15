@@ -136,7 +136,7 @@ public class Generator3D : MonoBehaviour {
 
     void Start() {
         int ranSeed = System.DateTime.Now.Second;
-        ranSeed = 28; //暂用
+        ranSeed = 29; //暂用
         Debug.LogWarning("Random seed:"+ranSeed.ToString());
         random = new Random(ranSeed);
         grid = new Grid3D<CellType>(size, Vector3Int.zero);
@@ -584,20 +584,27 @@ public class Generator3D : MonoBehaviour {
 
 
     private void addMonster(Vector3 pPos, bool isMonster) {
+        if (isMonster == false) {
+            pPos.x += 0.2f;
+            pPos.z += 0.2f;
+        }
+
         GameObject tmpMonster = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
         tmpMonster.name = "monster_"+ monsterID.ToString();
         monsterID++;
 
         roleProperty tmpPro = tmpMonster.GetComponent<roleProperty>();
-        tmpPro.InitData(camerTransform, canvasTransform);
+        
 
         if (isMonster)
         {
+            tmpPro.InitData(camerTransform, canvasTransform,0);
             CapsuleCollider tmpColl = tmpMonster.GetComponent<CapsuleCollider>();
-            tmpColl.isTrigger = true;
+            //tmpColl.isTrigger = true;
             tmpMonster.AddComponent<monsterNormalAI>();
         }
         else {
+            tmpPro.InitData(camerTransform, canvasTransform,1);
             followRole tmpFollow = tmpMonster.AddComponent<followRole>();
             //tmpFollow.mainObj = friendRole;
             friendRole = tmpMonster;

@@ -12,7 +12,9 @@ public class UCharacterController {
     public RoleChangeColorWeapon roleChangeColorWeaponMgr = null;
 
     //角色动作状态管理
-    public RoleStateMgr mainRoleState = null;
+    //public RoleStateMgr mainRoleState = null;
+
+    public roleAI mainRoleState = null;
 
     //角色位置及Camer管理
     public RolePosAndCamerMgr rolePosCamer = null;
@@ -63,9 +65,15 @@ public class UCharacterController {
     public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
         App.Game.character = this;
         //mainRoleState = new RoleStateMgr();
-        mainRoleState = roleInstance.transform.GetComponent<RoleStateMgr>();
+        //mainRoleState = roleInstance.transform.GetComponent<RoleStateMgr>();
+        //mainRoleState.initData(roleInstance);
 
-        mainRoleState.initData(roleInstance);
+        mainRoleState = roleInstance.transform.GetComponent<roleAI>();
+        mainRoleState.AIInitData(roleInstance);
+
+        //baseAI tmpRoleAI = roleInstance.transform.GetComponent<baseAI>();
+        //tmpRoleAI.AIInitData(roleInstance);
+        
         //mainRoleState.setJumpTime(csJumpUpTime * 2);
         /*
         jumpCheck = roleInstance.transform.GetComponent<jumpColider>();
@@ -76,7 +84,7 @@ public class UCharacterController {
         rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas);
 
         mainPro = roleInstance.transform.GetComponent<roleProperty>();
-        mainPro.InitData(pCameraTransform, pCanvas.transform);
+        mainPro.InitData(pCameraTransform, pCanvas.transform,1);
 
         //计算跳跃的加速度
         //s=0.5*a*t*t  a= s/0.5/t/t 
@@ -376,7 +384,7 @@ public class UCharacterController {
         }
 #else
             //目前不使用跳跃功能
-            mainRoleState.updataRoleControl(leftright, downup, isfire, false);
+            mainRoleState.updataAIRoleControl(leftright, downup, isfire, false);
 #endif
 
             if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色是否有位移

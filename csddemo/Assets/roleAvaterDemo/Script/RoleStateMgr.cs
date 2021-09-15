@@ -8,7 +8,8 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
     private Animation m_animationController = null;
     // public CharacterController roleControl = null;
 
-    private roleState oldRoleState = roleState.init;
+    private baseAI selfAI = null;
+   // private roleState oldRoleState = roleState.init;
 
     //动作的常量
     private const string csDefault = "breath";
@@ -41,7 +42,8 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
 
     public void initData(GameObject paraObj) {
         paraObj.GetComponent<Rigidbody>().freezeRotation = true;
-        m_animationController = paraObj.GetComponent<Animation>(); 
+        m_animationController = paraObj.GetComponent<Animation>();
+        selfAI = this.transform.GetComponent<baseAI>();
 
         //设置播放速度，实际无效
         foreach (AnimationState state in m_animationController)
@@ -50,9 +52,10 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
                 state.speed = csPlaySpeedTime;
         }
 
-
-        oldRoleState = roleState.stand;
-        changeRoleState(roleState.stand);
+        //oldRoleState = roleState.stand;
+        selfAI.oldRoleState = roleState.stand;
+        
+        PlayState(roleState.stand);
     }
 
 
@@ -242,7 +245,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
         }
     }
 
-    private roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump)
+    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump)
     {
         roleState nowState = getRoleNowState();
         roleState res = roleState.init;
@@ -329,7 +332,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
         */
     }
 
-    private roleState getRoleNowState()
+    public roleState getRoleNowState()
     { //获得角色当前状态
         roleState res = roleState.stand;
 
@@ -361,8 +364,9 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
                 else
                 {
                     res = roleState.init;
-                    oldRoleState = res;
-                 //   Debug.Log("need set roleState init");
+                    //oldRoleState = res;
+                    selfAI.oldRoleState = res;
+                    //   Debug.Log("need set roleState init");
                 }
             }
             else if (m_animationController.IsPlaying(csJump))
@@ -381,8 +385,9 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
             else
             {
                 res = roleState.init;
-                oldRoleState = res;
-               // Debug.Log("need set roleState default init");
+                //oldRoleState = res;
+                selfAI.oldRoleState = res;
+                // Debug.Log("need set roleState default init");
             }
 
         }
@@ -399,7 +404,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
     }
     */
     
-
+/*
     public bool updataRoleControl(float h, float tmpv, bool isfire, bool isJump = false)
     {
         roleState lState = getRoleNowState();
@@ -413,10 +418,11 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
             if (lHopeState == roleState.jump) //切换成跳跃状态
                 isChangeToJump = true;
             oldRoleState = lHopeState;
-            changeRoleState(lHopeState);
+            PlayState(lHopeState);
         }
         
 
         return isChangeToJump;
     }
+    */
 }
