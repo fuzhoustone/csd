@@ -460,8 +460,11 @@ public class RolePosAndCamerMgr  {
         //先修改坐标
         // updateRoleWorldPosFromXYZCal(leftright, downup);
        // offsetY = 0.0f;
+
+        //修改人物坐标及摄相机坐标
         updateRoleWorldPosFromControlMat(leftright, downup, pDelayTime, offsetY);
 
+        //人物朝向修改
         if ((leftright != 0.0f) || (downup != 0.0f)) //朝向未发生改变
         {
             //再修改朝向

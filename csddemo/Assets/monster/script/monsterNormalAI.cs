@@ -52,31 +52,12 @@ public class monsterNormalAI : baseAI
             { //死亡
                 baseAI enemyAI = enemyObj.transform.GetComponent<baseAI>();
                 enemyAI.stateDieStart();
-                this.enemyObj = null;
-                /*
-                IbaseANI enemyANI = enemyObj.transform.GetComponent<IbaseANI>();
-                if (enemyANI.isInPlayEntry(roleState.die) == false) //死亡动画
-                {
-                    enemyANI.PlayState(roleState.die);
-                }*/
-
             }
+            getNowNewEnemyFromLst();
+            if(enemyObj != null)
+                lookAtEnemy(this.gameObject, enemyObj);
         }
-        /*
-        IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
-        bool isAttack = tmpAni.attackStateEnd(); //伤害计算及UI显示，以及是否死亡的结算
-
-
-        
-        if (isAttack)
-        {
-            tmpAni.PlayState(roleState.attack);
-        }
-        else {
-            tmpAni.PlayState(roleState.stand);
-        }
-        */
-    }
+     }
 
     public override void stateDieStart()
     {
@@ -89,19 +70,23 @@ public class monsterNormalAI : baseAI
 
     public override void stateDieEnd()
     {
-        IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
-        tmpAni.dieStateEnd();
+        if (aniCon == null)
+        {
+            aniCon = this.gameObject.GetComponent<IbaseANI>();
+        }
+        aniCon.dieStateEndAct();
+
     }
 
     private void Update()
     {
         if (selfIsLive())
         {
-            if (isInFight()) //战斗标识中
-            {
-                actToAttack(enemyObj); // 等战斗结束,无需处理
-            }
-            else if (hasEnemy()) //有敌人
+            //if (isInFight()) //战斗标识中
+            //{
+            //    actToAttack(enemyObj); // 等战斗结束,无需处理
+            //}
+            if (hasEnemy()) //有敌人
             {
                 actToAttack(enemyObj); //切换攻击状态攻击敌人
             }

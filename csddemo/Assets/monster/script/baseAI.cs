@@ -8,6 +8,7 @@ public class baseAI : MonoBehaviour
 {
     public delegate void StateActEnd();
     public GameObject enemyObj;  //是否有敌人
+    private List<GameObject> enemyLst; 
     public roleProperty selPro = null;
     public IbaseANI aniCon = null;
     public roleState oldRoleState = roleState.init;
@@ -22,6 +23,122 @@ public class baseAI : MonoBehaviour
     public const string csAttack = "attack1";
     public const string csAttack2 = "attack2";
     public const string csDie = "die";
+
+    private const float csAttackMax = 0.3f;  //攻击距离最远值
+    
+
+    void Start() {
+        initData();
+    }
+
+    public void initData() {
+        enemyLst = new List<GameObject>();
+    }
+
+    //后续清空场景使用
+    public void clearData() {
+        enemyLst.Clear();
+    }
+
+    private int getEnemyFromLst(GameObject enemyObj) {
+        int index = -1;
+        for (int i = 0; i < enemyLst.Count; i++)
+        {
+            if (enemyObj == enemyLst[i])
+            {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    public void addEnemyToLst(GameObject enemyObj) {
+        int index = getEnemyFromLst(enemyObj);
+        if (index < 0) {
+            enemyLst.Add(enemyObj);
+        }
+    }
+
+    //检测是否在攻击范围内
+    public bool isInAttackRange(GameObject tmpObj) {
+        bool inRange = false;
+        Vector3 enemyPos = tmpObj.transform.position;
+        Vector3 thisPos = this.transform.position;
+
+        float xAbs = Mathf.Abs(enemyPos.x - thisPos.x);
+        float zAbs = Mathf.Abs(enemyPos.z - thisPos.z);
+
+        if ((xAbs <= csAttackMax) && (zAbs <= csAttackMax)) //都在攻击范围内
+        {
+            inRange = true;
+        }
+
+        return inRange;
+    }
+
+    private bool isLife(GameObject tmpObj) {
+        bool res = true;
+        if (tmpObj.GetComponent<roleProperty>().hp > 0)
+            res = true;
+        else
+            res = false;
+
+        return res;
+    }
+
+    //检测当前敌人是否存活，是否在攻击范围内，
+    // 若当前敌人已死或跑开，则从列表中挑选目标为当前敌人
+    public GameObject getNowNewEnemyFromLst() {
+        GameObject newEnemy = null;
+        
+        if (enemyObj != null)
+        {
+            bool needRemove = false;
+            if (isLife(enemyObj) == false)
+            {
+                needRemove = true;
+            }
+            else if (isInAttackRange(enemyObj) == false) {
+                needRemove = true;
+            }
+
+            if (needRemove) {
+                removeEnemyFromLst(enemyObj);
+                enemyObj = null;
+            }
+        }
+
+        if(enemyObj == null) //当前为空，或被移除了
+        {
+            //先全部清理掉列表中不可攻击的目标
+            for (int i = enemyLst.Count - 1; i > 0; i--) {
+                GameObject tmpObj =enemyLst[i];
+                if ((isLife(tmpObj) == false) || (isInAttackRange(tmpObj) == false))
+                {
+                    enemyLst.RemoveAt(i);
+                }
+             }
+
+            if (enemyLst.Count > 0) { //还存在可攻击的目标
+                enemyObj = enemyLst[0];
+                newEnemy = enemyObj;
+            }
+
+        }
+
+        return newEnemy;
+    }
+
+    public bool removeEnemyFromLst(GameObject enemyObj) {
+        bool hasFind = false;
+        int index = getEnemyFromLst(enemyObj);
+        if (index >= 0) {
+            hasFind = true;
+            enemyLst.RemoveAt(index);
+        }
+        return hasFind;
+    }
 
     public virtual void stateStandEnd() {
         if(EventStandEnd != null)
@@ -111,7 +228,7 @@ public class baseAI : MonoBehaviour
         bool res = false;
         if (enemyObj != null)
         { //存在敌人
-            if (enemyObj.GetComponent<roleProperty>().hp > 0)
+            if (isLife(enemyObj))
             { //敌人存活
                 res = true;
             }
@@ -125,9 +242,53 @@ public class baseAI : MonoBehaviour
         bool res = false;
         if (enemyObj != null)
         {
-            res = true;
+            if (isLife(enemyObj))
+            { //敌人存活
+                res = true;
+            }
         }
         return res;
+    }
+
+    //根据输入按键来获得动作状态
+    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump, roleState nowState)
+    {
+        if (aniCon == null)
+        {
+            aniCon = this.gameObject.GetComponent<IbaseANI>();
+        }
+
+       // roleState nowState = aniCon.getRoleNowState();
+        roleState res = roleState.init;
+        
+        if (nowState == roleState.die)
+        {
+            res = nowState;
+            return res;
+        }
+
+       // roleState tmpState = roleState.init;
+        if ((h == 0.0f) && (tmpv == 0.0f)) //没有输入
+        {
+            if ((nowState == roleState.init)
+                || (nowState == roleState.run)
+                || (nowState == roleState.stand)) {
+                res = roleState.stand;
+            }
+
+            else if (nowState == roleState.attack) {
+                if(enemyObj != null)
+                    res = roleState.attack;
+                else
+                    res = roleState.stand;
+            }
+        }
+        else {
+            res = roleState.run;
+        }
+
+        return res;
+        
     }
 
     public void actToAttack(GameObject enemy)

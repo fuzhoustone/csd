@@ -16,11 +16,12 @@ public interface IbaseANI
    // bool attackStateEnd();
 
 
-    void dieStateEnd();
+    //死亡动作完成后的特定动作
+    void dieStateEndAct();
 
     roleState getRoleNowState();
 
-    roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump);
+   // roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump);
     //bool updataRoleControl(float h, float tmpv, bool isfire, bool isJump = false);
 
    // void setToAttack(Vector3 rolePos);

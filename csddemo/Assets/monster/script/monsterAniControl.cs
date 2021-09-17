@@ -186,19 +186,18 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     }
 
     //死亡动画播至最后一帧,只触发一次
-    public void dieStateEnd() {
+    public void dieStateEndAct() {
         StartDieFadeOut();
     }
 
     //待完成
     public roleState getRoleNowState() {
+        //需把所有状态遍历一遍才可知
+
         return roleState.stand;
     }
 
-    //待完成
-    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump) {
-        return roleState.stand;
-    }
+
 
        
     void Update()

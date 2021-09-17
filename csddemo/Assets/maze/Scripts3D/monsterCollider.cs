@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class monsterCollider : MonoBehaviour
 {
-    private UCharacterController charInstance = null;
     //private GameObject roleInstance = null;
     //private IbaseANI monControl = null;
+
+    private UCharacterController charInstance = null;
     private baseAI selfAI = null;
     private roleProperty selfProperty = null;
     private const string csTagRole = "Role";
@@ -36,23 +37,22 @@ public class monsterCollider : MonoBehaviour
         ////以上为容错及过滤其它碰撞///////////
         if (collision.collider.tag == csTagRole) //碰到角色
         {
-            if (selfAI.enemyObj == null)
+            roleProperty colPro = collision.gameObject.GetComponent<roleProperty>();
+            if ((colPro.roleSort != selfProperty.roleSort)
+                && (colPro.hp > 0)
+                && (selfProperty.hp > 0)
+                ) //是敌人，且双方存活
             {
-                roleProperty colPro = collision.gameObject.GetComponent<roleProperty>();
-                
-                if((colPro.roleSort != selfProperty.roleSort) 
-                    && (colPro.hp > 0)
-                    && (selfProperty.hp > 0)
-                    ) //是敌人，且双方存活
+                selfProperty.showUI(); //显示自己的UI即可
+                if (selfAI.enemyObj == null) //当前为空，马上攻击敌人
                 {
-
-                    colPro.showUI();
-                    selfProperty.showUI();
-                    selfAI.setEnemyObj(collision.gameObject);
-
+                    selfAI.setEnemyObj(collision.gameObject);   //设置朝向及攻击目标是相互的
+                    selfAI.addEnemyToLst(collision.gameObject);
                     selfAI.lookAtEnemy(selfAI.gameObject, selfAI.enemyObj);
                 }
-
+                else {                     //
+                    selfAI.addEnemyToLst(collision.gameObject);
+                }
             }
         }
         /*
@@ -72,27 +72,27 @@ public class monsterCollider : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        
-        if (other == null)
-            return;
         /*
-       if (charInstance == null)
-       {
-           charInstance = App.Game.character;
-       }
+       if (other == null)
+           return;
 
-               if (monControl == null)
-               {
-                   monControl = this.transform.GetComponent<IbaseANI>();
-               }
+      if (charInstance == null)
+      {
+          charInstance = App.Game.character;
+      }
 
-               if (monControl.IsDie() == false)
-               {
-                   if (monControl.IsInAttackState() == true)
-                   {
-                       monControl.setToStand();
-                   }
-               }
-               */
+              if (monControl == null)
+              {
+                  monControl = this.transform.GetComponent<IbaseANI>();
+              }
+
+              if (monControl.IsDie() == false)
+              {
+                  if (monControl.IsInAttackState() == true)
+                  {
+                      monControl.setToStand();
+                  }
+              }
+              */
     }
 }

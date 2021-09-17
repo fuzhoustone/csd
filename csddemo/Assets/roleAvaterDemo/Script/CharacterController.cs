@@ -301,7 +301,7 @@ public class UCharacterController {
         return res;
     }
     */
-       public void Update () {
+       public void Update () {  //手动输入检测
          if (isStart == false) {
               //  Debug.Log("game not start characterController");
                 return;
@@ -315,10 +315,11 @@ public class UCharacterController {
         
          float leftright = Input.GetAxis("Horizontal");
          float downup = Input.GetAxis("Vertical");
-         bool isfire = Input.GetButton("Fire1");
-         bool isSetJump = Input.GetButton("Jump");
-        //test();
+         bool isfire = false;      //取消按键攻击
 
+        /*
+        bool isfire = Input.GetButton("Fire1");
+        bool isSetJump = Input.GetButton("Jump");
         if ((roleIsEscape == false)) //不逃跑并正在攻击中
         {
             if (roleIsAttack)
@@ -331,7 +332,7 @@ public class UCharacterController {
         else {
             isfire = false;
         }
-
+        */
         float offsetY = 0.0f;
 
 #if usejump
@@ -383,11 +384,11 @@ public class UCharacterController {
             oldY = 0.0f; // jumpStartY;
         }
 #else
-            //目前不使用跳跃功能
+            //目前不使用跳跃功能，根据输入来修改主角的动作状态
             mainRoleState.updataAIRoleControl(leftright, downup, isfire, false);
 #endif
 
-            if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色是否有位移
+            if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色有位移
             {
                 rolePosCamer.updateRolePosWorld(leftright, downup, pDeltaTime, offsetY); //改变角色位置及朝向, 基于世界坐标
 

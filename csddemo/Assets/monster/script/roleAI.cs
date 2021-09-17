@@ -27,20 +27,16 @@ public class roleAI : baseAI
             roleProperty enemyPro = enemyObj.transform.GetComponent<roleProperty>();
             int Hp = RoleDamageCal.instance.DamageCal(selPro, enemyPro);
 
-            enemyPro.SubHpValue(Hp); //UI显示
-            if (enemyPro.hp <= 0)
-            { //死亡
+            enemyPro.SubHpValue(Hp); //UI扣血显示
+            if (enemyPro.hp <= 0) //敌人死亡
+            { 
                 baseAI enemyAI = enemyObj.transform.GetComponent<baseAI>();
                 enemyAI.stateDieStart();
-                this.enemyObj = null;
-                /*
-                IbaseANI enemyANI = enemyObj.transform.GetComponent<IbaseANI>();
-                if (enemyANI.isInPlayEntry(roleState.die) == false) //死亡动画
-                {
-                    enemyANI.PlayState(roleState.die);
-                }*/
-
+                //this.enemyObj = null;
             }
+            getNowNewEnemyFromLst();
+            if (enemyObj != null)
+                lookAtEnemy(this.gameObject, enemyObj);
         }
     }
 
@@ -62,17 +58,26 @@ public class roleAI : baseAI
 
         roleState lState = aniCon.getRoleNowState();
 
-        roleState lHopeState = aniCon.getHopeState(h, tmpv, isfire, isJump); //按键判断是否改变状态
+        roleState lHopeState = getHopeState(h, tmpv, isfire, isJump,lState); //按键判断是否改变状态
 
         // bool isChangeToJump = false;
         if ((lState != lHopeState)
-            && (oldRoleState != lHopeState))  //避免重复执行
+            //&& (oldRoleState != lHopeState)
+            )  //避免重复执行
         {
             //  if (lHopeState == roleState.jump) //切换成跳跃状态
             //      isChangeToJump = true;
             oldRoleState = lHopeState;
             aniCon.PlayState(lHopeState);
         }
+
+        if (lHopeState == roleState.stand) { //移动停止时再检测敌人
+            if (enemyObj != null) {
+                getNowNewEnemyFromLst();
+             }
+        }
+        
+
         //return isChangeToJump;
 
     }
@@ -80,6 +85,13 @@ public class roleAI : baseAI
 
     private void Update()
     {
-
+        if (selfIsLive()) {
+            if (hasEnemy()) {
+                if (isAIState(roleState.run) == false) { //不是移动中，就自动攻击
+                    PlayAIState(roleState.attack);
+                    lookAtEnemy(this.gameObject, enemyObj); //修改朝向
+                }
+            }
+        }
     }
 }

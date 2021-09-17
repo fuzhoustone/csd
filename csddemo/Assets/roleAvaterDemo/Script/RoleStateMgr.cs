@@ -142,8 +142,9 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
     */
 
 
-
-    public void dieStateEnd() {
+    
+       //待UI实现
+    public void dieStateEndAct() {
         Debug.LogError("game over");
     }
 /*
@@ -245,93 +246,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
         }
     }
 
-    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump)
-    {
-        roleState nowState = getRoleNowState();
-        roleState res = roleState.init;
-        /*
-        if (nowState == roleState.attack)
-        { //攻击状态中，不能被其它打断
-            //roleState = roleState.attack;
-            res = nowState;
-            return res;
-        }
-        */
-/*
-        if (nowState == roleState.jump)
-        { //跳跃状态中，累计时间未到不能切换
-            res = nowState;
-
-            if (jumpAllTime <= jumpTime) //跳跃上升中，  //继续保持跳跃
-            {
-                res = nowState;
-                //跳跃的累计时间超过 跳跃时间, 落地切换成站立
-
-            }
-            else if (isJumpDownTouch == false) //下降中，继续保持跳跃动作
-            {
-                res = nowState;
-            }
-            else
-            { //落地，改为站立动作
-                clearJumpTime();
-                res = roleState.stand;
-            }
-
-
-            return res;
-        }
-        */
-        if (nowState == roleState.die) {
-            res = nowState;
-            return res;
-        }
-
-        //接下来都是能打断的状态
-        roleState tmpState = roleState.init;
-        if ((h == 0.0f) && (tmpv == 0.0f))
-            tmpState = roleState.stand;
-        else
-            tmpState = roleState.run;
-
-        if (isfire)
-            tmpState = roleState.attack;
-        else if (isKeyJump) //有跳跃按键
-            tmpState = roleState.jump;
-
-        res = tmpState;
-
-        return res;
-        /*
-        //其它状态下，
-        if (isfire) {  //按下了攻击键
-            if ((nowState == roleState.init) //攻击能打断的状态如下
-                || (nowState == roleState.stand)
-                || (nowState == roleState.run)
-                )
-                res = roleState.attack;
-            else  
-                res = nowState;
-        }
-        else
-        {
-            if (isKeyJump) //有跳跃按键
-            {
-                res = roleState.jump;
-            }
-            else //无跳跃
-            {
-                if ((h == 0.0f) && (tmpv == 0.0f))
-                    res = roleState.stand;
-                else
-                    res = roleState.run;
-            }
-        }
-
-        return res;
-        */
-    }
-
+     
     public roleState getRoleNowState()
     { //获得角色当前状态
         roleState res = roleState.stand;
