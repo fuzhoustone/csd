@@ -34,11 +34,9 @@ public class UCharacterController {
 
         roleChangeColorWeaponMgr = new RoleChangeColorWeapon(index, skeleton, weapon, head, chest, hand, feet, combine);
         roleInstance = roleChangeColorWeaponMgr.GetRoleInstance();
-       // mainPro = roleInstance.transform.GetComponent<roleProperty>();
-        //roleDamageManager = new RoleDamageCal();
-        //roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
     }
+
     //跳的高度值
     private const float csJumpHeightMax = 0.5f;
     //跳跃时，升空的时间

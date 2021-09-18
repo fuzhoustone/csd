@@ -17,7 +17,7 @@ public class App
     private UCharacterMgr characterMgr = new UCharacterMgr();
     public UCharacterMgr CharacterMgr { get { return characterMgr; } }
 
-    public GameManager gameManager { set; get; }
+   // public GameManager gameManager { set; get; }
     public UCharacterController character { set; get; }
 
 

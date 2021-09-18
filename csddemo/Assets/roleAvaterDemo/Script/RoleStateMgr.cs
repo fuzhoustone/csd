@@ -53,7 +53,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
         }
 
         //oldRoleState = roleState.stand;
-        selfAI.oldRoleState = roleState.stand;
+        //selfAI.oldRoleState = roleState.stand;
         
         PlayState(roleState.stand);
     }
@@ -189,14 +189,14 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
         {
             case roleState.init:
                 {
-                    m_animationController.wrapMode = WrapMode.Loop;
+                    m_animationController.wrapMode = WrapMode.Once;
                     m_animationController.Play(csDefault);
                   //  Debug.LogWarning("change state to stand");
                 }
                 break;
             case roleState.stand:
                 {
-                    m_animationController.wrapMode = WrapMode.Loop;
+                    m_animationController.wrapMode = WrapMode.Once;
                     m_animationController.Play(csDefault);
                    // Debug.LogWarning("change state to stand");
                 }
@@ -204,7 +204,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
                 break;
             case roleState.run:
                 {
-                    m_animationController.wrapMode = WrapMode.Loop;
+                    m_animationController.wrapMode = WrapMode.Once;
                     m_animationController.Play(csRun);
                  //   Debug.LogWarning("change state to run");
                 }
@@ -249,17 +249,23 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
      
     public roleState getRoleNowState()
     { //获得角色当前状态
-        roleState res = roleState.stand;
+        roleState res = roleState.init;
 
         if (m_animationController != null)
         {
             if (m_animationController.IsPlaying(csDefault))
             {
-                res = roleState.stand;
+                if (m_animationController[csDefault].normalizedTime < 1.0f)
+                    res = roleState.stand;
+                else
+                    res = roleState.init;
             }
             else if (m_animationController.IsPlaying(csRun))
             {
-                res = roleState.run;
+                if (m_animationController[csRun].normalizedTime < 1.0f)
+                    res = roleState.run;
+                else
+                    res = roleState.init;
             }
             else if (
                m_animationController.IsPlaying(csAttack1)
@@ -269,7 +275,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
             {
                 res = roleState.attack;
             }
-            else if (m_animationController.IsPlaying(csAttackEnd)) //攻击动画未播完
+            else if (m_animationController.IsPlaying(csAttackEnd)) //攻击动画是否播完需判断
             {
                 if (m_animationController[csAttackEnd].normalizedTime < 1.0f)
                 {
@@ -280,7 +286,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
                 {
                     res = roleState.init;
                     //oldRoleState = res;
-                    selfAI.oldRoleState = res;
+                    //selfAI.oldRoleState = res;
                     //   Debug.Log("need set roleState init");
                 }
             }
@@ -301,7 +307,7 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
             {
                 res = roleState.init;
                 //oldRoleState = res;
-                selfAI.oldRoleState = res;
+               // selfAI.oldRoleState = res;
                 // Debug.Log("need set roleState default init");
             }
 
@@ -311,33 +317,4 @@ public class RoleStateMgr: MonoBehaviour,IbaseANI
     }
 
 
-    /*
-    private void setAttackEnd()
-    {
-        attcakStartEnd pAttackClass = App.Game.character.roleInstance.GetComponent<attcakStartEnd>();
-      //  pAttackClass.attackJudge(0);
-    }
-    */
-    
-/*
-    public bool updataRoleControl(float h, float tmpv, bool isfire, bool isJump = false)
-    {
-        roleState lState = getRoleNowState();
-
-        roleState lHopeState = getHopeState(h, tmpv, isfire, isJump); //按键判断是否改变状态
-
-        bool isChangeToJump = false;
-        if ((lState != lHopeState) 
-            && (oldRoleState != lHopeState))  //避免重复执行
-        {
-            if (lHopeState == roleState.jump) //切换成跳跃状态
-                isChangeToJump = true;
-            oldRoleState = lHopeState;
-            PlayState(lHopeState);
-        }
-        
-
-        return isChangeToJump;
-    }
-    */
 }

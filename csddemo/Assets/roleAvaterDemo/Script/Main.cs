@@ -38,7 +38,7 @@ public class Main : MonoBehaviour {
     public GameObject developerUI;
 
     // 游戏管理器，场景管理器
-    public GameManager gameManager;
+    //public GameManager gameManager;
     private bool isInit = false;
     private bool isStart = false;
 
@@ -124,7 +124,7 @@ public class Main : MonoBehaviour {
             "ch_pc_hou_" + index[DEFAULT_FEET] + "_jiao",
             combine);
 
-        App.Game.gameManager = this.gameManager;
+       // App.Game.gameManager = this.gameManager;
         // App.Game.character = this.character;
 
         character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);

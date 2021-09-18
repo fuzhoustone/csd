@@ -71,7 +71,7 @@ public class roleAI : baseAI
             aniCon.PlayState(lHopeState);
         }
 
-        if (lHopeState == roleState.stand) { //移动停止时再检测敌人
+        if ((lHopeState == roleState.stand)|| (lHopeState == roleState.run)) { //移动停止时再检测敌人
             if (enemyObj != null) {
                 getNowNewEnemyFromLst();
              }

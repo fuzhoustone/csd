@@ -270,7 +270,12 @@ public class baseAI : MonoBehaviour
        // roleState tmpState = roleState.init;
         if ((h == 0.0f) && (tmpv == 0.0f)) //没有输入
         {
-            if ((nowState == roleState.init)
+            if (enemyObj != null)  //有敌人，直接攻击
+                res = roleState.attack;
+            else                   //没敌人，就站立
+                res = roleState.stand;
+            /*
+             if ((nowState == roleState.init)
                 || (nowState == roleState.run)
                 || (nowState == roleState.stand)) {
                 res = roleState.stand;
@@ -282,6 +287,8 @@ public class baseAI : MonoBehaviour
                 else
                     res = roleState.stand;
             }
+
+             */
         }
         else {
             res = roleState.run;
