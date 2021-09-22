@@ -39,11 +39,6 @@ public class followRole : baseAI
     public GameObject mainObj;   //跟随的人物
    // public GameObject enemyObj;  //是否有敌人
     
-
-    //  const string csStand = "stand";
-    //  const string csRun = "run";
-    //  const string csAttack = "attack1";
-
     //跟随检测范围, csFollowStop 必需大于 csFollowMin
     const float csFollowMin = 0.4f;  //触发跟随
     const float csFollowMax = 2.0f;  //矩离太远不跟了
@@ -56,10 +51,6 @@ public class followRole : baseAI
     //const float csAttackZ = 0.1f;
 
     //private IbaseANI aniCon = null;
-
-    public void initData() {
-        
-    }
 
     public override void stateStandEnd()
     {
@@ -120,28 +111,7 @@ public class followRole : baseAI
         }
         aniCon.dieStateEndAct();
     }
-    /*
-    private bool isState(roleState state) {
-        bool res = false;
-        if (aniCon == null) {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
-        }
-
-        res = aniCon.isInPlayEntry(state);
-
-        return res;
-    }
-   
-    //切换动作状态
-    private void PlayState(roleState state) {
-        if (aniCon == null)
-        {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
-        }
-
-        aniCon.PlayState(state);
-    }
-     */
+    
     //若不是移动动作，动作切换为移动
     private void actToMove() {
         if (isAIState(roleState.run) == false) {
@@ -156,61 +126,11 @@ public class followRole : baseAI
             PlayAIState(roleState.stand);
         }
     }
-
     /*
-    //攻击敌人
-    private void actToAttack(GameObject enemy) {
-        //自己切换成攻击状态
-        if (isState(roleState.attack) == false) {
-            PlayState(roleState.attack);
-        }
-        //敌人的攻击状态，由敌人切换，无需此处理
-
-        //血条的显示由 双方碰撞时产生,无需此处理
-
-        //扣血由动作完成时计算,并结算死亡
-
-    }
-
-    private bool hasEnemy() {
-        bool res = false;
-        if (enemyObj != null) {
-            res = true;
-        }
-        return res;
+    public void initData() {
+        Debug.LogWarning("followRole.initData");
     }
     */
-    //待完成，相关的
-
-
-    //根据HP判断是否死亡
-    /*
-    private bool selfIsLive() {
-        bool res = true;
-        if (selPro == null) {
-            selPro = this.transform.GetComponent<roleProperty>();
-        }
-
-        if (selPro.hp <= 0)
-            res = false;
-
-        return res;
-    }
-   
-    //基本完成
-    private bool isInFight() {
-        bool res = false;
-        if (enemyObj != null) { //存在敌人
-            if (enemyObj.GetComponent<roleProperty>().hp > 0) { //敌人存活
-                res = true;
-            }
-        }
-
-        return res;
-    }
-
-     */
-
     private void Update()
     {
         if (selfIsLive()) {

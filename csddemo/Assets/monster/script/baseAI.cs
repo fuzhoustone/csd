@@ -32,6 +32,7 @@ public class baseAI : MonoBehaviour
     }
 
     public void initData() {
+       // Debug.LogWarning("baseAI.initData");
         enemyLst = new List<GameObject>();
     }
 
