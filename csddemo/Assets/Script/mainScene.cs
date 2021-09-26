@@ -601,21 +601,16 @@ public class mainScene : MonoBehaviour
         }
     }
 
-    void PlaceCube(Vector2Int location, Vector2Int size, Material material)
-    {
-        GameObject go = Instantiate(cubePrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
-        go.GetComponent<Transform>().localScale = new Vector3(size.x, 1, size.y);
-        go.GetComponent<MeshRenderer>().material = material;
-    }
-
     void PlaceRoom(Vector2Int location, Vector2Int size)
     {
-        PlaceCube(location, size, redMaterial);
+        PlaceCube(new Vector3Int(location.x,csPosY,location.y), 
+                  new Vector3Int(size.x,csPosY,size.y), redMaterial);
     }
 
     void PlaceHallway(Vector2Int location)
     {
-        PlaceCube(location, new Vector2Int(1, 1), blueMaterial);
+        PlaceCube(new Vector3Int(location.x, csPosY, location.y),
+                  new Vector3Int(1,1, 1), blueMaterial);
     }
 
 #if debug_maze
