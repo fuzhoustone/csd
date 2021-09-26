@@ -97,8 +97,8 @@ public class Main : MonoBehaviour {
             character.roleResume();
         }
     }
-
-    public void clearScene() {
+    /*
+    public void clearScene3D() {
         character.clearSceneAlpha(); 
         roleHide();
 
@@ -107,7 +107,7 @@ public class Main : MonoBehaviour {
         gen3D.clearAllMaze();
         gen3D.clearAllHpUI();
     }
-
+    */
     public void showScene() {
         roleShow();
     }
@@ -181,7 +181,7 @@ public class Main : MonoBehaviour {
         }
 
     }
-
+    /*
     private void initRole() {
         Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
         if (tmpMaze != null)
@@ -189,7 +189,7 @@ public class Main : MonoBehaviour {
         else
             createRole(new Vector3(5, 0.005f, -5));
     }
-
+    */
     public void getStateBtnClick() {
   //      App.Game.character.mainRoleState.printRoleState();
     }

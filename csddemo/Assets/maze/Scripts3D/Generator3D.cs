@@ -16,10 +16,10 @@ public class Generator3D : MonoBehaviour {
 
     [SerializeField]
     Vector3Int size;  //三维数组房间，但每个房间的大小随机
-    [SerializeField]
-    Vector3Int localOffset;
-    [SerializeField]
-    Vector3Int sizeOffset; 
+    //[SerializeField]
+    //Vector3Int localOffset;
+    //[SerializeField]
+    //Vector3Int sizeOffset; 
     [SerializeField]
     int roomCount;  //房间数,若因空间问题无法产生，则房间不产生
     [SerializeField]
@@ -136,7 +136,7 @@ public class Generator3D : MonoBehaviour {
 
     void Start() {
         int ranSeed = System.DateTime.Now.Second;
-        ranSeed = 29; //暂用
+       // ranSeed = 29; //暂用
         Debug.LogWarning("Random seed:"+ranSeed.ToString());
         random = new Random(ranSeed);
         grid = new Grid3D<CellType>(size, Vector3Int.zero);
@@ -307,8 +307,9 @@ public class Generator3D : MonoBehaviour {
             //Room newRoom = new Room(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, mazeParent);
             //Room buffer = new Room(location + new Vector3Int(-1, 0, -1), roomSize + new Vector3Int(2, 0, 2));
 
-           // Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null,0);
-            BoundsInt buffer = new BoundsInt(location + localOffset, roomSize + sizeOffset);
+            // Room buffer = new Room(location + localOffset, roomSize + sizeOffset, planePrefab, wallPrefab, roomPlaceMaterial, null,0);
+            //BoundsInt buffer = new BoundsInt(location + localOffset, roomSize + sizeOffset);
+            BoundsInt buffer = new BoundsInt(location + new Vector3Int(-1, 0, -1), roomSize + new Vector3Int(2, 0, 2));
 
             foreach (var room in rooms) { //判断房间区间是否可以加入
                  //if (Room.Intersect(room, buffer)) { //intersect里有个!, 若返回 true，说明无法添加
@@ -574,11 +575,7 @@ public class Generator3D : MonoBehaviour {
             if (hideIndex == 0) {
                 firstPos = tmpPath.sourVector;
             }
-            
-
-
         }
-
      //    hideIndex++;
     }
 

@@ -48,7 +48,11 @@ public class Generator2D : MonoBehaviour {
     }
 
     void Generate() {
-        random = new Random(0);
+        int ranSeed = System.DateTime.Now.Second;
+        Debug.LogWarning("Random seed:" + ranSeed.ToString());
+        random = new Random(ranSeed);
+        //random = new Random(0);
+
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
         rooms = new List<Room>();
 
