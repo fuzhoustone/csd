@@ -41,7 +41,7 @@ public class followRole : baseAI
     
     //跟随检测范围, csFollowStop 必需大于 csFollowMin
     const float csFollowMin = 0.4f;  //触发跟随
-    const float csFollowMax = 2.0f;  //矩离太远不跟了
+    const float csFollowMax = 1.0f;  //矩离太远不跟了
     const float csFollowStop = 0.2f;  //走到指定矩离，不再继续跟随 
 
     const float csMoveOffset = 0.002f;  //每帧移动范围
