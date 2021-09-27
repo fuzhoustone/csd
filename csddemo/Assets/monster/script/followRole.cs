@@ -134,54 +134,47 @@ public class followRole : baseAI
     private void Update()
     {
         if (selfIsLive()) {
-            if (isInFight()) //战斗标识中
+            if (hasEnemy()) //有敌人
             {
-                actToAttack(enemyObj); // 等战斗结束,无需处理
-
+                actToAttack(enemyObj); //切换攻击状态攻击敌人
             }
-            else { //非战斗状态
-                if (hasEnemy()) //有敌人
-                {
-                    actToAttack(enemyObj); //切换攻击状态攻击敌人
-                }
-                else if (mainObj != null) //有跟随目标
-                {
-                    float offsetX = 0.0f;
-                    float offsetZ = 0.0f;
+            else if (mainObj != null) //有跟随目标
+            {
+                float offsetX = 0.0f;
+                float offsetZ = 0.0f;
 
-                    if (isAIState(roleState.run)) { //当前移动中
-                        if (isStopFollow(ref offsetX, ref offsetZ)) //是否已达到stop距离
-                        {
-                            Debug.LogWarning("isStopFollow");
-                            actToStand(); //停止跟随，转换站立状态
-                        }
-                        else
-                        { //继续跟随主角：发生位移，并保持移动状态，
-                            //isFollow(ref offsetX, ref offsetZ); //必然产生跟随
-
-                            Vector3 thisPos = this.transform.position;
-                            Vector3 newPos = new Vector3(thisPos.x + offsetX,
-                                                         thisPos.y,
-                                                         thisPos.z + offsetZ);
-                            this.transform.LookAt(mainObj.transform);
-                            this.transform.position = newPos;
-                            actToMove(); 
-                        }
-                    }
-                    else if( isFollow(ref offsetX, ref offsetZ)) //是否切换成跟随
+                if (isAIState(roleState.run)) { //当前移动中
+                    if (isStopFollow(ref offsetX, ref offsetZ)) //是否已达到stop距离
                     {
-                        Vector3 thisPos = this.transform.position;
-                        Vector3 newPos = new Vector3(thisPos.x + offsetX,
-                                                     thisPos.y,
-                                                     thisPos.z + offsetZ);
-                        this.transform.LookAt(mainObj.transform);
-                        this.transform.position = newPos;
-                        actToMove();
+                        Debug.LogWarning("isStopFollow");
+                        actToStand(); //停止跟随，转换站立状态
                     }
                     else
-                    {
-                        actToStand();
+                    { //继续跟随主角：发生位移，并保持移动状态，
+                        //isFollow(ref offsetX, ref offsetZ); //必然产生跟随
+
+                        Vector3 thisPos = this.transform.position;
+                        Vector3 newPos = new Vector3(thisPos.x + offsetX,
+                                                        thisPos.y,
+                                                        thisPos.z + offsetZ);
+                        this.transform.LookAt(mainObj.transform);
+                        this.transform.position = newPos;
+                        actToMove(); 
                     }
+                }
+                else if( isFollow(ref offsetX, ref offsetZ)) //是否切换成跟随
+                {
+                    Vector3 thisPos = this.transform.position;
+                    Vector3 newPos = new Vector3(thisPos.x + offsetX,
+                                                    thisPos.y,
+                                                    thisPos.z + offsetZ);
+                    this.transform.LookAt(mainObj.transform);
+                    this.transform.position = newPos;
+                    actToMove();
+                }
+                else
+                {
+                    actToStand();
                 }
             }
         }

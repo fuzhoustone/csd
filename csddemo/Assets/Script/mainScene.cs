@@ -137,6 +137,7 @@ public class mainScene : MonoBehaviour
     void createLandScape()
     {
         int ranSeed = System.DateTime.Now.Second;
+        ranSeed = 31;
         Debug.LogWarning("Random seed:" + ranSeed.ToString());
         random = new Random(ranSeed);
         //random = new Random(0);
@@ -273,6 +274,7 @@ public class mainScene : MonoBehaviour
             if (hideIndex == 0)
             {
                 isMonster = false;
+                addMonster(new Vector3(tmpPath.sourVector.x, csPosY, tmpPath.sourVector.y), false);
             }
 
             judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector, isMonster);
@@ -290,7 +292,7 @@ public class mainScene : MonoBehaviour
         //    hideIndex++;
     }
 
-
+    //判断两个相交的地块之间哪面墙要敲掉, 发现相交时返回true
     private bool judgePlaceDelWall(Vector2Int sourPos, Vector2Int destPos, bool isMonster)
     {
         bool res = false;
@@ -321,7 +323,8 @@ public class mainScene : MonoBehaviour
         {  //Z轴相交集， X相同的
            // if (sourPos.y == destPos.y) //Y轴相同
            // {
-                addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
+                if(isMonster)
+                    addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
 
                 //if (sourPos.z == destPos.z + 1) //sourPos在destPos的上面
                 if (sourPos.y > destPos.y)
@@ -336,7 +339,8 @@ public class mainScene : MonoBehaviour
         }
         else if (sourPos.y == destPos.y)
         { //X轴相交集， Z相同的
-            addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
+            if (isMonster)
+                addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
 
             if (sourPos.x > destPos.x)
             //if (sourPos.x == destPos.x + 1) //sourPos在destPos的右边

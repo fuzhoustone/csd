@@ -223,7 +223,7 @@ public class baseAI : MonoBehaviour
 
         aniCon.PlayState(state);
     }
-
+    /*
     public bool isInFight()
     {
         bool res = false;
@@ -237,7 +237,7 @@ public class baseAI : MonoBehaviour
 
         return res;
     }
-
+    */
     public bool hasEnemy()
     {
         bool res = false;
@@ -246,6 +246,10 @@ public class baseAI : MonoBehaviour
             if (isLife(enemyObj))
             { //敌人存活
                 res = true;
+            }
+            else
+            {
+                getNowNewEnemyFromLst();
             }
         }
         return res;
