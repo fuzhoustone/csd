@@ -189,7 +189,7 @@ public class mainScene : MonoBehaviour
       //  createStairsLst(); //生成楼梯
 
         hideHallWay(); //隐藏墙壁并生成怪物
-
+        createMonterInHallWay();
 #if DebugCube
                 drawLinePath();
 #endif
@@ -265,6 +265,14 @@ public class mainScene : MonoBehaviour
         //go.name = roomName + nameIndex.ToString() + "_" + placeIndex.ToString();
     }
 
+    public void createMonterInHallWay() {
+        for (int i = 0; i < hallways.Count; i++) {
+            HallWay2D tmpHallWay = hallways[i];
+            Vector3 tmpPos = new Vector3(tmpHallWay.pos.x, csPosY, tmpHallWay.pos.y);
+            addMonster(tmpPos,true);
+        }
+
+    }
     public void hideHallWay()
     {
         for (int hideIndex = 0; hideIndex < pathLst.Count; hideIndex++)
@@ -323,8 +331,8 @@ public class mainScene : MonoBehaviour
         {  //Z轴相交集， X相同的
            // if (sourPos.y == destPos.y) //Y轴相同
            // {
-                if(isMonster)
-                    addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
+                //if(isMonster)
+                //    addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
 
                 //if (sourPos.z == destPos.z + 1) //sourPos在destPos的上面
                 if (sourPos.y > destPos.y)
@@ -339,8 +347,8 @@ public class mainScene : MonoBehaviour
         }
         else if (sourPos.y == destPos.y)
         { //X轴相交集， Z相同的
-            if (isMonster)
-                addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
+            //if (isMonster)
+            //    addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
 
             if (sourPos.x > destPos.x)
             //if (sourPos.x == destPos.x + 1) //sourPos在destPos的右边
@@ -577,12 +585,12 @@ public class mainScene : MonoBehaviour
 
                         //add by csd begin
                         bool isCreate = grid.getDataIsCreate(pos);
-                        if (isCreate == false)
+                        if (isCreate == false) //不是第一次经过
                         {
                             //HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
                             GameObject newHallWayObj = new GameObject();
                             newHallWayObj.transform.SetParent(mazeParent.transform);
-                            newHallWayObj.name = "hallway" + pos.x.ToString() + "_" + pos.y.ToString() + "_" + pos.y.ToString();
+                            newHallWayObj.name = "hallway" + pos.x.ToString() + "_" + csPosY.ToString() + "_" + pos.y.ToString();
 
                             HallWay2D newHallWay = newHallWayObj.AddComponent<HallWay2D>();
                             newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
