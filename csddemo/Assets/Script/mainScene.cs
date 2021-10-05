@@ -132,7 +132,7 @@ public class mainScene : MonoBehaviour
     void Start()
     {
         initData();
-       // createLandScape();
+        createLandScape();
     }
 
     private void initData() {
@@ -170,8 +170,8 @@ public class mainScene : MonoBehaviour
 
         rooms.Clear();
 
-        //placeGrid.initData();
-        //placeGrid.clearData(null);
+        placeGrid.initData();
+        placeGrid.clearData(null);
 
         hallways.Clear();
 
@@ -187,19 +187,17 @@ public class mainScene : MonoBehaviour
     {
         isInitFinish = false;
 
-        Main tmpMain = this.transform.GetComponent<Main>();
-        tmpMain.roleClear();
-
-        //character.clearSceneAlpha();
-        //roleHide();
         sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
         sceneAlpha.clearData();
 
+        Main tmpMain = this.transform.GetComponent<Main>();
+        tmpMain.roleClear();
 
+        clearData();
         clearAllMonster();
         clearAllMaze();
         clearAllHpUI();
-        clearData();
+        
     }
 
     private void createScene()
@@ -857,7 +855,7 @@ public class mainScene : MonoBehaviour
             GameObject.Destroy(pTran.gameObject);
         }
     }
-
+/*
     public void clearRooms()
     {
         Debug.LogWarning("clearRooms");
@@ -868,4 +866,5 @@ public class mainScene : MonoBehaviour
 
         rooms.Clear();
     }
+    */
 }

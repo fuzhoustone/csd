@@ -13,7 +13,7 @@ public class SceneStart2D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //SceneStart();
     }
 
     public void SceneStart() {
