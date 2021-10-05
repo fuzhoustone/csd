@@ -18,6 +18,8 @@ public class Grid2D<T> {
 
         data = new T[size.x * size.y];
         //add by csd
+        initData();
+        /*
         int maxCount = size.x * size.y;
         dataObjLst = new Room2D[maxCount];
         dataIsCreate = new bool[maxCount];
@@ -25,7 +27,27 @@ public class Grid2D<T> {
         {
             dataIsCreate[i] = false;
         }
+        */
         //add by csd end
+    }
+
+    public void initData() {
+        int maxCount = Size.x * Size.y;
+        dataObjLst = new Room2D[maxCount];
+        dataIsCreate = new bool[maxCount];
+        for (int i = 0; i < maxCount; i++)
+        {
+            dataIsCreate[i] = false;
+            dataObjLst[i] = null;
+        }
+    }
+
+    public void clearData(T value) {
+        int maxCount = Size.x * Size.y;
+        for (int i = 0; i < maxCount; i++)
+        {
+            data[i] = value;
+        }
     }
 
     //add by csd

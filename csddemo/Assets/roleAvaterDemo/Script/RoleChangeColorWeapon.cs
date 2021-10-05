@@ -47,6 +47,16 @@ public class RoleChangeColorWeapon  {
         return pRoleInstance;
     }
 
+    public void dataDestory() {
+        
+        if(pRoleInstance != null)
+            GameObject.Destroy(pRoleInstance);
+        if (WeaponInstance != null)
+            GameObject.Destroy(WeaponInstance);
+        if (WeaponInstance_l != null)
+            GameObject.Destroy(WeaponInstance_l);
+    }
+
     public RoleChangeColorWeapon(int index, string skeleton, string weapon, string head, string chest, string hand, string feet, bool combine = false)
     {
 

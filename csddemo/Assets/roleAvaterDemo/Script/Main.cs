@@ -74,23 +74,40 @@ public class Main : MonoBehaviour {
         return isInit;
     }
 
+    private void initRoleLst(bool[] tmpLst, int defVal) {
+        for (int i = 0; i < tmpLst.Length; i++) {
+            tmpLst[i] = false;
+        }
+        tmpLst[defVal] = true;
+    }
+
     private void initData() {
+        /*
         weapon_list[DEFAULT_WEAPON] = true;
         head_list[DEFAULT_HEAD] = true;
         chest_list[DEFAULT_CHEST] = true;
         hand_list[DEFAULT_HAND] = true;
         feet_list[DEFAULT_FEET] = true;
+        */
+        initRoleLst(weapon_list, DEFAULT_WEAPON);
+        initRoleLst(head_list, DEFAULT_HEAD);
+        initRoleLst(chest_list, DEFAULT_CHEST);
+        initRoleLst(hand_list, DEFAULT_HAND);
+        initRoleLst(feet_list, DEFAULT_FEET);
         isInit = true;
     }
 
-    private void roleHide() {
+    public void roleClear() {
         if (character != null) {
-            character.roleInstance.SetActive(false);
-            character.rolePause();
+            character.dataDestory();
+            character = null;
+            //character.
+            //character.roleInstance.SetActive(false);
+            //
         }
     }
 
-    private void roleShow() {
+    public void roleShow() {
         if (character != null)
         {
             character.roleInstance.SetActive(true);
@@ -112,6 +129,10 @@ public class Main : MonoBehaviour {
         roleShow();
     }
 
+    public void clearRole() {
+        // GameObject.Destroy(character);
+        character = null;
+    }
 
     public void createRole(Vector3 pPos) {
         // create an avatar

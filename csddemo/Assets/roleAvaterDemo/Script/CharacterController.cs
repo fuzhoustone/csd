@@ -30,6 +30,28 @@ public class UCharacterController {
     private bool roleIsEscape = false; //玩家逃跑中
     private bool roleIsDie = false; //玩家死亡
 
+    public void dataDestory() {
+        isStart = false;
+
+        roleInstance = null;
+
+        roleChangeColorWeaponMgr.dataDestory();
+        roleChangeColorWeaponMgr = null;
+
+        mainRoleState = null;
+        //角色位置及Camer管理
+        rolePosCamer = null;
+
+        mainPro = null;
+        attackMonster = null; //被玩家攻击的怪物
+
+        
+
+        roleIsAttack = false; //玩家是否正在攻击中
+        roleIsEscape = false; //玩家逃跑中
+        roleIsDie = false; //玩家死亡
+    }
+
     public UCharacterController (int index,string skeleton, string weapon, string head, string chest, string hand, string feet, bool combine = false) {
 
         roleChangeColorWeaponMgr = new RoleChangeColorWeapon(index, skeleton, weapon, head, chest, hand, feet, combine);

@@ -131,27 +131,12 @@ public class mainScene : MonoBehaviour
 
     void Start()
     {
-        createLandScape();
+        initData();
+       // createLandScape();
     }
 
-    void createLandScape()
-    {
-        int ranSeed = System.DateTime.Now.Second;
-        ranSeed = 31;
-        Debug.LogWarning("Random seed:" + ranSeed.ToString());
-        random = new Random(ranSeed);
-        //random = new Random(0);
-
-        grid = new Grid2D<CellType>(size, Vector2Int.zero);
+    private void initData() {
         rooms = new List<Room2D>();
-        /*
-        PlaceRooms();
-        Triangulate();
-        CreateHallways();
-        PathfindHallways();
-        */
-        //add by csd
-        placeGrid = new Grid2D<placeWall>(size, Vector2Int.zero);
 
         hallways = new List<HallWay2D>();
 
@@ -159,18 +144,62 @@ public class mainScene : MonoBehaviour
 
         cubeDebugLst = new List<GameObject>();
         hallwayDebugLst = new List<GameObject>();
-       // stairDebugLst = new List<GameObject>();
         lineDebugLst = new List<GameObject>();
         monsterID = 0;
-        //add by csd end
+    }
+    public void createLandScape()
+    {
+        int ranSeed = System.DateTime.Now.Second;
+       // ranSeed = 31;
+        Debug.LogWarning("Random seed:" + ranSeed.ToString());
+        random = new Random(ranSeed);
+        //random = new Random(0);
+
+        grid = new Grid2D<CellType>(size, Vector2Int.zero);
+
+        placeGrid = new Grid2D<placeWall>(size, Vector2Int.zero);
 
         createScene();
     }
 
-    private void clearScene()
+    private void clearData() {
+
+        grid.initData();
+        //GameObject.Destroy(grid);
+        grid.clearData(CellType.None);
+
+        rooms.Clear();
+
+        //placeGrid.initData();
+        //placeGrid.clearData(null);
+
+        hallways.Clear();
+
+        pathLst.Clear();
+
+        cubeDebugLst.Clear();
+        hallwayDebugLst.Clear();
+        lineDebugLst.Clear();
+        monsterID = 0;
+    }
+
+    public void clearScene()
     {
         isInitFinish = false;
 
+        Main tmpMain = this.transform.GetComponent<Main>();
+        tmpMain.roleClear();
+
+        //character.clearSceneAlpha();
+        //roleHide();
+        sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
+        sceneAlpha.clearData();
+
+
+        clearAllMonster();
+        clearAllMaze();
+        clearAllHpUI();
+        clearData();
     }
 
     private void createScene()
@@ -685,7 +714,6 @@ public class mainScene : MonoBehaviour
         }
         i++;
 
-
     }
 
     public void drawLinePath()
@@ -806,7 +834,7 @@ public class mainScene : MonoBehaviour
                 delTransform(tmpTran);
             }
 
-            GameObject.Destroy(pTran.gameObject);
+           // GameObject.Destroy(pTran.gameObject);
         }
     }
 

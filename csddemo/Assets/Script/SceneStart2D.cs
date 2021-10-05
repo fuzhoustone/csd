@@ -16,19 +16,29 @@ public class SceneStart2D : MonoBehaviour
 
     }
 
+    public void SceneStart() {
+        mainScene tmpScene = this.transform.GetComponent<mainScene>();
+        tmpScene.createLandScape();
+
+
+        sceneIsFinish = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (isSceneStart)
-        {
-            return;
-        }
+       // if (isSceneStart)
+       // {
+       //     return;
+       // }
 
         if (isInit == false)
         {
             sceneMaze = this.gameObject.transform.GetComponent<mainScene>();
             roleMain = this.gameObject.transform.GetComponent<Main>();
+            isInit = true;
         }
+
         if (sceneIsFinish == false)
         {
             if ((sceneMaze.getIsInit()) && (roleMain.getIsInit()))
@@ -44,6 +54,6 @@ public class SceneStart2D : MonoBehaviour
             }
         }
 
-   }
+    }
 
 }
