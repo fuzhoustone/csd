@@ -38,6 +38,8 @@ public class mainScene : MonoBehaviour
     [SerializeField]
     Vector2Int roomMaxSize;
     [SerializeField]
+    Vector2Int roomMinSize;
+    [SerializeField]
     GameObject cubePrefab;
     [SerializeField]
     Material redMaterial;
@@ -450,8 +452,8 @@ public class mainScene : MonoBehaviour
             );
 
             Vector2Int roomSize = new Vector2Int(
-                random.Next(1, roomMaxSize.x + 1),
-                random.Next(1, roomMaxSize.y + 1)
+                random.Next(roomMinSize.x, roomMaxSize.x + 1),
+                random.Next(roomMinSize.y, roomMaxSize.y + 1)
             );
 
             bool add = true;
