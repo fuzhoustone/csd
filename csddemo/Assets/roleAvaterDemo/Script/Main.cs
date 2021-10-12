@@ -28,6 +28,8 @@ public class Main : MonoBehaviour {
     // 摄像机位置
     public Transform cameraTransform;
 
+    public Transform mapCamerTransform;
+
     //UI摄像机
     public Transform uiCammeraTransform;
 
@@ -150,7 +152,7 @@ public class Main : MonoBehaviour {
 
         character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas);
+        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform);
 
         isStart = true;
 
@@ -242,9 +244,9 @@ public class Main : MonoBehaviour {
         }
     }
 
- 
 
-    
+#if DEBUG_role
+
     void OnGUI () {
 
         float btnWidth = 100.0f;
@@ -332,44 +334,9 @@ public class Main : MonoBehaviour {
 			}
 		}
 
-        /*
-        if (GUI.Button(new Rect(Screen.width - btnWidth, 0, btnWidth, btnHeight), "getState"))
-        {
-            App.Game.character.mainRoleState.printRoleState();
-        }
-
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY, btnWidth, btnHeight), "镜头复原"))
-        {
-            App.Game.character.rolePosCamer.resetCamerPosFromRole();
-          
-          
-        }
-        
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY*2, btnWidth, btnHeight), "Escape"))
-        {
-            
-           // Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
-           // if (tmpMaze != null)
-           //     createRole(tmpMaze.firstPos);
-           // else
-           //     createRole(new Vector3(5, 0.005f, -5));
-                
-
-            //App.Game.character.rolePosCamer.test();
-            App.Game.character.setRoleInEscape();
-            StartCoroutine(escapeIEn());
-        }
-
-        if (GUI.Button(new Rect(Screen.width - btnWidth, btnPosY * 3, btnWidth, btnHeight), "rolationCamerY"))
-        {
-            // App.Game.character.test();
-            App.Game.character.rolePosCamer.rolationCamerY(90.0f, 1.0f/40.0f);
-            //App.Game.character.rolePosCamer.test(0, 3.0f);
-        }
-        */
-
     }
 
+#endif
 
     const float fEscapeTime = 5.0f;
     IEnumerator escapeIEn()

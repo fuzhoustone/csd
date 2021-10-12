@@ -82,7 +82,7 @@ public class UCharacterController {
     //镜头的虚化
     private sceneAlphaControl sceneAlpha;
 
-    public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
+    public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform) {
         App.Game.character = this;
         //mainRoleState = new RoleStateMgr();
         //mainRoleState = roleInstance.transform.GetComponent<RoleStateMgr>();
@@ -101,7 +101,7 @@ public class UCharacterController {
         jumpCheck.isUse = false;
         */
         rolePosCamer = new RolePosAndCamerMgr();
-        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas);
+        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas, pMapCamerTransform);
 
         mainPro = roleInstance.transform.GetComponent<roleProperty>();
         mainPro.InitData(pCameraTransform, pCanvas.transform,1);

@@ -13,6 +13,14 @@ public class RolePosAndCamerMgr  {
     public Transform cameraTransform;
     private Camera mainCamer;
 
+    //小地图摄像机
+    private Camera smallMapCamer;
+    private const float csSmallMapPosY = 5.0f;
+    private const float csSmallMapRotationX = 90.0f;
+    private const float csSmallMapRotationY = 90.0f;
+    //private Vector3 smallMapWorldPos;
+    private Vector3 smallMapRotation;
+
     // 摄像机距离人物的距离
     public float cameraDistance = 10.0f;
 
@@ -94,14 +102,14 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform)
+    private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform, Transform pMapCamerTransform)
     {
         cameraTransform = pCameraTransform;
         mainCamer = pCameraTransform.GetComponent<Camera>();
+        smallMapCamer = pMapCamerTransform.GetComponent<Camera>();
 
         roleTranform = pRoleTranform;
-     //   mainCamera = cameraTransform.GetComponent<Camera>();
-       // gameManager = pGameManager;
+
        // isInit = true;
     }
 
@@ -119,7 +127,7 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas) {
+    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform) {
         roleControl = paraObj.GetComponent<CharacterController>();
 
         // 摄像机距离人物的距离
@@ -162,7 +170,7 @@ public class RolePosAndCamerMgr  {
         //jumpTimeAdd = 0.0f;
         scaleCamerParam = 1.0f;
         roleCanvas = pCanvas;
-        setCameraAndTrans(pCameraTransform, pRoleTranform);
+        setCameraAndTrans(pCameraTransform, pRoleTranform, pMapCamerTransform);
 
         roleTranform.transform.position = pPos;
         roleTranform.eulerAngles = new Vector3(0, 90, 0);
@@ -171,6 +179,7 @@ public class RolePosAndCamerMgr  {
         camerByRoleRefer.initRefer(); // 摄像机参照人物关系初始化
 
         roleMoveRotat = new Vector3(0, 90, 0);
+        smallMapRotation = new Vector3(90,90,0);
 
         resetCamerPosFromRole();
         //控制坐标系初始化
@@ -200,8 +209,26 @@ public class RolePosAndCamerMgr  {
         controlMat = Matrix4x4.TRS(roleTranform.transform.position, Quaternion.Euler(roleMoveRotat), Vector3.one); //不能受角色朝向影响
     }
 
+    private void updateSmallMapFromRoltateY(float roltateY) {
+        //float oldX = smallMapRotation.x;
+        float tmp = smallMapRotation.z + roltateY*(-1.0f);
+        if (tmp > 360.0f)
+        {
+            tmp -= 360.0f;
+        }
+        else if (tmp < -360.0f)
+        {
+            tmp += 360.0f;
+        }
+
+        smallMapRotation = new Vector3(csSmallMapRotationX, csSmallMapRotationY, tmp);
+        // roleMoveRotat = new Vector3(0, newY, 0);
+        
+        smallMapCamer.transform.eulerAngles = smallMapRotation;
+    }
+
     private void updateControlMatFromRoltateY(float roltateY) {
-        float oldY = controlMat.rotation.eulerAngles.y;
+       // float oldY = controlMat.rotation.eulerAngles.y;
         float newY = controlMat.rotation.eulerAngles.y + roltateY;
         if (newY > 360.0f) {
             newY -= 360.0f;
@@ -268,7 +295,7 @@ public class RolePosAndCamerMgr  {
          //利用 变换矩阵，计算机摄相机在世界坐标中的新点
          Vector3 newPos = tmpMat2.MultiplyPoint(tmpCamer);
 
-         cameraTransform.transform.position = newPos;
+         cameraTransform.position = newPos;
          
         //摄相机朝向人物
         cameraTransform.LookAt(roleTranform.transform);
@@ -306,6 +333,10 @@ public class RolePosAndCamerMgr  {
         return posBInA;
     }
 
+    private void rolationMapCamerY(float rolation) {
+
+    }
+
     //摄相机绕着参照点旋转， 角度始终lookat人物并非参照点
     public void rolationCamerY(float rolation,float pDeltaTime) {
         /*
@@ -325,7 +356,8 @@ public class RolePosAndCamerMgr  {
         Vector3 tmpBposInA = GetBPosInA(tmpRolatVect, tmpDefauRolat, cameraTransform.position, out AToWorldMat);
 
         //计算本次要旋转角度
-        Vector3 tmpRolation = new Vector3(0, rolation * csRolateY * pDeltaTime, 0);
+        float tmpRolateY = rolation * csRolateY * pDeltaTime;
+        Vector3 tmpRolation = new Vector3(0, tmpRolateY, 0);
 
         //算出摄相机旋转后，在参照点坐标系下的坐标
         Vector3 newPos = GetRotatePos(tmpBposInA, tmpRolation);
@@ -336,11 +368,22 @@ public class RolePosAndCamerMgr  {
         //2.摄相机朝向人物
         cameraTransform.LookAt(roleTranform);
 
+
+        
         //3.人物操控坐标系更新
-        updateControlMatFromRoltateY(rolation * csRolateY * pDeltaTime);
+        updateControlMatFromRoltateY(tmpRolateY);
+
+        //小地图旋转更新
+        updateSmallMapFromRoltateY(tmpRolateY);
+        //rolationMapCamerY(tmpRolateY);
 
     }
 
+    private void refreshMapCamerNewPosFromRoleRefer() {
+        Vector3 tmpMapCamerPos = new Vector3(roleTranform.position.x, csSmallMapPosY, roleTranform.position.z);
+        //smallMapWorldPos
+        smallMapCamer.transform.position = tmpMapCamerPos;
+    }
 
     //计算摄像机的世界坐标，根据人物坐标系，以及与人物的参照关系
     private Vector3 getCamerNewPosFromRoleRefer() {
@@ -370,6 +413,9 @@ public class RolePosAndCamerMgr  {
         //摄像机的世界坐标
         cameraTransform.position = getCamerNewPosFromRoleRefer();
 
+        //小地图的坐标更新
+        refreshMapCamerNewPosFromRoleRefer();
+
         //摄像机朝向人物
         cameraTransform.LookAt(roleTranform);
         
@@ -388,7 +434,7 @@ public class RolePosAndCamerMgr  {
         Matrix4x4 tmpCamerMat = Matrix4x4.TRS(cameraTransform.transform.position, Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0),Vector3.one);
 
         Vector3 newPos = tmpCamerMat.MultiplyPoint(tmpPos);
-        cameraTransform.transform.position = newPos;
+        cameraTransform.position = newPos;
     }
 
     //摄相机上下左右移动，用矩阵换算的方式,将不再使用
@@ -402,7 +448,7 @@ public class RolePosAndCamerMgr  {
 
         Vector3 nowPos = cameraTransform.transform.position;
         Vector3 newPos = new Vector3(nowPos.x + pMove.x, nowPos.y + pMove.y, nowPos.z + pMove.z);
-        cameraTransform.transform.position = newPos;
+        cameraTransform.position = newPos;
         
     }
 
@@ -432,6 +478,8 @@ public class RolePosAndCamerMgr  {
 
         //摄像机跟据和人物的缩放比例,人物的移动方向，重新计算位置, lookat等暂不改
         cameraTransform.position = getCamerNewPosFromRoleRefer();
+
+        refreshMapCamerNewPosFromRoleRefer();
     }
 /*
     //人物坐标计算，用直接用xyz换算,目前不使用
