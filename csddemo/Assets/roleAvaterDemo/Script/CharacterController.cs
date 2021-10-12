@@ -6,7 +6,8 @@ using DamageCal;
 public class UCharacterController {
 
     //角色对象
-    public GameObject roleInstance = null;  
+    public GameObject roleInstance = null;
+    public GameObject roleFlagInstance = null;
 
     //角色换肤管理
     public RoleChangeColorWeapon roleChangeColorWeaponMgr = null;
@@ -56,7 +57,7 @@ public class UCharacterController {
 
         roleChangeColorWeaponMgr = new RoleChangeColorWeapon(index, skeleton, weapon, head, chest, hand, feet, combine);
         roleInstance = roleChangeColorWeaponMgr.GetRoleInstance();
-
+        roleFlagInstance = roleChangeColorWeaponMgr.GetRoleFlagInstance();
     }
 
     //跳的高度值
@@ -82,7 +83,7 @@ public class UCharacterController {
     //镜头的虚化
     private sceneAlphaControl sceneAlpha;
 
-    public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform) {
+    public void initData(Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform, Transform pRoleFlagTrans) {
         App.Game.character = this;
         //mainRoleState = new RoleStateMgr();
         //mainRoleState = roleInstance.transform.GetComponent<RoleStateMgr>();
@@ -101,7 +102,7 @@ public class UCharacterController {
         jumpCheck.isUse = false;
         */
         rolePosCamer = new RolePosAndCamerMgr();
-        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas, pMapCamerTransform);
+        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas, pMapCamerTransform, pRoleFlagTrans);
 
         mainPro = roleInstance.transform.GetComponent<roleProperty>();
         mainPro.InitData(pCameraTransform, pCanvas.transform,1);

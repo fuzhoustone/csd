@@ -8,12 +8,14 @@ public class RoleChangeColorWeapon  {
     /// GameObject reference
     /// </summary>
     public GameObject pRoleInstance = null;  //角色对象
+    public GameObject pRoleFlagInstance = null;  //角色对象
     public GameObject WeaponInstance = null;
     public GameObject WeaponInstance_l = null;
 
     /// <summary>
     /// Equipment informations
     /// </summary>
+    private const string csRoleFlagRes = "roleflag";
 	public string skeleton;
     public string equipment_head;
     public string equipment_chest;
@@ -47,10 +49,16 @@ public class RoleChangeColorWeapon  {
         return pRoleInstance;
     }
 
+    public GameObject GetRoleFlagInstance() {
+        return pRoleFlagInstance;
+    }
+
     public void dataDestory() {
         
         if(pRoleInstance != null)
             GameObject.Destroy(pRoleInstance);
+        if(pRoleFlagInstance != null)
+            GameObject.Destroy(pRoleFlagInstance);
         if (WeaponInstance != null)
             GameObject.Destroy(WeaponInstance);
         if (WeaponInstance_l != null)
@@ -62,10 +70,11 @@ public class RoleChangeColorWeapon  {
 
         //Creates the skeleton object
         Object res = Resources.Load("Prefab/" + skeleton);
-
+        Object flagRes = Resources.Load("Prefab/" + csRoleFlagRes);
         //App.Game.character.roleInstance = GameObject.Instantiate(res) as GameObject;
         pRoleInstance = GameObject.Instantiate(res) as GameObject;
-        
+
+        pRoleFlagInstance = GameObject.Instantiate(flagRes) as GameObject;
 
         this.index = index;
         this.skeleton = skeleton;
@@ -80,26 +89,40 @@ public class RoleChangeColorWeapon  {
         equipments[2] = hand;
         equipments[3] = feet;
 
+        CombineSkinned(pRoleInstance, equipments, combine);
+        CombineSkinned(pRoleFlagInstance, equipments, combine);
+        /*
         // Create and collect other parts SkinnedMeshRednerer
         SkinnedMeshRenderer[] meshes = new SkinnedMeshRenderer[4];
+        SkinnedMeshRenderer[] flagmeshes = new SkinnedMeshRenderer[4];
+
         GameObject[] objects = new GameObject[4];
+        GameObject[] flagobjects = new GameObject[4];
+
         for (int i = 0; i < equipments.Length; i++)
         {
 
             res = Resources.Load("Prefab/" + equipments[i]);
             objects[i] = GameObject.Instantiate(res) as GameObject;
+            flagobjects[i] = GameObject.Instantiate(res) as GameObject;
+
             meshes[i] = objects[i].GetComponentInChildren<SkinnedMeshRenderer>();
+            flagmeshes[i] = flagobjects[i].GetComponentInChildren<SkinnedMeshRenderer>();
         }
 
         // Combine meshes
         App.Game.CharacterMgr.CombineSkinnedMgr.CombineObject(pRoleInstance, meshes, combine);
+        App.Game.CharacterMgr.CombineSkinnedMgr.CombineObject(pRoleFlagInstance, flagmeshes, combine);
 
         // Delete temporal resources
         for (int i = 0; i < objects.Length; i++)
         {
 
             GameObject.DestroyImmediate(objects[i].gameObject);
+            GameObject.DestroyImmediate(flagobjects[i].gameObject);
         }
+        */
+
 
         // Create weapon
         res = Resources.Load("Prefab/" + weapon);
@@ -207,6 +230,27 @@ public class RoleChangeColorWeapon  {
         return newWeapon;
     }
 
+    private void CombineSkinned(GameObject pInstance, string[] equipments, bool combine) {
+        Object res = null;
+        SkinnedMeshRenderer[] meshes = new SkinnedMeshRenderer[4];
+        GameObject[] objects = new GameObject[4];
+        for (int i = 0; i < equipments.Length; i++)
+        {
+
+            res = Resources.Load("Prefab/" + equipments[i]);
+            objects[i] = GameObject.Instantiate(res) as GameObject;
+            meshes[i] = objects[i].GetComponentInChildren<SkinnedMeshRenderer>();
+        }
+
+        App.Game.CharacterMgr.CombineSkinnedMgr.CombineObject(pInstance, meshes, combine);
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+
+            GameObject.DestroyImmediate(objects[i].gameObject);
+        }
+    }
+
     public void ChangeEquipment(int index, string equipment, bool combine = false)
     {
         switch (index)
@@ -232,6 +276,9 @@ public class RoleChangeColorWeapon  {
         equipments[2] = equipment_hand;
         equipments[3] = equipment_feet;
 
+        CombineSkinned(pRoleInstance, equipments, combine);
+        CombineSkinned(pRoleFlagInstance, equipments, combine);
+        /*
         Object res = null;
         SkinnedMeshRenderer[] meshes = new SkinnedMeshRenderer[4];
         GameObject[] objects = new GameObject[4];
@@ -250,6 +297,7 @@ public class RoleChangeColorWeapon  {
 
             GameObject.DestroyImmediate(objects[i].gameObject);
         }
+        */
     }
 
 }

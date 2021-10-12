@@ -152,7 +152,7 @@ public class Main : MonoBehaviour {
 
         character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform);
+        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform, character.roleFlagInstance.transform);
 
         isStart = true;
 

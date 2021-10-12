@@ -8,6 +8,7 @@ public class RolePosAndCamerMgr  {
 
     //角色的位置
     public Transform roleTranform;
+    public Transform roleFlagTranform;
 
     // 摄像机位置
     public Transform cameraTransform;
@@ -102,13 +103,15 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform, Transform pMapCamerTransform)
+    private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform, Transform pMapCamerTransform, Transform pFlagRoleTranform)
     {
         cameraTransform = pCameraTransform;
         mainCamer = pCameraTransform.GetComponent<Camera>();
         smallMapCamer = pMapCamerTransform.GetComponent<Camera>();
 
+
         roleTranform = pRoleTranform;
+        roleFlagTranform = pFlagRoleTranform;
 
        // isInit = true;
     }
@@ -127,7 +130,7 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform) {
+    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform, Transform pRoleFlagTrans) {
         roleControl = paraObj.GetComponent<CharacterController>();
 
         // 摄像机距离人物的距离
@@ -170,9 +173,11 @@ public class RolePosAndCamerMgr  {
         //jumpTimeAdd = 0.0f;
         scaleCamerParam = 1.0f;
         roleCanvas = pCanvas;
-        setCameraAndTrans(pCameraTransform, pRoleTranform, pMapCamerTransform);
+        setCameraAndTrans(pCameraTransform, pRoleTranform, pMapCamerTransform, pRoleFlagTrans);
 
-        roleTranform.transform.position = pPos;
+        roleTranform.position = pPos;
+        roleFlagTranform.position = pPos;
+
         roleTranform.eulerAngles = new Vector3(0, 90, 0);
 
         camerByRoleRefer = new PosRefer();
@@ -474,7 +479,7 @@ public class RolePosAndCamerMgr  {
 
         //人物的当前坐标 加上 偏移值，为移动后的坐标
         roleTranform.position = roleTranform.position + pMove;
-
+        roleFlagTranform.position = roleTranform.position;
 
         //摄像机跟据和人物的缩放比例,人物的移动方向，重新计算位置, lookat等暂不改
         cameraTransform.position = getCamerNewPosFromRoleRefer();
