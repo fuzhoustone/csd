@@ -58,6 +58,9 @@ public class mainScene : MonoBehaviour
     GameObject wallPrefab;
 
     [SerializeField]
+    GameObject goldPrefab;
+
+    [SerializeField]
     Material roomPlaceMaterial;
 
     [SerializeField]
@@ -68,6 +71,9 @@ public class mainScene : MonoBehaviour
 
     [SerializeField]
     public GameObject mazeParent = null; //地板，墙的父节点
+
+    [SerializeField]
+    public Transform goldParentTrans = null;
 
     [SerializeField]
     public GameObject pathParent = null; //路径的父节点
@@ -86,6 +92,7 @@ public class mainScene : MonoBehaviour
 
     //怪物ID索引
     private int monsterID = 0;
+    private int goldID = 0;
 
     Grid2D<placeWall> placeGrid; //地块的三维空间表
     List<HallWay2D> hallways;
@@ -148,6 +155,7 @@ public class mainScene : MonoBehaviour
         hallwayDebugLst = new List<GameObject>();
         lineDebugLst = new List<GameObject>();
         monsterID = 0;
+        goldID = 0;
     }
     public void createLandScape()
     {
@@ -183,6 +191,13 @@ public class mainScene : MonoBehaviour
         hallwayDebugLst.Clear();
         lineDebugLst.Clear();
         monsterID = 0;
+        goldID = 0;
+    }
+
+    public void reBuildScene() {
+        clearScene();
+        SceneStart2D tmpScript = this.transform.GetComponent<SceneStart2D>();
+        tmpScript.SceneStart();
     }
 
     public void clearScene()
@@ -195,7 +210,10 @@ public class mainScene : MonoBehaviour
         Main tmpMain = this.transform.GetComponent<Main>();
         tmpMain.roleClear();
 
+        
+
         clearData();
+        clearAllGold();
         clearAllMonster();
         clearAllMaze();
         clearAllHpUI();
@@ -218,7 +236,9 @@ public class mainScene : MonoBehaviour
       //  createStairsLst(); //生成楼梯
 
         hideHallWay(); //隐藏墙壁并生成怪物
-        createMonterInHallWay();
+        //createMonterInHallWay();
+        createMonterInRoom();
+        createGoldInHallWay();
 #if DebugCube
                 drawLinePath();
 #endif
@@ -234,17 +254,18 @@ public class mainScene : MonoBehaviour
             //int i = 0;
             Room2D tmpRoom = rooms[i];
             tmpRoom.makeAllPlane();  //铺房间
-            if (i == 0)
-            {
-                firstPos = new Vector3Int(tmpRoom.pos.x, csPosY, tmpRoom.pos.y);
+            //if (i == 0)
+            //{
+            //    firstPos = new Vector3Int(tmpRoom.pos.x, csPosY, tmpRoom.pos.y);
                 // break;
-            }
+            //}
             //break;
 #if !TESTPATH
             tmpRoom.makeAllWall();  //铺墙
 #endif
         }
     }
+
 
 
     public void createHallWayLst()
@@ -258,6 +279,15 @@ public class mainScene : MonoBehaviour
             //tmpHallWay.bounds.
             //PlaceHallway(pos);
         }
+    }
+
+
+    private void addGold(Vector3 pPos) {
+       // GameObject tmpGoldPrefab = null;
+
+        GameObject tmpGold = Instantiate(goldPrefab, pPos, Quaternion.identity, goldParentTrans);
+        tmpGold.name = "gold_" + goldID.ToString();
+        goldID++;
     }
 
     private void addMonster(Vector3 pPos, bool isMonster)
@@ -294,11 +324,30 @@ public class mainScene : MonoBehaviour
         //go.name = roomName + nameIndex.ToString() + "_" + placeIndex.ToString();
     }
 
-    public void createMonterInHallWay() {
+    public void createMonterInRoom() {
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            Room2D tmpRoom = rooms[i];
+            if (i == 0) //生成小弟
+            {
+                firstPos = new Vector3Int(tmpRoom.pos.x, csPosY, tmpRoom.pos.y);
+                addMonster(firstPos, false);
+            }
+            else {  //生成怪物
+                Vector2 tmpVect2 = tmpRoom.getCenterPos();
+                Vector3 tmpMonster = new Vector3(tmpVect2.x, csPosY, tmpVect2.y);
+                addMonster(tmpMonster, true);
+            }
+
+        }
+    }
+
+    public void createGoldInHallWay() {
         for (int i = 0; i < hallways.Count; i++) {
             HallWay2D tmpHallWay = hallways[i];
             Vector3 tmpPos = new Vector3(tmpHallWay.pos.x, csPosY, tmpHallWay.pos.y);
-            addMonster(tmpPos,true);
+            //addMonster(tmpPos,true);
+            addGold(tmpPos);
         }
 
     }
@@ -307,30 +356,25 @@ public class mainScene : MonoBehaviour
         for (int hideIndex = 0; hideIndex < pathLst.Count; hideIndex++)
         {
             pathVector tmpPath = pathLst[hideIndex];
-            bool isMonster = true;
-            if (hideIndex == 0)
+            /*
+            if (hideIndex == 0) //生成小弟
             {
-                isMonster = false;
                 addMonster(new Vector3(tmpPath.sourVector.x, csPosY, tmpPath.sourVector.y), false);
             }
+            */
+            judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector);
 
-            judgePlaceDelWall(tmpPath.sourVector, tmpPath.destVector, isMonster);
-
-
+            /*
             if (hideIndex == 0)
             {
                 firstPos = new Vector3Int(tmpPath.sourVector.x, csPosY,tmpPath.sourVector.y);
             }
-
-
-
+            */
         }
-
-        //    hideIndex++;
     }
 
     //判断两个相交的地块之间哪面墙要敲掉, 发现相交时返回true
-    private bool judgePlaceDelWall(Vector2Int sourPos, Vector2Int destPos, bool isMonster)
+    private bool judgePlaceDelWall(Vector2Int sourPos, Vector2Int destPos)
     {
         bool res = false;
         bool sourNeed = false; //是否要敲墙
@@ -360,8 +404,6 @@ public class mainScene : MonoBehaviour
         {  //Z轴相交集， X相同的
            // if (sourPos.y == destPos.y) //Y轴相同
            // {
-                //if(isMonster)
-                //    addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
 
                 //if (sourPos.z == destPos.z + 1) //sourPos在destPos的上面
                 if (sourPos.y > destPos.y)
@@ -376,8 +418,6 @@ public class mainScene : MonoBehaviour
         }
         else if (sourPos.y == destPos.y)
         { //X轴相交集， Z相同的
-            //if (isMonster)
-            //    addMonster(new Vector3(sourPos.x, csPosY, sourPos.y), isMonster);
 
             if (sourPos.x > destPos.x)
             //if (sourPos.x == destPos.x + 1) //sourPos在destPos的右边
@@ -797,6 +837,13 @@ public class mainScene : MonoBehaviour
             hallwayDebugLst.Add(go);
         }
 
+    }
+
+    private void clearAllGold() {
+        if (goldParentTrans != null)
+        {
+            delTransformAllChild(goldParentTrans);
+        }
     }
 
     public void clearAllMonster()

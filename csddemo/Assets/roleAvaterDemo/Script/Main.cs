@@ -101,11 +101,8 @@ public class Main : MonoBehaviour {
 
     public void roleClear() {
         if (character != null) {
-            character.dataDestory();
+            App.Game.CharacterMgr.RemoveChar();
             character = null;
-            //character.
-            //character.roleInstance.SetActive(false);
-            //
         }
     }
 
@@ -175,9 +172,12 @@ public class Main : MonoBehaviour {
             manualHeight = Mathf.RoundToInt(System.Convert.ToSingle(ManualWidth) / Screen.width * Screen.height);
         else
             manualHeight = ManualHeight;
-        Camera camera = uiCammeraTransform.GetComponent<Camera>();
-        float scale = System.Convert.ToSingle(manualHeight / 640f);
-        camera.fieldOfView *= scale;
+        if (uiCammeraTransform != null)
+        {
+            Camera camera = uiCammeraTransform.GetComponent<Camera>();
+            float scale = System.Convert.ToSingle(manualHeight / 640f);
+            camera.fieldOfView *= scale;
+        }
 
     }
 
@@ -190,7 +190,9 @@ public class Main : MonoBehaviour {
         //这种方法。第一个参数是带设置的Layer，第二个参数是可以与该Layer发生碰撞的Mask.运行一下，我们就看到碰撞矩阵发生了变化。
         initData();
         //update by csd
-        //createRole(new Vector3(5, 0.005f, -5));
+#if DebugRole
+        createRole(new Vector3(5, 0.005f, -5));
+#endif
         //isStart = true;
         //update end
     }

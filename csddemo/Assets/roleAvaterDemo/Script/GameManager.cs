@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {  //地图场景生成
         initRoad(0);
         initRoad(1);
         isStart = true;
+        
     }
 	
 	// Update is called once per frame

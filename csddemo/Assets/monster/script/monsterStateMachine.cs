@@ -3,11 +3,12 @@ using System.Collections;
 
 public class monsterStateMachine : StateMachineBehaviour
 {
+    /*
     public const string csStand = "stand";
     public const string csAttack = "attack1";
     public const string csAttack2 = "attack2";
     public const string csDie = "die";
-
+    */
     private const string csMainAniLayer = "mainAniLayer";
 
     public int mainLayer;

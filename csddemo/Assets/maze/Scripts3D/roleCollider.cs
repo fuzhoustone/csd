@@ -11,6 +11,7 @@ public class roleCollider : MonoBehaviour
     private baseAI selfAI = null;
     private roleProperty selfProperty = null;
     private const string csTagRole = "Role";
+    private const string csTagGold = "Gold";
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class roleCollider : MonoBehaviour
                 {
                     selfAI.setEnemyObj(collision.gameObject);
                     selfAI.addEnemyToLst(collision.gameObject);
-                  //  selfAI.lookAtEnemy(selfAI.gameObject, selfAI.enemyObj);
+                    //  selfAI.lookAtEnemy(selfAI.gameObject, selfAI.enemyObj);
                 }
                 else
                 {
@@ -47,5 +48,10 @@ public class roleCollider : MonoBehaviour
                 }
             }
         }
+        else if (collision.collider.tag == csTagGold) {
+           // Debug.LogWarning("colision gold");
+            collision.transform.gameObject.SetActive(false);
+        }
+
     }
 }

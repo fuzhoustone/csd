@@ -9,9 +9,10 @@ public class UCharacterMgr  {
 	public UCombineSkinnedMgr CombineSkinnedMgr { get{ return skinnedMgr; } }
 
     private int characterIndex = 0;
-	private Dictionary<int,UCharacterController> characterDic = new Dictionary<int, UCharacterController>();
+    private UCharacterController characterDic = null;
+    //private Dictionary<int,UCharacterController> characterDic = new Dictionary<int, UCharacterController>();
 
-	public UCharacterMgr () {
+    public UCharacterMgr () {
 
 		skinnedMgr = new UCombineSkinnedMgr ();
 	}
@@ -20,22 +21,32 @@ public class UCharacterMgr  {
 	{
 
 		UCharacterController instance = new UCharacterController (characterIndex,skeleton,weapon,head,chest,hand,feet,combine);
-		characterDic.Add(characterIndex,instance);
-		characterIndex ++;
+        characterDic = instance;
+        //characterDic.Add(characterIndex,instance);
+		//characterIndex ++;
 
 		return instance;
 	}
 
-	public void Removecharacter (CharacterController character)
+	public void RemoveChar ()
 	{
-
-	}
+        characterDic.dataDestory();
+        characterDic = null;
+    }
 
 	public void Update () {
+#if DebugRole
+        return ;
+#endif
 
-		foreach(UCharacterController character in characterDic.Values)
+        if (characterDic != null)
+            characterDic.Update();
+
+        /*
+        foreach (UCharacterController character in characterDic.Values)
 		{
 			character.Update();
 		}
+        */
 	}
 }

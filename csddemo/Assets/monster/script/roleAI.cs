@@ -62,7 +62,7 @@ public class roleAI : baseAI
 
         // bool isChangeToJump = false;
         if ((lState != lHopeState)
-            //&& (oldRoleState != lHopeState)
+           // && (oldRoleState != lHopeState)
             )  //避免重复执行
         {
             //  if (lHopeState == roleState.jump) //切换成跳跃状态
@@ -88,8 +88,12 @@ public class roleAI : baseAI
         if (selfIsLive()) {
             if (hasEnemy()) {
                 if (isAIState(roleState.run) == false) { //不是移动中，就自动攻击
-                    PlayAIState(roleState.attack);
-                    lookAtEnemy(this.gameObject, enemyObj); //修改朝向
+
+                    if (isAIState(roleState.attack) == false) {
+                        lookAtEnemy(this.gameObject, enemyObj); //修改朝向
+                    }
+                    
+                    actToAttack(enemyObj);
                 }
             }
         }

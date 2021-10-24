@@ -16,7 +16,8 @@ public class RoleChangeColorWeapon  {
     /// Equipment informations
     /// </summary>
     private const string csRoleFlagRes = "roleflag";
-	public string skeleton;
+    private const string csRoleDogRes = "roledog";
+    public string skeleton;
     public string equipment_head;
     public string equipment_chest;
     public string equipment_hand;
@@ -69,11 +70,11 @@ public class RoleChangeColorWeapon  {
     {
 
         //Creates the skeleton object
-        Object res = Resources.Load("Prefab/" + skeleton);
+        //Object res = Resources.Load("Prefab/" + skeleton);
+        Object res = Resources.Load("Prefab/" + csRoleDogRes);
         Object flagRes = Resources.Load("Prefab/" + csRoleFlagRes);
-        //App.Game.character.roleInstance = GameObject.Instantiate(res) as GameObject;
-        pRoleInstance = GameObject.Instantiate(res) as GameObject;
 
+        pRoleInstance = GameObject.Instantiate(res) as GameObject;
         pRoleFlagInstance = GameObject.Instantiate(flagRes) as GameObject;
 
         this.index = index;
@@ -89,79 +90,15 @@ public class RoleChangeColorWeapon  {
         equipments[2] = hand;
         equipments[3] = feet;
 
-        CombineSkinned(pRoleInstance, equipments, combine);
+        //CombineSkinned(pRoleInstance, equipments, combine);
         CombineSkinned(pRoleFlagInstance, equipments, combine);
-        /*
-        // Create and collect other parts SkinnedMeshRednerer
-        SkinnedMeshRenderer[] meshes = new SkinnedMeshRenderer[4];
-        SkinnedMeshRenderer[] flagmeshes = new SkinnedMeshRenderer[4];
-
-        GameObject[] objects = new GameObject[4];
-        GameObject[] flagobjects = new GameObject[4];
-
-        for (int i = 0; i < equipments.Length; i++)
-        {
-
-            res = Resources.Load("Prefab/" + equipments[i]);
-            objects[i] = GameObject.Instantiate(res) as GameObject;
-            flagobjects[i] = GameObject.Instantiate(res) as GameObject;
-
-            meshes[i] = objects[i].GetComponentInChildren<SkinnedMeshRenderer>();
-            flagmeshes[i] = flagobjects[i].GetComponentInChildren<SkinnedMeshRenderer>();
-        }
-
-        // Combine meshes
-        App.Game.CharacterMgr.CombineSkinnedMgr.CombineObject(pRoleInstance, meshes, combine);
-        App.Game.CharacterMgr.CombineSkinnedMgr.CombineObject(pRoleFlagInstance, flagmeshes, combine);
-
-        // Delete temporal resources
-        for (int i = 0; i < objects.Length; i++)
-        {
-
-            GameObject.DestroyImmediate(objects[i].gameObject);
-            GameObject.DestroyImmediate(flagobjects[i].gameObject);
-        }
-        */
-
-
+        
         // Create weapon
-        res = Resources.Load("Prefab/" + weapon);
+        //res = Resources.Load("Prefab/" + weapon);
 
-        WeaponInstance_l = setWeaponInstance(res, "weapon_hand_l");
+        //WeaponInstance_l = setWeaponInstance(res, "weapon_hand_l");
 
     }
-
-    /*
-    private void setInitAttackBox(string boxName)
-    {
-        Transform[] transforms = WeaponInstance_l.GetComponentsInChildren<Transform>();
-        foreach (Transform joint in transforms)
-        {
-            if (joint.name == boxName)
-            {// find the joint (need the support of art designer)
-                //pWeaponInstance.transform.parent = joint.gameObject.transform;
-                attackCollider box = joint.GetComponent<attackCollider>();
-                if (box != null)
-                {
-                   // box.roleInstance = ;
-                    Debug.LogWarning("set attackRoleinstance");
-                }
-                break;
-            }
-        }
-    }
-    */
-/*
-    public bool isInAttack()
-    {
-        bool res = false;
-        if (attackClass != null)
-        {
-            res = attackClass.isInAttack;
-        }
-        return res;
-    }
-    */
 
     private GameObject setWeaponInstance(Object res, string weapon_hand)
     {

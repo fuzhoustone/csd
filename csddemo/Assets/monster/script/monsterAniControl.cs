@@ -7,17 +7,28 @@ using stoneState;
 
 public class monsterAniControl : MonoBehaviour, IbaseANI
 {
-    const string csStand = "stand";
+    /*
+    const string strStand = "stand";
 
-    const string csRun = "run";
-    const string csAttack = "attack1";
-    const string csAttack2 = "attack2";
-    const string csDie = "die";
-
+    const string strRun = "run";
+    const string strAttack = "attack1";
+    const string strAttack2 = "attack2";
+    const string strDie = "die";
+    */
     const string csInAttack = "InAttack";
     const string csHp = "Hp";
     const string csMainAniLayer = "mainAniLayer";
 
+    
+    [SerializeField]
+    public string strStand = "stand";
+    public string strRun = "run";
+    public string strAttack = "attack1";
+    public string strAttack2 = "attack2";
+    public string strDie = "die";
+
+
+    private string nowState = "";
     private Animator animator = null;
     private int mainLayer = -2;
     private bool isInAttack = false;
@@ -52,42 +63,49 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     }
 
     public void initData(GameObject paraObj) {
+        if (animator == null) {
+            animator = GetComponent<Animator>();
+            mainLayer = animator.GetLayerIndex(csMainAniLayer);
+            mAlphaMai = new Material(Shader.Find("Unity Shaders Book/Chapter 7/NormalMapWorldAlpha"));
+            isInAttack = false;
 
+            mMonsterPro = this.transform.GetComponent<roleProperty>();
+        }
     }
 
     private string getStateStrName(roleState entryName) {
-        string statestr = csStand;
+        string statestr = strStand;
         switch (entryName)
         {
             case roleState.init:
                 {
-                    statestr = csStand;
+                    statestr = strStand;
                 }
                 break;
             case roleState.stand:
                 {
-                    statestr = csStand;
+                    statestr = strStand;
                 }
 
                 break;
             case roleState.run:
                 {
-                    statestr = csRun;
+                    statestr = strRun;
                 }
                 break;
             case roleState.attack:
                 {
-                    statestr = csAttack;
+                    statestr = strAttack;
                 }
                 break;
             case roleState.die:
                 {
-                    statestr = csDie;
+                    statestr = strDie;
                 }
                 break;
             default:
                 {
-                    statestr = csStand;
+                    statestr = strStand;
                 }
                 break;
         }
@@ -104,11 +122,12 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
         if (info.IsName(entryName))
         {
             //动画播到最后一帧 或未开始
-            if ((info.normalizedTime >= 1.0f) || (info.normalizedTime < 0.0f))
+            //if ((info.normalizedTime >= 1.0f) || (info.normalizedTime < 0.0f))
+            if (info.normalizedTime >= 1.0f) //动画播到最后一帧
             {
                 res = false;
             }
-            else
+            else //未开始或正在播
             {  //动画正在播
                 res = true;
 
@@ -192,9 +211,41 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
 
     //待完成
     public roleState getRoleNowState() {
+        roleState resState = roleState.init;
         //需把所有状态遍历一遍才可知
+        if (animator == null) {
+            return resState;
+        }
 
-        return roleState.stand;
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        if (info.normalizedTime >= 1.0f)
+        {
+            resState = roleState.init;
+        }
+        else
+        {
+            if (info.IsName(strStand)) {
+                resState = roleState.stand;
+            }
+            else if(info.IsName(strRun)) {
+                resState = roleState.run;
+            }
+            else if (info.IsName(strAttack))
+            {
+                resState = roleState.attack;
+            }
+            else if (info.IsName(strAttack2))
+            {
+                resState = roleState.attack;
+            }
+            else if (info.IsName(strDie))
+            {
+                resState = roleState.die;
+            }
+        }
+        
+
+         return resState;
     }
 
 

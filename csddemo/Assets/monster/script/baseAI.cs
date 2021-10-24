@@ -309,6 +309,7 @@ public class baseAI : MonoBehaviour
         if (isAIState(roleState.attack) == false)
         {
             PlayAIState(roleState.attack);
+          //  lookAtEnemy(this.gameObject, enemy);
         }
         //敌人的攻击状态，由敌人切换，无需此处理
 

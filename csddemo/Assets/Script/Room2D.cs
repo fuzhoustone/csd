@@ -77,6 +77,12 @@ public class Room2D : MonoBehaviour
             || (a.bounds.position.y >= (b.bounds.position.y + b.bounds.size.y)) || ((a.bounds.position.y + a.bounds.size.y) <= b.bounds.position.y));
     }
 
+    public Vector2 getCenterPos() {
+        float posX = bounds.position.x-0.5f + bounds.size.x / 2.0f;
+        float posY = bounds.position.y-0.5f + bounds.size.y / 2.0f;
+        Vector2 resVect2 = new Vector2(posX, posY);
+        return resVect2;
+    }
 
     private GameObject makePlane(int posX, int posZ)
     {
