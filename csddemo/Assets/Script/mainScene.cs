@@ -40,31 +40,31 @@ public class mainScene : MonoBehaviour
     [SerializeField]
     Vector2Int roomMinSize;
     [SerializeField]
-    GameObject cubePrefab;
+    GameObject cubePrefab = null;
     [SerializeField]
-    Material redMaterial;
+    Material redMaterial = null;
     [SerializeField]
-    Material blueMaterial;
+    Material blueMaterial = null;
     //add by csd
     [SerializeField]
-    Material greenMaterial;
+    Material greenMaterial = null;
     [SerializeField]
-    GameObject linePrefab;
+    GameObject linePrefab = null;
 
     [SerializeField]
-    GameObject planePrefab;
+    GameObject planePrefab = null;
 
     [SerializeField]
-    GameObject wallPrefab;
+    GameObject wallPrefab = null;
 
     [SerializeField]
-    GameObject goldPrefab;
+    GameObject goldPrefab = null;
 
     [SerializeField]
-    Material roomPlaceMaterial;
+    Material roomPlaceMaterial = null;
 
     [SerializeField]
-    Material hallWayPlaceMaterial;
+    Material hallWayPlaceMaterial = null;
 
     [SerializeField]
     public GameObject cubeParent = null;  //色块的父节点
@@ -86,6 +86,11 @@ public class mainScene : MonoBehaviour
 
     [SerializeField]
     public Transform canvasTransform = null; //画布
+
+    [SerializeField]
+    public Transform UIControlMgr = null;
+
+    //private UIMenuMgr menuMgr = null;
 
     [SerializeField]
     public Transform monsterManagerTrans = null;  //怪物管理
@@ -156,6 +161,9 @@ public class mainScene : MonoBehaviour
         lineDebugLst = new List<GameObject>();
         monsterID = 0;
         goldID = 0;
+
+        UIMenuMgr menuMgr = UIControlMgr.GetComponent<UIMenuMgr>();
+        CsdUIControlMgr.uiMgr().initData(menuMgr);
     }
     public void createLandScape()
     {
@@ -195,6 +203,10 @@ public class mainScene : MonoBehaviour
     }
 
     public void reBuildScene() {
+
+        // UIControlMgr.gameObject.AddComponent<UIMenuMgr>();
+
+        CsdUIControlMgr.uiMgr().uiMenu.nextLevelPanel.gameObject.SetActive(false); ;
         clearScene();
         SceneStart2D tmpScript = this.transform.GetComponent<SceneStart2D>();
         tmpScript.SceneStart();
@@ -235,9 +247,9 @@ public class mainScene : MonoBehaviour
 
       //  createStairsLst(); //生成楼梯
 
-        hideHallWay(); //隐藏墙壁并生成怪物
+        hideHallWay(); //隐藏墙壁
         //createMonterInHallWay();
-        createMonterInRoom();
+        createMonterInRoom(); //创建怪物 并 初始化关卡配置
         createGoldInHallWay();
 #if DebugCube
                 drawLinePath();
@@ -340,6 +352,20 @@ public class mainScene : MonoBehaviour
             }
 
         }
+
+        int monsterNum = rooms.Count - 1;
+        int tmp = monsterNum / 2;
+        if (tmp > 0) {
+            monsterNum = monsterNum / 2;
+        }
+
+        int level = 0;
+        stageMgr.stage().initStage(level, monsterNum, finishState);
+
+    }
+
+    private void finishState(int reward) {
+        CsdUIControlMgr.uiMgr().uiMenu.nextLevelPanel.gameObject.SetActive(true); 
     }
 
     public void createGoldInHallWay() {

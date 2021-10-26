@@ -51,6 +51,7 @@ public class roleCollider : MonoBehaviour
         else if (collision.collider.tag == csTagGold) {
            // Debug.LogWarning("colision gold");
             collision.transform.gameObject.SetActive(false);
+            stageMgr.stage().addReward();
         }
 
     }

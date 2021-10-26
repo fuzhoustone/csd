@@ -37,7 +37,7 @@ public class Main : MonoBehaviour {
     public Canvas roleCanvas;
 
     //开发人员列表UI
-    public GameObject developerUI;
+    //private GameObject developerUI;
 
     // 游戏管理器，场景管理器
     //public GameManager gameManager;
@@ -234,16 +234,16 @@ public class Main : MonoBehaviour {
 
     public void showDevelopUI()
     {
-        if (developerUI != null) {
-            developerUI.SetActive(true);
-        }
+       // if (developerUI != null) {
+            CsdUIControlMgr.uiMgr().uiMenu.panelDev.gameObject.SetActive(true);
+      //  }
     }
     public void HideDevlopUI() {
         Debug.Log("HideDevlopUI");
-        if (developerUI != null)
-        {
-            developerUI.SetActive(false);
-        }
+        //if (developerUI != null)
+        //{
+            CsdUIControlMgr.uiMgr().uiMenu.panelDev.gameObject.SetActive(false);
+        //}
     }
 
 

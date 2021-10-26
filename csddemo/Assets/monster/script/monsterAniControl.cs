@@ -166,6 +166,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     private void dieFadeOutEnd() {
         mMonsterPro.hideUI();
         this.gameObject.SetActive(false);
+        stageMgr.stage().addClearMonster();
     }
 
     private void StartDieFadeOut() {
