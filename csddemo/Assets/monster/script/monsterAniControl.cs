@@ -25,6 +25,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     public string strRun = "run";
     public string strAttack = "attack1";
     public string strAttack2 = "attack2";
+    public string strDef = "defend";
     public string strDie = "die";
 
 
@@ -96,6 +97,16 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
             case roleState.attack:
                 {
                     statestr = strAttack;
+                }
+                break;
+            case roleState.attack2:
+                {
+                    statestr = strAttack2;
+                }
+                break;
+            case roleState.def:
+                {
+                    statestr = strDef;
                 }
                 break;
             case roleState.die:
@@ -237,7 +248,11 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
             }
             else if (info.IsName(strAttack2))
             {
-                resState = roleState.attack;
+                resState = roleState.attack2;
+            }
+            else if (info.IsName(strDef))
+            {
+                resState = roleState.def;
             }
             else if (info.IsName(strDie))
             {

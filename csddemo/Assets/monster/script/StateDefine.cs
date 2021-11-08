@@ -9,8 +9,10 @@ namespace stoneState {
         stand = 0,
         run = 1,
         attack = 2,
-        jump = 3,
-        die = 4
+        attack2 = 3,
+        def = 4,
+        jump = 9,
+        die = 10
     }
 
 }

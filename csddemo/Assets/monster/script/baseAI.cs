@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using stoneState;
+using System;
 
 public class baseAI : MonoBehaviour
 {
@@ -18,14 +19,22 @@ public class baseAI : MonoBehaviour
     public event StateActEnd EventDieStart;
     public event StateActEnd EventDieEnd;
 
-    public const string csStand = "stand";
-    public const string csRun = "run";
-    public const string csAttack = "attack1";
-    public const string csAttack2 = "attack2";
-    public const string csDie = "die";
 
-    private const float csAttackMax = 0.3f;  //攻击距离最远值
-    
+    public float atkCDTime = 1.0f;
+    public bool attackCD = false;
+
+    /*
+        public const string csStand = "stand";
+        public const string csRun = "run";
+        public const string csAttack = "attack1";
+        public const string csAttack2 = "attack2";
+        public const string csDie = "die";
+    */
+    public const float csAttackMax = 0.3f;  //攻击距离检测值，小于开战
+    public const float csAttackAuto = 0.7f;  //攻击自动开场点，若小于就自动移动
+    public const float csAttackReady = 1.0f;  //攻击警告点，用于记录后脱战的移动点
+
+
 
     void Start() {
         initData();
@@ -34,6 +43,7 @@ public class baseAI : MonoBehaviour
     public void initData() {
        // Debug.LogWarning("baseAI.initData");
         enemyLst = new List<GameObject>();
+        attackCD = false;
     }
 
     //后续清空场景使用
@@ -61,20 +71,22 @@ public class baseAI : MonoBehaviour
         }
     }
 
+    public float calDistance(Transform a, Transform b) {
+        float res = 0.0f;
+        Vector2 aTmp = new Vector2(a.position.x, a.position.z);
+        Vector2 bTmp = new Vector2(b.position.x, b.position.z);
+        res = Vector2.Distance(aTmp, bTmp);
+        return res;
+    }
+
     //检测是否在攻击范围内
     public bool isInAttackRange(GameObject tmpObj) {
         bool inRange = false;
-        Vector3 enemyPos = tmpObj.transform.position;
-        Vector3 thisPos = this.transform.position;
-
-        float xAbs = Mathf.Abs(enemyPos.x - thisPos.x);
-        float zAbs = Mathf.Abs(enemyPos.z - thisPos.z);
-
-        if ((xAbs <= csAttackMax) && (zAbs <= csAttackMax)) //都在攻击范围内
-        {
+        float tmpDis = calDistance(tmpObj.transform, this.transform);
+        
+        if (tmpDis <= csAttackMax)
             inRange = true;
-        }
-
+        
         return inRange;
     }
 
@@ -256,7 +268,7 @@ public class baseAI : MonoBehaviour
     }
 
     //根据输入按键来获得动作状态
-    public roleState getHopeState(float h, float tmpv, bool isfire, bool isKeyJump, roleState nowState)
+    public roleState getHopeState(float h, float tmpv, int fireSoft, roleState nowState)
     {
         if (aniCon == null)
         {
@@ -272,35 +284,37 @@ public class baseAI : MonoBehaviour
             return res;
         }
 
-       // roleState tmpState = roleState.init;
-        if ((h == 0.0f) && (tmpv == 0.0f)) //没有输入
+        if (enemyObj == null) //无攻击目标
         {
-            if (enemyObj != null)  //有敌人，直接攻击
-                res = roleState.attack;
-            else                   //没敌人，就站立
+            if ((h == 0.0f) && (tmpv == 0.0f)) //没有输入
                 res = roleState.stand;
-            /*
-             if ((nowState == roleState.init)
-                || (nowState == roleState.run)
-                || (nowState == roleState.stand)) {
-                res = roleState.stand;
-            }
-
-            else if (nowState == roleState.attack) {
-                if(enemyObj != null)
-                    res = roleState.attack;
-                else
-                    res = roleState.stand;
-            }
-
-             */
+            else
+                res = roleState.run;
         }
         else {
-            res = roleState.run;
+            if (fireSoft == 1)
+                res = roleState.attack;
+            else if (fireSoft == 2)
+                res = roleState.attack2;
+            else if (fireSoft == 3)
+                res = roleState.def;
+            else
+            {
+                res = nowState;
+            }
         }
 
         return res;
         
+    }
+
+    //若不是站立动作，动作切换为站立
+    public void actToStand()
+    {
+        if (isAIState(roleState.stand) == false)
+        {
+            PlayAIState(roleState.stand);
+        }
     }
 
     public void actToAttack(GameObject enemy)
@@ -319,7 +333,21 @@ public class baseAI : MonoBehaviour
 
     }
 
+    public void startSkillCD() {
+        attackCD = true;
+        StartCoroutine(doSkillCD());
+    }
 
-   
+    IEnumerator doSkillCD() {
+        float time = 0;
+        //float fadeLength = 5.0f;
+        while (time < atkCDTime) {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        attackCD = false;
+    }
+
 
 }

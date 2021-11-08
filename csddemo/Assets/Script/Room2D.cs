@@ -92,7 +92,7 @@ public class Room2D : MonoBehaviour
 
         //GameObject go = Instantiate(planePrefab, new Vector3(worldPosX + 0.5f, worldPosY, worldPosZ + 0.5f), Quaternion.identity);
         GameObject go = Instantiate(planePrefab, new Vector3(worldPosX , worldPosY, worldPosZ ), Quaternion.identity, parentObj.transform);
-        go.GetComponent<MeshRenderer>().material = material;
+        //go.GetComponent<MeshRenderer>().material = material;
         go.name = roomName+ nameIndex.ToString()+"_"+placeIndex.ToString();
 
         placeIndex++;

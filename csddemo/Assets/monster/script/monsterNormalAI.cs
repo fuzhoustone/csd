@@ -57,7 +57,9 @@ public class monsterNormalAI : baseAI
             if(enemyObj != null)
                 lookAtEnemy(this.gameObject, enemyObj);
         }
-     }
+
+        startSkillCD();
+    }
 
     public override void stateDieStart()
     {
@@ -88,36 +90,13 @@ public class monsterNormalAI : baseAI
             //}
             if (hasEnemy()) //有敌人
             {
-                actToAttack(enemyObj); //切换攻击状态攻击敌人
+                if (attackCD)
+                {
+                    actToStand();
+                }
+                else
+                    actToAttack(enemyObj); //切换攻击状态攻击敌人
             }
         }
     }
-
-
-
-    /*
-    private bool isState(roleState state)
-    {
-        bool res = false;
-        if (aniCon == null)
-        {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
-        }
-
-        res = aniCon.isInPlayEntry(state);
-
-        return res;
-    }
-
-    //切换动作状态
-    private void PlayState(roleState state)
-    {
-        if (aniCon == null)
-        {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
-        }
-
-        aniCon.PlayState(state);
-    }
-    */
 }

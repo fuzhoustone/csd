@@ -17,6 +17,7 @@ public class RoleChangeColorWeapon  {
     /// </summary>
     private const string csRoleFlagRes = "roleflag";
     private const string csRoleDogRes = "roledog";
+
     public string skeleton;
     public string equipment_head;
     public string equipment_chest;

@@ -55,6 +55,9 @@ public class mainScene : MonoBehaviour
     GameObject planePrefab = null;
 
     [SerializeField]
+    GameObject wayPrefab = null;
+
+    [SerializeField]
     GameObject wallPrefab = null;
 
     [SerializeField]
@@ -168,7 +171,7 @@ public class mainScene : MonoBehaviour
     public void createLandScape()
     {
         int ranSeed = System.DateTime.Now.Second;
-       // ranSeed = 31;
+      //  ranSeed = 8;//8，24
         Debug.LogWarning("Random seed:" + ranSeed.ToString());
         random = new Random(ranSeed);
         //random = new Random(0);
@@ -205,11 +208,12 @@ public class mainScene : MonoBehaviour
     public void reBuildScene() {
 
         // UIControlMgr.gameObject.AddComponent<UIMenuMgr>();
-
+      
         CsdUIControlMgr.uiMgr().uiMenu.nextLevelPanel.gameObject.SetActive(false); ;
         clearScene();
         SceneStart2D tmpScript = this.transform.GetComponent<SceneStart2D>();
         tmpScript.SceneStart();
+        
     }
 
     public void clearScene()
@@ -552,7 +556,8 @@ public class mainScene : MonoBehaviour
             if (add)
             {
                 rooms.Add(newRoom);
-                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size);
+                //上方块图，可无视
+                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size); 
                 //add by csd
                 roomIndex++;
                 //end
@@ -688,7 +693,7 @@ public class mainScene : MonoBehaviour
                             newHallWayObj.name = "hallway" + pos.x.ToString() + "_" + csPosY.ToString() + "_" + pos.y.ToString();
 
                             HallWay2D newHallWay = newHallWayObj.AddComponent<HallWay2D>();
-                            newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
+                            newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), wayPrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
 
                             /*
                             HallWay newHallWay = mazeParent.AddComponent<HallWay>();

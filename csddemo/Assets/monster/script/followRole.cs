@@ -81,6 +81,8 @@ public class followRole : baseAI
                 lookAtEnemy(this.gameObject, enemyObj);
         }
 
+        startSkillCD();
+
         /*
         IbaseANI tmpAni = this.transform.GetComponent<monsterAniControl>();
 
@@ -119,24 +121,16 @@ public class followRole : baseAI
         }
     }
 
-    //若不是站立动作，动作切换为站立
-    private void actToStand() {
-        if (isAIState(roleState.stand) == false)
-        {
-            PlayAIState(roleState.stand);
-        }
-    }
-    /*
-    public void initData() {
-        Debug.LogWarning("followRole.initData");
-    }
-    */
     private void Update()
     {
         if (selfIsLive()) {
             if (hasEnemy()) //有敌人
             {
-                actToAttack(enemyObj); //切换攻击状态攻击敌人
+                if (attackCD) {
+                    actToStand();
+                }
+                else
+                    actToAttack(enemyObj); //切换攻击状态攻击敌人
             }
             else if (mainObj != null) //有跟随目标
             {

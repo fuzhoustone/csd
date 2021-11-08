@@ -22,7 +22,7 @@ using System.Collections;
 /// </summary>
 
 
-//初始化创建场景，初始化创建角色，初始化UI，以及update
+//初始化创建角色，初始化UI，以及update
 public class Main : MonoBehaviour {
 
     // 摄像机位置
@@ -30,6 +30,7 @@ public class Main : MonoBehaviour {
 
     public Transform mapCamerTransform;
 
+    public Transform monParentTransform;
     //UI摄像机
     public Transform uiCammeraTransform;
 
@@ -149,7 +150,7 @@ public class Main : MonoBehaviour {
 
         character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform, character.roleFlagInstance.transform);
+        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform, character.roleFlagInstance.transform, monParentTransform);
 
         isStart = true;
 
@@ -167,6 +168,7 @@ public class Main : MonoBehaviour {
         //Debug.Log("screenAdapt");
         int ManualWidth = 960;
         int ManualHeight = 640;
+        float designHeight = 640.0f;
         int manualHeight;
         if (System.Convert.ToSingle(Screen.height) / Screen.width > System.Convert.ToSingle(ManualHeight) / ManualWidth)
             manualHeight = Mathf.RoundToInt(System.Convert.ToSingle(ManualWidth) / Screen.width * Screen.height);
@@ -175,7 +177,7 @@ public class Main : MonoBehaviour {
         if (uiCammeraTransform != null)
         {
             Camera camera = uiCammeraTransform.GetComponent<Camera>();
-            float scale = System.Convert.ToSingle(manualHeight / 640f);
+            float scale = System.Convert.ToSingle(manualHeight / designHeight);
             camera.fieldOfView *= scale;
         }
 
@@ -197,8 +199,6 @@ public class Main : MonoBehaviour {
         //update end
     }
 
-
-
     // Update is called once per frame
     void Update() {
         if (isStart) {
@@ -206,30 +206,24 @@ public class Main : MonoBehaviour {
         }
 
     }
-    /*
-    private void initRole() {
-        Generator3D tmpMaze = this.gameObject.transform.GetComponent<Generator3D>();
-        if (tmpMaze != null)
-            createRole(tmpMaze.firstPos);
-        else
-            createRole(new Vector3(5, 0.005f, -5));
-    }
-    */
-    public void getStateBtnClick() {
-  //      App.Game.character.mainRoleState.printRoleState();
-    }
 
     public void resetCamerClick() {
         App.Game.character.rolePosCamer.resetCamerPosFromRole();
     }
 
-    public void roleExcape() {
-        App.Game.character.setRoleInEscape();
-        StartCoroutine(escapeIEn());
+    //角色防御
+    public void roleDef() {
+        App.Game.character.roleDef();
     }
 
-    public void test() {
-        App.Game.character.rolePosCamer.rolationCamerY(90.0f, 1.0f / 40.0f);
+    //角色攻击1
+    public void roleAttack1() {
+        App.Game.character.roleAttack1();
+    }
+    
+    //角色攻击2
+    public void roleAttack2() {
+        App.Game.character.roleAttack2();
     }
 
     public void showDevelopUI()
@@ -339,21 +333,6 @@ public class Main : MonoBehaviour {
     }
 
 #endif
-
-    const float fEscapeTime = 5.0f;
-    IEnumerator escapeIEn()
-    {
-        float time = 0;
-
-        //float fadeLength = 5.0f;
-        while (time < fEscapeTime) // 还需另外设置跳出循环的条件
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        App.Game.character.setRoleNotEscape();
-    }
 
 }
 
