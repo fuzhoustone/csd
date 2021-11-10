@@ -9,7 +9,7 @@ public class monsterStateMachine : StateMachineBehaviour
     public const string csAttack2 = "attack2";
     public const string csDie = "die";
     */
-    private const string csMainAniLayer = "mainAniLayer";
+   // private const string csMainAniLayer = "mainAniLayer";
 
     public int mainLayer;
     public IbaseANI aniControl;
@@ -20,7 +20,7 @@ public class monsterStateMachine : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        mainLayer = animator.GetLayerIndex(csMainAniLayer);
+        mainLayer = 0; // animator.GetLayerIndex(csMainAniLayer);
         aniControl = animator.gameObject.transform.GetComponent<monsterAniControl>();
         aiControl = animator.gameObject.transform.GetComponent<baseAI>();
     }

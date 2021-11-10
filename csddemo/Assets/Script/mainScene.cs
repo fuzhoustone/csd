@@ -306,6 +306,68 @@ public class mainScene : MonoBehaviour
         goldID++;
     }
 
+
+    private GameObject getHpPoint(Transform parent) {
+        GameObject res = parent.gameObject;
+        int nCount = parent.childCount;
+        for (int i = 0; i < nCount; i++)
+        {
+           Transform tmp = parent.GetChild(i);
+            if (tmp.name == "HpPoint")
+            {
+                res = tmp.gameObject;
+                break;
+            }
+        }
+
+        return res;
+    }
+    //怪物属性
+    private roleProperty addRolePro(GameObject obj) {
+        roleProperty pro = obj.AddComponent<roleProperty>();
+        pro.roleSort = 0;
+        pro.hpMax = 100;
+        pro.mpMax = 100;
+        pro.hp = pro.hpMax;
+        pro.mp = pro.mpMax;
+        pro.attack = 1;
+        pro.level = 1;
+        pro.speed = 0.5f;
+        pro.turnTime = 0.0f;
+        pro.HpUIPoint = getHpPoint(obj.transform);
+
+        return pro;
+    }
+
+    //加入钢体
+    private void addRigidbody(GameObject obj) {
+        Rigidbody rd = obj.AddComponent<Rigidbody>();
+        rd.mass = 100.0f;
+        rd.drag = 0.0f;
+        rd.angularDrag = 0.5f;
+        rd.useGravity = true;
+        rd.isKinematic = false;
+        rd.interpolation = RigidbodyInterpolation.None;
+        rd.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rd.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    //碰撞触发代码
+    private void addMonsterColliderCode(GameObject obj) {
+        obj.AddComponent<monsterCollider>();
+    }
+
+    //动画实现代码
+    private void addAniControl(GameObject obj) {
+        obj.AddComponent<monsterAniControl>();
+    }
+
+    private const int csLayerRole = 13;
+    private void setRoleTagLayer(GameObject obj) {
+        obj.tag = "Role";
+        obj.layer = csLayerRole;
+    }
+
     private void addMonster(Vector3 pPos, bool isMonster)
     {
         if (isMonster == false)
@@ -317,9 +379,15 @@ public class mainScene : MonoBehaviour
         GameObject tmpMonster = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
         tmpMonster.name = "monster_" + monsterID.ToString();
         monsterID++;
+        setRoleTagLayer(tmpMonster);
+        addRigidbody(tmpMonster);
+        addMonsterColliderCode(tmpMonster);
+        addAniControl(tmpMonster);
+        
+        roleProperty tmpPro = addRolePro(tmpMonster);
 
-        roleProperty tmpPro = tmpMonster.GetComponent<roleProperty>();
-
+        //roleProperty tmpPro = tmpMonster.GetComponent<roleProperty>();
+        
 
         if (isMonster)
         {

@@ -52,7 +52,7 @@ public class roleProperty:MonoBehaviour
     private UnityEngine.UI.Slider roleSlider = null;
 
     [SerializeField]
-    private GameObject HpUIPoint = null;
+    public GameObject HpUIPoint = null;
 
     private const string csHpUI = "Prefabs/hpSlider";
 
