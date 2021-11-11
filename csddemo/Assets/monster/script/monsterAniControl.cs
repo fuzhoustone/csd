@@ -23,10 +23,10 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     [SerializeField]
     public string strStand = "stand";
     public string strRun = "run";
-    public string strAttack = "attack1";
-    public string strAttack2 = "attack2";
+    public string strAttack = "Attack01";
+    public string strAttack2 = "Attack02";
     public string strDef = "defend";
-    public string strDie = "die";
+    public string strDie = "Die";
 
 
     private string nowState = "";
@@ -45,7 +45,8 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     void Start()
     {
         animator = GetComponent<Animator>();
-        mainLayer = animator.GetLayerIndex(csMainAniLayer);
+        //mainLayer = animator.GetLayerIndex(csMainAniLayer);
+        mainLayer = 0;
         mAlphaMai = new Material(Shader.Find("Unity Shaders Book/Chapter 7/NormalMapWorldAlpha"));
         isInAttack = false;
 
@@ -66,7 +67,8 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
     public void initData(GameObject paraObj) {
         if (animator == null) {
             animator = GetComponent<Animator>();
-            mainLayer = animator.GetLayerIndex(csMainAniLayer);
+            //mainLayer = animator.GetLayerIndex(csMainAniLayer);
+            mainLayer = 0;
             mAlphaMai = new Material(Shader.Find("Unity Shaders Book/Chapter 7/NormalMapWorldAlpha"));
             isInAttack = false;
 

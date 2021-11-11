@@ -243,7 +243,7 @@ public class UCharacterController {
 
         if (skillDef == null)
         {
-            skillDef = new csdsleep();
+            skillDef = CsdUIControlMgr.uiMgr().uiMenu.gameObject.AddComponent<csdsleep>();
         }
     }
 
