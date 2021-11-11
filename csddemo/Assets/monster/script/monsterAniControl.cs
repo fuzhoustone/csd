@@ -154,6 +154,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
 
         string state = getStateStrName(stateName);
         animator.Play(state, mainLayer, 0.0f);  //从第0帧开始播
+        
     }
 
     /*

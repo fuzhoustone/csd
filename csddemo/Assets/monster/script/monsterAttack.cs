@@ -7,7 +7,7 @@ public class monsterAttack : monsterStateMachine
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
-
+        
         if (stateInfo.normalizedTime >= 1.0f)
         { //动画播完时
             //aniControl.attackStateEnd();
