@@ -4,6 +4,7 @@ using UnityEngine;
 using Random = System.Random;
 using Graphs;
 
+//场景生成，怪物生成
 public class mainScene : MonoBehaviour
 {
     enum CellType

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//游戏开始
 public class SceneStart2D : MonoBehaviour
 {
     private bool isInit = false;
@@ -47,8 +48,8 @@ public class SceneStart2D : MonoBehaviour
 
                 sceneMaze.friendRole.GetComponent<followRole>().mainObj = roleMain.character.roleInstance; //设置小弟跟随目标
 
-                sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
-                sceneAlpha._target = roleMain.character.roleInstance;
+                //sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
+                //sceneAlpha._target = roleMain.character.roleInstance;
 
                 sceneIsFinish = true;
             }

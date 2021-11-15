@@ -54,7 +54,7 @@ public class roleProperty:MonoBehaviour
     [SerializeField]
     public GameObject HpUIPoint = null;
 
-    private const string csHpUI = "Prefabs/hpSlider";
+    private const string csHpUI = "Prefab/hpSlider";
 
     public void InitData(Transform pCamerTransform, Transform pCanvasTransform, int lRoleSort = 0) {
         //hpMax = 100;
