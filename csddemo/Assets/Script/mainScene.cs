@@ -354,19 +354,19 @@ public class mainScene : MonoBehaviour
     }
 
     //碰撞触发代码
-    private void addMonsterColliderCode(GameObject obj) {
-        obj.AddComponent<monsterCollider>();
-    }
+   // private void addMonsterColliderCode(GameObject obj) {
+   //     obj.AddComponent<monsterCollider>();
+   // }
 
     //动画实现代码
     private void addAniControl(GameObject obj) {
         obj.AddComponent<monsterAniControl>();
     }
 
-    private const int csLayerRole = 13;
-    private void setRoleTagLayer(GameObject obj) {
+    private const int csLayerMonster = 13;
+    private void setMonsterTagLayer(GameObject obj) {
         obj.tag = "Role";
-        obj.layer = csLayerRole;
+        obj.layer = csLayerMonster;
     }
 
     private void addMonster(Vector3 pPos, bool isMonster)
@@ -380,11 +380,13 @@ public class mainScene : MonoBehaviour
         GameObject tmpMonster = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
         tmpMonster.name = "monster_" + monsterID.ToString();
         monsterID++;
-        setRoleTagLayer(tmpMonster);
+        setMonsterTagLayer(tmpMonster);
         addRigidbody(tmpMonster);
-        addMonsterColliderCode(tmpMonster);
-        addAniControl(tmpMonster);
-        
+        //addMonsterColliderCode(tmpMonster);
+        //addAniControl(tmpMonster);
+        tmpMonster.AddComponent<monsterCollider>();
+        tmpMonster.AddComponent<monsterAniControl>();
+
         roleProperty tmpPro = addRolePro(tmpMonster);
 
         //roleProperty tmpPro = tmpMonster.GetComponent<roleProperty>();
@@ -397,6 +399,7 @@ public class mainScene : MonoBehaviour
             //tmpColl.isTrigger = true;
             tmpMonster.AddComponent<monsterNormalAI>();
         }
+        /*
         else
         {
             tmpPro.InitData(camerTransform, canvasTransform, 1);
@@ -404,7 +407,7 @@ public class mainScene : MonoBehaviour
             //tmpFollow.mainObj = friendRole;
             friendRole = tmpMonster;
         }
-
+        */
         //go.GetComponent<MeshRenderer>().material = material;
         //go.name = roomName + nameIndex.ToString() + "_" + placeIndex.ToString();
     }
@@ -416,7 +419,7 @@ public class mainScene : MonoBehaviour
             if (i == 0) //生成小弟
             {
                 firstPos = new Vector3Int(tmpRoom.pos.x, csPosY, tmpRoom.pos.y);
-                addMonster(firstPos, false);
+             //   addMonster(firstPos, false);
             }
             else {  //生成怪物
                 Vector2 tmpVect2 = tmpRoom.getCenterPos();

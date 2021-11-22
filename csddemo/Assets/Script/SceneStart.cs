@@ -22,7 +22,7 @@ public class SceneStart : MonoBehaviour
         if (isSceneStart) {
             return ;
         }
-
+        
         if (isInit == false) {
             sceneMaze = this.gameObject.transform.GetComponent<Generator3D>();
             roleMain = this.gameObject.transform.GetComponent<Main>();

@@ -133,7 +133,9 @@ public class Main : MonoBehaviour {
         // GameObject.Destroy(character);
         character = null;
     }
+   
 
+    //创建主角
     public void createRole(Vector3 pPos) {
         // create an avatar
         character = App.Game.CharacterMgr.Generatecharacter(
@@ -145,6 +147,7 @@ public class Main : MonoBehaviour {
             "ch_pc_hou_" + index[DEFAULT_FEET] + "_jiao",
             combine);
 
+        addRoleData(character.roleInstance);
        // App.Game.gameManager = this.gameManager;
         // App.Game.character = this.character;
 
@@ -240,6 +243,79 @@ public class Main : MonoBehaviour {
         //}
     }
 
+    /// <summary>
+    /// 添加主角属性
+    /// </summary>
+    /// <param name="obj"></param>
+    private const int csLayerRole = 11;
+    private void addRoleData(GameObject obj) {
+        setRoleTagLayer(obj);
+        addRigidbody(obj);
+       // addMonsterColliderCode(obj);
+       // addAniControl(obj);
+
+        obj.AddComponent<roleCollider>();
+        obj.AddComponent<monsterAniControl>();
+
+        addRoleProperty(obj);
+        obj.AddComponent<roleAI>();
+    }
+
+    private void setRoleTagLayer(GameObject obj)
+    {
+        obj.tag = "Role";
+        obj.layer = csLayerRole;
+    }
+
+    private GameObject getHpPoint(Transform parent)
+    {
+        GameObject res = parent.gameObject;
+        int nCount = parent.childCount;
+        for (int i = 0; i < nCount; i++)
+        {
+            Transform tmp = parent.GetChild(i);
+            if (tmp.name == "HpPoint")
+            {
+                res = tmp.gameObject;
+                break;
+            }
+        }
+
+        return res;
+    }
+
+    private void addRoleProperty(GameObject obj)
+    {
+        roleProperty pro = obj.AddComponent<roleProperty>();
+        pro.roleSort = 1;
+        pro.hpMax = 100;
+        pro.mpMax = 100;
+        pro.hp = pro.hpMax;
+        pro.mp = pro.mpMax;
+        pro.attack = 1;
+        pro.level = 1;
+        pro.speed = 0.5f;
+        pro.turnTime = 0.0f;
+        pro.HpUIPoint = getHpPoint(obj.transform);
+    }
+
+    private void addRigidbody(GameObject obj)
+    {
+        Rigidbody rd = obj.AddComponent<Rigidbody>();
+        rd.mass = 1.0f;
+        rd.drag = 0.0f;
+        rd.angularDrag = 0.5f;
+        rd.useGravity = true;
+        rd.isKinematic = false;
+        rd.interpolation = RigidbodyInterpolation.None;
+        rd.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rd.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    /// <summary>
+    /// UI调试
+    /// </summary>
+    /// <param name="obj"></param>
 
 #if DEBUG_role
 

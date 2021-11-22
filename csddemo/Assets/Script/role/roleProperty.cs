@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using stoneState;
 public class roleProperty:MonoBehaviour
@@ -54,7 +55,7 @@ public class roleProperty:MonoBehaviour
     [SerializeField]
     public GameObject HpUIPoint = null;
 
-    private const string csHpUI = "Prefab/hpSlider";
+    private const string csHpUI = "Prefab/UI/hpSlider";
 
     public void InitData(Transform pCamerTransform, Transform pCanvasTransform, int lRoleSort = 0) {
         //hpMax = 100;
@@ -68,9 +69,11 @@ public class roleProperty:MonoBehaviour
         mainCamera = pCamerTransform.GetComponent<Camera>();
         mainCanvas = pCanvasTransform.GetComponent<Canvas>();
 
-        createHpUI();
-
         roleSort = lRoleSort;
+
+        createHpUI(roleSort);
+
+        
     }
 
     void Update()
@@ -80,7 +83,15 @@ public class roleProperty:MonoBehaviour
             refreshHpSilder();
     }
 
-    public void createHpUI()
+    private void setHpColor(Slider pSlider,bool isRole) {
+        Image pImage= pSlider.fillRect.GetComponent<Image>();
+        if(isRole)
+            pImage.color = Color.green;
+        else
+            pImage.color = Color.red;
+    }
+
+    public void createHpUI(int roleSort)
     {
         hpPrefab = (GameObject)Resources.Load(csHpUI);
 
@@ -90,7 +101,12 @@ public class roleProperty:MonoBehaviour
 
         hpUI = hpObj.GetComponent<RectTransform>();
 
-        roleSlider = hpObj.GetComponent<UnityEngine.UI.Slider>();
+        roleSlider = hpObj.GetComponent<Slider>();
+
+        if (roleSort == 1) 
+            setHpColor(roleSlider, true);
+        else
+            setHpColor(roleSlider, false);
 
         updateHpValue(hp);
 
