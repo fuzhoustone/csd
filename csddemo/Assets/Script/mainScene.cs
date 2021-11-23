@@ -360,7 +360,7 @@ public class mainScene : MonoBehaviour
 
     //动画实现代码
     private void addAniControl(GameObject obj) {
-        obj.AddComponent<monsterAniControl>();
+        obj.AddComponent<modelAnimatorControl>();
     }
 
     private const int csLayerMonster = 13;
@@ -385,7 +385,7 @@ public class mainScene : MonoBehaviour
         //addMonsterColliderCode(tmpMonster);
         //addAniControl(tmpMonster);
         tmpMonster.AddComponent<monsterCollider>();
-        tmpMonster.AddComponent<monsterAniControl>();
+        tmpMonster.AddComponent<modelAnimatorControl>();
 
         roleProperty tmpPro = addRolePro(tmpMonster);
 

@@ -29,7 +29,7 @@ public class monsterNormalAI : baseAI
 
     // Update is called once per frame
     public override void stateStandEnd() {
-        IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
+        IbaseAnimator tmpAni = this.transform.GetComponent<IbaseAnimator>();
         tmpAni.PlayState(roleState.stand);
     }
 
@@ -74,7 +74,7 @@ public class monsterNormalAI : baseAI
     {
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
         aniCon.dieStateEndAct();
 

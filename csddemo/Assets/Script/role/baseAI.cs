@@ -11,7 +11,7 @@ public class baseAI : MonoBehaviour
     public GameObject enemyObj;  //是否有敌人
     private List<GameObject> enemyLst; 
     public roleProperty selPro = null;
-    public IbaseANI aniCon = null;
+    public IbaseAnimator aniCon = null;
     public roleState oldRoleState = roleState.init;
 
     public event StateActEnd EventStandEnd;
@@ -207,7 +207,7 @@ public class baseAI : MonoBehaviour
         bool res = false;
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
 
         res = aniCon.isInPlayEntry(state);
@@ -219,7 +219,7 @@ public class baseAI : MonoBehaviour
     {
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
 
         aniCon.initData(paraObj);
@@ -230,7 +230,7 @@ public class baseAI : MonoBehaviour
     {
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
 
         aniCon.PlayState(state);
@@ -272,7 +272,7 @@ public class baseAI : MonoBehaviour
     {
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
 
        // roleState nowState = aniCon.getRoleNowState();

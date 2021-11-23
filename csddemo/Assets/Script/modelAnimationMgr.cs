@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using stoneState;
 
-public class RoleStateMgr: MonoBehaviour,IbaseANI
+public class modelAnimationMgr: MonoBehaviour,IbaseAnimator
 {
     private Animation m_animationController = null;
     // public CharacterController roleControl = null;

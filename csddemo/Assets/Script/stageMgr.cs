@@ -50,6 +50,10 @@ public class stageMgr
         }
     }
 
+    public void roleLose() {
+        Debug.LogError("主角挂了");
+    }
+
     public void addReward() {
         rewardNum++;
         CsdUIControlMgr.uiMgr().uiMenu.updateReward(rewardNum);

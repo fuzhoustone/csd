@@ -54,7 +54,7 @@ public class followRole : baseAI
 
     public override void stateStandEnd()
     {
-        IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
+        IbaseAnimator tmpAni = this.transform.GetComponent<IbaseAnimator>();
         tmpAni.PlayState(roleState.stand);
     }
 
@@ -109,7 +109,7 @@ public class followRole : baseAI
     public override void stateDieEnd() {
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
         aniCon.dieStateEndAct();
     }

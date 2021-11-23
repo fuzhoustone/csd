@@ -371,7 +371,8 @@ public class UCharacterController {
                 return;
          }
 
-        if (roleIsDie) { //玩家死亡不再时行操作
+        
+        if (mainRoleState.selfIsLive() == false) { //玩家死亡不再时行操作
             return ;
         }
 

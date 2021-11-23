@@ -12,7 +12,7 @@ public class monsterStateMachine : StateMachineBehaviour
    // private const string csMainAniLayer = "mainAniLayer";
 
     public int mainLayer;
-    public IbaseANI aniControl;
+    public IbaseAnimator aniControl;
 
 
     public baseAI aiControl;
@@ -21,7 +21,7 @@ public class monsterStateMachine : StateMachineBehaviour
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
         mainLayer = 0; // animator.GetLayerIndex(csMainAniLayer);
-        aniControl = animator.gameObject.transform.GetComponent<monsterAniControl>();
+        aniControl = animator.gameObject.transform.GetComponent<modelAnimatorControl>();
         aiControl = animator.gameObject.transform.GetComponent<baseAI>();
     }
 }

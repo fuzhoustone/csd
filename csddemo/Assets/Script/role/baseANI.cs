@@ -4,7 +4,7 @@ using UnityEngine;
 
 using stoneState;
 
-public interface IbaseANI  
+public interface IbaseAnimator  
 {
     void initData(GameObject paraObj);
 

@@ -5,7 +5,7 @@ using System;
 
 using stoneState;
 
-public class monsterAniControl : MonoBehaviour, IbaseANI
+public class modelAnimatorControl : MonoBehaviour, IbaseAnimator
 {
     /*
     const string strStand = "stand";
@@ -159,42 +159,36 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
         
     }
 
-    /*
-    public bool calAttackHp(roleProperty tmpPro) {
-        bool res = false;
-        res = App.Game.character.SubHp(mMonsterPro, tmpPro);
-        return res;
-    }
-    */
-    /*
-    //攻击动画播至最后一帧，不改变状态会不停触发
-    public bool attackStateEnd() {
-        //计算伤害,并UI显示
-        bool res = false;
-        res = App.Game.character.roleSubHp(mMonsterPro);
-
-        // animator.Play(csAttack, mainLayer, 0.0f);  //从第0帧开始播
-        return res;
-    }
-    */
+    private const int csLayRole = 11;
+    private const int csLayMonster = 13;
+    
     private void dieFadeOutEnd() {
         mMonsterPro.hideUI();
         this.gameObject.SetActive(false);
-        stageMgr.stage().addClearMonster();
+
+        if (this.gameObject.layer == csLayRole)
+        {
+            stageMgr.stage().roleLose();
+        }
+        else {
+            stageMgr.stage().addClearMonster();
+        }
     }
 
     private void StartDieFadeOut() {
 
+        dieFadeOutEnd();
 
-
+        /*
         Transform body = this.transform.Find("Body");
         if (body != null)
         {
             SkinnedMeshRenderer tRender = body.GetComponent<SkinnedMeshRenderer>();
             tRender.material = mAlphaMai;
         }
-
+        
         StartCoroutine(dieFadeOutIEn(dieFadeOutEnd));
+        */
     }
 
     const float fFadeOutTime = 5.0f;
@@ -224,7 +218,7 @@ public class monsterAniControl : MonoBehaviour, IbaseANI
         StartDieFadeOut();
     }
 
-    //待完成
+    
     public roleState getRoleNowState() {
         roleState resState = roleState.init;
         //需把所有状态遍历一遍才可知

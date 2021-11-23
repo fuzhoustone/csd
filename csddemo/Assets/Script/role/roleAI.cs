@@ -10,7 +10,7 @@ public class roleAI : baseAI
     
     public override void stateStandEnd()
     {
-        IbaseANI tmpAni = this.transform.GetComponent<IbaseANI>();
+        IbaseAnimator tmpAni = this.transform.GetComponent<IbaseAnimator>();
         tmpAni.PlayState(roleState.stand);
     }
 
@@ -51,6 +51,16 @@ public class roleAI : baseAI
         }
     }
 
+    public override void stateDieEnd()
+    {
+        if (aniCon == null)
+        {
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
+        }
+        aniCon.dieStateEndAct();
+
+    }
+
     public void AIRoleSkill(int fireSoft) {
         updataAIRoleControl(0.0f, 0.0f, fireSoft);
     }
@@ -59,7 +69,7 @@ public class roleAI : baseAI
     {
         if (aniCon == null)
         {
-            aniCon = this.gameObject.GetComponent<IbaseANI>();
+            aniCon = this.gameObject.GetComponent<IbaseAnimator>();
         }
 
         roleState lState = aniCon.getRoleNowState();

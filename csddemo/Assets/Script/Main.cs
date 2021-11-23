@@ -255,7 +255,7 @@ public class Main : MonoBehaviour {
        // addAniControl(obj);
 
         obj.AddComponent<roleCollider>();
-        obj.AddComponent<monsterAniControl>();
+        obj.AddComponent<modelAnimatorControl>();
 
         addRoleProperty(obj);
         obj.AddComponent<roleAI>();
