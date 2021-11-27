@@ -168,6 +168,7 @@ public class mainScene : MonoBehaviour
 
         UIMenuMgr menuMgr = UIControlMgr.GetComponent<UIMenuMgr>();
         CsdUIControlMgr.uiMgr().initData(menuMgr);
+        gameDataMgr.gameData().saveLevelData(1);
     }
     public void createLandScape()
     {

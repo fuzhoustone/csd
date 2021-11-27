@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class stageMgr
 { 
@@ -50,9 +51,31 @@ public class stageMgr
         }
     }
 
-    public void roleLose() {
-        Debug.LogError("主角挂了");
+    private void continueFight() {
+        Debug.LogWarning("主角复活");
     }
+
+    private void callBackMain() {
+        Debug.LogWarning("返回主菜单");
+
+        gameDataMgr.gameData().clearLevelData(); //清空通关记录
+
+        SceneManager.LoadSceneAsync("startScene");
+        
+    }
+
+    public void roleLose() {
+        Debug.LogWarning("主角挂了");
+        string title = "战斗失败";
+        string text = "战斗失败，复活继续战斗，或返回主菜单";
+        string[] buttons = new string[2];
+        buttons[0] = "复活";
+        buttons[1] = "返回主菜单";
+
+        CsdUIControlMgr.uiMgr().dialogBox(title,text,null, buttons, continueFight, callBackMain, null);
+    }
+
+
 
     public void addReward() {
         rewardNum++;

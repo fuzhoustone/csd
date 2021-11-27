@@ -37,7 +37,8 @@ public class roleCollider : MonoBehaviour
             {
                 selfProperty.showUI();
                 if (selfAI.enemyObj == null)
-                {
+                { //进入战斗
+                    CsdUIControlMgr.uiMgr().msgNoteTop();
                     selfAI.setEnemyObj(collision.gameObject);
                     selfAI.addEnemyToLst(collision.gameObject);
                     //  selfAI.lookAtEnemy(selfAI.gameObject, selfAI.enemyObj);

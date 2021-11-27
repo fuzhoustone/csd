@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DevionGames.UIWidgets;
 
 public class UIMenuMgr : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class UIMenuMgr : MonoBehaviour
     public Image imgAttack2;
     public Image Def;
     public Image Run;
+
+    public Notification noteMsg;
+    public Notification noteMsgTop;
+    public DialogBox m_DialogBox;
 
     private float attack1Amount = 0.0f;
     private float attack2Amount = 0.0f;

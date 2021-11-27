@@ -24,7 +24,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_14;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;DebugRole;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_14;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;CS0649;IDE0051</NoWarn>
@@ -62,40 +62,49 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\BloomModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\BuiltinDebugViewsEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\ChromaticAberrationEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\ColorGradingModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\DefaultPostFxModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\DepthOfFieldModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\DitheringModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\EyeAdaptationModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\FogModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\GrainModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\MotionBlurModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\ScreenSpaceReflectionModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\UserLutModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Models\VignetteModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Monitors\HistogramMonitor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Monitors\ParadeMonitor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Monitors\VectorscopeMonitor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Monitors\WaveformMonitor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PostProcessingBehaviourEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PostProcessingFactory.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PostProcessingInspector.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PostProcessingModelEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PostProcessingMonitor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PropertyDrawers\GetSetDrawer.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PropertyDrawers\MinDrawer.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\PropertyDrawers\TrackballGroupDrawer.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Utils\CurveEditor.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Utils\EditorGUIHelper.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Utils\EditorResources.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Utils\FxStyles.cs" />
-    <Compile Include="Assets\Flooded_Grounds\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
+    <Compile Include="Assets\Devion Games\Module Manager\Editor\Changelog.cs" />
+    <Compile Include="Assets\Devion Games\Module Manager\Editor\JsonHelper.cs" />
+    <Compile Include="Assets\Devion Games\Module Manager\Editor\ModuleItem.cs" />
+    <Compile Include="Assets\Devion Games\Module Manager\Editor\ModuleManagerWindow.cs" />
+    <Compile Include="Assets\Devion Games\Module Manager\Editor\UpdateNotificationWindow.cs" />
+    <Compile Include="Assets\Devion Games\UI Widgets\Scripts\Editor\UIContainerInspector.cs" />
+    <Compile Include="Assets\Devion Games\UI Widgets\Scripts\Editor\UIWidgetEditor.cs" />
+    <Compile Include="Assets\Devion Games\UI Widgets\Scripts\Editor\UIWidgetInspector.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Asset\AddObjectWindow.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Asset\AssetWindow.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Asset\ObjectPickerWindow.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Asset\ObjectWindow.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Collection Editor\CollectionEditor.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Collection Editor\ICollectionEditor.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Collection Editor\NamedVariableCollectionEditor.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Collection Editor\ObjectCollectionEditor.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Collection Editor\ScriptableObjectCollectionEditor.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\CustomDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\CustomDrawerAttribute.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\EditorTools.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Inspectors\AudioEventListenerInspector.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Inspectors\BlackboardInspector.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Inspectors\CallbackHandlerInspector.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Inspectors\PropertyBindingInspector.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Inspectors\SelectionHandlerInspector.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Internal\BuiltInResourcesWindow.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Internal\CopyComponentEditor.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Internal\InternalTestingTools.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Internal\TextToTextMeshPro.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\ArgumentVariableDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\CompoundDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\EnumFlagsDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\HeaderLineDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\InspectorLabelDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\MinMaxSliderDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\NamedVariableDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\NamedVariableLayoutDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\Property Drawers\VariablePropertyDrawer.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\UtilityInstanceWindow.cs" />
+    <Compile Include="Assets\Devion Games\Utilities\Scripts\Editor\UtilityWindow.cs" />
+    <Compile Include="Assets\VisualTween\Scripts\Editor\SequenceEditor.cs" />
+    <Compile Include="Assets\VisualTween\Scripts\Editor\Timeline.cs" />
+    <Compile Include="Assets\VisualTween\Scripts\Editor\TweenerInspector.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/unityInstall/unity2019_4_14f1/2014.4.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -291,17 +300,8 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Analytics.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>D:/stone_studio/csddemo/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>D:/stone_studio/csddemo/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>D:/stone_studio/csddemo/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/unityInstall/unity2019_4_14f1/2014.4.14f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -658,88 +658,54 @@
       <HintPath>D:/unityInstall/unity2019_4_14f1/2014.4.14f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.multiplayer-hlapi.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.Purchasing">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.multiplayer-weaver.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements.Editor">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>D:/stone_studio/csddemo/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <HintPath>D:/stone_maze/csd/csddemo/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{78F987BC-B627-49C0-3A5B-6A364551E538}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="DevionGames.Utilities.csproj">
+      <Project>{B8FB80D5-CE79-BAD8-F012-124AF92E30B1}</Project>
+      <Name>DevionGames.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="DevionGames.UIWidgets.csproj">
+      <Project>{B4480975-93C3-08E4-AB8F-3EF77C76BCF9}</Project>
+      <Name>DevionGames.UIWidgets</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

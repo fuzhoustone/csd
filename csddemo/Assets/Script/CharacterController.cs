@@ -290,24 +290,25 @@ public class UCharacterController {
 
 
 
-/// <summary>
-/// 技能按扭触发事件
-/// </summary>
-
-
+    /// <summary>
+    /// 技能按扭触发事件
+    /// </summary>
+    private const string csNoEnemy = "没有敌人";
     public void roleAttack1() {
         if (mainRoleState.enemyObj != null)
         {
             if (skillAttack1.isCD == false)
             {
                 skillAttack1.isCD = true;
-               // CsdUIControlMgr.uiMgr().uiMenu.updateImageAttack1Amount(0.0f, attack1Sleep);
+                // CsdUIControlMgr.uiMgr().uiMenu.updateImageAttack1Amount(0.0f, attack1Sleep);
                 mainRoleState.AIRoleSkill(1);
                 skillAttack1.startEvent();
             }
         }
+        else {
+            CsdUIControlMgr.uiMgr().msgNote(csNoEnemy);
+        }
     }
-
     
     public void roleAttack2() {
         if (mainRoleState.enemyObj != null)
@@ -315,10 +316,13 @@ public class UCharacterController {
             if (skillAttack2.isCD == false)
             {
                 skillAttack2.isCD = true;
-               // CsdUIControlMgr.uiMgr().uiMenu.updateImageAttack2Amount(0.0f, attack2Sleep);
+                // CsdUIControlMgr.uiMgr().uiMenu.updateImageAttack2Amount(0.0f, attack2Sleep);
                 mainRoleState.AIRoleSkill(2);
                 skillAttack2.startEvent();
             }
+        }
+        else {
+            CsdUIControlMgr.uiMgr().msgNote(csNoEnemy);
         }
     }
 
@@ -376,16 +380,22 @@ public class UCharacterController {
             return ;
         }
 
+
+
          float pDeltaTime = Time.deltaTime;
         
          float leftright = Input.GetAxis("Horizontal");
          float downup = Input.GetAxis("Vertical");
          
          float offsetY = 0.0f;
+        if (mainRoleState.enemyObj != null) //有敌人
+        {
+            leftright = 0.0f;
+            downup = 0.0f;
+        }
 
-
-            //目前不使用跳跃功能，根据输入来修改主角的动作状态
-            mainRoleState.updataAIRoleControl(leftright, downup, 0);
+        //目前不使用跳跃功能，根据输入来修改主角的动作状态
+        mainRoleState.updataAIRoleControl(leftright, downup, 0);
 
 
             if ((leftright != 0.0f) || (downup != 0.0f) || (offsetY != 0.0f)) //角色有位移
