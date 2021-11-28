@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class startScene : MonoBehaviour
 {
     public Button continueBtn;
+    public GameObject helpObj;
     private bool hasRecord;
     void Start()
     {
