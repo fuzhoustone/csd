@@ -259,14 +259,14 @@ public class UCharacterController {
         GameObject.Destroy(skillEscape);
 
     }
-
+    /*
     private void drawSceneAlpha() {
         if(sceneAlpha == null)
             sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
 
         sceneAlpha.drawSceneAlpha();
     }
-
+    */
     private float attack1Sleep = 5.0f;
     private float attack2Sleep = 5.0f;
     private void updateUIAttack1(float val)

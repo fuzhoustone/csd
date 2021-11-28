@@ -222,8 +222,8 @@ public class mainScene : MonoBehaviour
     {
         isInitFinish = false;
 
-        sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
-        sceneAlpha.clearData();
+       // sceneAlphaControl sceneAlpha = Camera.main.GetComponent<sceneAlphaControl>();
+       // sceneAlpha.clearData();
 
         Main tmpMain = this.transform.GetComponent<Main>();
         tmpMain.roleClear();

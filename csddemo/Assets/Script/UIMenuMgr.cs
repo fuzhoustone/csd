@@ -10,6 +10,7 @@ public class UIMenuMgr : MonoBehaviour
     public Transform nextLevelPanel = null;
     public Transform panelDev = null;
     public Transform rewardLab = null;
+    public Text killMonster;
 
     public Image imgAttack1;
     public Image imgAttack2;
@@ -26,6 +27,10 @@ public class UIMenuMgr : MonoBehaviour
     public void updateReward(int num) {
         Text tmpTxt = rewardLab.gameObject.GetComponent<Text>();
         tmpTxt.text = num.ToString();
+    }
+
+    public void updateKillNum(int now, int allNum) {
+        killMonster.text = now.ToString() + "/" + allNum.ToString();
     }
 
     public void updateImageAttack1Amount(float val, float count) {

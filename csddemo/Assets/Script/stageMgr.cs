@@ -39,11 +39,14 @@ public class stageMgr
 
         rewardNum = 0;
         CsdUIControlMgr.uiMgr().uiMenu.updateReward(rewardNum);
+        
         nowNum = 0;
+        CsdUIControlMgr.uiMgr().uiMenu.updateKillNum(nowNum, monsterLimitMin);
     }
 
     public void addClearMonster() {
         nowNum++;
+        CsdUIControlMgr.uiMgr().uiMenu.updateKillNum(nowNum, monsterLimitMin);
         if (nowNum >= monsterLimitMin) {  //符合通关条件
             if (finishEvent != null) {
                 finishEvent(rewardNum);
