@@ -110,6 +110,14 @@ public class gameDataMgr
         File.WriteAllText(m_ModelFileName, jsonStr);
     }
 
+    public bool hasRecord() {
+        bool res = false;
+        if (File.Exists(m_RoleFileName)) {
+            res = true;
+        }
+        return res;
+    }
+
     //加载所有数据
     private void loadAllData() {
         if (File.Exists(m_RoleFileName))
