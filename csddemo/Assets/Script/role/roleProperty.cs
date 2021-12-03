@@ -11,17 +11,22 @@ public class roleProperty:MonoBehaviour
 
     [SerializeField]
     public int hpMax;
-    [SerializeField]
-    public int mpMax;
+    //[SerializeField]
+    //public int mpMax;
     [SerializeField]
     public int hp;
-    [SerializeField]
-    public int mp;
+    //[SerializeField]
+    //public int mp;
 
     [SerializeField]
     public int attack;
     [SerializeField]
+    public int def;
+    [SerializeField]
     public int level;
+    [SerializeField]
+    public int element;
+
     [SerializeField]
     public float speed;
 
@@ -61,7 +66,7 @@ public class roleProperty:MonoBehaviour
         //hpMax = 100;
         hp = hpMax;
        // mpMax = 100;
-        mp = mpMax;
+       // mp = mpMax;
        // attack = 20;
        // level = 1;
        // speed = 0.5f;

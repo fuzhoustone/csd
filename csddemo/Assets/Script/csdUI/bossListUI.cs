@@ -6,7 +6,7 @@ using UnityEngine;
 public class bossListUI : MonoBehaviour
 {
     public Transform viewPortLst;
-    public Transform scrollViewParent;
+    //public Transform scrollViewParent;
     public TextAsset bossTab;
     private const string csBossinfo = "bossinfo";
     private void Start()
@@ -27,8 +27,8 @@ public class bossListUI : MonoBehaviour
         int nCount = BossInfoTable.GetTableLength();
         float csPosY = -124.0f;
         float allHeight = csPosY * (-1) * nCount;
-        //RectTransform tmpTrans = scrollViewParent.GetComponent<RectTransform>();
-        //tmpTrans.sizeDelta = new Vector2(tmpTrans.sizeDelta.x, allHeight);
+        RectTransform tmpTrans = viewPortLst.GetComponent<RectTransform>();
+        tmpTrans.sizeDelta = new Vector2(tmpTrans.sizeDelta.x, allHeight);
 
         for (int i = 0; i < nCount; i++) {
             BossInfoTable.bossElements tmpBoss = BossInfoTable.m_elements[i];

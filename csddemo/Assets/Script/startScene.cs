@@ -131,6 +131,7 @@ public class startScene : MonoBehaviour
     //图签
     public void shopList()
     {
+        //Time.timeScale = 1;
         if (helpObj.activeSelf == true)
         {
             helpObj.SetActive(false);
@@ -144,6 +145,7 @@ public class startScene : MonoBehaviour
     }
 
     public void helpShow() {
+        //Time.timeScale = 0;
         if (bossList.activeSelf == true)
         {
             bossList.SetActive(false);
@@ -154,7 +156,8 @@ public class startScene : MonoBehaviour
 
     public void exitGame()
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
+       
             UnityEditor.EditorApplication.isPlaying = false;
     #else
          Application.Quit();

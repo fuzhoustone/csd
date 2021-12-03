@@ -329,9 +329,9 @@ public class mainScene : MonoBehaviour
         roleProperty pro = obj.AddComponent<roleProperty>();
         pro.roleSort = 0;
         pro.hpMax = 100;
-        pro.mpMax = 100;
+      //  pro.mpMax = 100;
         pro.hp = pro.hpMax;
-        pro.mp = pro.mpMax;
+      //  pro.mp = pro.mpMax;
         pro.attack = 1;
         pro.level = 1;
         pro.speed = 0.5f;
