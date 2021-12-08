@@ -40,7 +40,7 @@ public class BossInfoTable  {
                        _Name,
                        _Des,
                        _Pic,
-                       _Cost
+                       _Cost,
                    };
         }
     }
@@ -57,10 +57,9 @@ public class BossInfoTable  {
             var des = row.GetString(_Des);
             var pic = row.GetString(_Pic);
             var cost = row.GetInt(_Cost);
-         
 
-            var element = new bossElements(id, name, des, pic, cost);
-            m_elements.Add(element);
+            var tmprow = new bossElements(id, name, des, pic, cost);
+            m_elements.Add(tmprow);
 
 
         }

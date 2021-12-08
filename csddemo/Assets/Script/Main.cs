@@ -229,6 +229,14 @@ public class Main : MonoBehaviour {
         App.Game.character.roleAttack2();
     }
 
+    //
+    public void transformRoleUI() {
+        //CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.SetActive(true);
+
+        roleListUI tmpUI = CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.GetComponent<roleListUI>();
+        tmpUI.showUI(0,null);
+    }
+
     public void showDevelopUI()
     {
        // if (developerUI != null) {

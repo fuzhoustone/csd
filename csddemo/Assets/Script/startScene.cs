@@ -131,7 +131,7 @@ public class startScene : MonoBehaviour
     //图签
     public void shopList()
     {
-        //Time.timeScale = 1;
+        //Time.timeScale = 0;
         if (helpObj.activeSelf == true)
         {
             helpObj.SetActive(false);
@@ -141,7 +141,8 @@ public class startScene : MonoBehaviour
             m_DialogBox.Close();
         }
 
-        bossList.SetActive(true);
+        bossList.GetComponent<bossListUI>().showUI();
+        //bossList.SetActive(true);
     }
 
     public void helpShow() {

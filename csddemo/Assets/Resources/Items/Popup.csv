@@ -1,5 +1,0 @@
-﻿ID,Des,Background_URL,Jumpto,PlacemetKey,Priority,EventIntervalStart,EventIntervalEnd
-1,首冲,Popup_firstrecharge,Activity_1100,Normal_7,0,2018-05-23 00:00,2019-06-05 23:59
-2,新增礼包,Popup_newpackage,Shop,Normal_9,0,2019-03-20 06:00,2019-03-27 05:59
-3,累计充值,Popup_charge,Shop,Normal_9,0,2019-02-27 00:00,2019-03-13 23:59
-4,强者的意志,Popup_Activity,Activity_1090,Normal_9,0,2019-04-24 06:00,2019-05-01 05:59

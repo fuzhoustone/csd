@@ -9,19 +9,30 @@ public class bossListUI : MonoBehaviour
     //public Transform scrollViewParent;
     public TextAsset bossTab;
     private const string csBossinfo = "bossinfo";
+    private bool isFirstShow = true;
     private void Start()
     {
         Debug.LogWarning("bossListUI start");
-        initData();
+      //  initData();
+    }
+
+    public void showUI() {
+        if (isFirstShow) {
+            isFirstShow = false;
+            initData();
+        }
+
+        this.gameObject.SetActive(true);
     }
 
     //加载显示UI
     public void initData() {
+        /*
         using (var stream = new MemoryStream(bossTab.bytes))
         {
             BossInfoTable.Load(stream);
         }
-
+        */
         Object bossInfoObj = Resources.Load("Prefab/UI/" + csBossinfo);
 
         int nCount = BossInfoTable.GetTableLength();
@@ -39,7 +50,15 @@ public class bossListUI : MonoBehaviour
             tmp.anchoredPosition3D = new Vector3(0, posY, 0);
 
             bossInfoUI tmpUI = tmpObj.GetComponent<bossInfoUI>();
-            int tmpcost = tmpBoss.Cost;
+            int tmpcost = 0;
+            bool isUse = gameDataMgr.gameData().m_bossTag.bossUse[i];
+            if (isUse) {
+                tmpcost = 0;
+            }
+            else {
+               
+                tmpcost = tmpBoss.Cost;
+            }
             tmpUI.initData(tmpBoss.Pic, tmpBoss.Name, tmpBoss.Des, tmpcost);
         }
     }

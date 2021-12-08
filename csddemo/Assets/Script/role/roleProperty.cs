@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using stoneState;
-public class roleProperty:MonoBehaviour
+public class roleProperty : MonoBehaviour
 {
     [SerializeField]
     public int roleSort = 0; //0是敌人，1是自己人
@@ -26,10 +26,14 @@ public class roleProperty:MonoBehaviour
     public int level;
     [SerializeField]
     public int element;
+    [SerializeField]
+    public int roleID;
+
 
     [SerializeField]
     public float speed;
 
+    public string picName;
     public float turnTime;
     public float nowTurnTime;
     public bool isTurn;

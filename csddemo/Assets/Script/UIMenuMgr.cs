@@ -10,6 +10,8 @@ public class UIMenuMgr : MonoBehaviour
     public Transform nextLevelPanel = null;
     public Transform panelDev = null;
     public Transform rewardLab = null;
+    public Transform roleList = null;
+
     public Text killMonster;
 
     public Image imgAttack1;

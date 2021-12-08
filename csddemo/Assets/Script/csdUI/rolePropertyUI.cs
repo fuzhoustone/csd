@@ -9,7 +9,7 @@ public class rolePropertyUI : MonoBehaviour
     public Text atkText;
     public Text defText;
     public Text hpText;
-    public Text lvText;
+    //public Text lvText;
     public Text eleText;
 
     public const string csElement0 = "无";
@@ -22,7 +22,7 @@ public class rolePropertyUI : MonoBehaviour
         atkText.text = pObj.attack.ToString();
         defText.text = pObj.def.ToString();
         hpText.text = pObj.hp.ToString() + "/" + pObj.hpMax.ToString();
-        lvText.text = pObj.level.ToString();
+        //lvText.text = pObj.level.ToString();
         eleText.text = getElementName(pObj.element);
     }
 

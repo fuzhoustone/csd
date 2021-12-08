@@ -12,23 +12,37 @@ public class gameDataMgr
      3. 图签，需设置格式
          Boar,Night,Soul,Terror,Usurper
          */
-    public class bossTag {
-        public int[] Boar = new int[4];
-        public int[] Night = new int[4];
-        public int[] Soul = new int[4];
-        public int[] Terror = new int[4];
-        public int[] Usurper = new int[4];
+
+    //魔物是否可用
+    /*
+    public class bossUse {
+        public int id { get; set; }
+        public bool canUse { get; set; }
     }
 
+    //魔物的当前血量
+    public class bossHp {
+        public int id { get; set; }
+        public int hp { get; set; }
+    }
+*/
+    //魔物解锁记录
+    public class bossTag
+    {
+        public bool[] bossUse = new bool[20];
+    }
+
+    //魔物当前的剩余血量
     public class roleData {
         public int mazeLevel; //关卡等级
-        public int roleLevel; //人数等级
+       // public int roleLevel; //人数等级
         public int rewardNum; //奖励个数
+        public int[] bosshp = new int[20];
     }
 
     private static gameDataMgr instance = null;
-    private bossTag m_bossTag;
-    private roleData m_roleData;
+    public bossTag m_bossTag;
+    public roleData m_roleData;
     private string m_ModelFileName = ""; //存放图签解锁的文件
     private string m_RoleFileName = ""; //存放通关记录的文件
     public static gameDataMgr gameData()
@@ -53,18 +67,27 @@ public class gameDataMgr
         m_roleData = new roleData();
         m_roleData.rewardNum = 0;
         m_roleData.mazeLevel = 1;
-        m_roleData.roleLevel = 1;
+        m_roleData.bosshp = new int[20];
+        for (int i = 0; i < 20; i++) {
+            m_roleData.bosshp[i] = 100;
+            //m_roleData.bosshp[i].id = i + 1;
+            //m_roleData.bosshp[i].hp = 100;
+        }
     }
 
     private void initModelData() {
         m_bossTag = new bossTag();
-        for (int i = 0; i < 4; i++) {
-            m_bossTag.Boar[i] = 0;
-            m_bossTag.Night[i] = 0;
-            m_bossTag.Soul[i] = 0;
-            m_bossTag.Terror[i] = 0;
-            m_bossTag.Usurper[i] = 0;
+        m_bossTag.bossUse = new bool[20];
 
+        for (int i = 0; i < 20; i++) {
+            m_bossTag.bossUse[i] = false;
+
+            /*
+            bossUse tmpUse = new bossUse();
+            tmpUse.id = i + 1;
+            tmpUse.canUse = false;
+            m_bossTag.bossUse.Add(tmpUse);
+            */
         }
     }
     private void saveRoleData() {
@@ -73,10 +96,9 @@ public class gameDataMgr
     }
 
     //记录当前主角等级
-    public void saveRoleLevel(int pLevel) {
-        m_roleData.roleLevel = pLevel;
-        saveRoleData();
-    }
+    //public void saveRoleLevel(int pLevel) {
+    //    saveRoleData();
+    //}
     
     //记录成就点个数
     public void addRewardNumData() {
@@ -102,9 +124,15 @@ public class gameDataMgr
         return res;
     }
 
+    public void deblockModel(int id) {
+        m_bossTag.bossUse[id-1] = true;
+        BossProTable.bossPro tmpPro = BossProTable.Get(id);
+        m_roleData.bosshp[id - 1] = tmpPro.MaxHp; 
+        saveModelData();
+    }
 
     //保存图签解锁
-    public void saveModelData() {
+    private void saveModelData() {
         
         string jsonStr = JsonUtility.ToJson(m_bossTag);
         File.WriteAllText(m_ModelFileName, jsonStr);
@@ -120,16 +148,6 @@ public class gameDataMgr
 
     //加载所有数据
     private void loadAllData() {
-        if (File.Exists(m_RoleFileName))
-        {
-            string jsonStr = File.ReadAllText(m_RoleFileName);
-            m_roleData = JsonUtility.FromJson<roleData>(jsonStr);
-        }
-        else {
-            initRoleData();
-            saveRoleData();
-        }
-
         if (File.Exists(m_ModelFileName))
         {
             string jsonStr = File.ReadAllText(m_ModelFileName);
@@ -141,7 +159,18 @@ public class gameDataMgr
             saveModelData();
         }
 
+        if (File.Exists(m_RoleFileName))
+        {
+            string jsonStr = File.ReadAllText(m_RoleFileName);
+            m_roleData = JsonUtility.FromJson<roleData>(jsonStr);
+        }
+        else
+        {
+            initRoleData();
+            saveRoleData();
+        }
     }
+
 
 
     /*内部数据加载*/

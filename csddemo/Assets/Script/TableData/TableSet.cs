@@ -6,49 +6,27 @@ using UnityEngine;
 
 public class TableSet : MonoBehaviour
 {
+    public TextAsset bossInfoTab;
+    public TextAsset bossPro;
 
-    public TextAsset m_PopFirstChargeTable;
-    private int m_loadedCount = 0;
-
-    public int LoadedCount
-    {
-        get { return m_loadedCount; }
+   private void Start()
+   {
+       initData();
     }
 
-
-    public const int TotalCount = 1; //2017.08.17
-
-
-    public void Load()
+    public void initData()
     {
-        m_loadedCount = 0;
-
-        LoadmPopChargeTable();
-
-    }
-
-    private void LoadmPopChargeTable()
-    {
-
-        using (var stream = new MemoryStream(m_PopFirstChargeTable.bytes))
+        using (var stream = new MemoryStream(bossInfoTab.bytes))
         {
-            PopFirstChargeTable.Load(stream);
+            BossInfoTable.Load(stream);
         }
-        ++m_loadedCount;
-    }
 
-   
-    public IEnumerator LoadCoroutine()
-    {
-        m_loadedCount = 0;
-        //
-        LoadmPopChargeTable();
-        yield return null;
+        using (var stream = new MemoryStream(bossPro.bytes))
+        {
+            BossProTable.Load(stream);
+        }
 
     }
-   
-    public static void Clear()
-    {
-        PopFirstChargeTable.Clear();
-    }
+       
+ 
 }
