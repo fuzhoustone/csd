@@ -118,7 +118,7 @@ public class roleListUI : MonoBehaviour
         float csPosY = 124.0f;
         float allHeight = csPosY * nLine;
         RectTransform tmpTrans = viewPortLst.GetComponent<RectTransform>();
-        tmpTrans.sizeDelta = new Vector2(tmpTrans.sizeDelta.x, allHeight);
+        tmpTrans.sizeDelta = new Vector2(csPosX * 3, allHeight);
 
         for (int i = 1; i <= nCount; i++)
         {
