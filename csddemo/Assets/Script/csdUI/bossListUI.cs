@@ -36,7 +36,7 @@ public class bossListUI : MonoBehaviour
         Object bossInfoObj = Resources.Load("Prefab/UI/" + csBossinfo);
 
         int nCount = BossInfoTable.GetTableLength();
-        float csPosY = -124.0f;
+        float csPosY = -122.0f;
         float allHeight = csPosY * (-1) * nCount;
         RectTransform tmpTrans = viewPortLst.GetComponent<RectTransform>();
         tmpTrans.sizeDelta = new Vector2(tmpTrans.sizeDelta.x, allHeight);
