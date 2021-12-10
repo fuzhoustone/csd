@@ -20,6 +20,8 @@ public class roleListUI : MonoBehaviour
     }
 
     public Transform viewPortLst;
+    public Button btnOK;
+
     public Action<int> calBackEvent;
     //public Transform scrollViewParent;
     // public TextAsset bossTab;
@@ -54,7 +56,7 @@ public class roleListUI : MonoBehaviour
         Button tmpBtn = tmpObj.GetComponent<Button>();
         tmpBtn.onClick.AddListener(delegate ()
         {
-            this.OnClick(pInfo.roleID);
+            this.OnClick(orderUIID);
         });
         return tmpObj;
     }
@@ -80,26 +82,36 @@ public class roleListUI : MonoBehaviour
             roleInfoUI tmpInfo = uiRole[oldRoleIndex].infoUI;
             calBackEvent(tmpInfo.roleID);
         }
+
+        UIclose();
     }
 
     private void initData() {
+        uiRole = new List<roleInfo>();
         int nCount = 0;
         gameDataMgr.bossTag tmpTag = gameDataMgr.gameData().m_bossTag;
         for (int i = 0; i < tmpTag.bossUse.Length; i++) {
             if (tmpTag.bossUse[i] == true) {
-                nCount++;
                 roleInfo tmpInfo = new roleInfo();
-
                 tmpInfo.roleID = i;
                 tmpInfo.hp = gameDataMgr.gameData().m_roleData.bosshp[i];
+
                 BossProTable.bossPro tmpPro = BossProTable.Get(i+1);
                 tmpInfo.maxHp = tmpPro.MaxHp;
+
                 BossInfoTable.bossElements tmpEle = BossInfoTable.Get(i+1);
                 tmpInfo.picName = tmpEle.Pic;
 
                 uiRole.Add(tmpInfo);
+                nCount++;
             }
         }
+
+        //OKBtnClick
+        btnOK.onClick.AddListener(delegate ()
+        {
+            this.OKBtnClick();
+        });
     }
 
     //加载显示UI
@@ -107,7 +119,7 @@ public class roleListUI : MonoBehaviour
     {
         calBackEvent = pEvent;
 
-        uiRole = new List<roleInfo>();
+        
         initData();
         int nCount = uiRole.Count;
         //int nCount = pData.mRoleData.Count;

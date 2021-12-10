@@ -44,6 +44,7 @@ public class Main : MonoBehaviour {
     //public GameManager gameManager;
     private bool isInit = false;
     private bool isStart = false;
+    public int roleID = 0;
 
     //总的角色控制类，控制角色换肤，动作，
     public UCharacterController character = null;
@@ -107,6 +108,19 @@ public class Main : MonoBehaviour {
         }
     }
 
+    private void changeRole()
+    {
+        Vector3 tmpPos = character.roleInstance.transform.position;
+        Vector3 nowPos = new Vector3(tmpPos.x, 0.0f, tmpPos.z);
+        if (character != null)
+        {
+            App.Game.CharacterMgr.changeChar();
+            character = null;
+        }
+
+        createRole(nowPos, roleID);
+    }
+
     public void roleShow() {
         if (character != null)
         {
@@ -133,11 +147,12 @@ public class Main : MonoBehaviour {
         // GameObject.Destroy(character);
         character = null;
     }
-   
+
+ 
 
     //创建主角
-    public void createRole(Vector3 pPos) {
-        // create an avatar
+    public void createRole(Vector3 pPos,int pRoleID = 0) {
+        /*
         character = App.Game.CharacterMgr.Generatecharacter(
             "ch_pc_hou",
             "ch_we_one_hou_" + index[DEFAULT_WEAPON],
@@ -146,24 +161,14 @@ public class Main : MonoBehaviour {
             "ch_pc_hou_" + index[DEFAULT_HAND] + "_shou",
             "ch_pc_hou_" + index[DEFAULT_FEET] + "_jiao",
             combine);
-
+*/
+        roleID = pRoleID;
+        string strPre = BossInfoTable.GetPrefab(roleID);
+        character = App.Game.CharacterMgr.Generatecharacter(strPre);
         addRoleData(character.roleInstance);
-       // App.Game.gameManager = this.gameManager;
-        // App.Game.character = this.character;
 
-        character.roleInstance.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform, character.roleFlagInstance.transform, monParentTransform);
-
+        character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform,  monParentTransform);
         isStart = true;
-
-        //   App.Game.character.rolePosCamer.setCameraAndTrans(cameraTransform, character.roleInstance.transform);
-
-        //App.Game.character.roleInstance = App.Game.character.roleChangeColorWeaponMgr.roleInstance;
-        //App.Game.CharacterMgr
-
-        // AvaterAnimationController tmpAnimaCon = character.roleInstance.GetComponent<AvaterAnimationController>();
-        // tmpAnimaCon.setCamera(cameraTransform, gameManager);
     }
 
     //UI适配
@@ -234,7 +239,16 @@ public class Main : MonoBehaviour {
         //CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.SetActive(true);
 
         roleListUI tmpUI = CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.GetComponent<roleListUI>();
-        tmpUI.showUI(0,null);
+        tmpUI.showUI(roleID, roleUIEvent);
+    }
+
+    private void roleUIEvent(int pID) {
+        if (roleID != pID)
+        {
+            roleID = pID;
+            changeRole();
+            //变身
+        }
     }
 
     public void showDevelopUI()

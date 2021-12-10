@@ -15,7 +15,7 @@ public class RoleChangeColorWeapon  {
     /// <summary>
     /// Equipment informations
     /// </summary>
-    private const string csRoleFlagRes = "roleflag";
+   // private const string csRoleFlagRes = "roleflag";
     private const string csRoleDogRes = "roledog";
 
     public string skeleton;
@@ -50,33 +50,39 @@ public class RoleChangeColorWeapon  {
     public GameObject GetRoleInstance() {
         return pRoleInstance;
     }
-
+/*
     public GameObject GetRoleFlagInstance() {
         return pRoleFlagInstance;
     }
-
+    */
     public void dataDestory() {
         
         if(pRoleInstance != null)
             GameObject.Destroy(pRoleInstance);
-        if(pRoleFlagInstance != null)
-            GameObject.Destroy(pRoleFlagInstance);
+      //  if(pRoleFlagInstance != null)
+      //      GameObject.Destroy(pRoleFlagInstance);
         if (WeaponInstance != null)
             GameObject.Destroy(WeaponInstance);
         if (WeaponInstance_l != null)
             GameObject.Destroy(WeaponInstance_l);
     }
 
+    public RoleChangeColorWeapon(string preStr) {
+        //Object res = Resources.Load("Prefab/" + csRoleDogRes);
+        Object res = Resources.Load("Prefab/Model/" + preStr);
+        pRoleInstance = GameObject.Instantiate(res) as GameObject;
+    }
+    /*
     public RoleChangeColorWeapon(int index, string skeleton, string weapon, string head, string chest, string hand, string feet, bool combine = false)
     {
 
         //Creates the skeleton object
         //Object res = Resources.Load("Prefab/" + skeleton);
         Object res = Resources.Load("Prefab/" + csRoleDogRes);
-        Object flagRes = Resources.Load("Prefab/" + csRoleFlagRes);
+    //    Object flagRes = Resources.Load("Prefab/" + csRoleFlagRes);
 
         pRoleInstance = GameObject.Instantiate(res) as GameObject;
-        pRoleFlagInstance = GameObject.Instantiate(flagRes) as GameObject;
+     //   pRoleFlagInstance = GameObject.Instantiate(flagRes) as GameObject;
 
         this.index = index;
         this.skeleton = skeleton;
@@ -92,7 +98,7 @@ public class RoleChangeColorWeapon  {
         equipments[3] = feet;
 
         //CombineSkinned(pRoleInstance, equipments, combine);
-        CombineSkinned(pRoleFlagInstance, equipments, combine);
+     //   CombineSkinned(pRoleFlagInstance, equipments, combine);
         
         // Create weapon
         //res = Resources.Load("Prefab/" + weapon);
@@ -100,6 +106,8 @@ public class RoleChangeColorWeapon  {
         //WeaponInstance_l = setWeaponInstance(res, "weapon_hand_l");
 
     }
+
+    */
 
     private GameObject setWeaponInstance(Object res, string weapon_hand)
     {
@@ -215,7 +223,7 @@ public class RoleChangeColorWeapon  {
         equipments[3] = equipment_feet;
 
         CombineSkinned(pRoleInstance, equipments, combine);
-        CombineSkinned(pRoleFlagInstance, equipments, combine);
+     //   CombineSkinned(pRoleFlagInstance, equipments, combine);
         /*
         Object res = null;
         SkinnedMeshRenderer[] meshes = new SkinnedMeshRenderer[4];

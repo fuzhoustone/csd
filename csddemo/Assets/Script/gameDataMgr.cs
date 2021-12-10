@@ -29,7 +29,7 @@ public class gameDataMgr
     //魔物解锁记录
     public class bossTag
     {
-        public bool[] bossUse = new bool[20];
+        public bool[] bossUse = new bool[21];
     }
 
     //魔物当前的剩余血量
@@ -37,7 +37,7 @@ public class gameDataMgr
         public int mazeLevel; //关卡等级
        // public int roleLevel; //人数等级
         public int rewardNum; //奖励个数
-        public int[] bosshp = new int[20];
+        public int[] bosshp = new int[21];
     }
 
     private static gameDataMgr instance = null;

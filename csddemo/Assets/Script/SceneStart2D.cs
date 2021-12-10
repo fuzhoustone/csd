@@ -44,7 +44,7 @@ public class SceneStart2D : MonoBehaviour
         {
             if ((sceneMaze.getIsInit()) && (roleMain.getIsInit()))
             {
-                roleMain.createRole(sceneMaze.firstPos);
+                roleMain.createRole(sceneMaze.firstPos, roleMain.roleID);
 
                 //sceneMaze.friendRole.GetComponent<followRole>().mainObj = roleMain.character.roleInstance; //设置小弟跟随目标
 

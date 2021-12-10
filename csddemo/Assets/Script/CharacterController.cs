@@ -8,7 +8,7 @@ public class UCharacterController {
 
     //角色对象
     public GameObject roleInstance = null;
-    public GameObject roleFlagInstance = null;
+ //   public GameObject roleFlagInstance = null;
 
     //角色换肤管理
     public RoleChangeColorWeapon roleChangeColorWeaponMgr = null;
@@ -38,15 +38,20 @@ public class UCharacterController {
     private csdsleep skillDef = null;
     private csdsleep skillEscape = null;
 
-    
 
+    public UCharacterController(string preStr) {
+        roleChangeColorWeaponMgr = new RoleChangeColorWeapon(preStr);
+        roleInstance = roleChangeColorWeaponMgr.GetRoleInstance();
+    }
+
+    /*
     public UCharacterController (int index,string skeleton, string weapon, string head, string chest, string hand, string feet, bool combine = false) {
 
         roleChangeColorWeaponMgr = new RoleChangeColorWeapon(index, skeleton, weapon, head, chest, hand, feet, combine);
         roleInstance = roleChangeColorWeaponMgr.GetRoleInstance();
-        roleFlagInstance = roleChangeColorWeaponMgr.GetRoleFlagInstance();
+     //   roleFlagInstance = roleChangeColorWeaponMgr.GetRoleFlagInstance();
     }
-
+*/
     //跳的高度值
     private const float csJumpHeightMax = 0.5f;
     //跳跃时，升空的时间
@@ -75,7 +80,7 @@ public class UCharacterController {
                          Vector3 pPos, 
                          Canvas pCanvas, 
                          Transform pMapCamerTransform, 
-                         Transform pRoleFlagTrans,
+                         //Transform pRoleFlagTrans,
                          Transform pMonsterParent) {
         App.Game.character = this;
         //mainRoleState = new RoleStateMgr();
@@ -87,7 +92,7 @@ public class UCharacterController {
         mainRoleState.AIInitData(roleInstance);
 
         rolePosCamer = new RolePosAndCamerMgr();
-        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas, pMapCamerTransform, pRoleFlagTrans);
+        rolePosCamer.initData(roleInstance, pCameraTransform, pRoleTranform,pPos, pCanvas, pMapCamerTransform);
 
         mainPro = roleInstance.transform.GetComponent<roleProperty>();
         mainPro.InitData(pCameraTransform, pCanvas.transform,1);
@@ -112,11 +117,7 @@ public class UCharacterController {
 
     }
 
-
-    public void dataDestory()
-    {
-        isStart = false;
-
+    public void onlyRoleDestory() {
         roleInstance = null;
 
         roleChangeColorWeaponMgr.dataDestory();
@@ -136,6 +137,14 @@ public class UCharacterController {
         roleIsDie = false; //玩家死亡
         skillDestory();
     }
+
+    public void dataDestory()
+    {
+        isStart = false;
+        onlyRoleDestory();
+
+
+    }
     public void rolePause() {
         isStart = false;
     }
@@ -149,7 +158,7 @@ public class UCharacterController {
             sceneAlpha.clearData();
         }
     }
-
+    /*
 	public void ChangeHeadEquipment (string equipment,bool combine = false)
 	{
         if (roleChangeColorWeaponMgr != null)
@@ -186,7 +195,7 @@ public class UCharacterController {
 
     }
 
-    /*
+    
     private void jumpDownOver() {
         mainRoleState.isJumpDownTouch = true;
         oldY = 0;

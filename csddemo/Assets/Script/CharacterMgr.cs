@@ -17,18 +17,30 @@ public class UCharacterMgr  {
 		skinnedMgr = new UCombineSkinnedMgr ();
 	}
 
+    public UCharacterController Generatecharacter(string strPre) {
+        UCharacterController instance = new UCharacterController(strPre);
+        characterDic = instance;
+        return instance;
+    }
+
+    /*
 	public UCharacterController Generatecharacter (string skeleton, string weapon, string head, string chest, string hand, string feet, bool combine = false)
 	{
 
-		UCharacterController instance = new UCharacterController (characterIndex,skeleton,weapon,head,chest,hand,feet,combine);
+        UCharacterController instance = new UCharacterController (characterIndex,skeleton,weapon,head,chest,hand,feet,combine);
         characterDic = instance;
         //characterDic.Add(characterIndex,instance);
 		//characterIndex ++;
 
 		return instance;
 	}
+    */
+    public void changeChar() {
+        characterDic.onlyRoleDestory();
+        characterDic = null;
+    }
 
-	public void RemoveChar ()
+    public void RemoveChar ()
 	{
         characterDic.dataDestory();
         characterDic = null;

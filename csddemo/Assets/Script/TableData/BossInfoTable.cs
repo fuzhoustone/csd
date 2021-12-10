@@ -10,15 +10,17 @@ public class BossInfoTable  {
         public string Name;
         public string Des;
         public string Pic;
-		public int Cost;       
+		public int Cost;
+        public string Prefab;
 
-        public bossElements(int id, string name,string des,string pic, int cost)
+        public bossElements(int id, string name,string des,string pic, int cost, string prefab)
         {
             ID = id;
             Name = name;
             Des = des;
 			Pic = pic;
             Cost = cost;
+            Prefab = prefab;
         }
     }
 
@@ -29,7 +31,8 @@ public class BossInfoTable  {
     private const string _Des = "Des";
     private const string _Pic = "Pic";
 	private const string _Cost = "Cost";
-    
+    private const string _Pre = "Pre";
+
     public static string[] ColumnNames
     {
         get
@@ -41,6 +44,7 @@ public class BossInfoTable  {
                        _Des,
                        _Pic,
                        _Cost,
+                       _Pre,
                    };
         }
     }
@@ -57,8 +61,9 @@ public class BossInfoTable  {
             var des = row.GetString(_Des);
             var pic = row.GetString(_Pic);
             var cost = row.GetInt(_Cost);
+            var pre = row.GetString(_Pre);
 
-            var tmprow = new bossElements(id, name, des, pic, cost);
+            var tmprow = new bossElements(id, name, des, pic, cost, pre);
             m_elements.Add(tmprow);
 
 
@@ -69,6 +74,11 @@ public class BossInfoTable  {
     public static int GetTableLength()
     {
         return m_elements.Count;
+    }
+
+    public static string GetPrefab(int id) {
+        string pre = Get(id).Prefab;
+        return pre;
     }
 
     public static bossElements Get(int id)

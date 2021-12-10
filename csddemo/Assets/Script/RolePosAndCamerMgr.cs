@@ -103,7 +103,7 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform, Transform pMapCamerTransform, Transform pFlagRoleTranform)
+    private void setCameraAndTrans(Transform pCameraTransform, Transform pRoleTranform, Transform pMapCamerTransform)
     {
         cameraTransform = pCameraTransform;
         mainCamer = pCameraTransform.GetComponent<Camera>();
@@ -111,7 +111,7 @@ public class RolePosAndCamerMgr  {
 
 
         roleTranform = pRoleTranform;
-        roleFlagTranform = pFlagRoleTranform;
+      //  roleFlagTranform = pFlagRoleTranform;
 
        // isInit = true;
     }
@@ -130,7 +130,7 @@ public class RolePosAndCamerMgr  {
 
     }
 
-    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform, Transform pRoleFlagTrans) {
+    public void initData(GameObject paraObj, Transform pCameraTransform, Transform pRoleTranform, Vector3 pPos, Canvas pCanvas, Transform pMapCamerTransform) {
         roleControl = paraObj.GetComponent<CharacterController>();
 
         // 摄像机距离人物的距离
@@ -173,10 +173,10 @@ public class RolePosAndCamerMgr  {
         //jumpTimeAdd = 0.0f;
         scaleCamerParam = 1.0f;
         roleCanvas = pCanvas;
-        setCameraAndTrans(pCameraTransform, pRoleTranform, pMapCamerTransform, pRoleFlagTrans);
+        setCameraAndTrans(pCameraTransform, pRoleTranform, pMapCamerTransform);
 
         roleTranform.position = pPos;
-        roleFlagTranform.position = pPos;
+       // roleFlagTranform.position = pPos;
 
         roleTranform.eulerAngles = new Vector3(0, 90, 0);
 
@@ -479,7 +479,7 @@ public class RolePosAndCamerMgr  {
 
         //人物的当前坐标 加上 偏移值，为移动后的坐标
         roleTranform.position = roleTranform.position + pMove;
-        roleFlagTranform.position = roleTranform.position;
+       // roleFlagTranform.position = roleTranform.position;
 
         //摄像机跟据和人物的缩放比例,人物的移动方向，重新计算位置, lookat等暂不改
         cameraTransform.position = getCamerNewPosFromRoleRefer();
