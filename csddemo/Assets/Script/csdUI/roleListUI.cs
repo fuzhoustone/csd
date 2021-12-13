@@ -93,11 +93,12 @@ public class roleListUI : MonoBehaviour
         for (int i = 0; i < tmpTag.bossUse.Length; i++) {
             if (tmpTag.bossUse[i] == true) {
                 roleInfo tmpInfo = new roleInfo();
-                tmpInfo.roleID = i;
+                
                 tmpInfo.hp = gameDataMgr.gameData().m_roleData.bosshp[i];
 
                 BossProTable.bossPro tmpPro = BossProTable.Get(i+1);
                 tmpInfo.maxHp = tmpPro.MaxHp;
+                tmpInfo.roleID = tmpPro.ID;
 
                 BossInfoTable.bossElements tmpEle = BossInfoTable.Get(i+1);
                 tmpInfo.picName = tmpEle.Pic;
@@ -119,7 +120,6 @@ public class roleListUI : MonoBehaviour
     {
         calBackEvent = pEvent;
 
-        
         initData();
         int nCount = uiRole.Count;
         //int nCount = pData.mRoleData.Count;
@@ -158,7 +158,15 @@ public class roleListUI : MonoBehaviour
 
     public void UIclose()
     {
+
+        for (int i = 0; i < viewPortLst.childCount; i++)
+        {
+            Transform pTran = viewPortLst.GetChild(i);
+            GameObject.Destroy(pTran.gameObject);
+        }
+
         uiRole.Clear();
+        btnOK.onClick.RemoveAllListeners();
 
         gameObject.SetActive(false);
     }

@@ -116,6 +116,7 @@ public class startScene : MonoBehaviour
 
     private void clearAndNewGame() {
         gameDataMgr.gameData().clearLevelData();  //清空通关记录
+        gameDataMgr.gameData().saveNewGameLevelData();  //保存一下新的通关记录
         changeGameScene(); //切换场景开始游戏
     }
 

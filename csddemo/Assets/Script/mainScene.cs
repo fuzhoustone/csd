@@ -168,7 +168,7 @@ public class mainScene : MonoBehaviour
 
         UIMenuMgr menuMgr = UIControlMgr.GetComponent<UIMenuMgr>();
         CsdUIControlMgr.uiMgr().initData(menuMgr);
-        gameDataMgr.gameData().saveLevelData(1);
+       // gameDataMgr.gameData().saveLevelData(1);
     }
     public void createLandScape()
     {
@@ -210,12 +210,16 @@ public class mainScene : MonoBehaviour
     public void reBuildScene() {
 
         // UIControlMgr.gameObject.AddComponent<UIMenuMgr>();
-      
+        gameDataMgr.gameData().saveNextLevelData();
+
         CsdUIControlMgr.uiMgr().uiMenu.nextLevelPanel.gameObject.SetActive(false); ;
         clearScene();
         SceneStart2D tmpScript = this.transform.GetComponent<SceneStart2D>();
         tmpScript.SceneStart();
+
         
+
+
     }
 
     public void clearScene()

@@ -165,7 +165,7 @@ public class Main : MonoBehaviour {
         roleID = pRoleID;
         string strPre = BossInfoTable.GetPrefab(roleID);
         character = App.Game.CharacterMgr.Generatecharacter(strPre);
-        addRoleData(character.roleInstance);
+        addRoleData(character.roleInstance, roleID);
 
         character.initData(cameraTransform, character.roleInstance.transform, pPos, roleCanvas, mapCamerTransform,  monParentTransform);
         isStart = true;
@@ -270,7 +270,7 @@ public class Main : MonoBehaviour {
     /// </summary>
     /// <param name="obj"></param>
     private const int csLayerRole = 11;
-    private void addRoleData(GameObject obj) {
+    private void addRoleData(GameObject obj, int roleID) {
         setRoleTagLayer(obj);
         addRigidbody(obj);
        // addMonsterColliderCode(obj);
@@ -279,7 +279,7 @@ public class Main : MonoBehaviour {
         obj.AddComponent<roleCollider>();
         obj.AddComponent<modelAnimatorControl>();
 
-        addRoleProperty(obj);
+        addRoleProperty(obj, roleID);
         obj.AddComponent<roleAI>();
     }
 
@@ -306,15 +306,17 @@ public class Main : MonoBehaviour {
         return res;
     }
 
-    private void addRoleProperty(GameObject obj)
+    private void addRoleProperty(GameObject obj, int roleID)
     {
         roleProperty pro = obj.AddComponent<roleProperty>();
+        BossProTable.bossPro tmpPro = BossProTable.Get(roleID);
         pro.roleSort = 1;
-        pro.hpMax = 100;
-      //  pro.mpMax = 100;
-        pro.hp = pro.hpMax;
-     //   pro.mp = pro.mpMax;
-        pro.attack = 1;
+        pro.hpMax = tmpPro.MaxHp;
+        pro.hp = gameDataMgr.gameData().m_roleData.bosshp[roleID];
+        pro.attack = tmpPro.Atk;
+        pro.def = tmpPro.Def;
+        pro.element = tmpPro.Ele;
+        pro.roleID = roleID;
         pro.level = 1;
         pro.speed = 0.5f;
         pro.turnTime = 0.0f;

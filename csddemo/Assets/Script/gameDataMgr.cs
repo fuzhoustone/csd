@@ -106,12 +106,23 @@ public class gameDataMgr
         saveRoleData();
     }
 
+    public void saveNextLevelData() {
+        m_roleData.mazeLevel++;
+        saveRoleData();
+    }
+
+    public void saveNewGameLevelData() {
+        m_roleData.mazeLevel = 1;
+        saveRoleData();
+    }
+
+    /*
     //记录当前通关数
     public void saveLevelData(int pLevel) {
         m_roleData.mazeLevel = pLevel;
         saveRoleData();
     }
-
+    */
     //清空当前通关数
     public void clearLevelData() {
         m_roleData.mazeLevel = 1;
