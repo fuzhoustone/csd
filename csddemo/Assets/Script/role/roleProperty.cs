@@ -9,34 +9,35 @@ public class roleProperty : MonoBehaviour
     [SerializeField]
     public int roleSort = 0; //0是敌人，1是自己人
 
-    [SerializeField]
-    public int hpMax;
-    //[SerializeField]
-    //public int mpMax;
-    [SerializeField]
-    public int hp;
     //[SerializeField]
     //public int mp;
-
-    [SerializeField]
-    public int attack;
-    [SerializeField]
-    public int def;
-    [SerializeField]
-    public int level;
-    [SerializeField]
-    public int element;
     [SerializeField]
     public int roleID;
 
+    [SerializeField]
+    public int attack;
 
+    [SerializeField]
+    public int def;
+
+    [SerializeField]
+    public int hpMax;
+    [SerializeField]
+    public int hp;
+
+    [SerializeField]
+    public int element;
+
+    [SerializeField]
+    public int level;
+    
     [SerializeField]
     public float speed;
 
-    public string picName;
-    public float turnTime;
-    public float nowTurnTime;
-    public bool isTurn;
+    //public string picName;
+   // public float turnTime;
+   // public float nowTurnTime;
+   // public bool isTurn;
 
     private Camera mainCamera;
     private Canvas mainCanvas;

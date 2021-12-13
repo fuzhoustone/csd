@@ -339,7 +339,7 @@ public class mainScene : MonoBehaviour
         pro.attack = 1;
         pro.level = 1;
         pro.speed = 0.5f;
-        pro.turnTime = 0.0f;
+       // pro.turnTime = 0.0f;
         pro.HpUIPoint = getHpPoint(obj.transform);
 
         return pro;
