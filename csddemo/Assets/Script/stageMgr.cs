@@ -42,6 +42,9 @@ public class stageMgr
         
         nowNum = 0;
         CsdUIControlMgr.uiMgr().uiMenu.updateKillNum(nowNum, monsterLimitMin);
+
+        int lev = gameDataMgr.gameData().m_roleData.mazeLevel;
+        CsdUIControlMgr.uiMgr().uiMenu.updateLevNum(lev);
     }
 
     public void addClearMonster() {

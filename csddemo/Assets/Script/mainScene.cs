@@ -103,12 +103,14 @@ public class mainScene : MonoBehaviour
     private int monsterID = 0;
     private int goldID = 0;
 
-    Grid2D<placeWall> placeGrid; //地块的三维空间表
+    private int ranSeed = 0;
+    Grid2D<placeWall> placeGrid = null; //地块的三维空间表
     List<HallWay2D> hallways;
     List<GameObject> cubeDebugLst;
     List<GameObject> hallwayDebugLst;
     //List<GameObject> stairDebugLst;
     List<GameObject> lineDebugLst;
+
     public GameObject friendRole; //主角的小弟
 
     [SerializeField]
@@ -120,7 +122,7 @@ public class mainScene : MonoBehaviour
     //add end
 
     Random random;
-    Grid2D<CellType> grid;
+    Grid2D<CellType> grid = null;
     List<Room2D> rooms;
     Delaunay2D delaunay;
     HashSet<Prim.Edge> selectedEdges;
@@ -172,21 +174,39 @@ public class mainScene : MonoBehaviour
     }
     public void createLandScape()
     {
-        int ranSeed = System.DateTime.Now.Second;
-      //  ranSeed = 8;//8，24
+        ranSeed = System.DateTime.Now.Second;
+        //ranSeed = 8;//8，24
         Debug.LogWarning("Random seed:" + ranSeed.ToString());
+
         random = new Random(ranSeed);
-        //random = new Random(0);
-
+        
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
-
         placeGrid = new Grid2D<placeWall>(size, Vector2Int.zero);
 
         createScene();
     }
 
-    private void clearData() {
+    private void newSeedRandom() {
+        ranSeed++;
+        Debug.LogWarning("Random seed:" + ranSeed.ToString());
+        random = new Random(ranSeed);
+    }
 
+    private void clearDataPlace() {
+        roomIndex = 0;
+        grid.initData();
+        //GameObject.Destroy(grid);
+        grid.clearData(CellType.None);
+
+        rooms.Clear();
+        placeGrid.initData();
+        placeGrid.clearData(null);
+
+        clearAllMaze();
+    }
+
+    private void clearData() {
+        roomIndex = 0;
         grid.initData();
         //GameObject.Destroy(grid);
         grid.clearData(CellType.None);
@@ -244,8 +264,20 @@ public class mainScene : MonoBehaviour
 
     private void createScene()
     {
-        PlaceRooms();  //生成房间
-        Triangulate(); //三角测量
+        bool flag = true;
+
+        while (flag)
+        {
+            PlaceRooms();  //生成房间
+            if (Triangulate()) //三角测量
+                flag = false;
+            else {
+                clearDataPlace();
+                newSeedRandom();
+            }
+        }
+        
+
         CreateHallways(); //创建走廊，过道
         PathfindHallways(); //走廊，过道寻路生成
 
@@ -655,8 +687,9 @@ public class mainScene : MonoBehaviour
         }
     }
 
-    void Triangulate()
+    private bool Triangulate()
     {
+        bool res = false;
         List<Vertex> vertices = new List<Vertex>();
 
         foreach (var room in rooms)
@@ -665,6 +698,9 @@ public class mainScene : MonoBehaviour
         }
 
         delaunay = Delaunay2D.Triangulate(vertices);
+        if (delaunay.Edges.Count > 0)
+            res = true;
+        return res;
     }
 
     void CreateHallways()

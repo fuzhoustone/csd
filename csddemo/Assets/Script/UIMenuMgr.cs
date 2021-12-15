@@ -13,6 +13,7 @@ public class UIMenuMgr : MonoBehaviour
     public Transform roleList = null;
 
     public Text killMonster;
+    public Text levNum;
 
     public Image imgAttack1;
     public Image imgAttack2;
@@ -33,6 +34,10 @@ public class UIMenuMgr : MonoBehaviour
 
     public void updateKillNum(int now, int allNum) {
         killMonster.text = now.ToString() + "/" + allNum.ToString();
+    }
+
+    public void updateLevNum(int num) {
+        levNum.text = "第" + num.ToString() + "关";
     }
 
     public void updateImageAttack1Amount(float val, float count) {
