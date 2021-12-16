@@ -142,6 +142,16 @@ public class roleProperty : MonoBehaviour
             roleSlider.value = 100.0f;
     }
 
+    public void testShowUI(Vector3 pPos) {
+        HpUIPoint.transform.localPosition = pPos;
+        //{
+        //    hpUI.gameObject.SetActive(true);
+        //    isShowUI = true;
+        //}
+        refreshHpSilder();
+        //testHpPoint(pPos);
+    }
+
     public void showUI()
     {
         if (hpUI.gameObject.activeSelf == false)
@@ -158,43 +168,13 @@ public class roleProperty : MonoBehaviour
         isShowUI = false;
     }
 
-
-    /*
-     人物
-    9，0.264995，16
-    0，90，0
-    0.1，0.1，0.1
-
-        摄像机
-        8,1,16
-        45,90,0
-        1,1,1
-
-*/
-
-
-
     public void setLineOffset(float x, float y) {
         xOffset = x;
         yOffset = y;
     }
 
-   
-    //GameObject pathParent;
 
-    //[SerializeField]
-    //GameObject pointPrefab;
-/*
-    public GameObject creatHp3DFlag(Vector3 pos, string pName)
-    {
-        pathParent = this.gameObject;
 
-        GameObject obj = Instantiate(pointPrefab, pos, Quaternion.identity, pathParent.transform);
-        obj.name = pName;
-
-        return obj;
-    }
-    */
     private void refreshHpSilder() {
         // UI坐标= mainCamera.WorldToScreenPoint(传入人物血条的世界坐标)
 

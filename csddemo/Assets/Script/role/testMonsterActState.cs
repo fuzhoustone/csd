@@ -11,45 +11,67 @@ public class testMonsterActState : MonoBehaviour
     public Transform CanvasTransform;
 
     [SerializeField]
-    public float xOffset;
+    public Transform roleTransform;
 
     [SerializeField]
-    public float yOffset;
+    public Vector3 pPos;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        addRolePro(roleTransform.gameObject);
 
-    }
-    /*
-    //调试使用Hp的3D模型
-    public void testHp3D() {
-        roleProperty tmpPro = this.GetComponent<roleProperty>();
-        //        tmpPro.creatPointFlag();
-        tmpPro.setLineOffset(xOffset, yOffset);
-
-        //根据其父节点的transform各属性构建坐标系
-        Vector3 parPos = this.transform.position;
-        Quaternion tmpRota = this.transform.rotation;
-        Vector3 parScale = this.transform.localScale;
-
-        Matrix4x4 tmpMat = Matrix4x4.TRS(parPos, tmpRota, parScale); //不能受角色朝向影响
-
-        Vector3 tmpPos = new Vector3(0, 0, 0);
-
-        Vector3 newMatPos = tmpMat.MultiplyPoint(tmpPos);
-
-        Vector3 offsetV3 = new Vector3(xOffset * transform.localScale.x, yOffset * transform.localScale.y, 0.0f);
-        tmpPro.creatHp3DFlag(offsetV3, "testLinePoint");
-    }
-    */
-    //根据Hp3D模型的位置，调试使用Hp的UI坐标
-    public void testHpUIShow() {
-        roleProperty tmpPro = this.GetComponent<roleProperty>();
+        roleProperty tmpPro = roleTransform.GetComponent<roleProperty>();
 
         tmpPro.InitData(CamerTransform, CanvasTransform);
 
         tmpPro.showUI();
     }
+   
+    //根据Hp3D模型的位置，调试使用Hp的UI坐标
+    public void testHpUIShow() {
+        roleProperty tmpPro = roleTransform.GetComponent<roleProperty>();
+
+        tmpPro.testShowUI(pPos);
+    }
+
+    public void refreshTestUIShow()
+    {
+        roleProperty tmpPro = roleTransform.GetComponent<roleProperty>();
+
+        tmpPro.testShowUI(pPos);
+    }
+
+    private void addRolePro(GameObject obj)
+    {
+        roleProperty pro = obj.AddComponent<roleProperty>();
+        pro.roleSort = 0;
+        pro.hpMax = 100;
+        pro.hp = pro.hpMax;
+        pro.attack = 1;
+        pro.level = 1;
+        pro.speed = 0.5f;
+        pro.HpUIPoint = getHpPoint(obj.transform);
+    }
+
+    private GameObject getHpPoint(Transform parent)
+    {
+        GameObject res = parent.gameObject;
+        int nCount = parent.childCount;
+        for (int i = 0; i < nCount; i++)
+        {
+            Transform tmp = parent.GetChild(i);
+            if (tmp.name == "HpPoint")
+            {
+                res = tmp.gameObject;
+                break;
+            }
+        }
+
+        return res;
+    }
+
+    
 
 }
