@@ -1,5 +1,5 @@
 ﻿ID,Name,Des,Pic,Cost,Pre
-0,狗,dogdog,boar_blue,10,role/roledog
+0,狗,dogdog,dogrole,0,role/roledog
 1,双角鱼1,aaa,boar_blue,10,DragonBoarPBR/BlueBoarPBR
 2,双角鱼2,bbb,boar_gold,10,DragonBoarPBR/GoldBoarPBR
 3,双角鱼3,ccc,boar_green,10,DragonBoarPBR/GreenBoarPBR
