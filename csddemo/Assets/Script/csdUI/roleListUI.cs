@@ -96,11 +96,12 @@ public class roleListUI : MonoBehaviour
                 
                 tmpInfo.hp = gameDataMgr.gameData().m_roleData.bosshp[i];
 
-                BossProTable.bossPro tmpPro = BossProTable.Get(i+1);
+                RoleProTable.rolePro tmpPro = RoleProTable.Get(i+1);
                 tmpInfo.maxHp = tmpPro.MaxHp;
                 tmpInfo.roleID = tmpPro.ID;
 
-                BossInfoTable.bossElements tmpEle = BossInfoTable.Get(i+1);
+                ShopItemTable.shopElements tmpEle = ShopItemTable.Get(i+1);
+                //RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(i+1);
                 tmpInfo.picName = tmpEle.Pic;
 
                 uiRole.Add(tmpInfo);

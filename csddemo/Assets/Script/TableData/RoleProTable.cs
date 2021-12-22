@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 
-public class BossProTable  {
+public class RoleProTable  {
 
-    public class bossPro
+    public class rolePro
     {
         public int ID;
         public int Atk;
@@ -12,7 +12,7 @@ public class BossProTable  {
         public int MaxHp;
 		public int Ele;
        // public int MaxHp;
-        public bossPro(int id, int atk, int def, int hp, int ele)
+        public rolePro(int id, int atk, int def, int hp, int ele)
         {
             ID = id;
             Atk = atk;
@@ -22,7 +22,7 @@ public class BossProTable  {
         }
     }
 
-    public static List<bossPro> m_elements = new List<bossPro>();
+    public static List<rolePro> m_elements = new List<rolePro>();
    
     private const string _ID = "ID";
     private const string _Atk = "Atk";
@@ -58,7 +58,7 @@ public class BossProTable  {
             var hp = row.GetInt(_MaxHp);
             var ele = row.GetInt(_Ele);
 
-            var tmprow = new bossPro(id, atk, def, hp, ele);
+            var tmprow = new rolePro(id, atk, def, hp, ele);
             m_elements.Add(tmprow);
         }
     }
@@ -69,7 +69,7 @@ public class BossProTable  {
         return m_elements.Count;
     }
 
-    public static bossPro Get(int id)
+    public static rolePro Get(int id)
     {
 		for (int i = 0; i < m_elements.Count; ++i)
 		{

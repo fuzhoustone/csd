@@ -7,7 +7,7 @@ public class bossListUI : MonoBehaviour
 {
     public Transform viewPortLst;
     //public Transform scrollViewParent;
-    public TextAsset bossTab;
+   // public TextAsset bossTab;
     private const string csBossinfo = "bossinfo";
     private bool isFirstShow = true;
     private void Start()
@@ -35,14 +35,16 @@ public class bossListUI : MonoBehaviour
         */
         Object bossInfoObj = Resources.Load("Prefab/UI/" + csBossinfo);
 
-        int nCount = BossInfoTable.GetTableLength();
+        int nCount = ShopItemTable.GetTableLength();
         float csPosY = -122.0f;
         float allHeight = csPosY * (-1) * nCount;
         RectTransform tmpTrans = viewPortLst.GetComponent<RectTransform>();
         tmpTrans.sizeDelta = new Vector2(tmpTrans.sizeDelta.x, allHeight);
 
         for (int i = 0; i < nCount; i++) {
-            BossInfoTable.bossElements tmpBoss = BossInfoTable.m_elements[i];
+            ShopItemTable.shopElements tmpBoss = ShopItemTable.m_elements[i];
+            int id = tmpBoss.ID;
+            RoleInfoTable.roleElements roleEle = RoleInfoTable.Get(id);
             float posY = csPosY * (i-1);
             GameObject tmpObj = GameObject.Instantiate(bossInfoObj, viewPortLst) as GameObject;
 
@@ -59,7 +61,7 @@ public class bossListUI : MonoBehaviour
                
                 tmpcost = tmpBoss.Cost;
             }
-            tmpUI.initData(tmpBoss.Pic, tmpBoss.Name, tmpBoss.Des, tmpcost);
+            tmpUI.initData(tmpBoss.Pic, roleEle.Name, roleEle.Des, tmpcost);
         }
     }
 

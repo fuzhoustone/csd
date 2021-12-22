@@ -137,7 +137,7 @@ public class gameDataMgr
 
     public void deblockModel(int id) {
         m_bossTag.bossUse[id-1] = true;
-        BossProTable.bossPro tmpPro = BossProTable.Get(id);
+        RoleProTable.rolePro tmpPro = RoleProTable.Get(id);
         m_roleData.bosshp[id - 1] = tmpPro.MaxHp; 
         saveModelData();
     }

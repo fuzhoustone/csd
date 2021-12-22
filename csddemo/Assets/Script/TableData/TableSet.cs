@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class TableSet : MonoBehaviour
 {
-    public TextAsset bossInfoTab;
-    public TextAsset bossPro;
+    public TextAsset roleItem;
+    public TextAsset roleProperty;
+    public TextAsset shopItemTab;
 
    private void Start()
    {
@@ -16,16 +17,20 @@ public class TableSet : MonoBehaviour
 
     public void initData()
     {
-        using (var stream = new MemoryStream(bossInfoTab.bytes))
+        using (var stream = new MemoryStream(roleItem.bytes))
         {
-            BossInfoTable.Load(stream);
+            RoleInfoTable.Load(stream);
         }
 
-        using (var stream = new MemoryStream(bossPro.bytes))
+        using (var stream = new MemoryStream(roleProperty.bytes))
         {
-            BossProTable.Load(stream);
+            RoleProTable.Load(stream);
         }
 
+        using (var stream = new MemoryStream(shopItemTab.bytes))
+        {
+            ShopItemTable.Load(stream);
+        }
     }
        
  

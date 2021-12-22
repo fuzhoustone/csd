@@ -163,7 +163,7 @@ public class Main : MonoBehaviour {
             combine);
 */
         roleID = pRoleID;
-        string strPre = BossInfoTable.GetPrefab(roleID);
+        string strPre = RoleInfoTable.GetPrefab(roleID);
         character = App.Game.CharacterMgr.Generatecharacter(strPre);
         addRoleData(character.roleInstance, roleID);
 
@@ -309,7 +309,7 @@ public class Main : MonoBehaviour {
     private void addRoleProperty(GameObject obj, int roleID)
     {
         roleProperty pro = obj.AddComponent<roleProperty>();
-        BossProTable.bossPro tmpPro = BossProTable.Get(roleID);
+        RoleProTable.rolePro tmpPro = RoleProTable.Get(roleID);
         pro.roleSort = 1;
         pro.hpMax = tmpPro.MaxHp;
         pro.hp = gameDataMgr.gameData().m_roleData.bosshp[roleID];
