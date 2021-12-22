@@ -309,7 +309,7 @@ public class Main : MonoBehaviour {
     private void addRoleProperty(GameObject obj, int roleID)
     {
         roleProperty pro = obj.AddComponent<roleProperty>();
-        RoleProTable.rolePro tmpPro = RoleProTable.Get(roleID);
+        RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(roleID);
         pro.roleSort = 1;
         pro.hpMax = tmpPro.MaxHp;
         pro.hp = gameDataMgr.gameData().m_roleData.bosshp[roleID];

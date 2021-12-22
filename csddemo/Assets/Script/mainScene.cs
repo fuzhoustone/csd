@@ -280,8 +280,8 @@ public class mainScene : MonoBehaviour
 
         CreateHallways(); //创建走廊，过道
         PathfindHallways(); //走廊，过道寻路生成
-
-
+        int lev = gameDataMgr.gameData().m_roleData.mazeLevel;
+        LevMonsterTab.initMonsterIDFromLev(lev);
         createPlance(); //生成房间
 
 #if !TESTPATH
@@ -361,17 +361,29 @@ public class mainScene : MonoBehaviour
         return res;
     }
     //怪物属性
-    private roleProperty addRolePro(GameObject obj) {
+    private roleProperty addRolePro(GameObject obj, int roleID) {
+        /*
         roleProperty pro = obj.AddComponent<roleProperty>();
         pro.roleSort = 0;
         pro.hpMax = 100;
-      //  pro.mpMax = 100;
         pro.hp = pro.hpMax;
-      //  pro.mp = pro.mpMax;
         pro.attack = 1;
         pro.level = 1;
         pro.speed = 0.5f;
-       // pro.turnTime = 0.0f;
+        pro.HpUIPoint = getHpPoint(obj.transform);
+        */
+
+        roleProperty pro = obj.AddComponent<roleProperty>();
+        RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(roleID);
+        pro.roleSort = 0;
+        pro.hpMax = tmpPro.MaxHp;
+        pro.hp = pro.hpMax;
+        pro.attack = tmpPro.Atk;
+        pro.def = tmpPro.Def;
+        pro.element = tmpPro.Ele;
+        pro.roleID = roleID;
+        pro.level = 1;
+        pro.speed = 0.5f;
         pro.HpUIPoint = getHpPoint(obj.transform);
 
         return pro;
@@ -413,8 +425,11 @@ public class mainScene : MonoBehaviour
             pPos.x += 0.2f;
             pPos.z += 0.2f;
         }
+        int roleID = LevMonsterTab.getRandomMonsterID();
+        string strPre = RoleInfoTable.GetPrefab(roleID);
+        Object tmpPre = Resources.Load("Prefab/Model/" + strPre);
 
-        GameObject tmpMonster = Instantiate(monsterPrefab, pPos, Quaternion.identity, monsterManagerTrans);
+        GameObject tmpMonster = GameObject.Instantiate(tmpPre, pPos, Quaternion.identity, monsterManagerTrans) as GameObject;
         tmpMonster.name = "monster_" + monsterID.ToString();
         monsterID++;
         setMonsterTagLayer(tmpMonster);
@@ -424,10 +439,7 @@ public class mainScene : MonoBehaviour
         tmpMonster.AddComponent<monsterCollider>();
         tmpMonster.AddComponent<modelAnimatorControl>();
 
-        roleProperty tmpPro = addRolePro(tmpMonster);
-
-        //roleProperty tmpPro = tmpMonster.GetComponent<roleProperty>();
-        
+        roleProperty tmpPro = addRolePro(tmpMonster, roleID);
 
         if (isMonster)
         {

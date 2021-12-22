@@ -9,6 +9,7 @@ public class TableSet : MonoBehaviour
     public TextAsset roleItem;
     public TextAsset roleProperty;
     public TextAsset shopItemTab;
+    public TextAsset levMonsterTab;
 
    private void Start()
    {
@@ -30,6 +31,11 @@ public class TableSet : MonoBehaviour
         using (var stream = new MemoryStream(shopItemTab.bytes))
         {
             ShopItemTable.Load(stream);
+        }
+
+        using (var stream = new MemoryStream(levMonsterTab.bytes))
+        {
+            LevMonsterTab.Load(stream);
         }
     }
        

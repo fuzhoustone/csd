@@ -7,14 +7,16 @@ public class RoleProTable  {
     public class rolePro
     {
         public int ID;
+        public int RoleID;
         public int Atk;
         public int Def;
         public int MaxHp;
 		public int Ele;
        // public int MaxHp;
-        public rolePro(int id, int atk, int def, int hp, int ele)
+        public rolePro(int id,int roleid, int atk, int def, int hp, int ele)
         {
             ID = id;
+            RoleID = roleid;
             Atk = atk;
             Def = def;
             MaxHp = hp;
@@ -25,6 +27,7 @@ public class RoleProTable  {
     public static List<rolePro> m_elements = new List<rolePro>();
    
     private const string _ID = "ID";
+    private const string _roleID = "RoleID";
     private const string _Atk = "Atk";
     private const string _Def = "Def";
     private const string _MaxHp = "Hp";
@@ -37,6 +40,7 @@ public class RoleProTable  {
             return new string[]
                    {
                        _ID,
+                       _roleID,
                        _Atk,
                        _Def,
                        _MaxHp,
@@ -53,12 +57,13 @@ public class RoleProTable  {
         {
             var row = data.GetRow(i);
             var id = row.GetInt(_ID);
+            var roleid = row.GetInt(_roleID);
             var atk = row.GetInt(_Atk);
             var def = row.GetInt(_Def);
             var hp = row.GetInt(_MaxHp);
             var ele = row.GetInt(_Ele);
 
-            var tmprow = new rolePro(id, atk, def, hp, ele);
+            var tmprow = new rolePro(id, roleid, atk, def, hp, ele);
             m_elements.Add(tmprow);
         }
     }
@@ -69,11 +74,11 @@ public class RoleProTable  {
         return m_elements.Count;
     }
 
-    public static rolePro Get(int id)
+    public static rolePro GetFromRoleID(int id)
     {
 		for (int i = 0; i < m_elements.Count; ++i)
 		{
-			if (m_elements[i].ID == id) 
+			if (m_elements[i].RoleID == id) 
 				return m_elements[i];
 		}
 		return null;
