@@ -6,10 +6,13 @@ using UnityEngine;
 public class shopListUI : MonoBehaviour
 {
     public Transform viewPortLst;
+    public rolePropertyUI roleProUI;
     //public Transform scrollViewParent;
    // public TextAsset bossTab;
-    private const string csBossinfo = "bossinfo";
+    private const string csShopInfo = "shopinfo";
+    //private const string csItemProperUI = "rolePropertyUI";
     private bool isFirstShow = true;
+    private shopInfoUI oldSelUI = null;
     private void Start()
     {
         Debug.LogWarning("bossListUI start");
@@ -33,18 +36,18 @@ public class shopListUI : MonoBehaviour
             BossInfoTable.Load(stream);
         }
         */
-        Object bossInfoObj = Resources.Load("Prefab/UI/" + csBossinfo);
+        Object bossInfoObj = Resources.Load("Prefab/UI/" + csShopInfo);
 
         int nCount = ShopItemTable.GetTableLength();
-        float csPosY = -122.0f;
+        float csPosY = -140.0f;
         float allHeight = csPosY * (-1) * nCount;
         RectTransform tmpTrans = viewPortLst.GetComponent<RectTransform>();
         tmpTrans.sizeDelta = new Vector2(tmpTrans.sizeDelta.x, allHeight);
 
         for (int i = 0; i < nCount; i++) {
             ShopItemTable.shopElements tmpBoss = ShopItemTable.m_elements[i];
-            int id = tmpBoss.ID;
-            RoleInfoTable.roleElements roleEle = RoleInfoTable.Get(id);
+            int roleID = tmpBoss.ID;
+            RoleInfoTable.roleElements roleEle = RoleInfoTable.Get(roleID);
             float posY = csPosY * (i-1);
             GameObject tmpObj = GameObject.Instantiate(bossInfoObj, viewPortLst) as GameObject;
 
@@ -54,15 +57,35 @@ public class shopListUI : MonoBehaviour
             shopInfoUI tmpUI = tmpObj.GetComponent<shopInfoUI>();
             int tmpcost = 0;
             bool isUse = gameDataMgr.gameData().m_bossTag.bossUse[i];
-            if (isUse) {
+            if (isUse) 
                 tmpcost = 0;
-            }
-            else {
-               
+            else 
                 tmpcost = tmpBoss.Cost;
+            
+            // tmpUI.initData(tmpBoss.Pic, roleEle.Name, roleEle.Des, tmpcost);
+            tmpUI.initData(tmpBoss.Pic, tmpcost, roleID, onClick);
+
+            if (i == 0) //给个默认选项
+            {
+                onClick(roleID, tmpUI);
             }
-            tmpUI.initData(tmpBoss.Pic, roleEle.Name, roleEle.Des, tmpcost);
+
         }
+    }
+
+    private void onClick(int roleID, shopInfoUI nowInfoUI) {
+        if (oldSelUI != null) {
+            oldSelUI.setSelectActive(false); 
+        }
+
+        oldSelUI = nowInfoUI;
+        oldSelUI.setSelectActive(true);
+        //roleID
+        roleProUI.showData(oldSelUI.roleID, onBuyItem);
+    }
+
+    private void onBuyItem() {
+        oldSelUI.setBuyOpen();
     }
 
     public void UIclose() {

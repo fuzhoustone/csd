@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,24 +7,44 @@ using UnityEngine.UI;
 public class rolePropertyUI : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Text monText;
     public Text atkText;
     public Text defText;
     public Text hpText;
     //public Text lvText;
     public Text eleText;
+    public Button btnBuy;
 
-    public const string csElement0 = "无";
-    public const string csElement1 = "风";
-    public const string csElement2 = "土";
-    public const string csElement3 = "水";
-    public const string csElement4 = "火";
+    private Action callEvent;
 
-    public void refreshData(roleProperty pObj) {
-        atkText.text = pObj.attack.ToString();
-        defText.text = pObj.def.ToString();
-        hpText.text = pObj.hp.ToString() + "/" + pObj.hpMax.ToString();
+    private const string csElement0 = "无";
+    private const string csElement1 = "火";  //red  
+    private const string csElement2 = "风";  //green 
+    private const string csElement3 = "水";  //blue
+    private const string csElement4 = "土";  //albino
+    private const string csElement5 = "圣";  //gold
+    private const string csElement6 = "暗";  //purple，darkblue
+
+    public void showData(int roleID, Action pEvent) {
+        //roleID用于展现UI
+        callEvent = pEvent;
+        RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(roleID);
+        refreshData(tmpPro);
+
+        RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(roleID);
+        monText.text = tmpEle.Name;
+    }
+
+    public void onBuyItem() {
+        //如果够买才触发
+    }
+
+    public void refreshData(RoleProTable.rolePro pObj) {
+        atkText.text = pObj.Atk.ToString();
+        defText.text = pObj.Def.ToString();
+        hpText.text =  pObj.MaxHp.ToString();
         //lvText.text = pObj.level.ToString();
-        eleText.text = getElementName(pObj.element);
+        eleText.text = getElementName(pObj.Ele);
     }
 
     public void uiClose() {
@@ -48,7 +69,16 @@ public class rolePropertyUI : MonoBehaviour
             case 4:
                 res = csElement4;
                 break;
-            
+            case 5:
+                res = csElement5;
+                break;
+            case 6:
+                res = csElement6;
+                break;
+
+            default:
+                res = csElement0;
+                break;
         }
         return res;
     }
