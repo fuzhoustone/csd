@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class bossListUI : MonoBehaviour
+public class shopListUI : MonoBehaviour
 {
     public Transform viewPortLst;
     //public Transform scrollViewParent;
@@ -51,7 +51,7 @@ public class bossListUI : MonoBehaviour
             RectTransform tmp = tmpObj.GetComponent<RectTransform>();
             tmp.anchoredPosition3D = new Vector3(0, posY, 0);
 
-            bossInfoUI tmpUI = tmpObj.GetComponent<bossInfoUI>();
+            shopInfoUI tmpUI = tmpObj.GetComponent<shopInfoUI>();
             int tmpcost = 0;
             bool isUse = gameDataMgr.gameData().m_bossTag.bossUse[i];
             if (isUse) {

@@ -142,7 +142,7 @@ public class startScene : MonoBehaviour
             m_DialogBox.Close();
         }
 
-        bossList.GetComponent<bossListUI>().showUI();
+        bossList.GetComponent<shopListUI>().showUI();
         //bossList.SetActive(true);
     }
 

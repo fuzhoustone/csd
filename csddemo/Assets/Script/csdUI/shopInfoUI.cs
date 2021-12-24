@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class bossInfoUI : MonoBehaviour
+public class shopInfoUI : MonoBehaviour
 {
     public Image pIcon;
     public Text pName;
