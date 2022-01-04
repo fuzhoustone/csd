@@ -17,6 +17,7 @@ public class shopInfoUI : MonoBehaviour
 
    // private int cost = 0;
     public int roleID = 0;
+    public int cost = 0;
     private const string csPicPath = "Textures/bosspic/";
     //private const string csFinish = "已解锁";
     //public void initData(string iconName, string name, string desc, int cost) {
@@ -31,7 +32,7 @@ public class shopInfoUI : MonoBehaviour
         //pName.text = name;
         //pDescription.text = desc;
 
-      //  cost = pCost;
+        cost = pCost;
         
         if (pCost > 0) //未解锁
         {
@@ -52,10 +53,12 @@ public class shopInfoUI : MonoBehaviour
         pBackImage.gameObject.SetActive(isShow);
     }
 
-    public void setBuyOpen() {
+    public void hideBuyTxt() {
         pTxtImage.gameObject.SetActive(false);
+
     }
 
+    //点击事件
     public void btnEvent() {
         btnCallBack(roleID, this);
     }

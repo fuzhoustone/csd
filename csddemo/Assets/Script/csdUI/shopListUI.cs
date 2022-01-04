@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class shopListUI : MonoBehaviour
 {
     public Transform viewPortLst;
     public rolePropertyUI roleProUI;
+    public Text rewardTxt;
     //public Transform scrollViewParent;
    // public TextAsset bossTab;
     private const string csShopInfo = "shopinfo";
@@ -24,8 +26,12 @@ public class shopListUI : MonoBehaviour
             isFirstShow = false;
             initData();
         }
-
+        refreshReward();
         this.gameObject.SetActive(true);
+    }
+
+    private void refreshReward() {
+        rewardTxt.text = gameDataMgr.gameData().m_roleData.rewardNum.ToString();
     }
 
     //加载显示UI
@@ -81,11 +87,13 @@ public class shopListUI : MonoBehaviour
         oldSelUI = nowInfoUI;
         oldSelUI.setSelectActive(true);
         //roleID
-        roleProUI.showData(oldSelUI.roleID, onBuyItem);
+        roleProUI.showData(oldSelUI.roleID, oldSelUI.cost, onHideBuyTxt);
     }
 
-    private void onBuyItem() {
-        oldSelUI.setBuyOpen();
+    private void onHideBuyTxt() {
+        oldSelUI.hideBuyTxt();
+        oldSelUI.cost = 0;
+        refreshReward();
     }
 
     public void UIclose() {

@@ -23,12 +23,12 @@ public class startScene : MonoBehaviour
         if (hasRecord == true)
         {
             continueBtn.interactable = true;
-            continueBtn.enabled = true;
+            //continueBtn.enabled = true;
         }
         else
         {
             continueBtn.interactable = false;
-            continueBtn.enabled = false;
+           // continueBtn.enabled = false;
         }
 
         helpObj.SetActive(false);

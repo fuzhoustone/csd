@@ -37,7 +37,7 @@ public class stageMgr
         monsterLimitMin = monsterNum;
         finishEvent = callEvent;
 
-        rewardNum = 0;
+        rewardNum = gameDataMgr.gameData().m_roleData.rewardNum;
         CsdUIControlMgr.uiMgr().uiMenu.updateReward(rewardNum);
         
         nowNum = 0;

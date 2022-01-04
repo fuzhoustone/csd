@@ -16,7 +16,8 @@ public class rolePropertyUI : MonoBehaviour
     public Button btnBuy;
 
     private Action callEvent;
-
+    private int cost;
+    private int roleID;
     private const string csElement0 = "无";
     private const string csElement1 = "火";  //red  
     private const string csElement2 = "风";  //green 
@@ -25,18 +26,52 @@ public class rolePropertyUI : MonoBehaviour
     private const string csElement5 = "圣";  //gold
     private const string csElement6 = "暗";  //purple，darkblue
 
-    public void showData(int roleID, Action pEvent) {
+    public void showData(int pRoleID,int pCost, Action pEvent) {
         //roleID用于展现UI
         callEvent = pEvent;
-        RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(roleID);
+        RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(pRoleID);
         refreshData(tmpPro);
 
-        RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(roleID);
+        RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(pRoleID);
         monText.text = tmpEle.Name;
+
+        roleID = pRoleID;
+        cost = pCost;
+        btnBuySet();
+
+    }
+
+    private void btnBuySet() {
+        if (cost > 0)
+        {
+            btnBuy.gameObject.SetActive(true);
+            if (gameDataMgr.gameData().m_roleData.rewardNum >= cost)
+            {
+             //   btnBuy.enabled = true;
+                btnBuy.interactable = true;
+            }
+            else {
+             //   btnBuy.enabled = false;
+                btnBuy.interactable = false;
+            }
+
+        }
+        else
+        {
+            btnBuy.gameObject.SetActive(false);
+        }
     }
 
     public void onBuyItem() {
-        //如果够买才触发
+        bool isSuccess = gameDataMgr.gameData().costRewardNum(cost,roleID);
+        if (isSuccess)
+        {
+            callEvent(); //需足够买才触发
+            btnBuy.gameObject.SetActive(false);
+        }
+        else {
+
+        }
     }
 
     public void refreshData(RoleProTable.rolePro pObj) {

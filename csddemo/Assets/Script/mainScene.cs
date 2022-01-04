@@ -490,7 +490,8 @@ public class mainScene : MonoBehaviour
     }
 
     private void finishState(int reward) {
-        CsdUIControlMgr.uiMgr().uiMenu.nextLevelPanel.gameObject.SetActive(true); 
+        CsdUIControlMgr.uiMgr().uiMenu.nextLevelPanel.gameObject.SetActive(true);
+        gameDataMgr.gameData().saveRewardNumData(reward);
     }
 
     public void createGoldInHallWay() {

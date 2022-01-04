@@ -101,9 +101,24 @@ public class gameDataMgr
     //}
     
     //记录成就点个数
-    public void addRewardNumData() {
-        m_roleData.rewardNum += 1;
+    public void saveRewardNumData(int num) {
+        m_roleData.rewardNum = num;
         saveRoleData();
+    }
+
+    public bool costRewardNum(int pCost, int pRoleID) {
+        bool res = false;
+        if (m_roleData.rewardNum >= pCost)
+        {
+            m_roleData.rewardNum -= pCost;
+            //m_roleData.bosshp[pRoleID] = true;
+            m_bossTag.bossUse[pRoleID] = true;
+            saveRoleData();
+            saveModelData();
+            res = true;
+        }
+
+        return res;
     }
 
     public void saveNextLevelData() {
