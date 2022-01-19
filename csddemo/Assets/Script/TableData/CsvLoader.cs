@@ -22,19 +22,39 @@ public static class CSVLoader
         do
         {
             columnNames = reader.ReadLine();
-        } while (columnNames.StartsWith("``"));
-        
+        }
+        //update by csd
+        while ((isNullLine(columnNames) == true) || (columnNames.StartsWith("``")));
+        //update end
+        //while (columnNames.StartsWith("``"));
+
         result = new CSVData(columnNames, seperator);
         string row;
         while (reader.EndOfStream == false)
         {
             row = reader.ReadLine();
             if (row.StartsWith("``")) continue;
+            //add by csd
+            if (isNullLine(row))
+                continue;
+            //add end
             result.Add(row, seperator, encoding);
         }
         reader.Close();
         return result;
     }
+
+    private static bool isNullLine(string pVal) {
+        bool res = false;
+        string tmpVal = pVal;
+        tmpVal = tmpVal.Replace(" ","");
+        tmpVal = tmpVal.Replace("°°", "");
+        if (tmpVal.Equals(""))  //”Î""œ‡µ»
+            res = true;
+
+        return res;
+    }
+
 }
 
 public class CSVData : IEnumerable<CSVRow>
@@ -83,6 +103,16 @@ public class CSVColumnNameIndexer
 {
     private readonly Dictionary<string, int> m_columnDic = new Dictionary<string, int>();
 
+    public List<string> getColDicLst() {
+        List<string> res = new List<string>();
+
+        foreach (KeyValuePair<string, int> kvp in m_columnDic) {
+            res.Add(kvp.Key);
+        }
+       
+        return res;
+    }
+
     internal CSVColumnNameIndexer(string columnNames, char seperator)
     {
         string[] columnNameArray = columnNames.Split(new[] {seperator}, StringSplitOptions.None);
@@ -114,6 +144,10 @@ public class CSVRow
     private readonly string[] m_rowDatas;
 
     private static readonly byte[] g_columnStr = new byte[2048];
+
+    public CSVColumnNameIndexer GetCSVColumnNameIndexer() {
+        return m_columnNameIndexer;
+    }
 
     public CSVRow(string row, CSVColumnNameIndexer columnNameIndexer, char seperator, Encoding encoding)
     {

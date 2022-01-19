@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 using Graphs;
-
+//目前不使用 by csd
 public class Generator3D : MonoBehaviour {
 
     enum CellType

@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DamageCal;
 using stoneState;
-
+//目前不使用，后续若要使用，需重构
 
 //小弟AI
 /*
@@ -76,7 +76,8 @@ public class followRole : baseAI
                 enemyAI.stateDieStart(); //处理 对方死亡动画及结算
                 this.enemyObj = null;
             }
-            getNowNewEnemyFromLst();
+            
+           // getNowNewEnemyFromLst(); 
             if (enemyObj != null)
                 lookAtEnemy(this.gameObject, enemyObj);
         }

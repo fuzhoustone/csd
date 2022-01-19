@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//目前不使用 by csd
 public class SceneStart : MonoBehaviour
 {
     private bool isInit = false;

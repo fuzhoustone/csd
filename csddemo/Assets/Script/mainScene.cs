@@ -428,6 +428,9 @@ public class mainScene : MonoBehaviour
         int roleID = LevMonsterTab.getRandomMonsterID();
         string strPre = RoleInfoTable.GetPrefab(roleID);
         Object tmpPre = Resources.Load("Prefab/Model/" + strPre);
+        if (tmpPre == null) {
+            Debug.LogError("role prefab not find roleID:"+ roleID.ToString());
+        }
 
         GameObject tmpMonster = GameObject.Instantiate(tmpPre, pPos, Quaternion.identity, monsterManagerTrans) as GameObject;
         tmpMonster.name = "monster_" + monsterID.ToString();

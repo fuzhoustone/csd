@@ -32,8 +32,13 @@ public class rolePropertyUI : MonoBehaviour
         RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(pRoleID);
         refreshData(tmpPro);
 
-        RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(pRoleID);
-        monText.text = tmpEle.Name;
+        //RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(pRoleID);
+        //monText.text = tmpEle.Name;
+        string tmpEleName = "";
+        CSVRow lRow = RoleInfoTable.GetRowFromID(pRoleID);
+        tmpEleName = lRow.GetString("Name");
+        //RoleInfoTable.GetKeyString("ID", pRoleID.ToString(), "Name", out tmpEleName);
+        monText.text = tmpEleName;
 
         roleID = pRoleID;
         cost = pCost;

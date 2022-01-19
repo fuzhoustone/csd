@@ -53,7 +53,7 @@ public class shopListUI : MonoBehaviour
         for (int i = 0; i < nCount; i++) {
             ShopItemTable.shopElements tmpBoss = ShopItemTable.m_elements[i];
             int roleID = tmpBoss.ID;
-            RoleInfoTable.roleElements roleEle = RoleInfoTable.Get(roleID);
+          //  CSVRow roleEle = RoleInfoTable.GetRowFromID(roleID);
             float posY = csPosY * (i-1);
             GameObject tmpObj = GameObject.Instantiate(bossInfoObj, viewPortLst) as GameObject;
 

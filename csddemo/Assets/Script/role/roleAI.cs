@@ -33,8 +33,10 @@ public class roleAI : baseAI
                 baseAI enemyAI = enemyObj.transform.GetComponent<baseAI>();
                 enemyAI.stateDieStart();
                 //this.enemyObj = null;
+
+                getNowNewEnemyFromLst();  //死亡，挑选新的敌人
             }
-            getNowNewEnemyFromLst();
+            
             if (enemyObj != null)
                 lookAtEnemy(this.gameObject, enemyObj);
         }
@@ -86,14 +88,14 @@ public class roleAI : baseAI
             oldRoleState = lHopeState;
             aniCon.PlayState(lHopeState);
         }
-
+        /*
         if ((lHopeState == roleState.stand)|| (lHopeState == roleState.run)) { //移动停止时再检测敌人
+        { //移动停止时再检测敌人
             if (enemyObj != null) {
                 getNowNewEnemyFromLst();
              }
         }
-        
-
+            */
         //return isChangeToJump;
 
     }

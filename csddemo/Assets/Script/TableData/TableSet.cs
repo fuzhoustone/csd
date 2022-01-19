@@ -21,6 +21,7 @@ public class TableSet : MonoBehaviour
         using (var stream = new MemoryStream(roleItem.bytes))
         {
             RoleInfoTable.Load(stream);
+            //StoneTable.CsdTTable<string>.Load(stream);
         }
 
         using (var stream = new MemoryStream(roleProperty.bytes))

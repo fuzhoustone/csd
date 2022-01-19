@@ -2,7 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 
-public class RoleInfoTable  {
+public class RoleInfoTable : CsdTTable<string> {
+    public static string GetPrefab(int pID) {
+        string res = "";
+        string lPath = "";
+        string lPreName = "";
+        CSVRow lRow = GetRowFromID(pID);
+        lPath = lRow.GetString("resPath");
+        lPreName = lRow.GetString("Pre");
+        res = lPath + "/" + lPreName;
+        /*
+        bool b1 = GetKeyString("ID",pID.ToString(), "resPath",out lPath);
+        bool b2 = GetKeyString("ID", pID.ToString(), "Pre", out lPreName);
+        if (b1 && b2) {
+            res = lPath + "/" + lPreName;
+        }*/
+        return res;
+    }
+}
+/*
+public class RoleInfoTable
+{
 
     public class roleElements
     {
@@ -21,7 +41,8 @@ public class RoleInfoTable  {
     }
 
     public static List<roleElements> m_elements = new List<roleElements>();
-   
+   // public static List<T> m_elementTs = new List<T>();
+
     private const string _ID = "ID";
     private const string _Name = "Name";
     private const string _Des = "Des";
@@ -87,3 +108,4 @@ public class RoleInfoTable  {
         m_elements.Clear();
     }
 }
+*/

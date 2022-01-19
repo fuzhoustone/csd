@@ -101,7 +101,7 @@ public class baseAI : MonoBehaviour
     }
 
     //检测当前敌人是否存活，是否在攻击范围内，
-    // 若当前敌人已死或跑开，则从列表中挑选目标为当前敌人
+    // 若当前敌人已死或跑开，则从列表中挑选目标为当前敌人（只是标识上修改）
     public GameObject getNowNewEnemyFromLst() {
         GameObject newEnemy = null;
         
@@ -261,7 +261,7 @@ public class baseAI : MonoBehaviour
             }
             else
             {
-                getNowNewEnemyFromLst();
+               getNowNewEnemyFromLst(); //挑选新的敌人
             }
         }
         return res;

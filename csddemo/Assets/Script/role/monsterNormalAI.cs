@@ -52,8 +52,10 @@ public class monsterNormalAI : baseAI
             { //死亡
                 baseAI enemyAI = enemyObj.transform.GetComponent<baseAI>();
                 enemyAI.stateDieStart();
+
+                getNowNewEnemyFromLst(); //死亡，挑选新的敌人
             }
-            getNowNewEnemyFromLst();
+            
             if(enemyObj != null)
                 lookAtEnemy(this.gameObject, enemyObj);
         }
