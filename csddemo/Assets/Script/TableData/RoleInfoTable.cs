@@ -19,6 +19,28 @@ public class RoleInfoTable : CsdTTable<string> {
         }*/
         return res;
     }
+
+    public static string GetSkin(CSVRow lRow) {
+        string res = "";
+        string lPath = "";
+        string lSkinName = "";
+        // = GetRowFromID(pID);
+        lPath = lRow.GetString("resPath");
+        lSkinName = lRow.GetString("skinName");
+        res = lPath + "/" + lSkinName;
+        return res;
+    }
+
+    public static CSVRow isUseSkin(int pID) {
+        CSVRow isUse = null;
+        CSVRow lRow = GetRowFromID(pID);
+        string l1 = lRow.GetString("skinNode");
+        string l2 = lRow.GetString("skinName");
+        if ((l1 != "") && (l2 != "")) {
+            isUse = lRow;
+        }
+        return isUse;
+    }
 }
 /*
 public class RoleInfoTable

@@ -344,35 +344,8 @@ public class mainScene : MonoBehaviour
         goldID++;
     }
 
-
-    private GameObject getHpPoint(Transform parent) {
-        GameObject res = parent.gameObject;
-        int nCount = parent.childCount;
-        for (int i = 0; i < nCount; i++)
-        {
-           Transform tmp = parent.GetChild(i);
-            if (tmp.name == "HpPoint")
-            {
-                res = tmp.gameObject;
-                break;
-            }
-        }
-
-        return res;
-    }
     //怪物属性
     private roleProperty addRolePro(GameObject obj, int roleID) {
-        /*
-        roleProperty pro = obj.AddComponent<roleProperty>();
-        pro.roleSort = 0;
-        pro.hpMax = 100;
-        pro.hp = pro.hpMax;
-        pro.attack = 1;
-        pro.level = 1;
-        pro.speed = 0.5f;
-        pro.HpUIPoint = getHpPoint(obj.transform);
-        */
-
         roleProperty pro = obj.AddComponent<roleProperty>();
         RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(roleID);
         pro.roleSort = 0;
@@ -384,7 +357,7 @@ public class mainScene : MonoBehaviour
         pro.roleID = roleID;
         pro.level = 1;
         pro.speed = 0.5f;
-        pro.HpUIPoint = getHpPoint(obj.transform);
+        pro.HpUIPoint = GameObjCommon.getObjNode(obj.transform, "HpPoint");
 
         return pro;
     }
@@ -432,9 +405,12 @@ public class mainScene : MonoBehaviour
             Debug.LogError("role prefab not find roleID:"+ roleID.ToString());
         }
 
+ 
         GameObject tmpMonster = GameObject.Instantiate(tmpPre, pPos, Quaternion.identity, monsterManagerTrans) as GameObject;
         tmpMonster.name = "monster_" + monsterID.ToString();
         monsterID++;
+
+        GameObjCommon.skinUpdate(roleID, tmpMonster.transform);
         setMonsterTagLayer(tmpMonster);
         addRigidbody(tmpMonster);
         //addMonsterColliderCode(tmpMonster);
