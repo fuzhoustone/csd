@@ -318,7 +318,14 @@ public class UCharacterController {
             CsdUIControlMgr.uiMgr().msgNote(csNoEnemy);
         }
     }
-    
+
+    public bool roleHasEnemy() {
+        if (mainRoleState.enemyObj != null)
+            return true;
+        else
+            return false;
+    }
+
     public void roleAttack2() {
         if (mainRoleState.enemyObj != null)
         {

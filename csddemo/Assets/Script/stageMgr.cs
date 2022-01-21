@@ -74,11 +74,16 @@ public class stageMgr
         Debug.LogWarning("主角挂了");
         string title = "战斗失败";
         string text = "战斗失败，复活继续战斗，或返回主菜单";
+        /*
         string[] buttons = new string[2];
         buttons[0] = "复活";
         buttons[1] = "返回主菜单";
 
         CsdUIControlMgr.uiMgr().dialogBox(title,text,null, buttons, continueFight, callBackMain, null);
+    */
+        string[] buttons = new string[1];
+        buttons[0] = "返回主菜单";
+        CsdUIControlMgr.uiMgr().dialogBox(title, text, null, buttons,  callBackMain, null,null);
     }
 
 

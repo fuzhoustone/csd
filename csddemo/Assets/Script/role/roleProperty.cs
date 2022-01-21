@@ -176,6 +176,10 @@ public class roleProperty : MonoBehaviour
 
 
     private void refreshHpSilder() {
+       // if (GameObjDataTemp.tempData().refreshHpUI == false) {
+       //     return ;
+       // }
+
         // UI坐标= mainCamera.WorldToScreenPoint(传入人物血条的世界坐标)
 
         // 人物血条的世界坐标显示UI的绑点 = 人物世界坐标 +  世界坐标系下的偏移坐标

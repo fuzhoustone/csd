@@ -24,6 +24,8 @@ public class UIMenuMgr : MonoBehaviour
     public Notification noteMsgTop;
     public DialogBox m_DialogBox;
 
+    public Transform canvasHP;
+
     private float attack1Amount = 0.0f;
     private float attack2Amount = 0.0f;
 

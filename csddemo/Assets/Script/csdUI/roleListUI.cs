@@ -159,6 +159,8 @@ public class roleListUI : MonoBehaviour
 
     public void UIclose()
     {
+        //GameObjDataTemp.tempData().refreshHpUI = true;
+        CsdUIControlMgr.uiMgr().uiMenu.canvasHP.gameObject.SetActive(true);
 
         for (int i = 0; i < viewPortLst.childCount; i++)
         {

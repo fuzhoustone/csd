@@ -15,6 +15,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 //using UCharacterMgr;
 
 /// <summary>
@@ -234,12 +235,26 @@ public class Main : MonoBehaviour {
         App.Game.character.roleAttack2();
     }
 
-    //
+    private const string csNoChange = "战斗中无法变身";
     public void transformRoleUI() {
         //CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.SetActive(true);
+        bool hasEnemy = App.Game.character.roleHasEnemy();
+         if (hasEnemy)
+         {
+             CsdUIControlMgr.uiMgr().msgNote(csNoChange);
+         }
+         else
+         {
+        
+            CsdUIControlMgr.uiMgr().uiMenu.canvasHP.gameObject.SetActive(false);
+            roleListUI tmpUI = CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.GetComponent<roleListUI>();
+            if (tmpUI.gameObject.activeSelf == false)
+                tmpUI.showUI(roleID, roleUIEvent);
+         }
+    }
 
-        roleListUI tmpUI = CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.GetComponent<roleListUI>();
-        tmpUI.showUI(roleID, roleUIEvent);
+    public void callToMainUI() {
+        SceneManager.LoadSceneAsync("startScene");
     }
 
     private void roleUIEvent(int pID) {
