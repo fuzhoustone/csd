@@ -88,9 +88,10 @@ public class roleProperty : MonoBehaviour
 
     void Update()
     {
-
+        
         if (isShowUI)
             refreshHpSilder();
+           
     }
 
     private void setHpColor(Slider pSlider,bool isRole) {
@@ -188,6 +189,7 @@ public class roleProperty : MonoBehaviour
             Vector3 offsetV3 = HpUIPoint.transform.position;
             Vector2 player2DPosition = mainCamera.WorldToScreenPoint(offsetV3);
             hpUI.position = player2DPosition;
+         //   Debug.Log("HpUIPoint:"+ this.gameObject.name);
         }
         
         /*

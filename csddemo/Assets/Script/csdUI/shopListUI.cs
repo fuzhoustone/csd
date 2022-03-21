@@ -62,7 +62,8 @@ public class shopListUI : MonoBehaviour
 
             shopInfoUI tmpUI = tmpObj.GetComponent<shopInfoUI>();
             int tmpcost = 0;
-            bool isUse = gameDataMgr.gameData().m_bossTag.bossUse[i];
+            //bool isUse = gameDataMgr.gameData().m_bossTag.bossUse[i];
+            bool isUse = gameDataMgr.gameData().m_bossTag.canUseById(roleID);
             if (isUse) 
                 tmpcost = 0;
             else 

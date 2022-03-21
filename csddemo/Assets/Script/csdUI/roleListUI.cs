@@ -89,24 +89,27 @@ public class roleListUI : MonoBehaviour
     private void initData() {
         uiRole = new List<roleInfo>();
         int nCount = 0;
-        gameDataMgr.bossTag tmpTag = gameDataMgr.gameData().m_bossTag;
-        for (int i = 0; i < tmpTag.bossUse.Length; i++) {
-            if (tmpTag.bossUse[i] == true) {
-                roleInfo tmpInfo = new roleInfo();
+        bossTag tmpTag = gameDataMgr.gameData().m_bossTag;
+        // for (int i = 0; i < tmpTag.bossUse.Length; i++) {
+        for (int i = 0; i < tmpTag.useLst.Count; i++)
+        {
+            int roleID = tmpTag.useLst[i].id;
+            //  if (tmpTag.bossUse[i] == true) {
+            roleInfo tmpInfo = new roleInfo();
                 
-                tmpInfo.hp = gameDataMgr.gameData().m_roleData.bosshp[i];
+                tmpInfo.hp = gameDataMgr.gameData().m_roleData.bosshp[roleID];
 
-                RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(i);
+                RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(roleID);
                 tmpInfo.maxHp = tmpPro.MaxHp;
                 tmpInfo.roleID = tmpPro.ID;
 
-                ShopItemTable.shopElements tmpEle = ShopItemTable.Get(i);
+                ShopItemTable.shopElements tmpEle = ShopItemTable.Get(roleID);
                 //RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(i+1);
                 tmpInfo.picName = tmpEle.Pic;
 
                 uiRole.Add(tmpInfo);
                 nCount++;
-            }
+          //  }
         }
 
         //OKBtnClick
