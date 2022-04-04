@@ -238,7 +238,8 @@ public class Main : MonoBehaviour {
     private const string csNoChange = "战斗中无法变身";
     public void transformRoleUI() {
         //CsdUIControlMgr.uiMgr().uiMenu.roleList.gameObject.SetActive(true);
-        bool hasEnemy = App.Game.character.roleHasEnemy();
+        
+         bool hasEnemy = App.Game.character.roleHasEnemy();
          if (hasEnemy)
          {
              CsdUIControlMgr.uiMgr().msgNote(csNoChange);
@@ -304,24 +305,7 @@ public class Main : MonoBehaviour {
         obj.tag = "Role";
         obj.layer = csLayerRole;
     }
-    /*
-    private GameObject getHpPoint(Transform parent)
-    {
-        GameObject res = parent.gameObject;
-        int nCount = parent.childCount;
-        for (int i = 0; i < nCount; i++)
-        {
-            Transform tmp = parent.GetChild(i);
-            if (tmp.name == "HpPoint")
-            {
-                res = tmp.gameObject;
-                break;
-            }
-        }
 
-        return res;
-    }
-    */
     private void addRoleProperty(GameObject obj, int roleID)
     {
         roleProperty pro = obj.AddComponent<roleProperty>();

@@ -32,12 +32,12 @@ public class screenCapture: MonoBehaviour  {
 	private int width = 0;
 	private int height = 0;
 
-    
-    private const string csFilePath = "D:/stone_maze/";
+    [SerializeField]
+    private string csFilePath = "D:/stone_maze/";
     // 保存路径
     //private string savePath = "StreamingAssets/";
     // 文件名称
-    public string fileName = "cameraCapture";
+    private string fileName;
 //	public int index =0;
 	public bool isPng = true;
 	public int type = 1;
@@ -86,12 +86,13 @@ public class screenCapture: MonoBehaviour  {
 		var date = string.Format("{0:00}{1:00}{2:00}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 		var time = string.Format("{0:00}{1:00}{2:00}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 		string outputFileName = "";
-		outputFileName = string.Format("_{0}_{1}",   date, time);
+		outputFileName = string.Format("_{0}_{1}_schinese",   date, time);
 
 		width = (int)size.x;
 		height = (int)size.y;
-		//string path = "D:/lk/" + savePath + outputFileName + extname;
-		string path = csFilePath + fileName + outputFileName + extname;
+        fileName = ((int)csWidthMax).ToString()+"_"+((int)csHeightMax).ToString();
+        //string path = "D:/lk/" + savePath + outputFileName + extname;
+        string path = csFilePath + fileName + outputFileName + extname;
 		saveTexture(path, capture());
 		//saveTexture(path, CaptureScreen((int)size.x, (int)size.y));
 	}

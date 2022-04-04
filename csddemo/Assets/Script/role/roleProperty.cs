@@ -186,10 +186,12 @@ public class roleProperty : MonoBehaviour
         // 人物血条的世界坐标显示UI的绑点 = 人物世界坐标 +  世界坐标系下的偏移坐标
         // 世界坐标系下的偏移坐标 = 以设计期人物为原点的坐标系， UI为具体坐标值, 转换为世界坐标
         if (HpUIPoint != null) {
-            Vector3 offsetV3 = HpUIPoint.transform.position;
+            Vector3 offsetV3 = HpUIPoint.transform.position; //世界坐标
             Vector2 player2DPosition = mainCamera.WorldToScreenPoint(offsetV3);
+            //hpUI.localPosition 
+            //hpUI.position = offsetV3;
             hpUI.position = player2DPosition;
-         //   Debug.Log("HpUIPoint:"+ this.gameObject.name);
+            Debug.Log("HpUIPoint:"+ player2DPosition.ToString());
         }
         
         /*

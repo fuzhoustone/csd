@@ -8,17 +8,76 @@ using UnityEngine.UI;
 
 public class startScene : MonoBehaviour
 {
-    public Button continueBtn;
-    public GameObject helpObj;
-    public GameObject bossList;
-    public DialogBox m_DialogBox;
+    [SerializeField]
+    private Transform uiCammeraTransform;
+
+    [SerializeField]
+    private Button continueBtn;
+
+    [SerializeField]
+    private GameObject helpObj;
+
+    [SerializeField]
+    private GameObject bossList;
+
+    [SerializeField]
+    private DialogBox m_DialogBox;
+
     private UnityAction btnEvent1, btnEvent2, btnEvent3; //分别对应，1个，2个，3个按扭
     private bool hasRecord;
     private const string title = "请确认";
     private const string text = "新游戏将清空现有游戏记录，是否清空并开始新游戏";
+
+    /*steam平台商店截屏用的*/
+    [SerializeField]
+    private Text startTxt;
+    [SerializeField]
+    private Text continueTxt;
+    [SerializeField]
+    private Text shopTxt;
+    [SerializeField]
+    private Text helpTxt;
+    [SerializeField]
+    private Text exitTxt;
+    [SerializeField]
+    private Text gameTxt;
+
+    private void steamShow() {
+        startTxt.text = "start";
+        continueTxt.text = "continue";
+        shopTxt.text = "shop";
+        helpTxt.text = "control";
+        exitTxt.text = "exit";
+
+        gameTxt.text = "monster maze";
+    }
+
+    public void screenAdapt()
+    {
+        //Debug.Log("screenAdapt");
+        int ManualWidth = 960;
+        int ManualHeight = 640;
+        float designHeight = 640.0f;
+        int manualHeight;
+        if (System.Convert.ToSingle(Screen.height) / Screen.width > System.Convert.ToSingle(ManualHeight) / ManualWidth)
+            manualHeight = Mathf.RoundToInt(System.Convert.ToSingle(ManualWidth) / Screen.width * Screen.height);
+        else
+            manualHeight = ManualHeight;
+        if (uiCammeraTransform != null)
+        {
+            Camera camera = uiCammeraTransform.GetComponent<Camera>();
+            float scale = System.Convert.ToSingle(manualHeight / designHeight);
+            camera.fieldOfView *= scale;
+        }
+
+    }
+
     void Start()
     {
-      
+#if streamScreen
+        steamShow();
+#endif
+
         hasRecord = hasGameRecord();
         if (hasRecord == true)
         {

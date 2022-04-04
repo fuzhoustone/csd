@@ -9,16 +9,26 @@ public class UIMenuMgr : MonoBehaviour
 {
     public Transform nextLevelPanel = null;
     public Transform panelDev = null;
-    public Transform rewardLab = null;
+
+    [SerializeField]
+    private Transform rewardLab = null;
+
     public Transform roleList = null;
 
-    public Text killMonster;
-    public Text levNum;
+    [SerializeField]
+    private Text killMonster;
+    [SerializeField]
+    private Text levNum;
 
-    public Image imgAttack1;
-    public Image imgAttack2;
-    public Image Def;
-    public Image Run;
+    [SerializeField]
+    private Image imgAttack1;
+    [SerializeField]
+    private Image imgAttack2;
+    [SerializeField]
+    private Image Def;
+    [SerializeField]
+    private Image Run;
+    
 
     public Notification noteMsg;
     public Notification noteMsgTop;
@@ -28,6 +38,39 @@ public class UIMenuMgr : MonoBehaviour
 
     private float attack1Amount = 0.0f;
     private float attack2Amount = 0.0f;
+
+
+    [SerializeField]
+    private Text levTitle;
+    [SerializeField]
+    private Text monsterTitle;
+    [SerializeField]
+    private Text rewardTitle;
+    [SerializeField]
+    private Text attackLab1;
+    [SerializeField]
+    private Text attackLab2;
+    [SerializeField]
+    private Text changeLab;
+    [SerializeField]
+    private Text calmainLab;
+
+    private void steamShow() {
+        levTitle.text = "Level:";
+        monsterTitle.text = "Kill:";
+        rewardTitle.text = "Reward:";
+        attackLab1.text = "attack1";
+        attackLab2.text = "attack2";
+        changeLab.text = "change";
+        calmainLab.text = "main\nmenu";
+    }
+
+    private void Start()
+    {
+#if streamScreen
+        steamShow();
+#endif
+    }
 
     public void updateReward(int num) {
         Text tmpTxt = rewardLab.gameObject.GetComponent<Text>();
@@ -39,7 +82,8 @@ public class UIMenuMgr : MonoBehaviour
     }
 
     public void updateLevNum(int num) {
-        levNum.text = "第" + num.ToString() + "关";
+        levNum.text = num.ToString();
+
     }
 
     public void updateImageAttack1Amount(float val, float count) {

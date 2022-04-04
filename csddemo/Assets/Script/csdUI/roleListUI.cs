@@ -93,7 +93,8 @@ public class roleListUI : MonoBehaviour
         // for (int i = 0; i < tmpTag.bossUse.Length; i++) {
         for (int i = 0; i < tmpTag.useLst.Count; i++)
         {
-            int roleID = tmpTag.useLst[i].id;
+            string tmpID = tmpTag.useLst[i];
+            int roleID = int.Parse(tmpID);
             //  if (tmpTag.bossUse[i] == true) {
             roleInfo tmpInfo = new roleInfo();
                 
