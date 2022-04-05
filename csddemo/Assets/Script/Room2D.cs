@@ -22,6 +22,8 @@ public class Room2D : MonoBehaviour
 
     public string roomName; //地板名字
 
+    public bool hasGetPath; //是否有路径到达
+
     private GameObject parentObj;
 
     private const int csPosY = 0;
@@ -44,6 +46,7 @@ public class Room2D : MonoBehaviour
 
         roomName = "room";
 
+        hasGetPath = false;
     }
 
     public Room2D()

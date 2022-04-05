@@ -5,8 +5,9 @@ using UnityEngine;
 public class Grid2D<T> {
     T[] data;
 
-    Room2D[] dataObjLst;  //add by csd
-    bool[] dataIsCreate; //Room继承于MonoBehaviour无法通过is null来判断
+    Room2D[] dataObjLst;  //add by csd，只是索引的记录
+
+    bool[] dataIsCreate; //Room继承于MonoBehaviour无法通过is null来判断（之前用new方式创建对象产生的）
 
 
     public Vector2Int Size { get; private set; }

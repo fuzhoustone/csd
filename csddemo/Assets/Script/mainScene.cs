@@ -104,7 +104,7 @@ public class mainScene : MonoBehaviour
     private int goldID = 0;
 
     private int ranSeed = 0;
-    Grid2D<placeWall> placeGrid = null; //地块的三维空间表
+    Grid2D<placeWall> placeGrid = null; //格子地块的数组，只用来记录四面的墙3D模型
     List<HallWay2D> hallways;
     List<GameObject> cubeDebugLst;
     List<GameObject> hallwayDebugLst;
@@ -122,17 +122,36 @@ public class mainScene : MonoBehaviour
     //add end
 
     Random random;
-    Grid2D<CellType> grid = null;
-    List<Room2D> rooms;
+    Grid2D<CellType> grid = null; //格子地块的数组，标识地块所属的类型，过道？房间？同时带有room2D数据
+    List<Room2D> rooms; //房间列表
     Delaunay2D delaunay;
     HashSet<Prim.Edge> selectedEdges;
 
 
     //add
-    class pathVector
+    public class pathVector
     {
         public Vector2Int sourVector { get; set; }
         public Vector2Int destVector { get; set; }
+
+        public bool isNearBySourDest() { //两个点是否相临
+            bool res = false;
+            int tmpAbs = 0;
+            if (sourVector.x == destVector.x)
+            {
+                
+                tmpAbs = sourVector.y - destVector.y;
+            }
+            else if (sourVector.y == destVector.y) {
+                tmpAbs = sourVector.x - destVector.x;
+            }
+
+            if ((tmpAbs == 1) || (tmpAbs == -1)) {
+                res = true;
+            }
+
+            return res;
+        }
     }
 
     List<pathVector> pathLst; //寻路的路径点
@@ -195,7 +214,6 @@ public class mainScene : MonoBehaviour
     private void clearDataPlace() {
         roomIndex = 0;
         grid.initData();
-        //GameObject.Destroy(grid);
         grid.clearData(CellType.None);
 
         rooms.Clear();
@@ -208,7 +226,6 @@ public class mainScene : MonoBehaviour
     private void clearData() {
         roomIndex = 0;
         grid.initData();
-        //GameObject.Destroy(grid);
         grid.clearData(CellType.None);
 
         rooms.Clear();
@@ -252,8 +269,6 @@ public class mainScene : MonoBehaviour
         Main tmpMain = this.transform.GetComponent<Main>();
         tmpMain.roleClear();
 
-        
-
         clearData();
         clearAllGold();
         clearAllMonster();
@@ -262,30 +277,55 @@ public class mainScene : MonoBehaviour
         
     }
 
-    private void createScene()
-    {
-        bool flag = true;
+    private void createRoomsData() {
+        //bool flag = true;
 
-        while (flag)
+        while (true)
         {
             PlaceRooms();  //生成房间
             if (Triangulate()) //三角测量
-                flag = false;
-            else {
+                break;
+            else
+            {
                 clearDataPlace();
                 newSeedRandom();
             }
         }
-        
+    }
 
-        CreateHallways(); //创建走廊，过道
-        PathfindHallways(); //走廊，过道寻路生成
+    private void createPlaceRoomsData() {
+        //bool checkFlag = true;
+        int i = 3;
+        while (i>0)
+        {
+            createRoomsData();
+
+            CreateHallways(); //创建走廊，过道
+            PathfindHallways(); //走廊，过道寻路生成
+
+            if (checkPathList())
+                break;
+            else
+            {
+                clearData();
+                clearAllMaze();
+                Debug.LogWarning("checkPathList false");
+                i--;
+                newSeedRandom();
+            }
+        }
+    }
+
+    private void createScene()
+    {
+        createPlaceRoomsData(); //生成房间与路径数据
+       
         int lev = gameDataMgr.gameData().m_roleData.mazeLevel;
         LevMonsterTab.initMonsterIDFromLev(lev);
-        createPlance(); //生成房间
+        createPlance(); //房间对象铺3D地板和墙
 
 #if !TESTPATH
-        createHallWayLst(); //生成过道间
+        createHallWayLst(); //过道间对象铺3D地板铺墙
 
       //  createStairsLst(); //生成楼梯
 
@@ -816,6 +856,47 @@ public class mainScene : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void flagRoomHasPath(Vector2Int pPos) {
+        if (isRoomOrHillWay(pPos)) //判断是否为房间
+        {
+            Room2D tmpRoom = grid.getGridDataObj(pPos);
+            tmpRoom.hasGetPath = true;
+        }
+    }
+
+    private bool checkPathList() {
+        bool res = true;
+        //for()
+        //pathVector tmpPath = pathLst[hideIndex];
+        for (int hideIndex = 0; hideIndex < pathLst.Count; hideIndex++)
+        {
+            pathVector tmpPath = pathLst[hideIndex];
+            if (tmpPath.isNearBySourDest() == false)
+            {
+                res = false;
+                break;
+            }
+            else {
+                flagRoomHasPath(tmpPath.sourVector);
+                flagRoomHasPath(tmpPath.destVector);
+            }
+
+        }
+
+        if (res) { //所有点都相临，需检查所有房间是否有路径经过
+            for (int i = 0; i < rooms.Count; i++) {
+                Room2D tmpRoom = rooms[i];
+                if (tmpRoom.hasGetPath == false) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+
+        
+        return res;
     }
 
     void PlaceRoom(Vector2Int location, Vector2Int size)
