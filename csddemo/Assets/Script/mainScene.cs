@@ -103,7 +103,9 @@ public class mainScene : MonoBehaviour
     private int monsterID = 0;
     private int goldID = 0;
 
+    //[SerializeField]
     private int ranSeed = 0;
+
     Grid2D<placeWall> placeGrid = null; //格子地块的数组，只用来记录四面的墙3D模型
     List<HallWay2D> hallways;
     List<GameObject> cubeDebugLst;
@@ -194,7 +196,7 @@ public class mainScene : MonoBehaviour
     public void createLandScape()
     {
         ranSeed = System.DateTime.Now.Second;
-        //ranSeed = 8;//8，24
+       // ranSeed = 8;//3, 8，24
         Debug.LogWarning("Random seed:" + ranSeed.ToString());
 
         random = new Random(ranSeed);
@@ -295,8 +297,8 @@ public class mainScene : MonoBehaviour
 
     private void createPlaceRoomsData() {
         //bool checkFlag = true;
-        int i = 3;
-        while (i>0)
+        //int i = 3;
+        while (true)
         {
             createRoomsData();
 
@@ -309,8 +311,9 @@ public class mainScene : MonoBehaviour
             {
                 clearData();
                 clearAllMaze();
+                
                 Debug.LogWarning("checkPathList false");
-                i--;
+               // i--;
                 newSeedRandom();
             }
         }
@@ -319,7 +322,9 @@ public class mainScene : MonoBehaviour
     private void createScene()
     {
         createPlaceRoomsData(); //生成房间与路径数据
-       
+
+    //    return ;
+
         int lev = gameDataMgr.gameData().m_roleData.mazeLevel;
         LevMonsterTab.initMonsterIDFromLev(lev);
         createPlance(); //房间对象铺3D地板和墙
@@ -668,6 +673,7 @@ public class mainScene : MonoBehaviour
             );
 
             bool add = true;
+            
             GameObject newRoomObj = new GameObject();
             newRoomObj.transform.SetParent(mazeParent.transform);
             newRoomObj.name = "room" + location.x.ToString() + "_" + location.y.ToString() + "_" + location.y.ToString();
@@ -704,7 +710,7 @@ public class mainScene : MonoBehaviour
                 //end
 
                 foreach (var pos in newRoom.bounds.allPositionsWithin)
-                {
+                { //给一个房间的每个格子设置标识
                     grid[pos] = CellType.Room;
                     //add by csd
                     grid.setGridDataObj(newRoom, pos);
@@ -830,12 +836,16 @@ public class mainScene : MonoBehaviour
 
                         //add by csd begin
                         bool isCreate = grid.getDataIsCreate(pos);
+                        //if (isCreate) {
+                        //    Debug.Log("getDataIsCreate true");
+                        //}
                         if (isCreate == false) //不是第一次经过
                         {
                             //HallWay newHallWay = new HallWay(pos, new Vector3Int(1, 1, 1), planePrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, mazeParent);
                             GameObject newHallWayObj = new GameObject();
                             newHallWayObj.transform.SetParent(mazeParent.transform);
                             newHallWayObj.name = "hallway" + pos.x.ToString() + "_" + csPosY.ToString() + "_" + pos.y.ToString();
+                          //  Debug.LogWarning("hallway:"+newHallWayObj.name);
 
                             HallWay2D newHallWay = newHallWayObj.AddComponent<HallWay2D>();
                             newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), wayPrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
@@ -876,6 +886,7 @@ public class mainScene : MonoBehaviour
             if (tmpPath.isNearBySourDest() == false)
             {
                 res = false;
+                Debug.LogWarning("checkPath sourDest is not near");
                 break;
             }
             else {
@@ -1092,7 +1103,8 @@ public class mainScene : MonoBehaviour
         int nCount = pTran.childCount;
         if (nCount > 0)
         {
-            for (int i = 0; i < nCount; i++)
+            //for (int i = 0; i < nCount; i++)
+            for(int i = nCount-1; i>=0; i--)
             {
                 Transform tmpTran = pTran.GetChild(i);
                 delTransform(tmpTran);
@@ -1112,7 +1124,8 @@ public class mainScene : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < nCount; i++)
+            //for (int i = 0; i < nCount; i++)
+            for (int i = nCount - 1; i >= 0; i--)
             {
                 Transform tmpTran = pTran.GetChild(i);
                 delTransform(tmpTran);

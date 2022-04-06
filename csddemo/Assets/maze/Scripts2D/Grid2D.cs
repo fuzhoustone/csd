@@ -5,9 +5,9 @@ using UnityEngine;
 public class Grid2D<T> {
     T[] data;
 
-    Room2D[] dataObjLst;  //add by csd，只是索引的记录
+    Room2D[] dataObjLst;  //add by csd，只是索引的记录，记录每个格子对应的Room2D, 一个Room2D存在多个格子
 
-    bool[] dataIsCreate; //Room继承于MonoBehaviour无法通过is null来判断（之前用new方式创建对象产生的）
+  //  bool[] dataIsCreate; //Room继承于MonoBehaviour无法通过is null来判断（之前用new方式创建对象产生的）
 
 
     public Vector2Int Size { get; private set; }
@@ -35,10 +35,10 @@ public class Grid2D<T> {
     public void initData() {
         int maxCount = Size.x * Size.y;
         dataObjLst = new Room2D[maxCount];
-        dataIsCreate = new bool[maxCount];
+       // dataIsCreate = new bool[maxCount];
         for (int i = 0; i < maxCount; i++)
         {
-            dataIsCreate[i] = false;
+         //   dataIsCreate[i] = false;
             dataObjLst[i] = null;
         }
     }
@@ -52,19 +52,29 @@ public class Grid2D<T> {
     }
 
     //add by csd
+    /*
     private void setDataIsCreate(Vector2Int pos, bool value)
     {
         dataIsCreate[GetIndex(pos)] = value;
     }
+    */
     public bool getDataIsCreate(Vector2Int pos)
     {
-        return dataIsCreate[GetIndex(pos)];
+        bool res = false;
+        //return dataIsCreate[GetIndex(pos)];
+        Room2D tmpData = dataObjLst[GetIndex(pos)];
+        if (tmpData != null)
+            res = true;
+        else
+            res = false;
+        return res;
+        
     }
 
     public void setGridDataObj(Room2D obj, Vector2Int pos)
     {
         dataObjLst[GetIndex(pos)] = obj;
-        this.setDataIsCreate(pos, true);
+      //  this.setDataIsCreate(pos, true);
     }
 
     public Room2D getGridDataObj(Vector2Int pos)
