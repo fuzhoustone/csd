@@ -23,14 +23,15 @@ public class HallWay : Room
 
 public class HallWay2D : Room2D
 {
+    
     //public HallWay preHallWay;
-    public HallWay2D(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<placeWall> pGrid, int pNameIndex, GameObject pParentObj) : base(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj)
+    public HallWay2D(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<CellType> pGrid, int pNameIndex, GameObject pParentObj) : base(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj)
     {
         roomName = "HallWay";
     }
+    
 
-
-    public void initDataHallWay(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    public void initDataHallWay(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<CellType> pGrid, int pNameIndex, GameObject pParentObj = null)
     {
         initData(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj);
 

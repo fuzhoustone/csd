@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Grid2D<T> {
     T[] data;
-
-    Room2D[] dataObjLst;  //add by csd，只是索引的记录，记录每个格子对应的Room2D, 一个Room2D存在多个格子
+    placeWall[] wallData; //add by csd, 记录每个格子对应的一个格子的地板及墙3D模型对象
+    Room2D[] dataObjLst;  //add by csd，只是索引的记录，记录每个格子对应的Room2D, 一个Room2D存在多个格子，用于根据格子坐标查询room
 
   //  bool[] dataIsCreate; //Room继承于MonoBehaviour无法通过is null来判断（之前用new方式创建对象产生的）
 
 
     public Vector2Int Size { get; private set; }
-    public Vector2Int Offset { get; set; }
+    public Vector2Int Offset { get; set; } //目前均为zero
 
     public Grid2D(Vector2Int size, Vector2Int offset) {
         Size = size;
@@ -20,26 +20,19 @@ public class Grid2D<T> {
         data = new T[size.x * size.y];
         //add by csd
         initData();
-        /*
-        int maxCount = size.x * size.y;
-        dataObjLst = new Room2D[maxCount];
-        dataIsCreate = new bool[maxCount];
-        for (int i = 0; i < maxCount; i++)
-        {
-            dataIsCreate[i] = false;
-        }
-        */
         //add by csd end
     }
 
     public void initData() {
         int maxCount = Size.x * Size.y;
         dataObjLst = new Room2D[maxCount];
+        wallData = new placeWall[maxCount];
        // dataIsCreate = new bool[maxCount];
         for (int i = 0; i < maxCount; i++)
         {
          //   dataIsCreate[i] = false;
             dataObjLst[i] = null;
+            wallData[i] = null;
         }
     }
 
@@ -48,6 +41,7 @@ public class Grid2D<T> {
         for (int i = 0; i < maxCount; i++)
         {
             data[i] = value;
+            wallData[i] = null;
         }
     }
 
@@ -76,6 +70,19 @@ public class Grid2D<T> {
         dataObjLst[GetIndex(pos)] = obj;
       //  this.setDataIsCreate(pos, true);
     }
+
+    public void setPlaceIndex(GameObject pObj, Vector2Int tmpPos)
+    {
+        placeWall placeObj = pObj.GetComponent<placeWall>();
+        wallData[GetIndex(tmpPos)] = placeObj;
+       // placeGrid[tmpPos] = placeObj;
+    }
+
+    public placeWall getPlaceWallObj(Vector2Int pos) {
+        placeWall res = wallData[GetIndex(pos)];
+        return res;
+    }
+
 
     public Room2D getGridDataObj(Vector2Int pos)
     {

@@ -14,7 +14,7 @@ public class testRoleUI : MonoBehaviour
     {
         roleProperty tmpPro = this.GetComponent<roleProperty>();
         tmpPro.InitData(lCamer, lCan,1);
-        tmpPro.showUI();
+        tmpPro.testShowUI();
     }
 
   

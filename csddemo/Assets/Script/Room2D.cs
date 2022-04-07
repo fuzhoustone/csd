@@ -14,7 +14,7 @@ public class Room2D : MonoBehaviour
 
     //private Grid3D<GameObject> placeLst;
 
-    public Grid2D<placeWall> placeGrid; //外部传入的placeGrid
+    public Grid2D<CellType> placeGrid; //外部传入的placeGrid
 
     public int nameIndex; //名字区分
 
@@ -28,7 +28,7 @@ public class Room2D : MonoBehaviour
 
     private const int csPosY = 0;
 
-    public virtual void initData(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    public virtual void initData(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<CellType> pGrid, int pNameIndex, GameObject pParentObj = null)
     {
         pos = location;
         bounds = new RectInt(location, size);
@@ -60,7 +60,7 @@ public class Room2D : MonoBehaviour
    
 
     //public Room2D(Vector2Int location, Vector2Int size)
-    public Room2D(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<placeWall> pGrid, int pNameIndex, GameObject pParentObj = null)
+    public Room2D(Vector2Int location, Vector2Int size, GameObject pPlaneObj, GameObject pWallObj, Material pMaterial, Grid2D<CellType> pGrid, int pNameIndex, GameObject pParentObj = null)
     {
         initData(location, size, pPlaneObj, pWallObj, pMaterial, pGrid, pNameIndex, pParentObj);
     }
@@ -109,18 +109,19 @@ public class Room2D : MonoBehaviour
             for (int y = 0; y < bounds.size.y; y++)
             {
                 GameObject tmpPlane = makePlane(x, y);
-                setPlaceIndex(tmpPlane, new Vector2Int(pos.x + x, pos.y + y));
+                placeGrid.setPlaceIndex(tmpPlane, new Vector2Int(pos.x + x, pos.y + y));
+               // setPlaceIndex(tmpPlane, new Vector2Int(pos.x + x, pos.y + y));
                 //flagPlacePos(tmpPlane, x, 0, z);
             }
         }
     }
-
+    /*
     private void setPlaceIndex(GameObject pObj, Vector2Int tmpPos)
     {
         placeWall placeObj = pObj.GetComponent<placeWall>();
         placeGrid[tmpPos] = placeObj;
     }
-
+    */
     private GameObject makeWall(int posX, int posZ, float rotationX = 0.0f, float rotationY = 0.0f, float rotationZ = 0.0f)
     {
         int worldPosX = bounds.position.x + posX;
@@ -135,7 +136,7 @@ public class Room2D : MonoBehaviour
         go.transform.eulerAngles = new Vector3(rotationX, rotationY, rotationZ);
         return go;
     }
-
+    /*
     public placeWall getSpaceWall()
     {
         placeWall tmpSpaceWall = null;
@@ -152,10 +153,11 @@ public class Room2D : MonoBehaviour
         }
         return tmpSpaceWall;
     }
-
+    */
     private void setWallIndex(GameObject wallObj, Vector2Int placePos, WallPos tmpWallPos)
     {
-        placeWall tmpSpaceWall = placeGrid[placePos]; //获得地块对象
+        placeWall tmpSpaceWall = placeGrid.getPlaceWallObj(placePos);
+        //placeWall tmpSpaceWall = placeGrid[placePos]; //获得地块对象
         if (tmpSpaceWall != null)
         {
 

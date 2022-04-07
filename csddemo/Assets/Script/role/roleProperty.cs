@@ -153,6 +153,15 @@ public class roleProperty : MonoBehaviour
         //testHpPoint(pPos);
     }
 
+    public void testShowUI() {
+        if (hpUI.gameObject.activeSelf == false)
+        {
+            hpUI.gameObject.SetActive(true);
+           // isShowUI = true;
+            refreshHpSilder();
+        }
+    }
+
     public void showUI()
     {
         if (hpUI.gameObject.activeSelf == false)
@@ -187,14 +196,21 @@ public class roleProperty : MonoBehaviour
         // 世界坐标系下的偏移坐标 = 以设计期人物为原点的坐标系， UI为具体坐标值, 转换为世界坐标
         if (HpUIPoint != null) {
             Vector3 offsetV3 = HpUIPoint.transform.position; //世界坐标
-            Vector2 player2DPosition = mainCamera.WorldToScreenPoint(offsetV3);
-            //hpUI.localPosition 
-            //hpUI.position = offsetV3;
-            hpUI.position = player2DPosition;
-            Debug.Log("HpUIPoint:"+ player2DPosition.ToString());
+            Vector3 player3DPosition = Camera.main.WorldToScreenPoint(offsetV3);
+            //Canvas:  Screen Space Overlay
+            hpUI.position = player3DPosition;
+
+            //Canvas:  Screen Space Camera
+            //hpUI.position = mainCamera.ScreenToWorldPoint(player3DPosition);
+            Debug.Log("HpUIPoint:" + hpUI.position.ToString());
+            
+
         }
-        
+
         /*
+        Vector3 pt = Camera.main.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + 1, this.transform.position.z));
+        bloodUI.transform.position = UICamera.FindCameraForLayer(bloodUI.layer).GetComponent<Camera>().ScreenToWorldPoint(new Vector3(pt.x, pt.y, 1));
+        
         Vector3 offsetV3 = new Vector3(xOffset * transform.localScale.x, yOffset * transform.localScale.y, 0.0f);
         //Vector3 tmpWorldPos = transform.position + offsetV3;
         //Vector3 UIWorldPos = new Vector3(tmpWorldPos.x * transform.localScale.x,

@@ -4,15 +4,16 @@ using UnityEngine;
 using Random = System.Random;
 using Graphs;
 
+public enum CellType
+{
+    None,
+    Room,
+    Hallway
+}
 //场景生成，怪物生成
 public class mainScene : MonoBehaviour
 {
-    enum CellType
-    {
-        None,
-        Room,
-        Hallway
-    }
+    
     /*
     class Room
     {
@@ -106,7 +107,7 @@ public class mainScene : MonoBehaviour
     //[SerializeField]
     private int ranSeed = 0;
 
-    Grid2D<placeWall> placeGrid = null; //格子地块的数组，只用来记录四面的墙3D模型
+  //  Grid2D<placeWall> placeGrid = null; //格子地块的数组，只用来记录四面的墙3D模型
     List<HallWay2D> hallways;
     List<GameObject> cubeDebugLst;
     List<GameObject> hallwayDebugLst;
@@ -202,7 +203,7 @@ public class mainScene : MonoBehaviour
         random = new Random(ranSeed);
         
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
-        placeGrid = new Grid2D<placeWall>(size, Vector2Int.zero);
+      //  placeGrid = new Grid2D<placeWall>(size, Vector2Int.zero);
 
         createScene();
     }
@@ -219,8 +220,8 @@ public class mainScene : MonoBehaviour
         grid.clearData(CellType.None);
 
         rooms.Clear();
-        placeGrid.initData();
-        placeGrid.clearData(null);
+        //placeGrid.initData();
+       // placeGrid.clearData(null);
 
         clearAllMaze();
     }
@@ -232,8 +233,8 @@ public class mainScene : MonoBehaviour
 
         rooms.Clear();
 
-        placeGrid.initData();
-        placeGrid.clearData(null);
+       // placeGrid.initData();
+       // placeGrid.clearData(null);
 
         hallways.Clear();
 
@@ -652,7 +653,8 @@ public class mainScene : MonoBehaviour
 
     private placeWall getPlaceWallByPos(Vector2Int pPos)
     {
-        placeWall tmpPlaceWall = placeGrid[pPos];
+        placeWall tmpPlaceWall = grid.getPlaceWallObj(pPos);
+        //placeWall tmpPlaceWall = placeGrid[pPos];
         return tmpPlaceWall;
     }
 
@@ -679,7 +681,8 @@ public class mainScene : MonoBehaviour
             newRoomObj.name = "room" + location.x.ToString() + "_" + location.y.ToString() + "_" + location.y.ToString();
 
             Room2D newRoom = newRoomObj.AddComponent<Room2D>();
-            newRoom.initData(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, newRoomObj);
+            //newRoom.initData(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, placeGrid, roomIndex, newRoomObj);
+            newRoom.initData(location, roomSize, planePrefab, wallPrefab, roomPlaceMaterial, grid, roomIndex, newRoomObj);
             //Room2D newRoom = new Room2D(location, roomSize);
             //Room2D buffer = new Room2D(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
 
@@ -848,7 +851,8 @@ public class mainScene : MonoBehaviour
                           //  Debug.LogWarning("hallway:"+newHallWayObj.name);
 
                             HallWay2D newHallWay = newHallWayObj.AddComponent<HallWay2D>();
-                            newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), wayPrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
+                            //newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), wayPrefab, wallPrefab, hallWayPlaceMaterial, placeGrid, roomIndex, newHallWayObj);
+                            newHallWay.initDataHallWay(pos, new Vector2Int(1, 1), wayPrefab, wallPrefab, hallWayPlaceMaterial, grid, roomIndex, newHallWayObj);
 
                             /*
                             HallWay newHallWay = mazeParent.AddComponent<HallWay>();
