@@ -23,7 +23,7 @@ public static class CSVLoader
         {
             columnNames = reader.ReadLine();
         }
-        //update by csd
+        //update by csd 跳过空行
         while ((isNullLine(columnNames) == true) || (columnNames.StartsWith("``")));
         //update end
         //while (columnNames.StartsWith("``"));
@@ -34,7 +34,7 @@ public static class CSVLoader
         {
             row = reader.ReadLine();
             if (row.StartsWith("``")) continue;
-            //add by csd
+            //add by csd 跳过空行
             if (isNullLine(row))
                 continue;
             //add end
@@ -318,6 +318,20 @@ public class CSVRow
         return (T)Enum.Parse(typeof(T), rowData);
     }
 
+    //add by csd
+    public T GetVal<T>(string columnName,T defVal) {
+        string rowData = GetString(columnName);
+        T res = defVal;
+        try
+        {
+            res = (T)Convert.ChangeType(rowData, typeof(T));
+        }
+        catch
+        {
+        }
+        return res;
+    }
+    //add by csd end
     //safe
 
     public int SafeGetInt(string columnName, int defaultValue=0)

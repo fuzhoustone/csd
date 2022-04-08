@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 
-public class RoleInfoTable : CsdTTable<string> {
+public class RoleInfoTable : CsdTTable {
     public static string GetPrefab(int pID) {
         string res = "";
         string lPath = "";
         string lPreName = "";
-        CSVRow lRow = GetRowFromID(pID);
-        lPath = lRow.GetString("resPath");
-        lPreName = lRow.GetString("Pre");
+        lPath = RoleInfoTable.GetValueFromID<string>(pID, "resPath","");
+        lPreName = RoleInfoTable.GetValueFromID<string>(pID, "Pre", "");
+
+        //CSVRow lRow = GetRowFromID(pID);
+        //lPath = lRow.GetString("resPath");
+        //lPreName = lRow.GetString("Pre");
         res = lPath + "/" + lPreName;
         /*
         bool b1 = GetKeyString("ID",pID.ToString(), "resPath",out lPath);

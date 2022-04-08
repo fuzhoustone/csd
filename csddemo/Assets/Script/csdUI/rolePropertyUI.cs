@@ -34,10 +34,11 @@ public class rolePropertyUI : MonoBehaviour
 
         //RoleInfoTable.roleElements tmpEle = RoleInfoTable.Get(pRoleID);
         //monText.text = tmpEle.Name;
-        string tmpEleName = "";
-        CSVRow lRow = RoleInfoTable.GetRowFromID(pRoleID);
-        tmpEleName = lRow.GetString("Name");
-        //RoleInfoTable.GetKeyString("ID", pRoleID.ToString(), "Name", out tmpEleName);
+        string tmpEleName = ""; //试用函数调用
+       // tmpEleName = RoleInfoTable.GetValueFromID<string>(pRoleID, "Name", "");
+        tmpEleName = RoleInfoTable.GetKeyValueFromID<int,string>("ID",pRoleID, "Name", "");
+        //CSVRow lRow = RoleInfoTable.GetRowFromID(pRoleID);
+        //tmpEleName = lRow.GetString("Name");
         monText.text = tmpEleName;
 
         roleID = pRoleID;
