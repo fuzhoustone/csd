@@ -179,6 +179,9 @@ public class gameDataMgr
             initRoleData();
             saveRoleData();
         }
+
+        //testEnemy tmpTest = new testEnemy();
+        //tmpTest.testData();
     }
 
     //记录当前主角等级
