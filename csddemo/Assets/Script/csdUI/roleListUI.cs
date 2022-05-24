@@ -127,6 +127,15 @@ public class roleListUI : MonoBehaviour
 
         initData();
         int nCount = uiRole.Count;
+        if (nCount <= 0)
+        {
+            btnOK.interactable = false;
+            this.gameObject.SetActive(true);
+            return;
+        }
+
+        btnOK.interactable = true;
+
         //int nCount = pData.mRoleData.Count;
         int nRowMax = 3;
         int nLine = Mathf.CeilToInt((float)nCount/(float)nRowMax);

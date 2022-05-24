@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Steamworks;
 
 public class attackCollider : MonoBehaviour {
     public UCharacterController charInstance = null;
     public attcakStartEnd pAttackClass = null;
 
     void Start() {
+        
        /*
         if (charInstance == null)
         {

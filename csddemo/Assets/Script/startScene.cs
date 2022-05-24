@@ -94,7 +94,7 @@ public class startScene : MonoBehaviour
         bossList.SetActive(false);
         //if(gameDialog.)
     }
-
+    
     private bool hasGameRecord() {
         bool result = gameDataMgr.gameData().hasRecord();
         return result;

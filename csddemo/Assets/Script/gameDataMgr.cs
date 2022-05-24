@@ -62,14 +62,15 @@ public class bossTag
 }
 public class gameDataMgr
 {
-  
 
+
+    public const int csRoleNum = 21; //实际应该用21
     //魔物当前的剩余血量
     public class roleData {
         public int mazeLevel; //关卡等级
        // public int roleLevel; //人数等级
         public int rewardNum; //奖励个数
-        public int[] bosshp = new int[21];
+        public int[] bosshp = new int[csRoleNum];
        
     }
     /*
@@ -84,6 +85,8 @@ public class gameDataMgr
     public roleData m_roleData;
     private string m_ModelFileName = ""; //存放图签解锁的文件
     private string m_RoleFileName = ""; //存放通关记录的文件
+
+    private bool findRecord = false;
     public static gameDataMgr gameData()
     {
         if (instance == null)
@@ -109,8 +112,8 @@ public class gameDataMgr
         m_roleData = new roleData();
         m_roleData.rewardNum = 0;
         m_roleData.mazeLevel = 1;
-        m_roleData.bosshp = new int[20];
-        for (int i = 0; i < 20; i++) {
+        m_roleData.bosshp = new int[csRoleNum];
+        for (int i = 0; i < csRoleNum; i++) {
             m_roleData.bosshp[i] = 100;
             //m_roleData.bosshp[i].id = i + 1;
             //m_roleData.bosshp[i].hp = 100;
@@ -141,6 +144,7 @@ public class gameDataMgr
     private void saveRoleData() {
         string jsonStr = JsonUtility.ToJson(m_roleData);
         File.WriteAllText(m_RoleFileName, jsonStr);
+        findRecord = true;
     }
 
 
@@ -169,15 +173,20 @@ public class gameDataMgr
             saveModelData();
         }
 
+        
         if (File.Exists(m_RoleFileName))
         {
+            
             string jsonStr = File.ReadAllText(m_RoleFileName);
             m_roleData = JsonUtility.FromJson<roleData>(jsonStr);
+            findRecord = true;
         }
         else
         {
+            
             initRoleData();
             saveRoleData();
+            findRecord = false;
         }
 
         //testEnemy tmpTest = new testEnemy();
@@ -258,13 +267,10 @@ public class gameDataMgr
         return res;
     }
 
-
+    
     public bool hasRecord() {
-        bool res = false;
-        if (File.Exists(m_RoleFileName)) {
-            res = true;
-        }
-        return res;
+               
+        return findRecord;
     }
-
+    
 }
