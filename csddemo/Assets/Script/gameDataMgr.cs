@@ -112,12 +112,14 @@ public class gameDataMgr
         m_roleData = new roleData();
         m_roleData.rewardNum = 0;
         m_roleData.mazeLevel = 1;
-        m_roleData.bosshp = new int[csRoleNum];
+        
+        initRoleHp();
+        /*
         for (int i = 0; i < csRoleNum; i++) {
             m_roleData.bosshp[i] = 100;
             //m_roleData.bosshp[i].id = i + 1;
             //m_roleData.bosshp[i].hp = 100;
-        }
+        }*/
     }
 
     private void initModelData() {
@@ -138,6 +140,22 @@ public class gameDataMgr
         //}
 
           //  File.WriteAllText(m_ModelFileName, "");
+    }
+
+    private void initRoleHp() {
+        m_roleData.bosshp = new int[csRoleNum];
+        for (int i = 0; i < csRoleNum; i++) {
+            int tmpHp = 100;
+            RoleProTable.rolePro tmpPro = RoleProTable.GetFromRoleID(i);
+            if (tmpPro != null)
+            {
+                tmpHp = tmpPro.MaxHp;
+            }
+            else {
+                Debug.LogWarning("roleID not has pro, id="+i.ToString());
+            }
+            m_roleData.bosshp[i] = tmpHp;
+        }
     }
 
 
@@ -245,6 +263,7 @@ public class gameDataMgr
 
     public void saveNewGameLevelData() {
         m_roleData.mazeLevel = 1;
+        initRoleHp();
         saveRoleData();
     }
 
