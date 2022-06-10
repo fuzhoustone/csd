@@ -24,7 +24,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_14;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_4_14;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;DEMO;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;CS0649;IDE0051</NoWarn>
@@ -68,6 +68,8 @@
     <Compile Include="Assets\Script\CharacterController.cs" />
     <Compile Include="Assets\Script\CharacterMgr.cs" />
     <Compile Include="Assets\Script\CombineSkinnedMgr.cs" />
+    <Compile Include="Assets\Script\CommonFunc\GameObjCommon.cs" />
+    <Compile Include="Assets\Script\CommonFunc\GameObjDataTemp.cs" />
     <Compile Include="Assets\Script\CsdUIControlMgr.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
     <Compile Include="Assets\Script\Main.cs" />
@@ -77,14 +79,29 @@
     <Compile Include="Assets\Script\Room2D.cs" />
     <Compile Include="Assets\Script\SceneStart.cs" />
     <Compile Include="Assets\Script\SceneStart2D.cs" />
-    <Compile Include="Assets\Script\TableData\CSVWriter.cs" />
+    <Compile Include="Assets\Script\TableData\CsdTTable.cs" />
+    <Compile Include="Assets\Script\TableData\CsdTTableRow.cs" />
+    <Compile Include="Assets\Script\TableData\CsvKeyName.cs" />
     <Compile Include="Assets\Script\TableData\CsvLoader.cs" />
+    <Compile Include="Assets\Script\TableData\LevMonsterTab.cs" />
     <Compile Include="Assets\Script\TableData\PopFirstChargeTable.cs" />
+    <Compile Include="Assets\Script\TableData\RoleInfoTable.cs" />
+    <Compile Include="Assets\Script\TableData\RoleProTable.cs" />
+    <Compile Include="Assets\Script\TableData\ShopItemTable.cs" />
     <Compile Include="Assets\Script\TableData\TableSet.cs" />
+    <Compile Include="Assets\Script\TableData\json\jsonEnmy.cs" />
     <Compile Include="Assets\Script\UIMenuMgr.cs" />
     <Compile Include="Assets\Script\attackCollider.cs" />
     <Compile Include="Assets\Script\attackStateMachine.cs" />
     <Compile Include="Assets\Script\attcakStartEnd.cs" />
+    <Compile Include="Assets\Script\csShader\EdgeDetection.cs" />
+    <Compile Include="Assets\Script\csShader\PostEffectsBase.cs" />
+    <Compile Include="Assets\Script\csdUI\helpPrefabUI.cs" />
+    <Compile Include="Assets\Script\csdUI\roleInfoUI.cs" />
+    <Compile Include="Assets\Script\csdUI\roleListUI.cs" />
+    <Compile Include="Assets\Script\csdUI\rolePropertyUI.cs" />
+    <Compile Include="Assets\Script\csdUI\shopInfoUI.cs" />
+    <Compile Include="Assets\Script\csdUI\shopListUI.cs" />
     <Compile Include="Assets\Script\csdsleep.cs" />
     <Compile Include="Assets\Script\gameDataMgr.cs" />
     <Compile Include="Assets\Script\jumpColider.cs" />
@@ -109,10 +126,13 @@
     <Compile Include="Assets\Script\role\roleProperty.cs" />
     <Compile Include="Assets\Script\role\roleStateRun.cs" />
     <Compile Include="Assets\Script\role\testMonsterActState.cs" />
+    <Compile Include="Assets\Script\role\testRoleUI.cs" />
     <Compile Include="Assets\Script\stageMgr.cs" />
     <Compile Include="Assets\Script\startScene.cs" />
     <Compile Include="Assets\Script\targetStateMachine.cs" />
     <Compile Include="Assets\Script\uiFousNone.cs" />
+    <Compile Include="Assets\Scripts\SteamScript.cs" />
+    <Compile Include="Assets\Scripts\Steamworks.NET\SteamManager.cs" />
     <Compile Include="Assets\VisualTween\Scripts\Runtime\EasingCurve.cs" />
     <Compile Include="Assets\VisualTween\Scripts\Runtime\EventNode.cs" />
     <Compile Include="Assets\VisualTween\Scripts\Runtime\MethodArgument.cs" />
@@ -152,12 +172,18 @@
     <None Include="Assets\maze\Shader\Chapter7-NormalMapWorldAlpha.shader" />
     <None Include="Assets\Resources\Shaders\UtilFunctionsCG.cginc" />
     <None Include="Assets\Resources\Shaders\Object\Object_no_branch.shader" />
+    <None Include="Assets\Resources\Shaders\Particle\Chapter12-EdgeDetection.shader" />
     <None Include="Assets\Resources\Shaders\LightFunctions.cginc" />
+    <None Include="Assets\Resources\Shaders\Particle\Chapter12-Bloom.shader" />
     <None Include="Assets\Resources\Shaders\Object\Object_cutoff_no_branch.shader" />
     <None Include="Assets\Resources\Shaders\Object\ObjectFunctions.cginc" />
     <None Include="Assets\maze\Shader\Chapter8-AlphaBlend.shader" />
+    <None Include="Assets\Resources\Shaders\Particle\Chapter12-GaussianBlur.shader" />
+    <None Include="Assets\Resources\Shaders\Particle\highlight.shader" />
     <None Include="Assets\maze\BlueRaja\LICENSE.txt" />
+    <None Include="Assets\Resources\Shaders\Particle\ModelLine.shader" />
     <None Include="Assets\Resources\Shaders\Particle\AlphaBlended.shader" />
+    <None Include="Assets\Resources\Shaders\Particle\ViewOutlineShading.shader" />
     <Reference Include="UnityEngine">
       <HintPath>D:/unityInstall/unity2019_4_14f1/2014.4.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -727,6 +753,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{FB987C91-6AB0-67E3-8CCD-2749B85250B4}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="DevionGames.Utilities.csproj">
       <Project>{B8FB80D5-CE79-BAD8-F012-124AF92E30B1}</Project>
       <Name>DevionGames.Utilities</Name>
