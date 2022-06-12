@@ -6,9 +6,10 @@ public class SteamScript : MonoBehaviour
 {
     void Start()
     {
-#if DEMO
-        Debug.LogWarning("this is demo run");
+#if UNITY_EDITOR
+        Debug.LogWarning("this is not call steam run");
 #else
+        
         if (SteamManager.Initialized)
         {
             Debug.Log("steam sdk init success");
