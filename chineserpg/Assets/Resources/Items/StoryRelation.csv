@@ -1,0 +1,6 @@
+ID,nextID,uiSort,content_cn,content_en,isRoleSay,needchangeBg,isSave,isKeySave
+1,2,0,内容1。内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1内容1,Englishcontent1,0,0,0,0
+2,0,0,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaBbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,Englishcontent1,0,1,0,0
+3,5,0,内容3,Englishcontent1,0,1,1,0
+4,5,0,内容4,Englishcontent1,0,0,1,0
+5,1,0,内容5,Englishcontent1,0,0,0,0
