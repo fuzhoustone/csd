@@ -17,15 +17,16 @@ public class keyData
     }
 }
 
+[Serializable]
 public class processChart
 { //记录剧情走到哪了
-    public int storyID { get; set; }
+    public int storyID;
 }
 
 public class autoSaveData //对指定档案的当前进度存档与读档
 {
     private static autoSaveData data = null;
-    public autoSaveData instance() {
+    public static autoSaveData instance() {
         if (data == null) {
             data = new autoSaveData();
         }
@@ -41,11 +42,24 @@ public class autoSaveData //对指定档案的当前进度存档与读档
     private const int ciDefautStoryID = 1;
     private string dataPath;
     private string keyPath;
+    private string rootPath;
     private processChart storyChart;
     private keyData storyKeyHistory;
 
+
     public void initParam(int lId) {
-        dataPath = Application.persistentDataPath + "//" + lId.ToString() + csSaveData;
+        rootPath = Application.persistentDataPath + "//" + lId.ToString();
+        dataPath = rootPath + csSaveData;
+        keyPath = rootPath + csKeyData;
+
+        if (Directory.Exists(rootPath) == false)
+        {
+            Directory.CreateDirectory(rootPath);
+        }
+
+        loadData();
+        loadKey();
+
     }
 
     public void saveData(int lstoryID) {
@@ -57,12 +71,19 @@ public class autoSaveData //对指定档案的当前进度存档与读档
     //加入关键剧情线
     public void saveKeyData(int lstoryID) {
         storyKeyHistory.storyKeyLst.Add(lstoryID.ToString());
-        string[] storyHis = storyKeyHistory.storyKeyLst.ToArray();
-        File.WriteAllLines(keyPath, storyHis);
+
+        //string str = JsonUtility.ToJson(new Serialization<string>(storyKeyHistory.storyKeyLst));
+        string str = JsonUtility.ToJson(storyKeyHistory);
+
+        File.WriteAllText(keyPath,str);
+
+        //string[] storyHis = storyKeyHistory.storyKeyLst.ToArray();
+        //File.WriteAllLines(keyPath, storyHis);
     }
 
     public int loadData() {
         int lStoryID = 0;
+
         if (File.Exists(dataPath))
         {
             string jsonStr = File.ReadAllText(dataPath);

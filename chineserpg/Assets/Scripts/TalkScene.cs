@@ -8,6 +8,7 @@ public class TalkScene : MonoBehaviour
     public Image sceneImage; //背景场景
 
     private List<Button> btnLst; //对话选择
+    private List<int> btnStoryLst; //对话选择对应的storyID跳转
 
     public Button btn1;
     public Button btn2;
@@ -35,28 +36,35 @@ public class TalkScene : MonoBehaviour
         if (btn1)
         {
             btnLst.Add(btn1);
-            btn1.onClick.AddListener(btnClick);
         }
         if (btn2) {
             btnLst.Add(btn2);
-            btn2.onClick.AddListener(btnClick);
         }
         if (btn3) {
             btnLst.Add(btn3);
-            btn3.onClick.AddListener(btnClick);
         }
         if(btn4) {
             btnLst.Add(btn4);
-            btn4.onClick.AddListener(btnClick);
         }
 
+        btnStoryLst = new List<int>();
         nextStoryID = 1;
-        //showContentText(1);
+
+        autoSaveData.instance().initParam(0);
     }
 
-    public void btnClick() {
-        string tmpTag = this.tag;
+
+    private void btnClick(int lStoryID) {
+        autoSaveData.instance().saveKeyData(lStoryID);
+        autoSaveData.instance().saveData(lStoryID);
+
+        showContentText(lStoryID);
+    }
+
+    public void btnInit() {
+        //string tmpTag = this.tag;
         //int talkID = int.Parse(tmpTag);
+
         if (btn1)
             btn1.gameObject.SetActive(false);
         if (btn2)
@@ -65,6 +73,7 @@ public class TalkScene : MonoBehaviour
             btn3.gameObject.SetActive(false);
         if (btn4)
             btn4.gameObject.SetActive(false);
+
         talkPanel.SetActive(false);
         conNext.gameObject.SetActive(true);
     }
@@ -95,12 +104,15 @@ public class TalkScene : MonoBehaviour
         
         CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(nowStoryid);
         string msg = tmpRow.GetString(StoryRelationTab.csContentCN);
-        nextStoryID = tmpRow.GetInt(StoryRelationTab.csNextID);
-
-        //string msg = StoryRelationTab.GetValueFromID<string>(nowStoryid, StoryRelationTab.csContentCN, "");
         ContentText.text = msg;
 
-        //int isSel = tmpRow.GetInt(StoryRelationTab.csIsTalkSel);
+        //是否自动保存
+        int isAutoSave = tmpRow.GetInt(StoryRelationTab.csIsAutoSave);
+        if (isAutoSave == 1) {
+            autoSaveData.instance().saveData(storyID);
+        }
+
+        nextStoryID = tmpRow.GetInt(StoryRelationTab.csNextID);
         if (nextStoryID == 0) { //出现选项的剧情
             showTalkSel(nowStoryid);
         }
@@ -131,18 +143,24 @@ public class TalkScene : MonoBehaviour
     
     //显示对话选择
     public void showTalkSel(int talkID) {
+        btnInit();
         List<talkOptionTab.optionObj> optionLst = talkOptionTab._instance().getOptionLst(talkID);
        // List<string> btnText = new List<string>();
         for (int i = 0; i < optionLst.Count; i++) {
            talkOptionTab.optionObj tmpObj = optionLst[i];
+            
            Button tmpBtn = btnLst[i];
            Transform tmpChild = tmpBtn.transform.GetChild(0);
            Text tmpBtnText = tmpChild.GetComponent<Text>();
            tmpBtnText.text = tmpObj.optionStrCn;
            tmpBtn.gameObject.SetActive(true);
            tmpBtn.onClick.RemoveAllListeners();
-           //tmpBtn.tag = tmpObj.nextStoryID.ToString();
-           tmpBtn.onClick.AddListener(btnClick);
+           tmpBtn.onClick.AddListener(delegate (){
+                btnClick(tmpObj.nextStoryID);
+               }
+            );
+           
+
         }
 
         conNext.gameObject.SetActive(false);
