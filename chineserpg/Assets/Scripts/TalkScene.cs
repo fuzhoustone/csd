@@ -51,6 +51,13 @@ public class TalkScene : MonoBehaviour
         nextStoryID = 1;
 
         autoSaveData.instance().initParam(0);
+      
+        /*
+         //   \n只会在调试阶段显示
+        Debug.LogWarning("换行test1:"+ContentText.text);
+        ContentText.text = "换行\ntest";
+        Debug.LogWarning("换行test2:"+ContentText.text);
+        */
     }
 
 
@@ -76,6 +83,12 @@ public class TalkScene : MonoBehaviour
 
         talkPanel.SetActive(false);
         conNext.gameObject.SetActive(true);
+    }
+
+    private string stringReplace(string lVal) {
+        string res = "";
+        res = lVal.Replace("\\n","\n");
+        return res;
     }
 
     //切换背景的场景
@@ -104,7 +117,7 @@ public class TalkScene : MonoBehaviour
         
         CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(nowStoryid);
         string msg = tmpRow.GetString(StoryRelationTab.csContentCN);
-        ContentText.text = msg;
+        ContentText.text = stringReplace(msg);
 
         //是否自动保存
         int isAutoSave = tmpRow.GetInt(StoryRelationTab.csIsAutoSave);
@@ -152,7 +165,7 @@ public class TalkScene : MonoBehaviour
            Button tmpBtn = btnLst[i];
            Transform tmpChild = tmpBtn.transform.GetChild(0);
            Text tmpBtnText = tmpChild.GetComponent<Text>();
-           tmpBtnText.text = tmpObj.optionStrCn;
+           tmpBtnText.text = stringReplace(tmpObj.optionStrCn);
            tmpBtn.gameObject.SetActive(true);
            tmpBtn.onClick.RemoveAllListeners();
            tmpBtn.onClick.AddListener(delegate (){
