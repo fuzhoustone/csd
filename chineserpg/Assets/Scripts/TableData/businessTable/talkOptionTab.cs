@@ -4,20 +4,30 @@ using System.IO;
 
 public class talkOptionTab : CsdTTable
 {
-    public const string csStoryID = "storyID";
-    public const string csNextStoryID = "nextStoryID";
-    public const string csOptionCn = "optionCn";
-    public const string csOptionEn = "optionEn";
-
     private static talkOptionTab instance = null;
     public static talkOptionTab _instance()
     {
         if (instance == null)
         {
             instance = new talkOptionTab();
+            instance.initParam();
         }
         return instance;
     }
+
+    public const string csStoryID  ="storyID";
+    public const string csNextStoryID ="nextStoryID"; 
+    public const string csOptionCn = "optionCn";  
+    public const string csOptionEn = "optionEn"; 
+    public void initParam()
+    {
+        addKeyName(csID);
+        addKeyName(csStoryID);
+        addKeyName(csNextStoryID);
+        addKeyName(csOptionCn);
+        addKeyName(csOptionEn);
+    }
+  
     public class optionObj {
         public string optionStrCn { get; set;}
         public string optionStrEn { get; set; }

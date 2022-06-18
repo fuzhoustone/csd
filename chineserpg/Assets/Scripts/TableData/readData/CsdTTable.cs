@@ -5,13 +5,33 @@ using System.IO;
 public class CsdTTable  
 {
     public List<CSVRow> m_elements = new List<CSVRow>();
-    //  public static List<CsvKeyName> mKeyNameLst;
     public const string csID = "ID";
+    public List<string> m_colomuns = new List<string>(); 
+    public void addKeyName(string lKey) {
+        m_colomuns.Add(lKey);
+    }
+
+    private bool checkKeyNameExists(CSVRow lRow) {
+        bool isPass = true;
+        for (int i = 0; i < m_colomuns.Count; i++) {
+            string tmpKeyName = m_colomuns[i];
+            
+            bool isExists = lRow.Exist(tmpKeyName);
+            if (isExists) {
+                UnityEngine.Debug.LogError("checkKeyNameExists Columns not tmpKeyName");
+                isPass = false;
+            }
+        }
+
+        return isPass;
+    }
 
     public void Load(Stream stream)
     {
         if (stream == null) return;
         CSVData data = CSVLoader.Load(stream);
+        bool isPass = data.isAllColumnNameExists(m_colomuns); //检查所有列名是否都存在
+
         for (int i = 0; i < data.RowCount; ++i)
         {
             var row = data.GetRow(i);

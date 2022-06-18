@@ -67,6 +67,26 @@ public class CSVData : IEnumerable<CSVRow>
         m_columnNameIndexer = new CSVColumnNameIndexer(columnNames, seperator);
     }
 
+    //add by csd
+    public bool isAllColumnNameExists(List<string> lKeyLst) {
+        bool isAll = true;
+        int columnIndex;
+        for (int i = 0; i < lKeyLst.Count; i++)
+        {
+            string tmpKeyName = lKeyLst[i];
+            try
+            {
+                columnIndex = m_columnNameIndexer.GetColumnIndex(tmpKeyName);
+            }
+            catch
+            {
+                isAll = false;
+            }
+        }
+        return isAll;
+    }
+    //add end
+
     public int RowCount
     {
         get { return m_datas.Count; }
@@ -128,6 +148,7 @@ public class CSVColumnNameIndexer
             m_columnDic.Add(columnName, index);
         }
     }
+
 
     internal int GetColumnIndex(string columnName)
     {
