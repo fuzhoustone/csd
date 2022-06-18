@@ -6,9 +6,20 @@ public class CsdTTable
 {
     public List<CSVRow> m_elements = new List<CSVRow>();
     public const string csID = "ID";
-    public List<string> m_colomuns = new List<string>(); 
+    public List<string> m_colomuns = new List<string>();
+    private int maxID = 0;
     public void addKeyName(string lKey) {
         m_colomuns.Add(lKey);
+    }
+
+    public int getNewID() {
+        return maxID + 1;
+    }
+
+    public void refreshMaxID(int val) {
+        if (maxID < val) {
+            maxID = val;
+        }
     }
 
     private bool checkKeyNameExists(CSVRow lRow) {
@@ -17,7 +28,8 @@ public class CsdTTable
             string tmpKeyName = m_colomuns[i];
             
             bool isExists = lRow.Exist(tmpKeyName);
-            if (isExists) {
+            if (isExists == false)
+            {
                 UnityEngine.Debug.LogError("checkKeyNameExists Columns not tmpKeyName");
                 isPass = false;
             }
@@ -35,6 +47,9 @@ public class CsdTTable
         for (int i = 0; i < data.RowCount; ++i)
         {
             var row = data.GetRow(i);
+            int tmpID = row.GetInt(csID);
+            if (tmpID > maxID)
+                maxID = tmpID;
             m_elements.Add(row);
         }
     }
