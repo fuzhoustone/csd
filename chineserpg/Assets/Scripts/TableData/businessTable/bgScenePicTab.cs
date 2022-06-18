@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
+﻿
 public class bgScenePicTab : CsdTTable
 {
     public const string csScenePic = "scenePic";

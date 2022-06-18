@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
 public class talkOptionTab : CsdTTable
 {
@@ -48,7 +46,6 @@ public class talkOptionTab : CsdTTable
 
                 res.Add(tmpObj);
             }
-               // return m_elements[i];
         }
         return res;
     }

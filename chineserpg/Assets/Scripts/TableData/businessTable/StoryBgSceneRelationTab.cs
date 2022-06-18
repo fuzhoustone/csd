@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
+﻿
 public class StoryBgSceneRelationTab : CsdTTable
 {
     private static StoryBgSceneRelationTab instance = null;

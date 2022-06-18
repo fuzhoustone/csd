@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
+﻿
 public class roleFacePicTab : CsdTTable
 {
     public const string csRoleID = "roleID";
