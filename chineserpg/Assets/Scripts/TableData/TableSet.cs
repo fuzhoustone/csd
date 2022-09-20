@@ -9,11 +9,14 @@ public class TableSet : MonoBehaviour
     public TextAsset bgScenePic;
     public TextAsset roleFacePic;
     public TextAsset talkOption;
+    public TextAsset roleNameLst;
+    public TextAsset storyVideo;
 
-    private void Start()
-    {
-       initData();
-    }
+    public TextAsset roleProperty;
+    public TextAsset roleTrust;
+    public TextAsset eventDamage;
+    public TextAsset eventList;
+    public TextAsset eventSystemType;
 
     public void initData()
     {
@@ -37,10 +40,48 @@ public class TableSet : MonoBehaviour
             roleFacePicTab._instance().Load(stream);
         }
 
+        using (var stream = new MemoryStream(roleNameLst.bytes))
+        {
+            roleNameTab._instance().Load(stream);
+        }
+
         using (var stream = new MemoryStream(talkOption.bytes))
         {
             talkOptionTab._instance().Load(stream);
         }
+
+        using (var stream = new MemoryStream(storyVideo.bytes))
+        {
+            StoryVideoTab._instance().Load(stream);
+        }
+
+        /**********/
+        using (var stream = new MemoryStream(roleProperty.bytes))
+        {
+            rolePropertyTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(roleTrust.bytes))
+        {
+            roleTrustTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(eventDamage.bytes))
+        {
+            eventDamageTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(eventList.bytes))
+        {
+            eventListTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(eventSystemType.bytes))
+        {
+            eventSystemTypeTab._instance().Load(stream);
+        }
+
+
     }
        
  

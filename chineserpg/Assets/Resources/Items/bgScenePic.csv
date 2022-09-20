@@ -1,3 +1,6 @@
-ID,scenePic
-1,1
-2,2
+ID,picName,sceneName
+1,1,test场景1
+2,2,test场景2
+3,片头,logo
+4,上前对决,pk
+5,绕过不打,runscene

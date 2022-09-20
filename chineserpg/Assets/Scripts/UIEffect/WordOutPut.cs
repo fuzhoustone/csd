@@ -16,25 +16,31 @@ public class WordOutPut : MonoBehaviour
     public bool Enabled { get; set; }
 
     // Use this for initialization
-    private void OnDisable()
-    {
-        Debug.Log("wordoutput:OnDisable");
-        OnFinish();//当脚本在失活的时候，将数据进行重置
-    }
 
-    public void showTextEffect(float lCharsPerSecond) {
-        charsPerSecond = lCharsPerSecond;
-        OnEnable();
-    }
 
     private void Start()
     {
-        charsPerSecond = cfCharsPerSecond;
+        Debug.LogWarning("WordOutPut start");
     }
 
-    /// <summary> 
-    　　/// 当脚本被激活的时候，将数据进行初始化
-    　　/// </summary>
+    public void setTextEffectSpeed(float lCharsPerSecond)
+    {
+        charsPerSecond = lCharsPerSecond;
+        //OnEnable();
+    }
+
+    public void setContext(string ltext) {
+        timer = 0;
+        isActive = true;
+        isShowFinish = false;
+        charsPerSecond = cfCharsPerSecond;
+        charsPerSecond = Mathf.Max(0.02f, charsPerSecond); //将最小的出字速度限制为0.02，也可以自行调整
+        words = ltext;
+        if(myText == null)
+            myText = GetComponent<Text>();
+        myText.text = "";
+    }
+    /*
     private void OnEnable()
     {
         Debug.Log("wordoutput:onEnable");
@@ -46,7 +52,13 @@ public class WordOutPut : MonoBehaviour
         words = myText.text;
         myText.text = "";//获取Text的文本信息，保存到words中，然后动态更新文本显示内容，实现打字机的效果
     }
+    */
 
+    private void OnDisable()
+    {
+        Debug.Log("wordoutput:OnDisable");
+        OnFinish();//当脚本在失活的时候，将数据进行重置
+    }
     // Update is called once per frame
     private void Update()
     {

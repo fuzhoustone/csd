@@ -1,6 +1,6 @@
 ID,nextID,uiSort,content_cn,content_en,isRoleSay,needchangeBg,isSave,isKeySave
-1,2,0,内容1。内容1\n内容2..内容1内容3\n内容4内容1内容1内容1，内容1内容1内容1。内容1内容1内容1内容1,Englishcontent1,0,0,0,0
-2,0,0,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaBbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,Englishcontent1,0,1,0,0
-3,5,0,内容3,Englishcontent1,0,1,1,0
-4,5,0,内容4,Englishcontent1,0,0,1,0
-5,1,0,内容5,Englishcontent1,0,0,0,0
+1,0,0,开始艾尔登法环之旅,Englishcontent1,0,0,0,0
+2,0,0,"前方有个骑士,绕开他还是上前对决",Englishcontent1,0,0,0,0
+3,1,0,对决失败，大侠请重头再来,Englishcontent1,0,0,0,0
+4,1,0,未完待续,Englishcontent1,0,0,0,0
+5,0,0,"前方有个NPC,上去对话还是干他",Englishcontent1,0,0,0,0

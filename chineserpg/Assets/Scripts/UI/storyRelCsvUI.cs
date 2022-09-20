@@ -14,13 +14,21 @@ public class storyRelCsvUI : MonoBehaviour
     public Dropdown BgChange;
     public Dropdown isAutoSave;
     public Dropdown isKeyOption;
-   // public InputField inputCn;
+   // public Dropdown roleNameLst;
     public InputField textCn;
-
-  //  public InputField inputEn;
     public InputField textEn;
 
     public Text checkNextIDObj;
+
+    private const string csNextIDExist = "NextID存在";
+    private const string csNextIDNotExist = "NextID不存在";
+
+    //初始化
+    private void Start()
+    {
+        roleLstInit();
+        sceneLstInit();
+    }
 
     private string repStr(string lVal) {
         string res = "";
@@ -31,7 +39,38 @@ public class storyRelCsvUI : MonoBehaviour
         return res;
     }
 
-    //UI调用
+    private void dropListInit(Dropdown lDropDown, CsdTTable tmpTab, string itemName) {
+        string tmpRoleName = "";
+        int nCount = tmpTab.GetTableLength();
+        for (int i = 0; i < nCount; i++)
+        {
+            CSVRow tmpRow = tmpTab.GetRowFromIndex(i);
+            tmpRoleName = tmpRow.GetString(itemName);
+            lDropDown.options.Add(new Dropdown.OptionData(tmpRoleName));
+        }
+    }
+
+    private void roleLstInit() {
+        dropListInit(roleSay, roleNameTab._instance(), roleNameTab.csRoleName);
+        /*
+        string tmpRoleName = "";
+        int nCount = roleInfoTab._instance().GetTableLength();
+        for (int i = 0; i < nCount; i++)
+        {
+            CSVRow tmpRow = roleInfoTab._instance().GetRowFromIndex(i);
+            tmpRoleName = tmpRow.GetString(roleInfoTab.csRoleName);
+            roleSay.options.Add(new Dropdown.OptionData(tmpRoleName));
+        }*/
+    }
+
+    private void sceneLstInit() {
+        dropListInit(BgChange, bgScenePicTab._instance(), bgScenePicTab.csSceneName);
+    }
+
+
+    // <summary>
+    // UI调用函数
+    // </summary>
     public void UISelID()
     {
         int tempID = int.Parse(textID.text.Trim());
@@ -61,12 +100,20 @@ public class storyRelCsvUI : MonoBehaviour
         textEn.text = "Need input";
     }
 
-    public void UISaveRow() {
+    public void UISaveRow() { 
+        int tempID = int.Parse(textID.text.Trim());
+        CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(tempID);
+        if (tmpRow != null) //保存
+        {
 
+        }
+        else {  //新增
+
+        }
+
+        //提示保存成功
     }
 
-    private const string csNextIDExist = "NextID存在";
-    private const string csNextIDNotExist = "NextID不存在";
     public void UICheckNextID() {
         int tempNextID = int.Parse(textNextID.text.Trim());
         CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(tempNextID);
@@ -87,58 +134,94 @@ public class storyRelCsvUI : MonoBehaviour
         checkNextIDObj.gameObject.SetActive(false);
     }
 
+    /*
+    public void onUIRoleSayChange() {
+        int tmp = roleSay.value;
+        if (tmp == 0) //No
+        {
+         //   roleNameLst.transform.parent.gameObject.SetActive(false);
+        }
+        else { //Yes
+         //   roleNameLst.transform.parent.gameObject.SetActive(true);
+        }
+    }
+    */
 
-    /// <summary>
-    /// //////////
-    /// </summary>
-    /// <returns></returns>
-    public string getUIID() {
+    // <summary>
+    // //////////外部调用
+    // </summary>
+
+    protected string getUIID() {
         return repStr(textID.text);
     }
 
-    public string getNextID()
+    protected string getNextID()
     {
         return repStr(textID.text);
     }
 
-    public string getContextCn() {
+    protected string getContextCn() {
         return repStr(textCn.text);
     }
 
-    public string getContextEn()
+    protected string getContextEn()
     {
         return repStr(textEn.text);
     }
 
 
-    public int getUIEffect()
+    protected int getUIEffect()
     {
-        int res = getDropDown(uiEffect);
+        int res = uiEffect.value;
         return res;
     }
 
-    public int getIsRoleSay() {
-        int res = getDropDown(roleSay);
-        return res;
-    }
-    public int getBgChange()
-    {
-        int res = getDropDown(BgChange);
-        return res;
-    }
-    public int getIsAutoSave()
-    {
-        int res = getDropDown(isAutoSave);
-        return res;
-    }
-    public int getIsKeyOption()
-    {
-        int res = getDropDown(isKeyOption);
+    protected int getIsRoleSay() {
+        int res = roleSay.value;
+        if (res > 0)
+            res = 1;
         return res;
     }
 
-    private int getDropDown(Dropdown tmpDd) {
-        return tmpDd.value;
+    private int getIDFromDropTab(Dropdown dropLst, CsdTTable tmpTab) {
+        int tmpID = 0;
+        int index = dropLst.value; //按表的顺序加载的
+        if (index > 0)
+        {
+            CSVRow tmpRow = tmpTab.GetRowFromIndex(index - 1); //第一行为默认的“无”
+            if (tmpRow != null)
+                tmpID = tmpRow.GetInt(CsdTTable.csID);
+        }
+        return tmpID;
     }
+
+    protected int getRoleID()
+    {
+        return getIDFromDropTab(roleSay, roleNameTab._instance());
+    }
+
+    protected int getSceneID() {
+        return getIDFromDropTab(BgChange, bgScenePicTab._instance());
+    }
+
+    protected int getBgChange()
+    {
+        int res = BgChange.value;
+        if (res > 0)
+            res = 1;
+        return res;
+    }
+    protected int getIsAutoSave()
+    {
+        int res = isAutoSave.value;
+        return res;
+    }
+    protected int getIsKeyOption()
+    {
+        int res = isKeyOption.value;
+        return res;
+    }
+
+
 
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class CsdTTable  
 {
-    public List<CSVRow> m_elements = new List<CSVRow>();
+    protected List<CSVRow> m_elements = new List<CSVRow>();
     public const string csID = "ID";
-    public List<string> m_colomuns = new List<string>();
+    public List<string> m_colomuns = new List<string>(); //用于检查字段名是存在，非必须
     private int maxID = 0;
     public void addKeyName(string lKey) {
         m_colomuns.Add(lKey);
@@ -64,6 +65,7 @@ public class CsdTTable
         m_elements.Clear();
     }
 
+    //根据ID返回
     public CSVRow GetRowFromID(int id)
     {
         for (int i = 0; i < m_elements.Count; ++i)
@@ -71,6 +73,16 @@ public class CsdTTable
             if (m_elements[i].GetInt(csID) == id)
                 return m_elements[i];
         }
+        Debug.LogWarning("CSVRow is null,ID="+id.ToString() );
+        return null;
+    }
+
+    //遍历表用的
+    public CSVRow GetRowFromIndex(int i) {
+        if (m_elements.Count > i) {
+            return m_elements[i];
+        }
+
         return null;
     }
 
@@ -87,7 +99,7 @@ public class CsdTTable
 
     //根据key字段及key字段的值，返回val字段的值,需给val默认值,
     //key只支持整型，string,浮点型
-    public T GetKeyValueFromID<K,T>(string keyName, K keyVal,string valName, T defVal)
+    public T GetValueFromKey<K,T>(string keyName, K keyVal,string valName, T defVal)
     {
         T res = defVal;
         for (int i = 0; i < m_elements.Count; ++i)

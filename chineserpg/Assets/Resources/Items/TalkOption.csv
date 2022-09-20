@@ -1,3 +1,6 @@
-ID,storyID,nextStoryID,optionCn,optionEn
-1,2,1,这是选项A,optionA
-2,2,2,这是选项B,optionB
+ID,storyID,nextStoryID,videoID,optionCn,optionEn
+1,1,5,1,开始,optionA
+2,2,3,2,上前对决,optionA
+3,2,4,3,绕过不打,optionB
+4,5,4,4,上前对话,optionA
+5,5,3,5,干他,optionA

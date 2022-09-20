@@ -14,7 +14,8 @@ public class talkOptionTab : CsdTTable
     }
 
     public const string csStoryID  ="storyID";
-    public const string csNextStoryID ="nextStoryID"; 
+    public const string csNextStoryID ="nextStoryID";
+    public const string csVideoID = "videoID";
     public const string csOptionCn = "optionCn";  
     public const string csOptionEn = "optionEn"; 
     public void initParam()
@@ -30,6 +31,8 @@ public class talkOptionTab : CsdTTable
         public string optionStrCn { get; set;}
         public string optionStrEn { get; set; }
         public int nextStoryID { get; set; }
+
+        public int videoID { get; set; }
     }
 
     public List<optionObj> getOptionLst(int lId) {
@@ -40,6 +43,7 @@ public class talkOptionTab : CsdTTable
             if (m_elements[i].GetInt(csStoryID) == lId)
             {
                 optionObj tmpObj = new optionObj();
+                tmpObj.videoID = m_elements[i].GetInt(csVideoID);
                 tmpObj.nextStoryID = m_elements[i].GetInt(csNextStoryID);
                 tmpObj.optionStrCn = m_elements[i].GetString(csOptionCn);
                 tmpObj.optionStrEn = m_elements[i].GetString(csOptionEn);

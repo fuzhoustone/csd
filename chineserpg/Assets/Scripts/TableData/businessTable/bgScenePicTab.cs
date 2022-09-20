@@ -1,11 +1,13 @@
 ﻿
 public class bgScenePicTab : CsdTTable
 {
-    public const string csScenePic = "scenePic";
+    public const string csPicName = "picName";
+    public const string csSceneName = "sceneName";
     public void initParam()
     {
         addKeyName(csID);
-        addKeyName(csScenePic);
+        addKeyName(csPicName);
+        addKeyName(csSceneName);
     }
     private static bgScenePicTab instance = null;
     public static bgScenePicTab _instance()
