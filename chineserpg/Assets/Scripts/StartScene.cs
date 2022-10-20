@@ -14,17 +14,20 @@ public class StartScene : MonoBehaviour
     [SerializeField]
     private Button continueBtn;
 
-    [SerializeField]
-    private GameObject helpObj;
+//    [SerializeField]
+//    private GameObject helpObj;
 
     [SerializeField]
     private DialogBox m_DialogBox;
+
+    [SerializeField]
+    private selRoleDialogUI selRoleDialog;
 
     private UnityAction btnEvent1, btnEvent2, btnEvent3; //分别对应，1个，2个，3个按扭
     private bool hasRecord;
     private const string title = "请确认";
     private const string text = "新游戏将清空现有游戏记录，是否清空并开始新游戏";
-
+/*
     [SerializeField]
     private Text startTxt;
     [SerializeField]
@@ -37,7 +40,8 @@ public class StartScene : MonoBehaviour
     private Text exitTxt;
     [SerializeField]
     private Text gameTxt;
-
+*/
+    /*
     private void steamShow() {
         startTxt.text = "start";
         continueTxt.text = "continue";
@@ -47,7 +51,7 @@ public class StartScene : MonoBehaviour
 
         gameTxt.text = "monster maze";
     }
-
+    */
     public void screenAdapt()
     {
         //Debug.Log("screenAdapt");
@@ -75,22 +79,24 @@ public class StartScene : MonoBehaviour
     }
 
     //切换到游戏场景
-    private void changeGameScene() {
-        SceneManager.LoadSceneAsync("mainScene");
+    private void changeGameScene(int roleID) {
+        SceneManager.LoadSceneAsync("storyScene");
     }
 
     /// <summary>
     /// UI按扭
     /// </summary>
     public void startNewGame() {
-/*
-        if (helpObj.activeSelf == true)
-        {
-            helpObj.SetActive(false);
-        }
-*/
+        /*
+                if (helpObj.activeSelf == true)
+                {
+                    helpObj.SetActive(false);
+                }
+        */
+        selRoleDialog.showDialog(changeGameScene);
+
           //切换场景
-            changeGameScene();
+        //changeGameScene();
        
     }
 
@@ -137,23 +143,41 @@ public class StartScene : MonoBehaviour
         }
     }
 
+    /*
     private void clearAndNewGame() {
         changeGameScene(); //切换场景开始游戏
     }
-
+    */
     private void closeDialog() {
         m_DialogBox.Close();
     }
 
     public void continueGame()
     {
-        changeGameScene();
+      //  changeGameScene();
     }
 
-
+    /*
     public void helpShow() {
 
         helpObj.SetActive(true);
+    }
+    */
+
+    public void showDevelopers() { 
+    
+    }
+
+    public void setTing() { 
+    
+    }
+
+    public void setLanguage() { 
+    
+    }
+
+    public void loadGame() { 
+        
     }
 
     public void exitGame()
