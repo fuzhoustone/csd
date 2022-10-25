@@ -245,8 +245,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7675504683214387975}
-  - component: {fileID: 2124982800024946713}
   - component: {fileID: 8137752328897124280}
+  - component: {fileID: 2124982800024946713}
   - component: {fileID: 9151968072923066129}
   - component: {fileID: 7979067136227104410}
   m_Layer: 5
@@ -277,6 +277,14 @@ RectTransform:
   m_AnchoredPosition: {x: -4, y: -380}
   m_SizeDelta: {x: 1144, y: 450}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &8137752328897124280
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158625558035667950}
+  m_CullTransparentMesh: 0
 --- !u!114 &2124982800024946713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,14 +315,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!222 &8137752328897124280
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158625558035667950}
-  m_CullTransparentMesh: 0
 --- !u!114 &9151968072923066129
 MonoBehaviour:
   m_ObjectHideFlags: 0

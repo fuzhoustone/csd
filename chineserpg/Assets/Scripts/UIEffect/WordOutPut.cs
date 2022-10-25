@@ -30,7 +30,7 @@ public class WordOutPut : MonoBehaviour
     }
 
     public void setContext(string ltext) {
-        timer = 0;
+        clearParam();
         isActive = true;
         isShowFinish = false;
         charsPerSecond = cfCharsPerSecond;
@@ -97,10 +97,14 @@ public class WordOutPut : MonoBehaviour
     /// </summary>
     private void OnFinish()
     {
+        clearParam();
+        if (isShowFinish == false)
+            myText.text = words;
+    }
+
+    private void clearParam() {
         isActive = false;
         timer = 0;
         currentPos = 0;
-        if(isShowFinish == false)
-            myText.text = words;
     }
 }
