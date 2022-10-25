@@ -74,7 +74,7 @@ public class StartScene : MonoBehaviour
 
     void Start()
     {
-
+        TableSet.instance.initData();
 
     }
 

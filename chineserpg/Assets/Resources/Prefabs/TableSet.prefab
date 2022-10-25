@@ -48,7 +48,7 @@ MonoBehaviour:
   bgScenePic: {fileID: 4900000, guid: 8477baac4cf059141ac340b844fba2b8, type: 3}
   roleFacePic: {fileID: 4900000, guid: 4d6783ff01e647a4d87567c9ab506855, type: 3}
   talkOption: {fileID: 4900000, guid: 5d04cfcd48a4c704bb90e0482dd7fc38, type: 3}
-  roleInfoLst: {fileID: 4900000, guid: 9920ca0711258764a91d177accdaf454, type: 3}
+  roleNameLst: {fileID: 4900000, guid: 9920ca0711258764a91d177accdaf454, type: 3}
   storyVideo: {fileID: 4900000, guid: ba33a40c67af49b469f53655a139c704, type: 3}
   roleProperty: {fileID: 4900000, guid: 94865b2d8c18f0e4a906a04c9e76f574, type: 3}
   roleTrust: {fileID: 4900000, guid: 4a36920dace32d241a933469743de858, type: 3}

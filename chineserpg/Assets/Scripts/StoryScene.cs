@@ -21,7 +21,7 @@ public class StoryScene : MonoBehaviour
     public GameObject btnPanel;
     public GameObject contextPanel;
     public Button conNext;
-    public TableSet dataTable;
+   // public TableSet dataTable;
 
 
     private int storyID,nextStoryID;
@@ -34,9 +34,11 @@ public class StoryScene : MonoBehaviour
     private void Start()
     {
        // Debug.Log("test start");
-        dataTable.initData();
+        //dataTable.initData();
+        TableSet.instance.initData();
+        toolBarManager.instance.getTopBar();
 
-        Debug.LogWarning("talkscene start");
+        Debug.LogWarning("storyscene start");
         if (btnLst != null) {
             btnLst.Clear();
         }

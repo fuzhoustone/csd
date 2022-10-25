@@ -4,6 +4,25 @@ using UnityEngine;
 
 public class TableSet : MonoBehaviour
 {
+    private const string csTableSetPre = "Prefabs/TableSet";
+    private bool isInit = false;
+    private static TableSet _instance = null;
+    public static TableSet instance
+    {
+        get {
+            if (_instance == null) {
+                UnityEngine.Object tmpObj = Resources.Load(csTableSetPre);
+                GameObject tabObj = GameObject.Instantiate(tmpObj) as GameObject;
+                _instance = tabObj.GetComponent<TableSet>();
+
+                MonoBehaviour.DontDestroyOnLoad(tabObj);
+            }
+
+            return _instance;
+        }
+    }
+
+
     public TextAsset storyRel;
     public TextAsset storyBgSceneRel;
     public TextAsset bgScenePic;
@@ -18,8 +37,15 @@ public class TableSet : MonoBehaviour
     public TextAsset eventList;
     public TextAsset eventSystemType;
 
+    //private GameObject tableSetObj;
+
+   // public TableSet tabData;
+
     public void initData()
     {
+        if (isInit)
+            return;
+
         using (var stream = new MemoryStream(storyRel.bytes))
         {
             StoryRelationTab._instance().Load(stream);
@@ -80,7 +106,7 @@ public class TableSet : MonoBehaviour
         {
             eventSystemTypeTab._instance().Load(stream);
         }
-
+        isInit = true;
 
     }
        

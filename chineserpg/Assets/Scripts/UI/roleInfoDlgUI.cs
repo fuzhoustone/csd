@@ -6,15 +6,35 @@ using UnityEngine.UI;
 public class roleInfoDlgUI : MonoBehaviour
 {
     private const string csPreClueBtn = "Prefabs/UI/roleNameBtn";
+    private const string csPreInfoMsg = "Prefabs/UI/roleInfoMsg";
 
     // private Texture2D pSelBg, pUnSelBg;
     private int oldClueIndex = 0;
     private List<roleNameBtnUI> nameLst;
-    public Transform nameViewPostLst;
+
+    [SerializeField]
+    private Transform nameViewPostLst;
+
+    [SerializeField]
+    private Transform infoViewLst;
+
+    [SerializeField]
+    private Image roleHeadPic;
+
+    [SerializeField]
+    private Text roleNameText;
+
+    [SerializeField]
+    private Text roleHeadText;
+
 
     void Start()
     {
         initData();
+    }
+
+    public void showUI() { 
+    
     }
 
     public void UIClose()
@@ -50,6 +70,12 @@ public class roleInfoDlgUI : MonoBehaviour
 
     }
 
+    private void setRoleNameSel(int index, bool isSel)
+    {
+        roleNameBtnUI tmpBtnUI = nameLst[index];
+        tmpBtnUI.setSelActive(isSel);
+    }
+
     public void roleNameOnClick(int tmpID)
     {
         Debug.LogWarning("clueOnClick id:" + tmpID.ToString());
@@ -58,13 +84,36 @@ public class roleInfoDlgUI : MonoBehaviour
             setRoleNameSel(oldClueIndex, false);
             setRoleNameSel(tmpID, true);
             oldClueIndex = tmpID;
+
+            roleInfoData(tmpID);
         }
     }
 
-    private void setRoleNameSel(int index, bool isSel)
+    private void clearInfoMsg() {
+        for (int i = infoViewLst.childCount; i >= 1; i--) {
+            Transform tmpTs = infoViewLst.GetChild(i-1);
+            GameObject.Destroy(tmpTs.gameObject);
+            
+        }
+    }
+
+    private void roleInfoData(int tmpID)
     {
-        roleNameBtnUI tmpBtnUI = nameLst[index];
-        tmpBtnUI.setSelActive(isSel);
+        //roleHeadPic
+        roleNameText.text = "角色" + tmpID.ToString();
+        roleHeadText.text = "角色" + tmpID.ToString() + "testest";
+
+        clearInfoMsg();
+
+        int nCount = tmpID;
+        for (int i = 1; i <= nCount; i++)
+        {
+            UnityEngine.Object infoObj = Resources.Load(csPreInfoMsg);
+            GameObject tmpObj = GameObject.Instantiate(infoObj, infoViewLst) as GameObject;
+            roleInfoMsgUI tmpUIData = tmpObj.GetComponent<roleInfoMsgUI>();
+            string testMsg = "角色" + tmpID.ToString() + "msgmsg";
+            tmpUIData.setData(testMsg);
+        }
 
     }
 }
