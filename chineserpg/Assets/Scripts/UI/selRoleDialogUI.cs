@@ -54,7 +54,8 @@ public class selRoleDialogUI : MonoBehaviour
                 tmpID = tmpRow.GetInt(roleNameTab.csID);
             }
 
-            tmpUIData.initData(tmpID);
+            string tmpRoleName = tmpRow.GetString(roleNameTab.csRoleName);
+            tmpUIData.initData(tmpID,tmpRoleName);
             //roleLst.Add(tmpUIData);
 
             Button tmpBtn = tmpUIData.gameObject.GetComponent<Button>();

@@ -388,4 +388,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selImage: {fileID: 4109141073670082807}
+  roleNameTxt: {fileID: 2646517295081252547}
   pID: 0
