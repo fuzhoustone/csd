@@ -36,10 +36,11 @@ public class TableSet : MonoBehaviour
     public TextAsset eventDamage;
     public TextAsset eventList;
     public TextAsset eventSystemType;
+    public TextAsset clueLst;
 
     //private GameObject tableSetObj;
 
-   // public TableSet tabData;
+    // public TableSet tabData;
 
     public void initData()
     {
@@ -106,6 +107,12 @@ public class TableSet : MonoBehaviour
         {
             eventSystemTypeTab._instance().Load(stream);
         }
+
+        using (var stream = new MemoryStream(clueLst.bytes))
+        {
+            clueLstTab._instance().Load(stream);
+        }
+
         isInit = true;
 
     }

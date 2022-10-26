@@ -72,7 +72,7 @@ public class roleInfoDlgUI : MonoBehaviour
         }
         oldClueIndex = 0;
         setRoleNameSel(oldClueIndex, true);
-
+        roleInfoData(oldClueIndex);
     }
 
     private void setRoleNameSel(int index, bool isSel)
@@ -116,14 +116,25 @@ public class roleInfoDlgUI : MonoBehaviour
 
         clearInfoMsg();
 
-        int nCount = tmpID;
+        int nCount = clueLstTab._instance().GetTableLength();
+        // int nCount = tmpID;
+        
+        int nowRoleID = tmpNameBtnUI.pId;
+        int nowChartID = 1;
         for (int i = 1; i <= nCount; i++)
         {
-            UnityEngine.Object infoObj = Resources.Load(csPreInfoMsg);
-            GameObject tmpObj = GameObject.Instantiate(infoObj, infoViewLst) as GameObject;
-            roleInfoMsgUI tmpUIData = tmpObj.GetComponent<roleInfoMsgUI>();
-            string testMsg = "角色" + tmpID.ToString() + "msgmsg";
-            tmpUIData.setData(testMsg);
+
+            CSVRow tmpClueRow = clueLstTab._instance().GetRowFromIndex(i - 1);
+            int tmpRoleID = tmpClueRow.GetInt(clueLstTab.csRoleID);
+            int tmpChartID = tmpClueRow.GetInt(clueLstTab.csChartID);
+            if((tmpRoleID == nowRoleID) && (nowChartID >= tmpChartID))
+            { 
+                UnityEngine.Object infoObj = Resources.Load(csPreInfoMsg);
+                GameObject tmpObj = GameObject.Instantiate(infoObj, infoViewLst) as GameObject;
+                roleInfoMsgUI tmpUIData = tmpObj.GetComponent<roleInfoMsgUI>();
+                string testMsg = tmpClueRow.GetString(clueLstTab.csContentCn);
+                tmpUIData.setData(testMsg);
+            }
         }
 
     }
