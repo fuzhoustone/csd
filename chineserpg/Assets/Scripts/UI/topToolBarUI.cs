@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class topToolBarUI : MonoBehaviour
 {
@@ -9,7 +10,19 @@ public class topToolBarUI : MonoBehaviour
     [SerializeField]
     private GameObject infoDlg;
 
+    [SerializeField]
+    private GameObject missionPal;
     //private string csRoleInfoDlgPre = "Prefabs/UI/roleNameBtn/roleInfoDialog";
+    [SerializeField]
+    private Text missionTitle;
+    [SerializeField]
+    private Text missionContext;
+
+
+    public void showMission(bool isShow) {
+        if(missionPal.activeSelf != isShow)
+            missionPal.SetActive(isShow);
+    }
 
     public void showRoleInfo()
     {

@@ -22,6 +22,13 @@ public class selRoleDialogUI : MonoBehaviour
     [SerializeField]
     private GameObject palListRow13;
 
+    [SerializeField]
+    private Text titleTxt;
+
+    private const string csSelCosPlayCn = "选择一个想扮演的角色";
+    private const string csSelCosPlayEn = "";
+    private const string csSelTalkCn = "选择一个想私聊的角色";
+    private const string csSelTalkEn = "";
     private List<roleBodyUI> roleLst;
 
     public void initData(int pSelfRoleID) {
@@ -30,12 +37,14 @@ public class selRoleDialogUI : MonoBehaviour
             roleLst = roleTalkLst;
             palListRow12.SetActive(true);
             palListRow13.SetActive(false);
+            titleTxt.text = csSelTalkCn;
         }
         else //选择一个角色玩
         {  
             roleLst = roleStartLst;
             palListRow12.SetActive(false);
             palListRow13.SetActive(true);
+            titleTxt.text = csSelCosPlayCn;
         }
 
         int nCount = roleLst.Count;

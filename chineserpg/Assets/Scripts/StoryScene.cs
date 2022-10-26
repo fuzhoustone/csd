@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Video;
+
 
 public class StoryScene : MonoBehaviour
 {
@@ -21,13 +22,20 @@ public class StoryScene : MonoBehaviour
     public GameObject btnPanel;
     public GameObject contextPanel;
     public Button conNext;
-   // public TableSet dataTable;
+
+    [SerializeField]
+    private Text titleRoleTxt;
+    [SerializeField]
+    private Image roleImage;
+    // public TableSet dataTable;
 
 
     private int storyID,nextStoryID;
     //private Action<int> btnEvent;
     private const string csBgPicPath = "Textures/ScenePic/";
-    //private bool updateflag = true;
+    private const string csTalkSceneName = "talkScene";
+
+    private const int ciShowTalkScene = -1;
 
 
 
@@ -60,42 +68,16 @@ public class StoryScene : MonoBehaviour
         }
 
         btnStoryLst = new List<int>();
-        nextStoryID = 1;
+        nextStoryID = 20;
 
         autoSaveData.instance().initParam(0);
         btnInit();
         showContentText(nextStoryID);
-        /*
-#if videotest
-        sceneImage.gameObject.SetActive(false);
-        showContentText(nextStoryID);
-#endif
-        */
-        // videoCon.startPlay();
-        /*
-         //   \n只会在调试阶段显示
-        Debug.LogWarning("换行test1:"+ContentText.text);
-        ContentText.text = "换行\ntest";
-        Debug.LogWarning("换行test2:"+ContentText.text);
-        */
-    }
 
-    private void Update()
-    {
-       // if (updateflag)
-       // {
-       //     updateflag = false;
-       //     Debug.Log("test update");
-       // }
     }
 
     private void showVideo(int lid) {
-        //storyID = nextStoryID;
-
-        //获得视频名字
-
-        //CSVRow tmpRow = StoryVideoTab._instance().GetRowFromID(nowStoryid);
-        //string fileName = tmpRow.GetString(StoryVideoTab.csFileName);
+        
         string fileName = StoryVideoTab._instance().GetValueFromKey<int, string>(
                                                         StoryVideoTab.csOptionID, lid,
                                                         StoryVideoTab.csFileName, "");
@@ -138,19 +120,12 @@ public class StoryScene : MonoBehaviour
     private void btnClick(int lStoryID,int lVideoID) {
         autoSaveData.instance().saveKeyData(lStoryID);
         autoSaveData.instance().saveData(lStoryID);
-#if videotest
-        contextPanel.SetActive(false);
-        btnPanel.SetActive(false);
-        showVideo(lVideoID);
-        nextStoryID = lStoryID;
-#else
+
         showContentText(lStoryID);
-#endif
+
     }
 
     public void btnInit() {
-        //string tmpTag = this.tag;
-        //int talkID = int.Parse(tmpTag);
 
         if (btn1)
             btn1.gameObject.SetActive(false);
@@ -194,49 +169,64 @@ public class StoryScene : MonoBehaviour
 
     }
 
+ 
     
     //显示剧情内容
     public void showContentText(int nowStoryid) {
-//#if videotest
-        contextPanel.SetActive(true);
-//#endif
-        storyID = nextStoryID;
-        
-
-        CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(nowStoryid);
-        string msg = tmpRow.GetString(StoryRelationTab.csContentCN);
-        //ContentText.text = stringReplace(msg);
-        contentTextPut.setContext(msg);
-
-        //contentText.
-
-        //是否自动保存
-        int isAutoSave = tmpRow.GetInt(StoryRelationTab.csIsAutoSave);
-        if (isAutoSave == 1) {
-            autoSaveData.instance().saveData(storyID);
-        }
-
-        nextStoryID = tmpRow.GetInt(StoryRelationTab.csNextID);
-        if (nextStoryID == 0) { //出现选项的剧情
-            showTalkSel(nowStoryid);
-        }
-
-        int tmpIsRoleSay = tmpRow.GetInt(StoryRelationTab.csIsRoleSay);
-        if (tmpIsRoleSay == 1) //角色说的话
+        if(nowStoryid == ciShowTalkScene)
         {
-            //判断角色是否发生改变
+            SceneManager.LoadSceneAsync(csTalkSceneName);
+            toolBarManager.instance.topBar.showMission(true);
         }
-        else { //背景傍白
-            //角色头像是否要隐蔽
-        }
-
-        int tmpIsChangeBgScene = tmpRow.GetInt(StoryRelationTab.csNeedChangeBg);
-        if(tmpIsChangeBgScene == 1) //场景需要切换
+        else
         {
-            showBgScene(nowStoryid); 
+            toolBarManager.instance.topBar.showMission(false);
+            contextPanel.SetActive(true);
+
+            storyID = nextStoryID;
+
+
+            CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(nowStoryid);
+            string msg = tmpRow.GetString(StoryRelationTab.csContentCN);
+            contentTextPut.setContext(msg);
+
+            //是否自动保存
+            int isAutoSave = tmpRow.GetInt(StoryRelationTab.csIsAutoSave);
+            if (isAutoSave == 1)
+            {
+                autoSaveData.instance().saveData(storyID);
+            }
+
+            nextStoryID = tmpRow.GetInt(StoryRelationTab.csNextID);
+            if (nextStoryID == 0)
+            { //出现选项的剧情
+                showTalkSel(nowStoryid);
+            }
+
+            int tmpRoleID = tmpRow.GetInt(StoryRelationTab.csIsRoleSay);
+            if (tmpRoleID > 0) //角色说的话
+            {
+                //判断角色是否发生改变
+                titleRoleTxt.gameObject.SetActive(true);
+                roleImage.gameObject.SetActive(true);
+                CSVRow tmpRoleRow = roleNameTab._instance().GetRowFromID(tmpRoleID);
+                titleRoleTxt.text = tmpRoleRow.GetString(roleNameTab.csRoleName);
+
+
+            }
+            else
+            { //背景傍白
+              //角色头像是否要隐蔽
+                titleRoleTxt.gameObject.SetActive(false);
+                roleImage.gameObject.SetActive(false);
+            }
+
+            int tmpIsChangeBgScene = tmpRow.GetInt(StoryRelationTab.csNeedChangeBg);
+            if (tmpIsChangeBgScene == 1) //场景需要切换
+            {
+                showBgScene(nowStoryid);
+            }
         }
-
-
     }
     
     //UI上的next按扭触发剧情
@@ -266,9 +256,6 @@ public class StoryScene : MonoBehaviour
            
 
         }
-#if videotest
-        conNext.gameObject.SetActive(false);
-#endif
         btnPanel.SetActive(true);
     }
 

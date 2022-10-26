@@ -33,12 +33,15 @@ public class roleNameBtnUI : MonoBehaviour
     private Texture2D pUnSelBg;
 
     public int pId;
+    public string roleName;
+
     private Action<int> pEvent;
 
-    public void initData(int lId)
+    public void initData(int lId, string lroleName)
     {
         pId = lId;
-        pText.text = "角色" + lId.ToString();
+        roleName = lroleName;
+        pText.text = roleName;
         setSelActive(false);
     }
 

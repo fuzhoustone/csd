@@ -46,23 +46,28 @@ public class roleInfoDlgUI : MonoBehaviour
     {
         nameLst = new List<roleNameBtnUI>();
 
-        int nCount = 5;
+        int nCount = roleNameTab._instance().GetTableLength();
+       
+        //int nCount = 5;
         for (int i = 1; i <= nCount; i++)
         {
             //int orderUIID = i - 1;
             //创建UI
+            CSVRow tmpRow = roleNameTab._instance().GetRowFromIndex(i - 1);
+            int tmpID = tmpRow.GetInt(roleNameTab.csID);
+            string tmpRoleName = tmpRow.GetString(roleNameTab.csRoleName);
 
             UnityEngine.Object infoObj = Resources.Load(csPreClueBtn);
             GameObject tmpObj = GameObject.Instantiate(infoObj, nameViewPostLst) as GameObject;
-
             roleNameBtnUI tmpUIData = tmpObj.GetComponent<roleNameBtnUI>();
-            tmpUIData.initData(i - 1);
-            nameLst.Add(tmpUIData);
+            tmpUIData.initData(tmpID, tmpRoleName);
 
+            nameLst.Add(tmpUIData);
+            int tmpIndex = i - 1;
             Button tmpBtn = tmpObj.GetComponent<Button>();
             tmpBtn.onClick.AddListener(delegate ()
             {
-                this.roleNameOnClick(tmpUIData.pId);
+                this.roleNameOnClick(tmpIndex);
             });
         }
         oldClueIndex = 0;
@@ -99,9 +104,15 @@ public class roleInfoDlgUI : MonoBehaviour
 
     private void roleInfoData(int tmpID)
     {
+        roleNameBtnUI tmpNameBtnUI = nameLst[tmpID];
         //roleHeadPic
-        roleNameText.text = "角色" + tmpID.ToString();
-        roleHeadText.text = "角色" + tmpID.ToString() + "testest";
+        roleNameText.text = tmpNameBtnUI.roleName;
+
+        
+        CSVRow tmpRow = roleNameTab._instance().GetRowFromID(tmpNameBtnUI.pId);
+
+        string titleName = tmpRow.GetString(roleNameTab.csTitle);
+        roleHeadText.text = titleName;
 
         clearInfoMsg();
 

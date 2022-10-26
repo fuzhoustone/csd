@@ -76,4 +76,11 @@ public class TalkScene : MonoBehaviour
         tmpBtnUI.setSelActive(isSel);
 
     }
+
+    public void optionBtnChange(Toggle t) {
+        if(t.isOn)
+            Debug.Log("optionBtnChange true:"+t.name);
+
+    }
+
 }

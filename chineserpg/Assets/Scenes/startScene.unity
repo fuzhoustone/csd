@@ -1015,6 +1015,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: selRoleDialog
       objectReference: {fileID: 0}
+    - target: {fileID: 7458150096991961119, guid: 97d1b7065159fbc47bcbc4ddae51816f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97d1b7065159fbc47bcbc4ddae51816f, type: 3}
 --- !u!224 &1486644794 stripped
