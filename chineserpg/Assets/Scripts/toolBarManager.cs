@@ -32,7 +32,7 @@ public class toolBarManager
         UnityEngine.Object tmpObj = Resources.Load(csTopBarPre);
         GameObject topbarObj = GameObject.Instantiate(tmpObj) as GameObject;
         topBar = topbarObj.GetComponent<topToolBarUI>();
-
+        topBar.setChartName(1);
         MonoBehaviour.DontDestroyOnLoad(topbarObj);
    //     MonoBehaviour.DontDestroyOnLoad(toolBarManagerObj);
     }

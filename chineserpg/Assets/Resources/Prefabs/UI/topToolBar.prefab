@@ -413,11 +413,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: dd884e9ab0979d24290cfdc62cb9076a, type: 3}
-    m_FontSize: 35
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -502,7 +502,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u914D\u5408\u8C03\u67E5\u7687\u4E0A\u4E00\u76F4\u6CA1\u6709\u513F\u5B50\u7684\u539F\u56E0\uFF0C\u6487\u6E05\u81EA\u5DF1\u7684\u5ACC\u7591"
+  m_Text: "testtes\u914D\u5408\u8C03\u67E5\u7687\u4E0A\u4E00\u76F4\u6CA1\u6709\u513F\u5B50\u7684\u539F\u56E0\uFF0C\u6487\u6E05\u81EA\u5DF1\u7684\u5ACC\u7591"
 --- !u!1 &5225917106946379168
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoDlg: {fileID: 3858871121628486850}
+  chartTxt: {fileID: 4647494444092540342}
   missionPal: {fileID: 133244927221054997}
   missionTitle: {fileID: 3063826676532668007}
   missionContext: {fileID: 1994986673656552058}

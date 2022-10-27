@@ -56,3 +56,4 @@ MonoBehaviour:
   eventList: {fileID: 4900000, guid: e81c2107e68944344ab51b0696762cb5, type: 3}
   eventSystemType: {fileID: 4900000, guid: 5493d044eb63aa24a9bc7a7689fdc1d2, type: 3}
   clueLst: {fileID: 4900000, guid: 0cf1d97ceb7d8e447a81ec51d93921f2, type: 3}
+  missionLst: {fileID: 4900000, guid: 650c00d238f8fdc42baf7e58ce5cebb0, type: 3}
