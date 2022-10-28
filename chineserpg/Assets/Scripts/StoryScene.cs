@@ -44,7 +44,7 @@ public class StoryScene : MonoBehaviour
        // Debug.Log("test start");
         //dataTable.initData();
         TableSet.instance.initData();
-        toolBarManager.instance.getTopBar();
+        toolBarManager.instance.showTopBar();
 
         Debug.LogWarning("storyscene start");
         if (btnLst != null) {

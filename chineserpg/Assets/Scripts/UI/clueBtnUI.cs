@@ -32,9 +32,9 @@ public class clueBtnUI : MonoBehaviour
     private Action<int> pEvent;
     public int pId;
 
-    public void initData(int lId) {
+    public void initData(int lId,string lKeyName) {
         pId = lId;
-        pText.text = "线索"+lId.ToString();
+        pText.text = lKeyName;
         setSelActive(false);
     }
 

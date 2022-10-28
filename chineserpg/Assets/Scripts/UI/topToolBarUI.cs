@@ -73,4 +73,9 @@ public class topToolBarUI : MonoBehaviour
             infoDlgUI.showUI();
         */
     }
+
+
+    public void showSelRoleDlg() {
+        toolBarManager.instance.showSelRoleDlg(null,2);
+    }
 }

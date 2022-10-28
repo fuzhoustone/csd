@@ -93,7 +93,8 @@ public class StartScene : MonoBehaviour
                     helpObj.SetActive(false);
                 }
         */
-        selRoleDialog.showDialog(changeGameScene);
+        toolBarManager.instance.showSelRoleDlg(changeGameScene);
+      //  selRoleDialog.showDialog();
 
           //切换场景
         //changeGameScene();

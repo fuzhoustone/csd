@@ -35,24 +35,29 @@ public class TalkScene : MonoBehaviour
     public void initData()
     {
         clueLst = new List<clueBtnUI>();
-
-        int nCount = 5;
+        
+        int nCount = talkInfoLstTab._instance().GetTableLength();
         for (int i = 1; i <= nCount; i++)
         {
+            CSVRow tmpRow = talkInfoLstTab._instance().GetRowFromIndex(i-1);
+            int tmpID = tmpRow.GetInt(talkInfoLstTab.csID);
+            string tmpKeyStr = tmpRow.GetString(talkInfoLstTab.csContentCn);
+
             //int orderUIID = i - 1;
             //创建UI
-                                                         
+            int indexClick = i - 1;
             UnityEngine.Object infoObj = Resources.Load(csPreClueBtn);
             GameObject tmpObj = GameObject.Instantiate(infoObj, clueViewPostLst) as GameObject;
 
             clueBtnUI tmpClue = tmpObj.GetComponent<clueBtnUI>();
-            tmpClue.initData(i-1);
+
+            tmpClue.initData(tmpID, tmpKeyStr);
             clueLst.Add(tmpClue);
 
             Button tmpBtn = tmpObj.GetComponent<Button>();
             tmpBtn.onClick.AddListener(delegate ()
             {
-                this.clueOnClick(tmpClue.pId);
+                this.clueOnClick(indexClick);
             });
         }
         oldClueIndex = 0;

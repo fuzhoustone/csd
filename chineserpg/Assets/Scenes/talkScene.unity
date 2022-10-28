@@ -2063,10 +2063,10 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 187, y: 61}
+  m_CellSize: {x: 287, y: 61}
   m_Spacing: {x: 20, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 2
+  m_ConstraintCount: 1
 --- !u!114 &2126341796
 MonoBehaviour:
   m_ObjectHideFlags: 0

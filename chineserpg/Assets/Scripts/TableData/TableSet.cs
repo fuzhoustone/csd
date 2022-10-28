@@ -38,6 +38,7 @@ public class TableSet : MonoBehaviour
     public TextAsset eventSystemType;
     public TextAsset clueLst;
     public TextAsset missionLst;
+    public TextAsset talkInfoLst;
 
     //private GameObject tableSetObj;
 
@@ -117,6 +118,10 @@ public class TableSet : MonoBehaviour
         using (var stream = new MemoryStream(missionLst.bytes))
         {
             missionLstTab._instance().Load(stream);
+        }
+        using (var stream = new MemoryStream(talkInfoLst.bytes))
+        {
+            talkInfoLstTab._instance().Load(stream);
         }
         
 

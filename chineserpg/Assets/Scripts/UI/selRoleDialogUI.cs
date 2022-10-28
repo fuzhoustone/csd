@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class selRoleDialogUI : MonoBehaviour
 {
     private UnityAction<int> callEvent;
-    private int roleId;
-    
+    private int selRoleId;
+    private int selfRoleId = -2;
     private int oldIndex = 0;
 
     [SerializeField]
@@ -32,6 +32,7 @@ public class selRoleDialogUI : MonoBehaviour
     private List<roleBodyUI> roleLst;
 
     public void initData(int pSelfRoleID) {
+        selfRoleId = pSelfRoleID;
         if (pSelfRoleID >= 0) //选择其它人聊天
         {
             roleLst = roleTalkLst;
@@ -57,10 +58,11 @@ public class selRoleDialogUI : MonoBehaviour
             CSVRow tmpRow = roleNameTab._instance().GetRowFromIndex(roleRowIndex -1 );
             int tmpID = tmpRow.GetInt(roleNameTab.csID);
             roleRowIndex++;
-            if (pSelfRoleID == tmpID)
+            if (pSelfRoleID == tmpID) //只需要跳一个
             {
                 tmpRow = roleNameTab._instance().GetRowFromIndex(roleRowIndex - 1);
                 tmpID = tmpRow.GetInt(roleNameTab.csID);
+                roleRowIndex++;
             }
 
             string tmpRoleName = tmpRow.GetString(roleNameTab.csRoleName);
@@ -88,7 +90,7 @@ public class selRoleDialogUI : MonoBehaviour
             setRoleSel(tmpID, true);
             oldIndex = tmpID;
 
-            roleId = roleLst[tmpID].pID; 
+            selRoleId = roleLst[tmpID].pID; 
           //  roleInfoData(tmpID);
         }
     }
@@ -99,9 +101,16 @@ public class selRoleDialogUI : MonoBehaviour
         tmpBtnUI.setSelActive(isSel);
     }
 
-    public void showDialog(UnityAction<int> pEvent, int lSelfID = -1) {
-        callEvent = pEvent;
-        initData(lSelfID);
+    public void showDialog(UnityAction<int> pEvent, int lSelfID) {
+        if ( selfRoleId  != lSelfID) { 
+            callEvent = pEvent;
+            initData(lSelfID);
+        }
+
+        this.gameObject.SetActive(true);
+    }
+
+    public void showUI() {
         this.gameObject.SetActive(true);
     }
 
@@ -113,7 +122,7 @@ public class selRoleDialogUI : MonoBehaviour
         this.gameObject.SetActive(false);
 
         if (callEvent != null)
-            callEvent(roleId);
+            callEvent(selRoleId);
         
     }
 
