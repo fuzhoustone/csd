@@ -17,14 +17,14 @@ public class clueLstTab : CsdTTable
     }
 
     public const string csRoleID = "roleID"; // { get {return "nextID";} }
-    public const string csChartID = "chartID";
+    public const string csChaptID = "chaptID";
     public const string csContentCn = "contentCn";
     public const string csContentEn = "contentEn";
     public void initParam()
     {
         addKeyName(csID);
         addKeyName(csRoleID);
-        addKeyName(csChartID);
+        addKeyName(csChaptID);
         addKeyName(csContentCn);
         addKeyName(csContentEn);
 

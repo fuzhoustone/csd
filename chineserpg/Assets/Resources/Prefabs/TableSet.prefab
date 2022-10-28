@@ -58,3 +58,4 @@ MonoBehaviour:
   clueLst: {fileID: 4900000, guid: 0cf1d97ceb7d8e447a81ec51d93921f2, type: 3}
   missionLst: {fileID: 4900000, guid: 650c00d238f8fdc42baf7e58ce5cebb0, type: 3}
   talkInfoLst: {fileID: 4900000, guid: 3eabe1d772cf39247ae1b6ab794bfe2a, type: 3}
+  roleStoryStartRel: {fileID: 4900000, guid: 23da04badcb602245b568c42ade46118, type: 3}

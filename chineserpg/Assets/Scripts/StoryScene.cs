@@ -68,7 +68,9 @@ public class StoryScene : MonoBehaviour
         }
 
         btnStoryLst = new List<int>();
-        nextStoryID = 20;
+        
+        nextStoryID = roleStoryStartRelTab._instance().getStartStoryID(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
+        //nextStoryID = 20;
 
         autoSaveData.instance().initParam(0);
         btnInit();

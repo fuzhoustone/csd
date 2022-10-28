@@ -48,7 +48,6 @@ public class roleInfoDlgUI : MonoBehaviour
 
         int nCount = roleNameTab._instance().GetTableLength();
        
-        //int nCount = 5;
         for (int i = 1; i <= nCount; i++)
         {
             //int orderUIID = i - 1;
@@ -120,14 +119,15 @@ public class roleInfoDlgUI : MonoBehaviour
         // int nCount = tmpID;
         
         int nowRoleID = tmpNameBtnUI.pId;
-        int nowChartID = 1;
+        int nowChaptID = gameDataManager.instance.chaptID;
+        nowChaptID = 4;
         for (int i = 1; i <= nCount; i++)
         {
 
             CSVRow tmpClueRow = clueLstTab._instance().GetRowFromIndex(i - 1);
             int tmpRoleID = tmpClueRow.GetInt(clueLstTab.csRoleID);
-            int tmpChartID = tmpClueRow.GetInt(clueLstTab.csChartID);
-            if((tmpRoleID == nowRoleID) && (nowChartID >= tmpChartID))
+            int tmpChaptID = tmpClueRow.GetInt(clueLstTab.csChaptID);
+            if((tmpRoleID == nowRoleID) && (nowChaptID >= tmpChaptID))
             { 
                 UnityEngine.Object infoObj = Resources.Load(csPreInfoMsg);
                 GameObject tmpObj = GameObject.Instantiate(infoObj, infoViewLst) as GameObject;

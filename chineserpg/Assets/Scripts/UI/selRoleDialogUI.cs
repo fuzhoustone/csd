@@ -55,12 +55,13 @@ public class selRoleDialogUI : MonoBehaviour
             int index = i - 1;
             roleBodyUI tmpUIData = roleLst[index];
 
-            CSVRow tmpRow = roleNameTab._instance().GetRowFromIndex(roleRowIndex -1 );
+            //第一个角色是不能选的，所以roleRowIndex不-1
+            CSVRow tmpRow = roleNameTab._instance().GetRowFromIndex(roleRowIndex);
             int tmpID = tmpRow.GetInt(roleNameTab.csID);
             roleRowIndex++;
             if (pSelfRoleID == tmpID) //只需要跳一个
             {
-                tmpRow = roleNameTab._instance().GetRowFromIndex(roleRowIndex - 1);
+                tmpRow = roleNameTab._instance().GetRowFromIndex(roleRowIndex);
                 tmpID = tmpRow.GetInt(roleNameTab.csID);
                 roleRowIndex++;
             }
@@ -79,6 +80,7 @@ public class selRoleDialogUI : MonoBehaviour
         }
         oldIndex = 0;
         setRoleSel(oldIndex, true);
+        selRoleId = roleLst[oldIndex].pID;
 
     }
 

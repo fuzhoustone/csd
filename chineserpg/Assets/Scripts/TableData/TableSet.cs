@@ -39,6 +39,7 @@ public class TableSet : MonoBehaviour
     public TextAsset clueLst;
     public TextAsset missionLst;
     public TextAsset talkInfoLst;
+    public TextAsset roleStoryStartRel;
 
     //private GameObject tableSetObj;
 
@@ -122,6 +123,11 @@ public class TableSet : MonoBehaviour
         using (var stream = new MemoryStream(talkInfoLst.bytes))
         {
             talkInfoLstTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(roleStoryStartRel.bytes))
+        {
+            roleStoryStartRelTab._instance().Load(stream);
         }
         
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class topToolBarUI : MonoBehaviour
@@ -42,12 +43,13 @@ public class topToolBarUI : MonoBehaviour
 
     }
 
+    //显示当前任务
     public void showMission(bool isShow) {
         if (missionPal.activeSelf != isShow)
         {
             missionPal.SetActive(isShow);
             if (isShow) {
-                CSVRow tmpRow = missionLstTab._instance().getMission(2,lChartID);
+                CSVRow tmpRow = missionLstTab._instance().getMission(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
                 string tmpMission = tmpRow.GetString(missionLstTab.csContentCn);
                 missionContext.text = tmpMission;
 
@@ -55,6 +57,7 @@ public class topToolBarUI : MonoBehaviour
         }
     }
 
+    //显示角色信息
     public void showRoleInfo()
     {
         if (infoDlg.activeSelf == false) {
@@ -75,7 +78,14 @@ public class topToolBarUI : MonoBehaviour
     }
 
 
+    //私聊界面
     public void showSelRoleDlg() {
-        toolBarManager.instance.showSelRoleDlg(null,2);
+        toolBarManager.instance.showSelRoleDlg(null, gameDataManager.instance.roleID);
     }
+
+    public void changeToStartScene() {
+        this.gameObject.SetActive(false);
+        SceneManager.LoadSceneAsync(sceneName.csStartScene);
+    }
+
 }

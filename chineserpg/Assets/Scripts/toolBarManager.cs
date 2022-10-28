@@ -45,6 +45,8 @@ public class toolBarManager
             selRoleDlg = null;
             MonoBehaviour.DontDestroyOnLoad(topbarObj);
         }
+        else
+            topBar.gameObject.SetActive(true);
     }
 
     /*

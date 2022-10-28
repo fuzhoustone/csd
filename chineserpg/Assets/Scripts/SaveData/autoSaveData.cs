@@ -9,11 +9,11 @@ using UnityEngine;
 public class keyData
 {
     [SerializeField]
-    public List<string> storyKeyLst;
+    public List<int> storyClueLst; //获得哪些线索
 
-    public keyData(List<string> lst)
+    public keyData(List<int> lst)
     {
-        this.storyKeyLst = lst;
+        this.storyClueLst = lst;
     }
 }
 
@@ -70,7 +70,7 @@ public class autoSaveData //对指定档案的当前进度存档与读档
 
     //加入关键剧情线
     public void saveKeyData(int lstoryID) {
-        storyKeyHistory.storyKeyLst.Add(lstoryID.ToString());
+        storyKeyHistory.storyClueLst.Add(lstoryID);
 
         //string str = JsonUtility.ToJson(new Serialization<string>(storyKeyHistory.storyKeyLst));
         string str = JsonUtility.ToJson(storyKeyHistory);
@@ -106,7 +106,7 @@ public class autoSaveData //对指定档案的当前进度存档与读档
         }
         else
         {
-            storyKeyHistory = new keyData(new List<string>());
+            storyKeyHistory = new keyData(new List<int>());
             //storyKeyHistory.storyKeyLst = ;
             saveKeyData(ciDefautStoryID);
         }

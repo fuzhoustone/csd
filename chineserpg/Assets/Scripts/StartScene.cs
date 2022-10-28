@@ -20,13 +20,16 @@ public class StartScene : MonoBehaviour
     [SerializeField]
     private DialogBox m_DialogBox;
 
-    [SerializeField]
-    private selRoleDialogUI selRoleDialog;
+  //  [SerializeField]
+  //  private selRoleDialogUI selRoleDialog;
 
     private UnityAction btnEvent1, btnEvent2, btnEvent3; //分别对应，1个，2个，3个按扭
     private bool hasRecord;
     private const string title = "请确认";
     private const string text = "新游戏将清空现有游戏记录，是否清空并开始新游戏";
+
+  //  private const string csStoryScene = "storyScene";
+
 /*
     [SerializeField]
     private Text startTxt;
@@ -79,8 +82,11 @@ public class StartScene : MonoBehaviour
     }
 
     //切换到游戏场景
-    private void changeGameScene(int roleID) {
-        SceneManager.LoadSceneAsync("storyScene");
+    private void changeGameScene(int roleID) { //新游戏的选角
+        gameDataManager.instance.roleID = roleID;
+        gameDataManager.instance.chaptID = 1;
+
+        SceneManager.LoadSceneAsync(sceneName.csStoryScene);
     }
 
     /// <summary>

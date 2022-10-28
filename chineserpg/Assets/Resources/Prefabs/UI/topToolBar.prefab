@@ -1076,7 +1076,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2719052040707198260}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3930316041292338933}
+        m_MethodName: changeToStartScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &5912625051998199005
 PrefabInstance:
   m_ObjectHideFlags: 0
