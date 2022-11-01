@@ -62,7 +62,26 @@ public class TalkScene : MonoBehaviour
         }
         oldClueIndex = 0;
         setClueSel(oldClueIndex,true);
-        
+
+        getClue();
+    }
+
+    public void getClue() {
+        for (int i = 0; i < clueLstTab._instance().GetTableLength(); i++) {
+            CSVRow tmpClueRow = clueLstTab._instance().GetRowFromIndex(i);
+            int tmpRoleID = tmpClueRow.GetInt(clueLstTab.csRoleID);
+            int tmpChaptID = tmpClueRow.GetInt(clueLstTab.csChaptID);
+            int tmpClueID = tmpClueRow.GetInt(clueLstTab.csID);
+            if ((tmpRoleID == gameDataManager.instance.roleID)
+                && (tmpChaptID == gameDataManager.instance.chaptID)) {
+                clueLstGetTab._instance().AddRow(tmpClueID);    
+            }
+        }
+
+        string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
+
+        clueLstGetTab._instance().WriteFile(filePath);
+
     }
 
     public void clueOnClick(int tmpID)

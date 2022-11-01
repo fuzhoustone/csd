@@ -462,7 +462,6 @@ MonoBehaviour:
   uiCammeraTransform: {fileID: 1895748201}
   continueBtn: {fileID: 1830646365}
   m_DialogBox: {fileID: 1410442684}
-  selRoleDialog: {fileID: 0}
 --- !u!114 &995691226
 MonoBehaviour:
   m_ObjectHideFlags: 0

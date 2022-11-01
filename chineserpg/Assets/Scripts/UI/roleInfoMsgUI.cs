@@ -8,8 +8,46 @@ public class roleInfoMsgUI : MonoBehaviour
     [SerializeField]
     private Text infoText;
 
-    public void setData(string msgInfo) {
+    [SerializeField]
+    private GameObject isPubObj;
+
+    [SerializeField]
+    private GameObject isLookObj;
+
+    private bool isLook, isPub;
+    private int clueGetID;
+    public void setData(int lID,string msgInfo,bool lIsLook,bool lIsPub) {
         infoText.text = msgInfo;
+        isLook = lIsLook;
+        isPub = lIsPub;
+        clueGetID = lID;
+        if (isPub)
+            isPubObj.SetActive(false);
+        else
+            isPubObj.SetActive(true);
+
+        //if (isLook)
+            isLookObj.SetActive(isLook);
+        //else
+        //    isLookObj.SetActive(false);
+
+
     }
-    
+
+    public void OnClick() {
+        
+        if (isLook == false)
+        {
+            isLook = true;
+            isLookObj.SetActive(isLook);
+
+            CSVRow tmpRow = clueLstGetTab._instance().GetRowFromID(clueGetID);
+            tmpRow.SetBool(clueLstGetTab.csLook, isLook);
+
+            string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
+
+            clueLstGetTab._instance().WriteFile(filePath);
+        }
+    }
+
 }

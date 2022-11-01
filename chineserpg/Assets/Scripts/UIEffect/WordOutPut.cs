@@ -20,7 +20,7 @@ public class WordOutPut : MonoBehaviour
 
     private void Start()
     {
-        Debug.LogWarning("WordOutPut start");
+      //  Debug.LogWarning("WordOutPut start");
     }
 
     public void setTextEffectSpeed(float lCharsPerSecond)
@@ -56,7 +56,7 @@ public class WordOutPut : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("wordoutput:OnDisable");
+      //  Debug.Log("wordoutput:OnDisable");
         OnFinish();//当脚本在失活的时候，将数据进行重置
     }
     // Update is called once per frame

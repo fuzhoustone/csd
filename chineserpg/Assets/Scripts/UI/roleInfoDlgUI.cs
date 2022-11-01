@@ -115,26 +115,39 @@ public class roleInfoDlgUI : MonoBehaviour
 
         clearInfoMsg();
 
-        int nCount = clueLstTab._instance().GetTableLength();
+        
         // int nCount = tmpID;
         
         int nowRoleID = tmpNameBtnUI.pId;
         int nowChaptID = gameDataManager.instance.chaptID;
-        nowChaptID = 4;
-        for (int i = 1; i <= nCount; i++)
+        
+
+        int nCount = clueLstTab._instance().GetTableLength();
+        //nowChaptID = 1;
+        for (int i = 1; i <= nCount; i++) 
         {
 
             CSVRow tmpClueRow = clueLstTab._instance().GetRowFromIndex(i - 1);
             int tmpRoleID = tmpClueRow.GetInt(clueLstTab.csRoleID);
             int tmpChaptID = tmpClueRow.GetInt(clueLstTab.csChaptID);
-            if((tmpRoleID == nowRoleID) && (nowChaptID >= tmpChaptID))
-            { 
-                UnityEngine.Object infoObj = Resources.Load(csPreInfoMsg);
-                GameObject tmpObj = GameObject.Instantiate(infoObj, infoViewLst) as GameObject;
-                roleInfoMsgUI tmpUIData = tmpObj.GetComponent<roleInfoMsgUI>();
-                string testMsg = tmpClueRow.GetString(clueLstTab.csContentCn);
-                tmpUIData.setData(testMsg);
+            int tmpClueID = tmpClueRow.GetInt(clueLstTab.csID);
+            if ((tmpRoleID == nowRoleID) && (nowChaptID >= tmpChaptID))
+            {
+                //检查线索是否已公开    （自身的线索，在对应章节 线索获得表 需自动加入）
+                CSVRow tmpGetRow = clueLstGetTab._instance().GetRowFromKeyVal(clueLstGetTab.csClueID, tmpClueID.ToString());
+                if (tmpGetRow != null) {
+                    bool isPub = tmpGetRow.GetBool(clueLstGetTab.csIsPub);
+                    bool isLook = tmpGetRow.GetBool(clueLstGetTab.csLook);
+                    int  clueGetID = tmpGetRow.GetInt(clueLstGetTab.csID);
+
+                    UnityEngine.Object infoObj = Resources.Load(csPreInfoMsg);
+                    GameObject tmpObj = GameObject.Instantiate(infoObj, infoViewLst) as GameObject;
+                    roleInfoMsgUI tmpUIData = tmpObj.GetComponent<roleInfoMsgUI>();
+                    string testMsg = tmpClueRow.GetString(clueLstTab.csContentCn);
+                    tmpUIData.setData(clueGetID, testMsg, isLook, isPub);
+                }
             }
+
         }
 
     }

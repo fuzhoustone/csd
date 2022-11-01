@@ -33,7 +33,7 @@ public class StoryScene : MonoBehaviour
     private int storyID,nextStoryID;
     //private Action<int> btnEvent;
     private const string csBgPicPath = "Textures/ScenePic/";
-    private const string csTalkSceneName = "talkScene";
+    //private const string csTalkSceneName = "talkScene";
 
     private const int ciShowTalkScene = -1;
 
@@ -46,7 +46,7 @@ public class StoryScene : MonoBehaviour
         TableSet.instance.initData();
         toolBarManager.instance.showTopBar();
 
-        Debug.LogWarning("storyscene start");
+       // Debug.LogWarning("storyscene start");
         if (btnLst != null) {
             btnLst.Clear();
         }
@@ -177,7 +177,7 @@ public class StoryScene : MonoBehaviour
     public void showContentText(int nowStoryid) {
         if(nowStoryid == ciShowTalkScene)
         {
-            SceneManager.LoadSceneAsync(csTalkSceneName);
+           // SceneManager.LoadSceneAsync(csTalkSceneName);
             toolBarManager.instance.topBar.showMission(true);
         }
         else

@@ -80,7 +80,12 @@ public class topToolBarUI : MonoBehaviour
 
     //私聊界面
     public void showSelRoleDlg() {
-        toolBarManager.instance.showSelRoleDlg(null, gameDataManager.instance.roleID);
+        toolBarManager.instance.showSelRoleDlg(chageToTalkScene, gameDataManager.instance.roleID);
+    }
+
+    public void chageToTalkScene(int lroleID) {
+       // gameDataManager.instance.
+        SceneManager.LoadSceneAsync(sceneName.csTalkScene);
     }
 
     public void changeToStartScene() {

@@ -59,8 +59,10 @@ public static class CSVLoader
 
 public class CSVData : IEnumerable<CSVRow>
 {
-    private readonly CSVColumnNameIndexer m_columnNameIndexer;
-    private readonly List<CSVRow> m_datas = new List<CSVRow>();
+    public readonly CSVColumnNameIndexer m_columnNameIndexer;
+    private List<CSVRow> m_datas = new List<CSVRow>();
+
+
 
     internal CSVData(string columnNames, char seperator)
     {
@@ -90,6 +92,10 @@ public class CSVData : IEnumerable<CSVRow>
     public int RowCount
     {
         get { return m_datas.Count; }
+    }
+
+    public void Add(CSVRow tmpRow) {
+        m_datas.Add(tmpRow);
     }
 
     public void Add(string row, char seperator, Encoding encoding)
@@ -150,7 +156,7 @@ public class CSVColumnNameIndexer
     }
 
 
-    internal int GetColumnIndex(string columnName)
+    public int GetColumnIndex(string columnName)
     {
         if (m_columnDic.ContainsKey(columnName) == false) throw new Exception("Cannot find column : " + columnName);
         return m_columnDic[columnName];
@@ -169,6 +175,17 @@ public class CSVRow
     public CSVColumnNameIndexer GetCSVColumnNameIndexer() {
         return m_columnNameIndexer;
     }
+
+    //add by csd copy by CSVRow
+    public CSVRow(string[] values, CSVColumnNameIndexer columnNameIndexer) {
+        m_columnNameIndexer = columnNameIndexer;
+        m_rowDatas = new string[columnNameIndexer.ColumnCount];
+        for (int i = 0; i < columnNameIndexer.ColumnCount; i++) {
+            m_rowDatas[i] = values[i];
+        }
+
+    }
+//end
 
     public CSVRow(string row, CSVColumnNameIndexer columnNameIndexer, char seperator, Encoding encoding)
     {
@@ -308,6 +325,15 @@ public class CSVRow
         return m_rowDatas[columnIndex];
     }
 
+    //add by csd begin
+    public void SetString(string columnName, string columnVal)
+    {
+        int columnIndex = m_columnNameIndexer.GetColumnIndex(columnName);
+        m_rowDatas[columnIndex] = columnVal;
+    }
+
+    //add end
+
     public uint GetUInt(string columnName)
     {
         string rowData = GetString(columnName);
@@ -320,6 +346,14 @@ public class CSVRow
         if (string.IsNullOrEmpty(rowData)) return false;
         return int.Parse(rowData) != 0;
     }
+
+    //add by csd
+    public void SetBool(string columnName, bool columnVal) {
+        int columnIndex = m_columnNameIndexer.GetColumnIndex(columnName);
+
+        m_rowDatas[columnIndex] = (columnVal ? "1" : "0");
+    }
+    //add end
 
     public ulong GetULong(string columnName)
     {

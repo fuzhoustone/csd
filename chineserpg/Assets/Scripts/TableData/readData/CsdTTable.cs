@@ -6,6 +6,7 @@ using UnityEngine;
 public class CsdTTable  
 {
     protected List<CSVRow> m_elements = new List<CSVRow>();
+    protected CSVData data;
     public const string csID = "ID";
     public List<string> m_colomuns = new List<string>(); //用于检查字段名是存在，非必须
     private int maxID = 0;
@@ -42,7 +43,7 @@ public class CsdTTable
     public void Load(Stream stream)
     {
         if (stream == null) return;
-        CSVData data = CSVLoader.Load(stream);
+        data = CSVLoader.Load(stream);
         bool isPass = data.isAllColumnNameExists(m_colomuns); //检查所有列名是否都存在
 
         for (int i = 0; i < data.RowCount; ++i)
@@ -86,6 +87,24 @@ public class CsdTTable
         return null;
     }
 
+    public CSVRow GetRowFromKeyVal(string keyName, string checkVal)
+    {
+        CSVRow resRow = null;
+        for (int i = 0; i <m_elements.Count; i++)
+        {
+            
+            CSVRow tmpRow = m_elements[i];
+            string keyVal = tmpRow.GetString(keyName);
+            if(keyVal.Equals(checkVal))
+            {
+                resRow = tmpRow;
+                break;
+            }
+                
+        }
+        return resRow;
+    }
+
     //根据id值，返回特定字段的值,需给返回默认值
     public T GetValueFromID<T>(int id, string valName, T defVal) {
         CSVRow tmpRoleID = GetRowFromID(id);
@@ -115,5 +134,19 @@ public class CsdTTable
         }
         return res;
     }
+
+    public void AddCSVRow(string[] lValues) {
+        CSVRow tmpRow = new CSVRow(lValues, data.m_columnNameIndexer);
+        data.Add(tmpRow);
+        m_elements.Add(tmpRow);
+    }
+
+    public void WriteFile(string filePath) {
+        using (var writeStream = new FileStream(filePath, FileMode.Create))
+        {
+            CSVWriter.Write(data, writeStream, m_colomuns.ToArray());
+        }
+    }
+
  }
 
