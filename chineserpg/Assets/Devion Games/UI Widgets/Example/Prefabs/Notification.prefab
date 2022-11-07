@@ -68,16 +68,15 @@ MonoBehaviour:
   m_KeyCode: 0
   m_EaseType: 28
   m_Duration: 0.7
-  showSound: {fileID: 0}
-  closeSound: {fileID: 0}
+  m_IgnoreTimeScale: 1
+  m_ShowSound: {fileID: 0}
+  m_CloseSound: {fileID: 0}
   m_Focus: 1
   m_DeactivateOnClose: 1
-  onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  onClose:
-    m_PersistentCalls:
-      m_Calls: []
+  m_ShowAndHideCursor: 0
+  m_CameraPreset: UI
+  m_CloseOnMove: 1
+  m_FocusPlayer: 0
   m_DynamicContainer: 1
   m_SlotParent: {fileID: 4529551416597636527}
   m_SlotPrefab: {fileID: 4529551416678822166}
@@ -197,7 +196,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 213, y: -10}
-  m_SizeDelta: {x: 426, y: 20}
+  m_SizeDelta: {x: 426, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4529551416678822251
 MonoBehaviour:
@@ -237,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Text: {fileID: 4529551417204117152}
+  m_Time: {fileID: 0}
   m_Icon: {fileID: 4529551416762532396}
 --- !u!1 &4529551416762532395
 GameObject:
@@ -489,7 +489,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 225.5, y: -10}
-  m_SizeDelta: {x: 401, y: 20}
+  m_SizeDelta: {x: 401, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4529551417204117155
 CanvasRenderer:
@@ -519,8 +519,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_Font: {fileID: 12800000, guid: dd884e9ab0979d24290cfdc62cb9076a, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1

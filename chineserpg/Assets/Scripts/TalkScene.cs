@@ -13,14 +13,20 @@ public class TalkScene : MonoBehaviour
    // private Texture2D pSelBg, pUnSelBg;
     private int oldClueIndex = 0;
     private List<clueBtnUI> clueLst;
-    public Transform clueViewPostLst;
+
+    [SerializeField]
+    private List<talkOptionUI> optLst;
+
+    [SerializeField]
+    private Transform clueViewPostLst;
     //  private 
 
     // Start is called before the first frame update
     void Start()
     {
-      //  pSelBg = (Texture2D)Resources.Load(csPath + csSelImage) as Texture2D;
-      //  pUnSelBg = (Texture2D)Resources.Load(csPath + csUnSelImage) as Texture2D;
+        //  pSelBg = (Texture2D)Resources.Load(csPath + csSelImage) as Texture2D;
+        //  pUnSelBg = (Texture2D)Resources.Load(csPath + csUnSelImage) as Texture2D;
+        TableSet.instance.initData();
         initData();
     }
 
@@ -62,10 +68,11 @@ public class TalkScene : MonoBehaviour
         }
         oldClueIndex = 0;
         setClueSel(oldClueIndex,true);
-
-        getClue();
+        clueBtnUI tmpBtnUI = clueLst[oldClueIndex];
+        getClueShowToggle(tmpBtnUI.pTalkId);
+        // getClue();
     }
-
+/*
     public void getClue() {
         for (int i = 0; i < clueLstTab._instance().GetTableLength(); i++) {
             CSVRow tmpClueRow = clueLstTab._instance().GetRowFromIndex(i);
@@ -78,12 +85,9 @@ public class TalkScene : MonoBehaviour
             }
         }
 
-        string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
-
-        clueLstGetTab._instance().WriteFile(filePath);
-
+        clueLstGetTab._instance().SaveFile();
     }
-
+*/
     public void clueOnClick(int tmpID)
     {
         Debug.LogWarning("clueOnClick id:"+tmpID.ToString());
@@ -91,6 +95,9 @@ public class TalkScene : MonoBehaviour
             setClueSel(oldClueIndex, false);
             setClueSel(tmpID, true);
             oldClueIndex = tmpID;
+
+            clueBtnUI tmpBtnUI = clueLst[tmpID];
+            getClueShowToggle(tmpBtnUI.pTalkId);
         }
     }
 
@@ -98,13 +105,32 @@ public class TalkScene : MonoBehaviour
     {
         clueBtnUI tmpBtnUI = clueLst[index];
         tmpBtnUI.setSelActive(isSel);
+    }
 
+    private void getClueShowToggle(int ltalkID) {
+        List<talkInfoOptionTab.talkOptionObj> tmpOptionLst = talkInfoOptionTab._instance().getOptionLst(ltalkID);
+        for (int i = 0; i < optLst.Count; i++) {
+            optLst[i].gameObject.SetActive(false);
+        }
+        
+        for (int i = 0; i < tmpOptionLst.Count; i++) {
+            talkInfoOptionTab.talkOptionObj tmpOptObj = tmpOptionLst[i];
+            talkOptionUI tmpTog = optLst[i];
+            tmpTog.gameObject.SetActive(true);
+
+            string tmpStr = tmpOptObj.optionStrCn;
+            tmpTog.setTxt(tmpStr, tmpOptObj.optionID);
+            //tmpOptObj.optionStrCn;
+        }
     }
 
     public void optionBtnChange(Toggle t) {
-        if(t.isOn)
-            Debug.Log("optionBtnChange true:"+t.name);
-
+        if (t.isOn)
+        {
+           talkOptionUI tmpUI = t.gameObject.GetComponent<talkOptionUI>();
+           int tmpID = tmpUI.getOptionID();
+           noteMsg.instance.noteUI.msgNoteBottom("optionID:"+tmpID.ToString());
+        }
     }
 
 }

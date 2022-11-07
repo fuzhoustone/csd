@@ -44,9 +44,7 @@ public class roleInfoMsgUI : MonoBehaviour
             CSVRow tmpRow = clueLstGetTab._instance().GetRowFromID(clueGetID);
             tmpRow.SetBool(clueLstGetTab.csLook, isLook);
 
-            string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
-
-            clueLstGetTab._instance().WriteFile(filePath);
+            clueLstGetTab._instance().SaveFile();
         }
     }
 

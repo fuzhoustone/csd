@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-public class talkOptionTab : CsdTTable
+public class storyOptionTab : CsdTTable
 {
-    private static talkOptionTab instance = null;
-    public static talkOptionTab _instance()
+    private static storyOptionTab instance = null;
+    public static storyOptionTab _instance()
     {
         if (instance == null)
         {
-            instance = new talkOptionTab();
+            instance = new storyOptionTab();
             instance.initParam();
         }
         return instance;

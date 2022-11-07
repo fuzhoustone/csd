@@ -47,7 +47,7 @@ MonoBehaviour:
   storyBgSceneRel: {fileID: 4900000, guid: 9c4dc3f38b16b4c4c9deb98e9ff893fe, type: 3}
   bgScenePic: {fileID: 4900000, guid: 8477baac4cf059141ac340b844fba2b8, type: 3}
   roleFacePic: {fileID: 4900000, guid: 4d6783ff01e647a4d87567c9ab506855, type: 3}
-  talkOption: {fileID: 4900000, guid: 5d04cfcd48a4c704bb90e0482dd7fc38, type: 3}
+  talkOption: {fileID: 4900000, guid: 66a00703bc5fb63439acb213eccd1c2c, type: 3}
   roleNameLst: {fileID: 4900000, guid: 9920ca0711258764a91d177accdaf454, type: 3}
   storyVideo: {fileID: 4900000, guid: ba33a40c67af49b469f53655a139c704, type: 3}
   roleProperty: {fileID: 4900000, guid: 94865b2d8c18f0e4a906a04c9e76f574, type: 3}
@@ -59,4 +59,5 @@ MonoBehaviour:
   clueLstGet: {fileID: 4900000, guid: 25c68130a7000fc49ab72cfbb7dbf53e, type: 3}
   missionLst: {fileID: 4900000, guid: 650c00d238f8fdc42baf7e58ce5cebb0, type: 3}
   talkInfoLst: {fileID: 4900000, guid: 3eabe1d772cf39247ae1b6ab794bfe2a, type: 3}
+  talkInfoOptionLst: {fileID: 4900000, guid: 6f5bc0bec912fd24b895ea529d967b79, type: 3}
   roleStoryStartRel: {fileID: 4900000, guid: 23da04badcb602245b568c42ade46118, type: 3}

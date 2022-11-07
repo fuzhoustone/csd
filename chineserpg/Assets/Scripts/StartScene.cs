@@ -161,6 +161,7 @@ public class StartScene : MonoBehaviour
 
     public void continueGame()
     {
+        noteMsg.instance.noteUI.msgNoteBottom("test");
       //  changeGameScene();
     }
 

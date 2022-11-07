@@ -1,0 +1,6 @@
+ID,talkID,storyID,optionCn,optionEn
+1,1,1,说谎,optionA
+2,1,2,半真半假,optionA
+3,1,2,据实,optionB
+4,2,5,陈述,optionA
+5,2,5,装傻,optionA

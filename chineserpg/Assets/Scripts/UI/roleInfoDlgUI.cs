@@ -19,7 +19,7 @@ public class roleInfoDlgUI : MonoBehaviour
     private Transform infoViewLst;
 
     [SerializeField]
-    private Image roleHeadPic;
+    private roleHeadUI roleHead;
 
     [SerializeField]
     private Text roleNameText;
@@ -106,8 +106,8 @@ public class roleInfoDlgUI : MonoBehaviour
         roleNameBtnUI tmpNameBtnUI = nameLst[tmpID];
         //roleHeadPic
         roleNameText.text = tmpNameBtnUI.roleName;
+        roleHead.setImage(tmpNameBtnUI.pId);
 
-        
         CSVRow tmpRow = roleNameTab._instance().GetRowFromID(tmpNameBtnUI.pId);
 
         string titleName = tmpRow.GetString(roleNameTab.csTitle);

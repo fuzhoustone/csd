@@ -137,10 +137,7 @@ public class StoryScene : MonoBehaviour
             btn3.gameObject.SetActive(false);
         if (btn4)
             btn4.gameObject.SetActive(false);
-#if !videotest
-        btnPanel.SetActive(false);
-        conNext.gameObject.SetActive(false);
-#endif
+
         conNext.gameObject.SetActive(true);
 
     }
@@ -171,13 +168,25 @@ public class StoryScene : MonoBehaviour
 
     }
 
- 
+    private void getClueInStory() {
+        //根据当前章节及角色自动获得线索
+        //gameDataManager.instance.chaptID;
+        //gameDataManager.instance.roleID;
+        List<int> tmpClueLst = clueLstTab._instance().getClueLst(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
+        for (int i = 0; i < tmpClueLst.Count; i++) {
+            int tmpID = tmpClueLst[i];
+            clueLstGetTab._instance().AddRow(tmpID);
+        }
+        clueLstGetTab._instance().SaveFile();
+        noteMsg.instance.noteUI.msgNoteBottom("你获得新的线索");
+    }
     
     //显示剧情内容
     public void showContentText(int nowStoryid) {
-        if(nowStoryid == ciShowTalkScene)
+        if(nowStoryid == ciShowTalkScene) //固定剧情结束，进入聊天环节
         {
-           // SceneManager.LoadSceneAsync(csTalkSceneName);
+            // SceneManager.LoadSceneAsync(csTalkSceneName);
+            getClueInStory();
             toolBarManager.instance.topBar.showMission(true);
         }
         else
@@ -233,17 +242,17 @@ public class StoryScene : MonoBehaviour
     
     //UI上的next按扭触发剧情
     public void showUINextContentText() {
-
+       // noteMsg.instance.noteUI.msgNoteBottom("你获得新的线索");
         showContentText(nextStoryID);
     }
     
     //显示对话选择
     public void showTalkSel(int talkID) {
         btnInit();
-        List<talkOptionTab.optionObj> optionLst = talkOptionTab._instance().getOptionLst(talkID);
+        List<storyOptionTab.optionObj> optionLst = storyOptionTab._instance().getOptionLst(talkID);
        // List<string> btnText = new List<string>();
         for (int i = 0; i < optionLst.Count; i++) {
-           talkOptionTab.optionObj tmpObj = optionLst[i];
+           storyOptionTab.optionObj tmpObj = optionLst[i];
             
            Button tmpBtn = btnLst[i];
            Transform tmpChild = tmpBtn.transform.GetChild(0);

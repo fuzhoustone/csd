@@ -152,7 +152,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Toggle
+  m_Text: Toggle22
 --- !u!1 &538438390062265938
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5407867376688332615}
   - component: {fileID: 538438389859025794}
+  - component: {fileID: 8915484539005558248}
   m_Layer: 5
   m_Name: optionBtn
   m_TagString: Untagged
@@ -312,3 +313,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &8915484539005558248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7458150096991961119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 994a6c90064795f4a99c9ac0fce55496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lab: {fileID: 538438389804484200}

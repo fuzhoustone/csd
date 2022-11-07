@@ -40,6 +40,7 @@ public class TableSet : MonoBehaviour
     public TextAsset clueLstGet;
     public TextAsset missionLst;
     public TextAsset talkInfoLst;
+    public TextAsset talkInfoOptionLst;
     public TextAsset roleStoryStartRel;
 
 
@@ -79,7 +80,7 @@ public class TableSet : MonoBehaviour
 
         using (var stream = new MemoryStream(talkOption.bytes))
         {
-            talkOptionTab._instance().Load(stream);
+            storyOptionTab._instance().Load(stream);
         }
 
         using (var stream = new MemoryStream(storyVideo.bytes))
@@ -131,6 +132,12 @@ public class TableSet : MonoBehaviour
         {
             talkInfoLstTab._instance().Load(stream);
         }
+
+        using (var stream = new MemoryStream(talkInfoOptionLst.bytes))
+        {
+            talkInfoOptionTab._instance().Load(stream);
+        }
+        
 
         using (var stream = new MemoryStream(roleStoryStartRel.bytes))
         {

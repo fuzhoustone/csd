@@ -27,6 +27,21 @@ public class clueLstTab : CsdTTable
         addKeyName(csChaptID);
         addKeyName(csContentCn);
         addKeyName(csContentEn);
-
     }
+
+    public List<int> getClueLst(int roleID, int chaptID) {
+        List<int> res = new List<int>();
+        for (int i = 0; i < this.GetTableLength(); i++) {
+            CSVRow tmpRow = this.GetRowFromIndex(i);
+            int tmpRoleID = tmpRow.GetInt(csRoleID);
+            int tmpChaptID = tmpRow.GetInt(csChaptID);
+            if ((tmpRoleID == roleID) && (tmpChaptID == chaptID)) {
+                int tmpID = tmpRow.GetInt(csID);
+                res.Add(tmpID);
+            }
+        }
+
+        return res;
+    }
+
 }

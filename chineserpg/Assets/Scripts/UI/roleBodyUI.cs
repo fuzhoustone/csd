@@ -11,7 +11,12 @@ public class roleBodyUI : MonoBehaviour
     [SerializeField]
     private Text roleNameTxt;
 
+    [SerializeField]
+    private GameObject rootObj;
+    
+
     public int pID;
+    private Outline txtOutline;
     private void Start()
     {
       //  lImage = this.gameObject.GetComponent<Image>();
@@ -21,13 +26,22 @@ public class roleBodyUI : MonoBehaviour
        
         pID = lroleID;
         roleNameTxt.text = roleName;
+        txtOutline = roleNameTxt.gameObject.GetComponent<Outline>();
         setSelActive(false);
     }
 
     public void setSelActive(bool isSel) {
         
+        bool isGrey = !isSel;
+        UISetGrey.SetUIDrey(rootObj, isGrey);
+
+        txtOutline.enabled = isSel;
+//        if (btn.interactable != isSel)
+//            btn.interactable = isSel;
+        /*
         if (selImage.enabled != isSel)
             selImage.enabled = isSel;
+        */
     }
 
    

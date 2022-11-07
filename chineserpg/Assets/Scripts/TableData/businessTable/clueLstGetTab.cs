@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 
 public class clueLstGetTab : CsdTTable
 {
@@ -51,11 +51,12 @@ public class clueLstGetTab : CsdTTable
 
         this.AddCSVRow(tmpLst);
     }
-    /*
-    public void SaveCSV() {
+
+    public void SaveFile()
+    {
         string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
 
-        clueLstGetTab._instance().WriteFile(filePath);
+        this.WriteFile(filePath);
     }
-    */
+
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,10 +28,10 @@ public class clueBtnUI : MonoBehaviour
     private const float cfImageHeight = 61.0f;
  
     private Action<int> pEvent;
-    public int pId;
+    public int pTalkId;
 
     public void initData(int lId,string lKeyName) {
-        pId = lId;
+        pTalkId = lId;
         pText.text = lKeyName;
         setSelActive(false);
     }
@@ -50,11 +48,11 @@ public class clueBtnUI : MonoBehaviour
         }
 
     }
-
+    /*
     public void onCallBackClick() {
         pEvent?.Invoke(pId);
     }
-
+    */
     
 
 }
