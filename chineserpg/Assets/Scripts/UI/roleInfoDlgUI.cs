@@ -10,7 +10,7 @@ public class roleInfoDlgUI : MonoBehaviour
 
     // private Texture2D pSelBg, pUnSelBg;
     private int oldClueIndex = 0;
-    private List<roleNameBtnUI> nameLst;
+    private List<roleNameBtnUI> nameLst = null;
 
     [SerializeField]
     private Transform nameViewPostLst;
@@ -30,16 +30,23 @@ public class roleInfoDlgUI : MonoBehaviour
 
     void Start()
     {
-        initData();
+        
     }
 
-    public void showUI() { 
-    
+    public void showUI() {
+        this.gameObject.SetActive(true);
+        if((nameLst == null) ||(nameLst.Count <=0))
+            initData();
+        
     }
 
     public void UIClose()
     {
-       
+        this.gameObject.SetActive(false);
+    }
+
+    public void clearData() { 
+        
     }
 
     public void initData()
@@ -82,7 +89,7 @@ public class roleInfoDlgUI : MonoBehaviour
 
     public void roleNameOnClick(int tmpID)
     {
-        Debug.LogWarning("clueOnClick id:" + tmpID.ToString());
+      //  Debug.LogWarning("clueOnClick id:" + tmpID.ToString());
         if (tmpID != oldClueIndex)
         {
             setRoleNameSel(oldClueIndex, false);

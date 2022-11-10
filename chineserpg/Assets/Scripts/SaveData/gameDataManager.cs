@@ -18,4 +18,5 @@ public class gameDataManager
     public int roleID { get; set; }
     public int chaptID { get; set; }
 
+    public int storyID { get; set; }
 }

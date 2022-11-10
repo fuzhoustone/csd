@@ -1,9 +1,6 @@
 ﻿using DevionGames.UIWidgets;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartScene : MonoBehaviour
@@ -20,15 +17,11 @@ public class StartScene : MonoBehaviour
     [SerializeField]
     private DialogBox m_DialogBox;
 
-  //  [SerializeField]
-  //  private selRoleDialogUI selRoleDialog;
-
     private UnityAction btnEvent1, btnEvent2, btnEvent3; //分别对应，1个，2个，3个按扭
     private bool hasRecord;
     private const string title = "请确认";
     private const string text = "新游戏将清空现有游戏记录，是否清空并开始新游戏";
 
-  //  private const string csStoryScene = "storyScene";
 
 /*
     [SerializeField]
@@ -86,24 +79,17 @@ public class StartScene : MonoBehaviour
         gameDataManager.instance.roleID = roleID;
         gameDataManager.instance.chaptID = 1;
 
-        SceneManager.LoadSceneAsync(sceneName.csStoryScene);
+        sceneName.instance.changeSceneSingle(sceneName.csStoryScene);
+        toolBarManager.instance.showTopBar();
+        toolBarManager.instance.topBar.setBackBtnVisible(false);
     }
 
     /// <summary>
     /// UI按扭
     /// </summary>
     public void startNewGame() {
-        /*
-                if (helpObj.activeSelf == true)
-                {
-                    helpObj.SetActive(false);
-                }
-        */
-        toolBarManager.instance.showSelRoleDlg(changeGameScene);
-      //  selRoleDialog.showDialog();
 
-          //切换场景
-        //changeGameScene();
+        toolBarManager.instance.showSelRoleDlg(changeGameScene);
        
     }
 

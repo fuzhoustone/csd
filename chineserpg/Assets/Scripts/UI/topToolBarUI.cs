@@ -9,7 +9,10 @@ public class topToolBarUI : MonoBehaviour
     // Start is called before the first frame update
     //private roleInfoDlgUI infoDlgUI = null;
     [SerializeField]
-    private GameObject infoDlg;
+    private roleInfoDlgUI infoDlg;
+
+    [SerializeField]
+    private Button backBtn;
 
     [SerializeField]
     private Text chartTxt;
@@ -60,37 +63,40 @@ public class topToolBarUI : MonoBehaviour
     //显示角色信息
     public void showRoleInfo()
     {
-        if (infoDlg.activeSelf == false) {
-            infoDlg.SetActive(true);
-        }
-
-        /*
-        if (infoDlgUI == null)
-        {
-            UnityEngine.Object infoObj = Resources.Load(csRoleInfoDlgPre);
-            GameObject tmpObj = GameObject.Instantiate(infoObj) as GameObject;
-            infoDlgUI = tmpObj.GetComponent<roleInfoDlgUI>();
-        }
-
-        if (infoDlgUI.gameObject.activeSelf == false)
-            infoDlgUI.showUI();
-        */
+        infoDlg.showUI();
+        setBackBtnVisible(true);
+        //if (infoDlg.activeSelf == false) {
+        //    infoDlg.SetActive(true);
+        //}
     }
 
+    public void setBackBtnVisible(bool isVisible) {
+        backBtn.gameObject.SetActive(isVisible);
+    }
 
     //私聊界面
     public void showSelRoleDlg() {
         toolBarManager.instance.showSelRoleDlg(chageToTalkScene, gameDataManager.instance.roleID);
+       // setBackBtnVisible(true);
     }
 
     public void chageToTalkScene(int lroleID) {
-       // gameDataManager.instance.
-        SceneManager.LoadSceneAsync(sceneName.csTalkScene);
+        sceneName.instance.changeScene(sceneName.csTalkScene);
+        setBackBtnVisible(true);
     }
 
     public void changeToStartScene() {
-        this.gameObject.SetActive(false);
-        SceneManager.LoadSceneAsync(sceneName.csStartScene);
+        sceneName.instance.changeSceneSingle(sceneName.csStartScene);
+    }
+
+    private void hideAllDlg() {
+        infoDlg.UIClose();
+    }
+
+    public void backBtnClick() {
+        hideAllDlg();
+        sceneName.instance.changeScene(sceneName.csStoryScene); //切换上一个场景，如果上一个场景不为空
+        setBackBtnVisible(false);
     }
 
 }

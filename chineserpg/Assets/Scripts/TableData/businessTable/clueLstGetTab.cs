@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 
 public class clueLstGetTab : CsdTTable
 {
@@ -19,6 +20,8 @@ public class clueLstGetTab : CsdTTable
     public const string csIsPub = "isPublic";
     public const string csLook = "isLook";
 
+    private const string csFileName = "clueLstGet.csv";
+    private string csvFilePath;
     public void initParam()
     {
         addKeyName(csID);
@@ -52,11 +55,49 @@ public class clueLstGetTab : CsdTTable
         this.AddCSVRow(tmpLst);
     }
 
+    
+
+    public string checkAndNewFile() {
+
+        string tarPath = Application.persistentDataPath;
+        if (!Directory.Exists(tarPath))
+        {
+            Directory.CreateDirectory(tarPath);
+        }
+
+        string sourFile = Application.dataPath + "/Resources/Items/modelItems/" + csFileName;
+        csvFilePath = tarPath + "/" + csFileName;
+        if (File.Exists(csvFilePath) == false) {
+            File.Copy(sourFile, csvFilePath, true); //覆盖模式
+        }
+        return csvFilePath;
+    }
+
+    public void LoadDefFile() {
+        string tarFile = checkAndNewFile();
+
+        try
+        {
+            using (FileStream fsSource = new FileStream(tarFile,
+                                FileMode.Open, FileAccess.Read))
+            {
+                this.Load(fsSource);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("方法Read()异常" + ex);
+        }
+
+    }
+
     public void SaveFile()
     {
-        string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
 
-        this.WriteFile(filePath);
+
+       // string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
+
+        this.WriteFile(csvFilePath);
     }
 
 }

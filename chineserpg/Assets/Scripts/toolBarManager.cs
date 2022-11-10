@@ -48,8 +48,12 @@ public class toolBarManager
         }
         
         selRoleDlg.showDialog(pEvent, lSelfID);
+    }
 
-
+    public void hideSelRoleDlg() {
+        if (selRoleDlg != null) {
+            selRoleDlg.gameObject.SetActive(false);
+        }
     }
 
 }

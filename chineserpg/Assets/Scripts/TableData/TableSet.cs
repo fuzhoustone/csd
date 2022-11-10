@@ -37,7 +37,7 @@ public class TableSet : MonoBehaviour
     public TextAsset eventList;
     public TextAsset eventSystemType;
     public TextAsset clueLst;
-    public TextAsset clueLstGet;
+  //  public TextAsset clueLstGet;
     public TextAsset missionLst;
     public TextAsset talkInfoLst;
     public TextAsset talkInfoOptionLst;
@@ -119,10 +119,11 @@ public class TableSet : MonoBehaviour
             clueLstTab._instance().Load(stream);
         }
 
-        using (var stream = new MemoryStream(clueLstGet.bytes))
-        {
-            clueLstGetTab._instance().Load(stream);
-        }
+        //using (var stream = new MemoryStream(clueLstGet.bytes))
+        //{
+        clueLstGetTab._instance().LoadDefFile();
+           
+        //}
 
         using (var stream = new MemoryStream(missionLst.bytes))
         {

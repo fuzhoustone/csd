@@ -41,13 +41,17 @@ public class StoryScene : MonoBehaviour
 
     private void Start()
     {
-       // Debug.Log("test start");
-        //dataTable.initData();
+
+        initParam();
+    }
+
+    public void initParam() {
         TableSet.instance.initData();
         toolBarManager.instance.showTopBar();
 
-       // Debug.LogWarning("storyscene start");
-        if (btnLst != null) {
+        // Debug.LogWarning("storyscene start");
+        if (btnLst != null)
+        {
             btnLst.Clear();
         }
         else
@@ -57,18 +61,21 @@ public class StoryScene : MonoBehaviour
         {
             btnLst.Add(btn1);
         }
-        if (btn2) {
+        if (btn2)
+        {
             btnLst.Add(btn2);
         }
-        if (btn3) {
+        if (btn3)
+        {
             btnLst.Add(btn3);
         }
-        if(btn4) {
+        if (btn4)
+        {
             btnLst.Add(btn4);
         }
 
         btnStoryLst = new List<int>();
-        
+
         nextStoryID = roleStoryStartRelTab._instance().getStartStoryID(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
         //nextStoryID = 20;
 
@@ -183,6 +190,7 @@ public class StoryScene : MonoBehaviour
     
     //显示剧情内容
     public void showContentText(int nowStoryid) {
+        gameDataManager.instance.storyID = nowStoryid;
         if(nowStoryid == ciShowTalkScene) //固定剧情结束，进入聊天环节
         {
             // SceneManager.LoadSceneAsync(csTalkSceneName);
