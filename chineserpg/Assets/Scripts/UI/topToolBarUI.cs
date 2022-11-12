@@ -81,22 +81,27 @@ public class topToolBarUI : MonoBehaviour
     }
 
     public void chageToTalkScene(int lroleID) {
-        sceneName.instance.changeScene(sceneName.csTalkScene);
+        toolBarManager.instance.hideSelRoleDlg();
         setBackBtnVisible(true);
+        sceneName.instance.changeScene(sceneName.csTalkScene);
+       
     }
 
     public void changeToStartScene() {
+        hideAllDlg();
+        toolBarManager.instance.hidoTopBar();
         sceneName.instance.changeSceneSingle(sceneName.csStartScene);
     }
 
     private void hideAllDlg() {
         infoDlg.UIClose();
+        setBackBtnVisible(false);
     }
 
     public void backBtnClick() {
         hideAllDlg();
         sceneName.instance.changeScene(sceneName.csStoryScene); //切换上一个场景，如果上一个场景不为空
-        setBackBtnVisible(false);
+        
     }
 
 }

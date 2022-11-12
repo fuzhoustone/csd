@@ -38,6 +38,10 @@ public class toolBarManager
             topBar.gameObject.SetActive(true);
     }
 
+    public void hidoTopBar() {
+        topBar.gameObject.SetActive(false);
+    }
+
     public void showSelRoleDlg(UnityEngine.Events.UnityAction<int> pEvent, int lSelfID = -1) {
         if (selRoleDlg == null)
         {
@@ -52,7 +56,12 @@ public class toolBarManager
 
     public void hideSelRoleDlg() {
         if (selRoleDlg != null) {
-            selRoleDlg.gameObject.SetActive(false);
+           // noteMsg.instance.noteUI.msgNoteBottom("selRoleDlg != null");
+            selRoleDlg.closeDialog();
+        }
+        else
+        {
+           // noteMsg.instance.noteUI.msgNoteBottom("selRoleDlg == null");
         }
     }
 

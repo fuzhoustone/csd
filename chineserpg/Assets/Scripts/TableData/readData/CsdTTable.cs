@@ -10,6 +10,8 @@ public class CsdTTable
     public const string csID = "ID";
     public List<string> m_colomuns = new List<string>(); //用于检查字段名是存在，非必须
     private int maxID = 0;
+    private string csvFilePath;
+
     public void addKeyName(string lKey) {
         m_colomuns.Add(lKey);
     }
@@ -148,5 +150,46 @@ public class CsdTTable
         }
     }
 
- }
+    public string checkAndNewFile(string pFileName)
+    {
+
+        string tarPath = Application.persistentDataPath;
+        if (!Directory.Exists(tarPath))
+        {
+            Directory.CreateDirectory(tarPath);
+        }
+
+        string sourFile = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
+        csvFilePath = tarPath + "/" + pFileName;
+        if (File.Exists(csvFilePath) == false)
+        {
+            File.Copy(sourFile, csvFilePath, true); //覆盖模式
+        }
+        return csvFilePath;
+    }
+
+    public void LoadFile(string pFileName){
+        string tarFile = checkAndNewFile(pFileName);
+
+        try
+        {
+            using (FileStream fsSource = new FileStream(tarFile,
+                                FileMode.Open, FileAccess.Read))
+            {
+                this.Load(fsSource);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("方法Read()异常" + ex);
+        }
+    }
+
+    public void SaveFile()
+    {
+
+        this.WriteFile(csvFilePath);
+    }
+
+}
 

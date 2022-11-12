@@ -75,10 +75,10 @@ public class StartScene : MonoBehaviour
     }
 
     //切换到游戏场景
-    private void changeGameScene(int roleID) { //新游戏的选角
+    private void changeGameScene(int roleID) { 
         gameDataManager.instance.roleID = roleID;
         gameDataManager.instance.chaptID = 1;
-
+       // toolBarManager.instance.hideSelRoleDlg();
         sceneName.instance.changeSceneSingle(sceneName.csStoryScene);
         toolBarManager.instance.showTopBar();
         toolBarManager.instance.topBar.setBackBtnVisible(false);

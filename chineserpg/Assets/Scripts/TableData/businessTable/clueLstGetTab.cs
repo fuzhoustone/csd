@@ -1,6 +1,4 @@
-﻿using System.IO;
-using UnityEngine;
-
+﻿
 public class clueLstGetTab : CsdTTable
 {
     private static clueLstGetTab instance = null;
@@ -11,7 +9,6 @@ public class clueLstGetTab : CsdTTable
             instance = new clueLstGetTab();
             instance.initParam();
         }
-
         return instance;
     }
 
@@ -21,13 +18,19 @@ public class clueLstGetTab : CsdTTable
     public const string csLook = "isLook";
 
     private const string csFileName = "clueLstGet.csv";
-    private string csvFilePath;
+   // private string csvFilePath;
     public void initParam()
     {
         addKeyName(csID);
         addKeyName(csClueID);
         addKeyName(csIsPub);
         addKeyName(csLook);
+    }
+
+    public void LoadDefFile()
+    {
+        LoadFile(csFileName);
+
     }
 
     public bool isGetClue(int lClueID, ref bool isLook) {
@@ -53,51 +56,6 @@ public class clueLstGetTab : CsdTTable
         tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csLook)] = (isLook?1:0).ToString();
 
         this.AddCSVRow(tmpLst);
-    }
-
-    
-
-    public string checkAndNewFile() {
-
-        string tarPath = Application.persistentDataPath;
-        if (!Directory.Exists(tarPath))
-        {
-            Directory.CreateDirectory(tarPath);
-        }
-
-        string sourFile = Application.dataPath + "/Resources/Items/modelItems/" + csFileName;
-        csvFilePath = tarPath + "/" + csFileName;
-        if (File.Exists(csvFilePath) == false) {
-            File.Copy(sourFile, csvFilePath, true); //覆盖模式
-        }
-        return csvFilePath;
-    }
-
-    public void LoadDefFile() {
-        string tarFile = checkAndNewFile();
-
-        try
-        {
-            using (FileStream fsSource = new FileStream(tarFile,
-                                FileMode.Open, FileAccess.Read))
-            {
-                this.Load(fsSource);
-            }
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError("方法Read()异常" + ex);
-        }
-
-    }
-
-    public void SaveFile()
-    {
-
-
-       // string filePath = Application.dataPath + "/AssetItems/clueLstGet.csv";
-
-        this.WriteFile(csvFilePath);
     }
 
 }

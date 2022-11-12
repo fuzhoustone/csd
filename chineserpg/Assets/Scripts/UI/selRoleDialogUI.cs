@@ -111,11 +111,11 @@ public class selRoleDialogUI : MonoBehaviour
 
         this.gameObject.SetActive(true);
     }
-
+    /*
     public void showUI() {
         this.gameObject.SetActive(true);
     }
-
+    */
     public void closeDialog() {
         this.gameObject.SetActive(false);
     }

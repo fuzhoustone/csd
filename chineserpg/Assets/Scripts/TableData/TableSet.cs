@@ -43,6 +43,8 @@ public class TableSet : MonoBehaviour
     public TextAsset talkInfoOptionLst;
     public TextAsset roleStoryStartRel;
 
+    //public TextAsset talkInfoGet;
+    public TextAsset talkInfoRule;
 
     //private GameObject tableSetObj;
 
@@ -144,7 +146,13 @@ public class TableSet : MonoBehaviour
         {
             roleStoryStartRelTab._instance().Load(stream);
         }
-        
+
+        using (var stream = new MemoryStream(talkInfoRule.bytes))
+        {
+            talkInfoRuleTab._instance().Load(stream);
+        }
+
+        talkInfoGetTab._instance().LoadDefFile();
 
         isInit = true;
 
