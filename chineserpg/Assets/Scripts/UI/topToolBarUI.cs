@@ -91,6 +91,7 @@ public class topToolBarUI : MonoBehaviour
 
     public void chageToTalkScene(int lroleID) {
         toolBarManager.instance.hideSelRoleDlg();
+        toolBarManager.instance.hideRoleInfoDlg();
         setBackBtnVisible(true);
         sceneName.instance.changeScene(sceneName.csTalkScene);
        
