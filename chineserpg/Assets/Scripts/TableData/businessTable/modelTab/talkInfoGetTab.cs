@@ -18,6 +18,7 @@ public class talkInfoGetTab : CsdTTable
     public const string csSayRoleIDLst = "roleIDLst"; //和哪些人物说过
 
     private const string csFileName = "talkInfoGet.csv";
+    private const string csSplitID = "_";
     // private string csvFilePath;
     public void initParam()
     {
@@ -43,8 +44,16 @@ public class talkInfoGetTab : CsdTTable
 
     private bool hasRole(int roleID, string roleLst) {
         bool res = false;
+        if (roleLst.Equals("") != false) {
+            string[] tmpLst = roleLst.Split(csSplitID.ToCharArray());
+            for (int i = 0; i < tmpLst.Length; i++) {
+                if (int.Parse(tmpLst[i]) == roleID) {
+                    res = true;
+                    break;
+                }
+            }
 
-        //待写
+        }
 
         return res;
     }
@@ -63,7 +72,7 @@ public class talkInfoGetTab : CsdTTable
 
     private string addRole(int roleID, string roleLst) {
         string res = roleLst;
-        res = roleLst + "_" + roleID;
+        res = roleLst + csSplitID + roleID;
         return res;
     }
 

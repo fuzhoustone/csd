@@ -19,7 +19,9 @@ public class TalkScene : MonoBehaviour
 
     [SerializeField]
     private Transform clueViewPostLst;
-    //  private 
+
+    [SerializeField]
+    private CanvasScaler canBg, canUI;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,8 @@ public class TalkScene : MonoBehaviour
         //  pUnSelBg = (Texture2D)Resources.Load(csPath + csUnSelImage) as Texture2D;
         TableSet.instance.initData();
         initData();
+        canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
+        canUI.matchWidthOrHeight = canAdvapt.instance.uiMatchWidHeight;
     }
 
     public void UIClose() {

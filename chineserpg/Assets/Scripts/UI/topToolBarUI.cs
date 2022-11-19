@@ -8,8 +8,8 @@ public class topToolBarUI : MonoBehaviour
 {
     // Start is called before the first frame update
     //private roleInfoDlgUI infoDlgUI = null;
-    [SerializeField]
-    private roleInfoDlgUI infoDlg;
+   // [SerializeField]
+   // private roleInfoDlgUI infoDlg;
 
     [SerializeField]
     private Button backBtn;
@@ -25,7 +25,15 @@ public class topToolBarUI : MonoBehaviour
     [SerializeField]
     private Text missionContext;
 
+    //[SerializeField]
+    //private CanvasScaler canBg;
+
     private int lChartID = 0;
+
+    //private void Start()
+    //{
+    //    canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
+    //}
 
     public void setChartName(int chartID) {
         string tmpChart = "";
@@ -63,7 +71,8 @@ public class topToolBarUI : MonoBehaviour
     //显示角色信息
     public void showRoleInfo()
     {
-        infoDlg.showUI();
+        //infoDlg.showUI();
+        toolBarManager.instance.showRoleInfoDlg();
         setBackBtnVisible(true);
         //if (infoDlg.activeSelf == false) {
         //    infoDlg.SetActive(true);
@@ -94,7 +103,8 @@ public class topToolBarUI : MonoBehaviour
     }
 
     private void hideAllDlg() {
-        infoDlg.UIClose();
+        //infoDlg.UIClose();
+        toolBarManager.instance.hideRoleInfoDlg();
         setBackBtnVisible(false);
     }
 

@@ -11,8 +11,11 @@ public class StartScene : MonoBehaviour
     [SerializeField]
     private Button continueBtn;
 
-//    [SerializeField]
-//    private GameObject helpObj;
+    [SerializeField]
+    private CanvasScaler canBg, canUI;
+
+    //    [SerializeField]
+    //    private GameObject helpObj;
 
     [SerializeField]
     private DialogBox m_DialogBox;
@@ -71,7 +74,8 @@ public class StartScene : MonoBehaviour
     void Start()
     {
         TableSet.instance.initData();
-
+        canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
+        canUI.matchWidthOrHeight = canAdvapt.instance.uiMatchWidHeight;
     }
 
     //切换到游戏场景

@@ -25,11 +25,20 @@ public class selRoleDialogUI : MonoBehaviour
     [SerializeField]
     private Text titleTxt;
 
+    [SerializeField]
+    private CanvasScaler canBg;
+
     private const string csSelCosPlayCn = "选择一个想扮演的角色";
     private const string csSelCosPlayEn = "";
     private const string csSelTalkCn = "选择一个想私聊的角色";
     private const string csSelTalkEn = "";
     private List<roleBodyUI> roleLst;
+
+    private void Start()
+    {
+        canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
+       
+    }
 
     public void initData(int pSelfRoleID) {
         selfRoleId = pSelfRoleID;

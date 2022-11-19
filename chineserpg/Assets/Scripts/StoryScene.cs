@@ -29,6 +29,8 @@ public class StoryScene : MonoBehaviour
     private Image roleImage;
     // public TableSet dataTable;
 
+    [SerializeField]
+    private CanvasScaler canBg, canUI;
 
     private int storyID,nextStoryID;
     //private Action<int> btnEvent;
@@ -41,8 +43,9 @@ public class StoryScene : MonoBehaviour
 
     private void Start()
     {
-
         initParam();
+        canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
+        canUI.matchWidthOrHeight = canAdvapt.instance.uiMatchWidHeight;
     }
 
     public void initParam() {

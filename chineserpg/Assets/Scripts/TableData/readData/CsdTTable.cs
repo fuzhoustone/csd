@@ -137,6 +137,30 @@ public class CsdTTable
         return res;
     }
 
+    //根据key,key2字段及其的值，返回CSVRow
+    //key,key2只支持:整型，string,浮点型
+    public CSVRow GetValueFromKey2<K,M>(string keyName, K keyVal, 
+                                      string keyName2, M keyVal2)
+    {
+        CSVRow res = null;
+        for (int i = 0; i < m_elements.Count; ++i)
+        {
+            K keyDefVal = (K)Convert.ChangeType("0", typeof(K));
+            K tmpKey = m_elements[i].GetVal<K>(keyName, keyDefVal);
+
+            M keyDefVal2 = (M)Convert.ChangeType("0", typeof(M));
+            M tmpKey2 = m_elements[i].GetVal<M>(keyName2, keyDefVal2);
+            if ((tmpKey.Equals(keyVal)) &&
+                (tmpKey2.Equals(keyVal2)) 
+               )
+            {
+                res = m_elements[i];
+                break;
+            }
+        }
+        return res;
+    }
+
     public void AddCSVRow(string[] lValues) {
         CSVRow tmpRow = new CSVRow(lValues, data.m_columnNameIndexer);
         data.Add(tmpRow);

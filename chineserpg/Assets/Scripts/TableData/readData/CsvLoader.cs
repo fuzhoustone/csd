@@ -279,6 +279,15 @@ public class CSVRow
         return -1;
     }
 
+    //add by csd
+    public void SetIngeger(string columnName, int columnVal)
+    {
+        int columnIndex = m_columnNameIndexer.GetColumnIndex(columnName);
+        m_rowDatas[columnIndex] = columnVal.ToString();
+    }
+
+    //add end
+
     public short GetShort(string columnName)
     {
         string rowData = GetString(columnName);

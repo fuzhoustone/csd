@@ -27,10 +27,14 @@ public class roleInfoDlgUI : MonoBehaviour
     [SerializeField]
     private Text roleHeadText;
 
+    [SerializeField]
+    private CanvasScaler canBg;
+    // [SerializeField]
+    // private CanvasScaler canBg;
 
     void Start()
     {
-        
+       canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
     }
 
     public void showUI() {

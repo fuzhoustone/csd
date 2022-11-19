@@ -46,6 +46,8 @@ public class TableSet : MonoBehaviour
     //public TextAsset talkInfoGet;
     public TextAsset talkInfoRule;
 
+    public TextAsset roleRelChange;
+
     //private GameObject tableSetObj;
 
     // public TableSet tabData;
@@ -153,6 +155,16 @@ public class TableSet : MonoBehaviour
         }
 
         talkInfoGetTab._instance().LoadDefFile();
+
+        using (var stream = new MemoryStream(roleRelChange.bytes))
+        {
+            
+            roleRelationChangeTab._instance().Load(stream);
+        }
+
+
+        roleFriendTab._instance().LoadDefFile();
+
 
         isInit = true;
 
