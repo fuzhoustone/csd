@@ -21,6 +21,10 @@ public class sceneName
 
     private string oldSceneName;
 
+    private void initParam() {
+        oldSceneName = "";
+    }
+
     private void setSceneActive(Scene tmpSce,bool pActive) {
         GameObject[] objLst = tmpSce.GetRootGameObjects();
         
@@ -32,19 +36,28 @@ public class sceneName
 
 
     public void changeSceneSingle(string sceName) {
+        oldSceneName = sceName;
         SceneManager.LoadScene(sceName, LoadSceneMode.Single);
     }
 
     public void changeScene(string sceName) {
 
+        if (oldSceneName != "") {
+            Scene nowScene = SceneManager.GetSceneByName(oldSceneName);
+            if (nowScene.isLoaded)
+            {
+                setSceneActive(nowScene, false);
+            }
+        }
+
+        /*
         Scene nowScene = SceneManager.GetActiveScene();
         if (nowScene.isLoaded)
         {
             setSceneActive(nowScene, false);
-         //   if(saveOldSceName)
-         //       oldSceneName = nowScene.name;
         }
-
+        */
+        oldSceneName = sceName;
         Scene nextScene = SceneManager.GetSceneByName(sceName);
         bool sceneIsValid = nextScene.isLoaded;
         if (sceneIsValid == false) //不存在此场景
