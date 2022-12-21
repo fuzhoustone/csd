@@ -62,3 +62,11 @@ MonoBehaviour:
   roleStoryStartRel: {fileID: 4900000, guid: 23da04badcb602245b568c42ade46118, type: 3}
   talkInfoRule: {fileID: 4900000, guid: 9872f895aaa7e1f49b52b677189a1c82, type: 3}
   roleRelChange: {fileID: 4900000, guid: 82e38026ee234a44cbd50583a8323180, type: 3}
+  talkRoleInfo: {fileID: 4900000, guid: f0cf31cd210fe38449347cdb75677c8d, type: 3}
+  talkStory: {fileID: 4900000, guid: be5a2c72b3dcbe448866b5b6ee4487e3, type: 3}
+  talkRoleInfoTalkingGetRule: {fileID: 4900000, guid: 30c2719c7f1d0024da184d1da946b9cb,
+    type: 3}
+  talkRoleInfoChaptGetRule: {fileID: 4900000, guid: 246bc9272d0108147a773a41f899b955,
+    type: 3}
+  roleDefEnemy: {fileID: 4900000, guid: ab0b59ed1cbfd0b45ab6ff7e0daae60b, type: 3}
+  roleActOrd: {fileID: 4900000, guid: e2754c1fefc0145429cd97cdcc269137, type: 3}
