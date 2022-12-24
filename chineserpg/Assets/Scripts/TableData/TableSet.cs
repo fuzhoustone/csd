@@ -48,10 +48,12 @@ public class TableSet : MonoBehaviour
 
     public TextAsset roleRelChange;
 
-    //private GameObject tableSetObj;
-
-    // public TableSet tabData;
-
+    public TextAsset talkRoleInfo;
+    public TextAsset talkStory;
+    public TextAsset talkRoleInfoTalkingGetRule;
+    public TextAsset talkRoleInfoChaptGetRule;
+    public TextAsset roleDefEnemy;
+    public TextAsset roleActOrd;
     public void initData()
     {
         if (isInit)
@@ -164,7 +166,45 @@ public class TableSet : MonoBehaviour
 
 
         roleFriendTab._instance().LoadDefFile();
+        roleActTab._instance().LoadDefFile();
+        talkRoleInfoGetTab._instance().LoadDefFile();
 
+        using (var stream = new MemoryStream(talkRoleInfo.bytes))
+        {
+
+            talkRoleInfoTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(talkStory.bytes))
+        {
+
+            talkStoryTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(talkRoleInfoTalkingGetRule.bytes))
+        {
+
+            talkRoleInfoTalkingGetRuleTab._instance().Load(stream);
+        }
+       
+        using (var stream = new MemoryStream(talkRoleInfoChaptGetRule.bytes))
+        {
+
+            talkRoleInfoChaptGetRuleTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(roleDefEnemy.bytes))
+        {
+
+            roleDefEnemyTab._instance().Load(stream);
+        }
+
+        using (var stream = new MemoryStream(roleActOrd.bytes))
+        {
+
+            roleChaptActOrdTab._instance().Load(stream);
+        }
+        
 
         isInit = true;
 

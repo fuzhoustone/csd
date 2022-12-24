@@ -50,13 +50,6 @@ public class sceneName
             }
         }
 
-        /*
-        Scene nowScene = SceneManager.GetActiveScene();
-        if (nowScene.isLoaded)
-        {
-            setSceneActive(nowScene, false);
-        }
-        */
         oldSceneName = sceName;
         Scene nextScene = SceneManager.GetSceneByName(sceName);
         bool sceneIsValid = nextScene.isLoaded;
@@ -69,11 +62,4 @@ public class sceneName
         }
 
     }
-/*
-    public void changePrevScene(bool saveOldSceneName) {
-        //if(prevSceneName.Equals("") == false)
-        //    changeScene(prevSceneName, false);
-        changeScene(oldSceneName, saveOldSceneName);
-    }
-*/
 }

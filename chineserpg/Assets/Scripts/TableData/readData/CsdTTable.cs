@@ -45,7 +45,7 @@ public class CsdTTable
     public void Load(Stream stream)
     {
         if (stream == null) return;
-        data = CSVLoader.Load(stream);
+        data = CSVLoader.Load(stream);  //data是new出来的，原先的data理论上内存有泄漏
         bool isPass = data.isAllColumnNameExists(m_colomuns); //检查所有列名是否都存在
 
         for (int i = 0; i < data.RowCount; ++i)
@@ -139,7 +139,7 @@ public class CsdTTable
 
     //根据key,key2字段及其的值，返回CSVRow
     //key,key2只支持:整型，string,浮点型
-    public CSVRow GetValueFromKey2<K,M>(string keyName, K keyVal, 
+    public CSVRow GetRowFromKey2<K,M>(string keyName, K keyVal, 
                                       string keyName2, M keyVal2)
     {
         CSVRow res = null;
@@ -192,8 +192,24 @@ public class CsdTTable
         return csvFilePath;
     }
 
+    public void createOverrideFile() {
+        string pFileName = csvFilePath;
+        string tarPath = Application.persistentDataPath;
+        if (!Directory.Exists(tarPath))
+        {
+            Directory.CreateDirectory(tarPath);
+        }
+
+        string sourFile = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
+        csvFilePath = tarPath + "/" + pFileName;
+        //if (File.Exists(csvFilePath) == true)
+        //{
+            File.Copy(sourFile, csvFilePath, true); //覆盖模式
+        //}
+    }
+
     public void LoadFile(string pFileName){
-        string tarFile = checkAndNewFile(pFileName);
+        string tarFile = checkAndNewFile(pFileName); //检查文件，不存在就新建文件
 
         try
         {

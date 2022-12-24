@@ -80,9 +80,10 @@ public class StartScene : MonoBehaviour
 
     //切换到游戏场景
     private void changeGameScene(int roleID) { 
-        gameDataManager.instance.roleID = roleID;
-        gameDataManager.instance.chaptID = 1;
-       // toolBarManager.instance.hideSelRoleDlg();
+
+        newGameDataInit(roleID);
+
+        // toolBarManager.instance.hideSelRoleDlg();
         sceneName.instance.changeSceneSingle(sceneName.csStoryScene);
         toolBarManager.instance.showTopBar();
         toolBarManager.instance.topBar.setBackBtnVisible(false);
@@ -97,7 +98,15 @@ public class StartScene : MonoBehaviour
        
     }
 
-    
+    private void newGameDataInit(int roleID) {
+        gameDataManager.instance.roleID = roleID;
+        gameDataManager.instance.chaptID = 1;
+        talkRoleInfoChaptGetRuleTab._instance().getTalkRoleInfoFromChapt(gameDataManager.instance.chaptID);
+
+        //LoadDefFile  saveFile
+    }
+
+
     private void dialogBox(string title, string text, Sprite icon, string[] buttons,
                           UnityAction pBtnEvent1, UnityAction pBtnEvent2, UnityAction pBtnEvent3)
     {

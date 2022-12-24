@@ -38,14 +38,14 @@ public class StoryScene : MonoBehaviour
     //private const string csTalkSceneName = "talkScene";
 
     private const int ciShowTalkScene = -1;
-
+    private bool chaptInit = false; //章节初始化标志
 
 
     private void Start()
     {
-        initParam();
         canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
         canUI.matchWidthOrHeight = canAdvapt.instance.uiMatchWidHeight;
+        initParam();
     }
 
     public void initParam() {
@@ -80,12 +80,14 @@ public class StoryScene : MonoBehaviour
         btnStoryLst = new List<int>();
 
         nextStoryID = roleStoryStartRelTab._instance().getStartStoryID(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
+
         //nextStoryID = 20;
 
         autoSaveData.instance().initParam(0);
         btnInit();
         showContentText(nextStoryID);
-
+        chaptInit = false;
+        roleAIManager.instance.chaptFreeTimeInit(gameDataManager.instance.chaptID, contentTextPut);
     }
 
     private void showVideo(int lid) {
@@ -194,14 +196,28 @@ public class StoryScene : MonoBehaviour
     //显示剧情内容
     public void showContentText(int nowStoryid) {
         gameDataManager.instance.storyID = nowStoryid;
-        if(nowStoryid == ciShowTalkScene) //固定剧情结束，进入聊天环节
+        if(nowStoryid == ciShowTalkScene) //固定剧情结束，进入聊天环节, 
         {
+            //每章节限制调用一次
             // SceneManager.LoadSceneAsync(csTalkSceneName);
-            getClueInStory();
-            toolBarManager.instance.topBar.showMission(true);
+            if (chaptInit == false)
+            {
+                chaptInit = true;
+
+                getClueInStory();
+                toolBarManager.instance.topBar.showMission(true);
+                //roleAIManager.instance.startFreeTime();
+                roleAIManager.instance.talkSelfStart();
+            }
+            else {
+                roleAIManager.instance.talkSelf();
+            }
+            
         }
         else
         {
+
+
             toolBarManager.instance.topBar.showMission(false);
             contextPanel.SetActive(true);
 
@@ -253,8 +269,12 @@ public class StoryScene : MonoBehaviour
     
     //UI上的next按扭触发剧情
     public void showUINextContentText() {
-       // noteMsg.instance.noteUI.msgNoteBottom("你获得新的线索");
-        showContentText(nextStoryID);
+        //判断是否自由行动时间
+        if (roleAIManager.instance.isFreeTimeNow()) {
+            roleAIManager.instance.onNextClick();
+        }
+        else
+            showContentText(nextStoryID);
     }
     
     //显示对话选择

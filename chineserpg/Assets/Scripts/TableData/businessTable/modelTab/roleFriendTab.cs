@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 public class roleFriendTab : CsdTTable
 {
     private static roleFriendTab instance = null;
@@ -44,7 +46,7 @@ public class roleFriendTab : CsdTTable
                 int tmpTargetID = tmpRow.GetInt(roleRelationChangeTab.csTargetID);
                 int tmpValue = tmpRow.GetInt(roleRelationChangeTab.csValue);
 
-                CSVRow friendRow = GetValueFromKey2<int, int>(csRoleID, tmpRoleID,
+                CSVRow friendRow = GetRowFromKey2<int, int>(csRoleID, tmpRoleID,
                                                              csTargetID, tmpTargetID
                                                              );
                int val = friendRow.GetInt(csValue);
@@ -55,5 +57,49 @@ public class roleFriendTab : CsdTTable
         SaveFile();
     }
 
+    //取各AI的友好度为负数的
+    public List<CSVRow> getEnemy() {
+        List<CSVRow> res = new List<CSVRow>();
 
+        int nCount = GetTableLength();
+        int actCount = roleNameTab._instance().GetTableLength();
+        for (int a = 0; a < actCount; a++) { //根据角色列表，取角色的敌对值
+           CSVRow tmoRole = roleNameTab._instance().GetRowFromIndex(a);
+           int tmpRoleID = tmoRole.GetInt(roleNameTab.csID);
+           int tmpOldFriVal = 0;
+           CSVRow tmpRoleEmyRow = null;
+            if (gameDataManager.instance.roleID == tmpRoleID) { //玩家自身的友好度无需计算
+                continue;
+            }
+
+            //取友好度最差的一条记录
+            for (int i = 0; i < nCount; i++)
+            {
+                CSVRow tmpFriRow = GetRowFromIndex(i);
+                if (tmpFriRow.GetInt(csRoleID) == tmpRoleID) {
+                    int tmpFriVal = tmpFriRow.GetInt(csValue);
+                    if (tmpFriVal < tmpOldFriVal) {  //最不友好的
+                        tmpRoleEmyRow = tmpFriRow;
+                        tmpOldFriVal = tmpFriVal;
+                    }
+                }
+            }
+            if (tmpRoleEmyRow != null) { //有可行动的不友好对象
+                res.Add(tmpRoleEmyRow);
+            }
+
+        }
+
+        return res;
+    }
+
+
+/*
+    public List<CSVRow> getDefEnemy() {
+        return roleDefEnemyTab.m_elements;
+
+
+        
+    }
+*/
 }
