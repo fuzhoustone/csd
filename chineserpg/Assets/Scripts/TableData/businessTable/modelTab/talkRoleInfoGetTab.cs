@@ -29,9 +29,9 @@ public class talkRoleInfoGetTab : CsdTTable
         addKeyName(csIsUse);
     }
 
-    public void LoadDefFile()
+    public void InifDefFile()
     {
-        LoadFile(csFileName);
+        InitFileName(csFileName);
     }
 
     //获取要聊天的话题

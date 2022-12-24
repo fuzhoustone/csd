@@ -31,9 +31,9 @@ public class roleFriendTab : CsdTTable
         addKeyName(csValue);
     }
 
-    public void LoadDefFile()
+    public void InifDefFile()
     {
-        LoadFile(csFileName);
+        InitFileName(csFileName);
     }
 
     //更新某个章节各分物关系值

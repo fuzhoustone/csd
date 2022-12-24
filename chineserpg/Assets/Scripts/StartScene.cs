@@ -101,6 +101,23 @@ public class StartScene : MonoBehaviour
     private void newGameDataInit(int roleID) {
         gameDataManager.instance.roleID = roleID;
         gameDataManager.instance.chaptID = 1;
+
+        clueLstGetTab._instance().checkAndNewFile();
+        clueLstGetTab._instance().LoadFile();
+
+        talkInfoGetTab._instance().checkAndNewFile();
+        talkInfoGetTab._instance().LoadFile();
+
+        roleFriendTab._instance().checkAndNewFile();
+        roleFriendTab._instance().LoadFile();
+
+        roleActTab._instance().checkAndNewFile();
+        roleActTab._instance().LoadFile();
+
+        talkRoleInfoGetTab._instance().checkAndNewFile();
+        talkRoleInfoGetTab._instance().LoadFile();
+
+
         talkRoleInfoChaptGetRuleTab._instance().getTalkRoleInfoFromChapt(gameDataManager.instance.chaptID);
 
         //LoadDefFile  saveFile

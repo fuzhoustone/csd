@@ -10,7 +10,7 @@ public class CsdTTable
     public const string csID = "ID";
     public List<string> m_colomuns = new List<string>(); //用于检查字段名是存在，非必须
     private int maxID = 0;
-    private string csvFilePath;
+    private string csvFileName,modeFileName;
 
     public void addKeyName(string lKey) {
         m_colomuns.Add(lKey);
@@ -174,42 +174,30 @@ public class CsdTTable
         }
     }
 
-    public string checkAndNewFile(string pFileName)
+    public string checkAndNewFile() //检查并覆盖新建文件
     {
 
+        if (File.Exists(csvFileName) == false)
+        {
+            File.Copy(modeFileName, csvFileName, true); //覆盖模式
+        }
+        return csvFileName;
+    }
+
+    public void InitFileName(string pFileName) {
         string tarPath = Application.persistentDataPath;
         if (!Directory.Exists(tarPath))
         {
             Directory.CreateDirectory(tarPath);
         }
 
-        string sourFile = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
-        csvFilePath = tarPath + "/" + pFileName;
-        if (File.Exists(csvFilePath) == false)
-        {
-            File.Copy(sourFile, csvFilePath, true); //覆盖模式
-        }
-        return csvFilePath;
+        modeFileName = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
+        csvFileName = tarPath + "/" + pFileName;
+        
     }
 
-    public void createOverrideFile() {
-        string pFileName = csvFilePath;
-        string tarPath = Application.persistentDataPath;
-        if (!Directory.Exists(tarPath))
-        {
-            Directory.CreateDirectory(tarPath);
-        }
-
-        string sourFile = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
-        csvFilePath = tarPath + "/" + pFileName;
-        //if (File.Exists(csvFilePath) == true)
-        //{
-            File.Copy(sourFile, csvFilePath, true); //覆盖模式
-        //}
-    }
-
-    public void LoadFile(string pFileName){
-        string tarFile = checkAndNewFile(pFileName); //检查文件，不存在就新建文件
+    public void LoadFile(){
+        string tarFile = csvFileName; //检查文件，不存在就新建文件
 
         try
         {
@@ -228,7 +216,7 @@ public class CsdTTable
     public void SaveFile()
     {
 
-        this.WriteFile(csvFilePath);
+        this.WriteFile(csvFileName);
     }
 
 }

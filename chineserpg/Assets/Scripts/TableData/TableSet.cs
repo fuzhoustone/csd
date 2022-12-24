@@ -127,7 +127,7 @@ public class TableSet : MonoBehaviour
 
         //using (var stream = new MemoryStream(clueLstGet.bytes))
         //{
-        clueLstGetTab._instance().LoadDefFile();
+        
            
         //}
 
@@ -156,7 +156,7 @@ public class TableSet : MonoBehaviour
             talkInfoRuleTab._instance().Load(stream);
         }
 
-        talkInfoGetTab._instance().LoadDefFile();
+
 
         using (var stream = new MemoryStream(roleRelChange.bytes))
         {
@@ -164,10 +164,11 @@ public class TableSet : MonoBehaviour
             roleRelationChangeTab._instance().Load(stream);
         }
 
-
-        roleFriendTab._instance().LoadDefFile();
-        roleActTab._instance().LoadDefFile();
-        talkRoleInfoGetTab._instance().LoadDefFile();
+        clueLstGetTab._instance().InifDefFile();
+        talkInfoGetTab._instance().InifDefFile();
+        roleFriendTab._instance().InifDefFile();
+        roleActTab._instance().InifDefFile();
+        talkRoleInfoGetTab._instance().InifDefFile();
 
         using (var stream = new MemoryStream(talkRoleInfo.bytes))
         {

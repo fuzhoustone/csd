@@ -32,8 +32,8 @@ public class roleActTab : CsdTTable
         
     }
 
-    public void LoadDefFile()
+    public void InifDefFile()
     {
-        LoadFile(csFileName);
+        InitFileName(csFileName);
     }
 }

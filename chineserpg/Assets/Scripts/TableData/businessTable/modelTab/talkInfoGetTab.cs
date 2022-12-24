@@ -27,9 +27,9 @@ public class talkInfoGetTab : CsdTTable
         addKeyName(csSayRoleIDLst);
     }
 
-    public void LoadDefFile()
+    public void InifDefFile()
     {
-        LoadFile(csFileName);
+        InitFileName(csFileName);
     }
 
     public bool isSayByRoleID(int talkID,int roleID) {

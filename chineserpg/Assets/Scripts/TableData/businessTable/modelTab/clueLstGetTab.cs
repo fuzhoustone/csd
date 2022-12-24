@@ -27,9 +27,9 @@ public class clueLstGetTab : CsdTTable
         addKeyName(csLook);
     }
 
-    public void LoadDefFile()
+    public void InifDefFile()
     {
-        LoadFile(csFileName);
+        InitFileName(csFileName);
 
     }
 
