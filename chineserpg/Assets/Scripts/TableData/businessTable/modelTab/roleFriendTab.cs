@@ -66,7 +66,7 @@ public class roleFriendTab : CsdTTable
         for (int a = 0; a < actCount; a++) { //根据角色列表，取角色的敌对值
            CSVRow tmoRole = roleNameTab._instance().GetRowFromIndex(a);
            int tmpRoleID = tmoRole.GetInt(roleNameTab.csID);
-           int tmpOldFriVal = 0;
+           int tmpOldFriVal = 0; //调整为负数则ID：2-7 每人都有敌人，0只有个别人有敌人
            CSVRow tmpRoleEmyRow = null;
             if (gameDataManager.instance.roleID == tmpRoleID) { //玩家自身的友好度无需计算
                 continue;
@@ -78,9 +78,14 @@ public class roleFriendTab : CsdTTable
                 CSVRow tmpFriRow = GetRowFromIndex(i);
                 if (tmpFriRow.GetInt(csRoleID) == tmpRoleID) {
                     int tmpFriVal = tmpFriRow.GetInt(csValue);
-                    if (tmpFriVal < tmpOldFriVal) {  //最不友好的
-                        tmpRoleEmyRow = tmpFriRow;
-                        tmpOldFriVal = tmpFriVal;
+                    int ltmpTarID = tmpFriRow.GetInt(csTargetID);
+                    if (talkRoleInfoGetTab._instance().hasNoSayTalkRoleInfo(tmpRoleID, ltmpTarID)) //还有话题
+                    {                          
+                        if (tmpFriVal < tmpOldFriVal)    //最不友好的
+                        {
+                            tmpRoleEmyRow = tmpFriRow;
+                            tmpOldFriVal = tmpFriVal;
+                        }
                     }
                 }
             }

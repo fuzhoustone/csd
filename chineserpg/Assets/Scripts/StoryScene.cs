@@ -206,11 +206,11 @@ public class StoryScene : MonoBehaviour
 
                 getClueInStory();
                 toolBarManager.instance.topBar.showMission(true);
-                //roleAIManager.instance.startFreeTime();
-                roleAIManager.instance.talkSelfStart();
+                roleAIManager.instance.startFreeTime();
+                //roleAIManager.instance.talkSelfStart();
             }
             else {
-                roleAIManager.instance.talkSelf();
+              //  roleAIManager.instance.talkSelf();
             }
             
         }

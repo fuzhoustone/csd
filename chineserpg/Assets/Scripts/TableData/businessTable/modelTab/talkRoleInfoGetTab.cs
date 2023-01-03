@@ -34,6 +34,32 @@ public class talkRoleInfoGetTab : CsdTTable
         InitFileName(csFileName);
     }
 
+    public bool hasNoSayTalkRoleInfo(int lroleID, int lTarID) {
+        bool res = false;
+        int nCount = GetTableLength();
+        for (int i = 0; i < nCount; i++)
+        {  //从已获得话题中挑选
+            CSVRow tmpGetRow = GetRowFromIndex(i);
+            if ((tmpGetRow.GetInt(csRoleID) == lroleID) &&
+                 (tmpGetRow.GetBool(csIsUse) == false))
+            {
+                int tmpTRIID = tmpGetRow.GetInt(csTalkRoleInfoID);
+                CSVRow tmpTalkRow = talkRoleInfoTab._instance().GetRowFromKey2<int, int>
+                             (talkRoleInfoTab.csID, tmpTRIID,
+                              talkRoleInfoTab.csTarRoleID, lTarID);
+
+                if (tmpTalkRow != null)
+                {
+                    res = true;
+                    break;
+                }
+            }
+        }
+               
+        return res;
+    
+    }
+
     //获取要聊天的话题
     public CSVRow getTalkRoleInfo(int lroleID, int lTarID)
     {

@@ -174,14 +174,14 @@ public class CsdTTable
         }
     }
 
-    public string checkAndNewFile() //检查并覆盖新建文件
+    public void checkAndNewFile() //检查并覆盖新建文件
     {
 
-        if (File.Exists(csvFileName) == false)
-        {
+       // if (File.Exists(csvFileName) == false)
+       // {
             File.Copy(modeFileName, csvFileName, true); //覆盖模式
-        }
-        return csvFileName;
+       // }
+      //  return csvFileName;
     }
 
     public void InitFileName(string pFileName) {

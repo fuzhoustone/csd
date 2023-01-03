@@ -28,7 +28,21 @@ public class roleDefEnemyTab : CsdTTable
 
     public List<CSVRow> getDefEnemy()
     {
-        return m_elements;
+        List<CSVRow> res = new List<CSVRow>();
+
+        int nCount = GetTableLength();
+        for (int i = 0; i < nCount; i++) {
+            CSVRow tmpRow = GetRowFromIndex(i);
+            int tmpRoleID = tmpRow.GetInt(csRoleID);
+            int ltmpTarID = tmpRow.GetInt(csTargetID);
+
+            if (talkRoleInfoGetTab._instance().hasNoSayTalkRoleInfo(tmpRoleID, ltmpTarID))
+            {
+                res.Add(tmpRow);
+            }
+        }
+
+        return res;
 
     }
 }
