@@ -24,6 +24,8 @@ public class roleAIManager
     public int chaptID;
 
     private WordOutPut UIContxt;
+    private Text roleNameTxt;
+
     private int nextID;
     private const int csFinishEnd = -1;
     private bool InFreeTime = false;
@@ -33,8 +35,11 @@ public class roleAIManager
     private bool saySelf = false;
 
 
-    public bool isFreeTimeNow() {
-        return InFreeTime;
+    public bool isAITimeNow() {
+        if (InFreeTime || saySelf)
+            return true;
+        else
+            return false;
     }
 
     public void startFreeTime() {
@@ -66,10 +71,11 @@ public class roleAIManager
     }
 
     //各章节活动时间
-    public void chaptFreeTimeInit(int lChaptID, WordOutPut lUIText) {
+    public void chaptFreeTimeInit(int lChaptID, WordOutPut lUIText, Text lNameTxt) {
         chaptID = lChaptID;
         freeTime = 0;
         UIContxt = lUIText;
+        roleNameTxt = lNameTxt;
         //更新各角色的友好度及敌对值
         //在有敌对的玩家中随机选一名进行行动
 
@@ -156,15 +162,26 @@ public class roleAIManager
             talkRoleInfoGetTab._instance().SaveFile();
 
             CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(tmpTalkStoryID);
-            talkStoryUI(tmpStoryRow); //UI展现话题， 等UI上的onclick事件触发后续
+            talkStoryUI(tmpStoryRow, lRoleID); //UI展现话题， 等UI上的onclick事件触发后续
         }
     }
 
-    public void talkStoryUI(CSVRow talkStoryRow) {
+    public void talkStoryUI(CSVRow talkStoryRow, int lRoleID = -1) {
         string msg = talkStoryRow.GetString(talkStoryTab.csContentCn);
         UIContxt.setContext(msg);
+
+        if(lRoleID != -1)
+        {
+            CSVRow tmpRoleRow = roleNameTab._instance().GetRowFromID(lRoleID);
+            roleNameTxt.text = tmpRoleRow.GetString(roleNameTab.csRoleName);
+            roleNameTxt.gameObject.SetActive(true);
+        }
+
+
         nextID = talkStoryRow.GetInt(talkStoryTab.csNextID);
     }
+
+    
 
     public void onNextClick() {
         if (nextID == csFinishEnd) //某一个话题结束
@@ -203,29 +220,34 @@ public class roleAIManager
         //按角色行动顺序，从1-6 分别自述
         roleOrdAct = 1;
         saySelf = true;
+        InFreeTime = false;
         talkSelf();
     }
 
     public void talkSelf() {
-        
-        if (roleOrdAct > 6) {
+
+        if (roleOrdAct > 6)
+        {
             Debug.Log("allTalkSelf");
-            noteMsg.instance.noteUI.msgNoteBottom("下一章节内容制作中");
-            return ;
-        }
-
-        int tmpRoleID = roleChaptActOrdTab._instance().GetValueFromKey<int, int>
-                      (roleChaptActOrdTab.csActOrder, roleOrdAct, roleChaptActOrdTab.csRoleID, 0);
-        roleOrdAct++;
-
-        if (tmpRoleID == gameDataManager.instance.roleID)
-        {  //玩家自己的
-            //doThing(tmpRoleID, -1);
-            talkSelf();  //暂时当作玩家自己已说
+            //noteMsg.instance.noteUI.msgNoteBottom("下一章节内容制作中");
+            startFreeTime(); //切换成相互PK
         }
         else {
-            doThing(tmpRoleID, -1);
+            int tmpRoleID = roleChaptActOrdTab._instance().GetValueFromKey<int, int>
+                          (roleChaptActOrdTab.csActOrder, roleOrdAct, roleChaptActOrdTab.csRoleID, 0);
+            roleOrdAct++;
+
+            if (tmpRoleID == gameDataManager.instance.roleID)
+            {  //玩家自己的
+               //doThing(tmpRoleID, -1);
+                talkSelf();  //暂时当作玩家自己已说
+            }
+            else
+            {
+                doThing(tmpRoleID, -1);
+            }
         }
+        
 
     }
 

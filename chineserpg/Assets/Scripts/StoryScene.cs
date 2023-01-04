@@ -87,7 +87,7 @@ public class StoryScene : MonoBehaviour
         btnInit();
         showContentText(nextStoryID);
         chaptInit = false;
-        roleAIManager.instance.chaptFreeTimeInit(gameDataManager.instance.chaptID, contentTextPut);
+        roleAIManager.instance.chaptFreeTimeInit(gameDataManager.instance.chaptID, contentTextPut, titleRoleTxt);
     }
 
     private void showVideo(int lid) {
@@ -206,8 +206,8 @@ public class StoryScene : MonoBehaviour
 
                 getClueInStory();
                 toolBarManager.instance.topBar.showMission(true);
-                roleAIManager.instance.startFreeTime();
-                //roleAIManager.instance.talkSelfStart();
+               // roleAIManager.instance.startFreeTime();
+                roleAIManager.instance.talkSelfStart();
             }
             else {
               //  roleAIManager.instance.talkSelf();
@@ -270,7 +270,7 @@ public class StoryScene : MonoBehaviour
     //UI上的next按扭触发剧情
     public void showUINextContentText() {
         //判断是否自由行动时间
-        if (roleAIManager.instance.isFreeTimeNow()) {
+        if (roleAIManager.instance.isAITimeNow()) {
             roleAIManager.instance.onNextClick();
         }
         else
