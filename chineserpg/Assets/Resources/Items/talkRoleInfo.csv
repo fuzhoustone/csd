@@ -37,3 +37,5 @@ ID,roleID,tarRoleID,talkStortyID,priority
 36,7,4,36,36
 37,7,5,37,37
 38,7,6,38,38
+39,7,3,41,39
+40,4,2,42,40

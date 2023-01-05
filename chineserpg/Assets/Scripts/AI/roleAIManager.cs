@@ -19,7 +19,7 @@ public class roleAIManager
     }
 
     //章节最大活动时间
-    public const int ciChaptMaxTime = 5;
+    public const int ciChaptMaxTime = 10;
     public int freeTime;
     public int chaptID;
 
@@ -161,11 +161,15 @@ public class roleAIManager
             tmpRoleInfo.SetBool(talkRoleInfoGetTab.csIsUse, true);
             talkRoleInfoGetTab._instance().SaveFile();
 
+            //某个话题被提到引发新的话题
+            talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(tmpTalkStoryID);
+
             CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(tmpTalkStoryID);
             talkStoryUI(tmpStoryRow, lRoleID); //UI展现话题， 等UI上的onclick事件触发后续
         }
     }
 
+    //lRoleID：说话人的ID
     public void talkStoryUI(CSVRow talkStoryRow, int lRoleID = -1) {
         string msg = talkStoryRow.GetString(talkStoryTab.csContentCn);
         UIContxt.setContext(msg);
@@ -194,7 +198,11 @@ public class roleAIManager
                 talkSelf();
             }
         }
-        else { //暂时不测
+        else {
+            //某个话题被提到引发新的话题
+            talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(nextID);
+
+            //UI展现当前话题
             CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(nextID);
             talkStoryUI(tmpStoryRow);
         }

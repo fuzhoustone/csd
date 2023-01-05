@@ -92,6 +92,15 @@ public class talkRoleInfoGetTab : CsdTTable
 
     }
 
+    public bool hasRow(int lroleID, int talRoleInfoID) {
+        bool res = false;
+        CSVRow tmpRow = GetRowFromKey2<int, int>(csRoleID,lroleID, csTalkRoleInfoID, talRoleInfoID);
+        if (tmpRow != null) {
+            res = true;
+        }
+        return res;
+    }
+
     public void AddRow(int lroleID,int talRoleInfoID)
     {
         int newID = GetTableLength();
@@ -105,3 +114,4 @@ public class talkRoleInfoGetTab : CsdTTable
         this.AddCSVRow(tmpLst);
     }
 }
+

@@ -16,32 +16,35 @@ public class talkRoleInfoTalkingGetRuleTab : CsdTTable
         return instance;
     }
     //roleID	tarRoleID	talkRoleInfoID
-    public const string csRoleID = "roleID";
-    public const string csTarRoleID = "tarRoleID";
-    public const string csSayTalkRoleInfoID = "sayTalkRoleInfoID";
+   // public const string csRoleID = "roleID";
+   // public const string csTarRoleID = "tarRoleID";
+    public const string csSayTalkStoryID = "sayTalkStoryID";
     public const string csTalkRoleInfoID = "talkRoleInfoID";
     public void initParam()
     {
         addKeyName(csID);
-        addKeyName(csRoleID);
-        addKeyName(csTarRoleID);
-        addKeyName(csSayTalkRoleInfoID);
+      //  addKeyName(csRoleID);
+      //  addKeyName(csTarRoleID);
+        addKeyName(csSayTalkStoryID);
         addKeyName(csTalkRoleInfoID);
     }
 
-    public void checkAddTalkRoleInfo(int lRoleID,int ltarID, int lSaytalkID) {
+    //某个话题被提到,引发新的话题
+    public void checkAddTalkRoleInfo(int lSayTalkStoryID) {
        // CSVRow res = null;
         for (int i = 0; i < m_elements.Count; ++i)
         {
 
-            if ((m_elements[i].GetInt(csRoleID) == lRoleID) &&
-              (m_elements[i].GetInt(csTarRoleID) == ltarID) &&
-              (m_elements[i].GetInt(csSayTalkRoleInfoID) == lSaytalkID))
+            //if ((m_elements[i].GetInt(csRoleID) == lRoleID) &&
+              //(m_elements[i].GetInt(csTarRoleID) == ltarID) &&
+            if  (m_elements[i].GetInt(csSayTalkStoryID) == lSayTalkStoryID)
             {
                 int tmpTalkID = m_elements[i].GetInt(csTalkRoleInfoID);
                 int tmpRoleID = talkRoleInfoTab._instance().GetValueFromID<int>(tmpTalkID, talkRoleInfoTab.csRoleID, -1);
-                if (tmpRoleID > 0)
+                if( (tmpRoleID > 0) && 
+                    (talkRoleInfoGetTab._instance().hasRow(tmpRoleID, tmpTalkID) == false))
                 {
+
                     talkRoleInfoGetTab._instance().AddRow(tmpRoleID, tmpTalkID);
                 }
             }
@@ -49,6 +52,7 @@ public class talkRoleInfoTalkingGetRuleTab : CsdTTable
             
         }
 
+        talkRoleInfoGetTab._instance().SaveFile();
     }
 
 

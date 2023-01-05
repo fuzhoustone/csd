@@ -198,25 +198,18 @@ public class StoryScene : MonoBehaviour
         gameDataManager.instance.storyID = nowStoryid;
         if(nowStoryid == ciShowTalkScene) //固定剧情结束，进入聊天环节, 
         {
-            //每章节限制调用一次
-            // SceneManager.LoadSceneAsync(csTalkSceneName);
-            if (chaptInit == false)
+            if (chaptInit == false)       //每章节限制调用一次
             {
                 chaptInit = true;
 
                 getClueInStory();
                 toolBarManager.instance.topBar.showMission(true);
-               // roleAIManager.instance.startFreeTime();
-                roleAIManager.instance.talkSelfStart();
+                roleAIManager.instance.talkSelfStart(); //自述完成后，开始自由PK
+                // roleAIManager.instance.startFreeTime();
             }
-            else {
-              //  roleAIManager.instance.talkSelf();
-            }
-            
         }
         else
         {
-
 
             toolBarManager.instance.topBar.showMission(false);
             contextPanel.SetActive(true);
