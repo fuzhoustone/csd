@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,6 +22,10 @@ public class StoryScene : MonoBehaviour
 
     public GameObject btnPanel;
     public GameObject contextPanel;
+  
+    [SerializeField]
+    private GameObject btnTalkSelPal;
+
     public Button conNext;
 
     [SerializeField]
@@ -87,48 +92,8 @@ public class StoryScene : MonoBehaviour
         btnInit();
         showContentText(nextStoryID);
         chaptInit = false;
-        roleAIManager.instance.chaptFreeTimeInit(gameDataManager.instance.chaptID, contentTextPut, titleRoleTxt);
-    }
-
-    private void showVideo(int lid) {
-        
-        string fileName = StoryVideoTab._instance().GetValueFromKey<int, string>(
-                                                        StoryVideoTab.csOptionID, lid,
-                                                        StoryVideoTab.csFileName, "");
-        //string msg = tmpRow.GetString(StoryRelationTab.csContentCN);
-        //ContentText.text = stringReplace(msg);
-
-
-        /*
-        //是否自动保存
-        int isAutoSave = tmpRow.GetInt(StoryRelationTab.csIsAutoSave);
-        if (isAutoSave == 1)
-        {
-            autoSaveData.instance().saveData(storyID);
-        }
-        
-        nextStoryID = tmpRow.GetInt(StoryRelationTab.csNextID);
-        if (nextStoryID == 0)
-        { //出现选项的剧情
-            showTalkSel(nowStoryid);
-        }
-        
-        int tmpIsRoleSay = tmpRow.GetInt(StoryRelationTab.csIsRoleSay);
-        if (tmpIsRoleSay == 1) //角色说的话
-        {
-            //判断角色是否发生改变
-        }
-        else
-        { //背景傍白
-            //角色头像是否要隐蔽
-        }
-
-        int tmpIsChangeBgScene = tmpRow.GetInt(StoryRelationTab.csNeedChangeBg);
-        if (tmpIsChangeBgScene == 1) //场景需要切换
-        {
-            showBgScene(nowStoryid);
-        }
-        */
+        roleAIManager.instance.chaptFreeTimeInit(gameDataManager.instance.chaptID, contentTextPut, titleRoleTxt, 
+                                                  showOptionSel, btnInit, showTalkSel);
     }
 
     private void btnClick(int lStoryID,int lVideoID) {
@@ -269,29 +234,56 @@ public class StoryScene : MonoBehaviour
         else
             showContentText(nextStoryID);
     }
-    
-    //显示对话选择
-    public void showTalkSel(int talkID) {
-        btnInit();
-        List<storyOptionTab.optionObj> optionLst = storyOptionTab._instance().getOptionLst(talkID);
-       // List<string> btnText = new List<string>();
-        for (int i = 0; i < optionLst.Count; i++) {
-           storyOptionTab.optionObj tmpObj = optionLst[i];
-            
-           Button tmpBtn = btnLst[i];
-           Transform tmpChild = tmpBtn.transform.GetChild(0);
-           Text tmpBtnText = tmpChild.GetComponent<Text>();
-           tmpBtnText.text = stringReplace(tmpObj.optionStrCn);
-           tmpBtn.gameObject.SetActive(true);
-           tmpBtn.onClick.RemoveAllListeners();
-           tmpBtn.onClick.AddListener(delegate (){
-           btnClick(tmpObj.nextStoryID,tmpObj.videoID);
-           }
-            );
-           
 
+
+    //传入 ID及文字列表， 触发btnClick事件
+
+    public void showOptionSel(List<storyOptionTab.optionObj> optionLst, 
+                               Action<int,int> pAction)
+    {
+        btnInit();
+        for (int i = 0; i < optionLst.Count; i++)
+        {
+            storyOptionTab.optionObj tmpObj = optionLst[i];
+
+            Button tmpBtn = btnLst[i];
+            Transform tmpChild = tmpBtn.transform.GetChild(0);
+            Text tmpBtnText = tmpChild.GetComponent<Text>();
+            tmpBtnText.text = stringReplace(tmpObj.optionStrCn);
+            tmpBtn.gameObject.SetActive(true);
+            tmpBtn.onClick.RemoveAllListeners();
+            tmpBtn.onClick.AddListener(delegate () {
+                pAction(tmpObj.nextStoryID, tmpObj.noteID);
+            }
+             );
         }
         btnPanel.SetActive(true);
+        conNext.gameObject.SetActive(false);
+    }
+
+    //显示对话选择
+    private void showTalkSel(int talkID) {
+        List<storyOptionTab.optionObj> optionLst = storyOptionTab._instance().getOptionLst(talkID);
+        showOptionSel(optionLst, btnClick);
+    }
+
+
+    public void btnTalkRole() {  //发表言论
+        btnTalkSelPal.SetActive(false);
+        //新增talkScene场景，选择话题
+        sceneName.instance.changeScene(sceneName.csTalkScene);
+    }
+
+    public void btnNoTalkRole() { //不发表言论
+        btnTalkSelPal.SetActive(false);
+        //AI自由PK发言继续
+        roleAIManager.instance.AITurn();
+
+    }
+
+    //UI展现选项，由玩家决定是否发言
+    public void showTalkSel() {
+        btnTalkSelPal.SetActive(true);
     }
 
 }

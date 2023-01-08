@@ -17,14 +17,16 @@ public class talkStoryTab : CsdTTable
     }
 
     public const string csNextID = "nextID";
-    public const string csTalkTxt = "talkTxt";
+    public const string csTalkTxtCn = "talkTxtCn";
+    public const string csTalkTxtEn = "talkTxtEn";
     public const string csContentCn = "contentCn";
     public const string csContentEn = "contentEn";
     public void initParam()
     {
         addKeyName(csID);
         addKeyName(csNextID);
-        addKeyName(csTalkTxt);
+        addKeyName(csTalkTxtCn);
+        addKeyName(csTalkTxtEn); 
         addKeyName(csContentCn);
         addKeyName(csContentEn);
     }

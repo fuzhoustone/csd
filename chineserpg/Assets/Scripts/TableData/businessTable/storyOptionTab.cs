@@ -32,7 +32,7 @@ public class storyOptionTab : CsdTTable
         public string optionStrEn { get; set; }
         public int nextStoryID { get; set; }
 
-        public int videoID { get; set; }
+        public int noteID { get; set; }
     }
 
     public List<optionObj> getOptionLst(int lId) {
@@ -43,10 +43,10 @@ public class storyOptionTab : CsdTTable
             if (m_elements[i].GetInt(csStoryID) == lId)
             {
                 optionObj tmpObj = new optionObj();
-                tmpObj.videoID = m_elements[i].GetInt(csVideoID);
                 tmpObj.nextStoryID = m_elements[i].GetInt(csNextStoryID);
                 tmpObj.optionStrCn = m_elements[i].GetString(csOptionCn);
                 tmpObj.optionStrEn = m_elements[i].GetString(csOptionEn);
+                tmpObj.noteID = 0; // m_elements[i].GetInt(csVideoID);
 
                 res.Add(tmpObj);
             }
