@@ -28,10 +28,10 @@ public class clueBtnUI : MonoBehaviour
     private const float cfImageHeight = 61.0f;
  
     private Action<int> pEvent;
-    public int pTalkId;
+    public int pTalkInfoLstId;
 
     public void initData(int lId,string lKeyName) {
-        pTalkId = lId;
+        pTalkInfoLstId = lId;
         pText.text = lKeyName;
         setSelActive(false);
     }

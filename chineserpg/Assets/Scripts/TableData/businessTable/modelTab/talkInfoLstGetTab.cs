@@ -1,12 +1,12 @@
 ﻿
-public class talkInfoGetTab : CsdTTable
+public class talkInfoLstGetTab : CsdTTable
 {
-    private static talkInfoGetTab instance = null;
-    public static talkInfoGetTab _instance()
+    private static talkInfoLstGetTab instance = null;
+    public static talkInfoLstGetTab _instance()
     {
         if (instance == null)
         {
-            instance = new talkInfoGetTab();
+            instance = new talkInfoLstGetTab();
             instance.initParam();
         }
         return instance;
@@ -14,16 +14,16 @@ public class talkInfoGetTab : CsdTTable
    
 
     //玩家获得的话题表
-    public const string csTalkID = "talkID"; 
-    public const string csSayRoleIDLst = "roleIDLst"; //和哪些人物说过
+    public const string csTalkInfoLstID = "talkInfoLstID"; 
+    public const string csSayRoleIDLst = "roleIDLst"; //和哪些人物已知
 
-    private const string csFileName = "talkInfoGet.csv";
+    private const string csFileName = "talkInfoLstGet.csv";
     private const string csSplitID = "_";
     // private string csvFilePath;
     public void initParam()
     {
         addKeyName(csID);
-        addKeyName(csTalkID);
+        addKeyName(csTalkInfoLstID);
         addKeyName(csSayRoleIDLst);
     }
 
@@ -34,7 +34,7 @@ public class talkInfoGetTab : CsdTTable
 
     public bool isSayByRoleID(int talkID,int roleID) {
         bool res = false;
-        CSVRow tmpRow = GetRowFromKeyVal(csTalkID, talkID.ToString());
+        CSVRow tmpRow = GetRowFromKeyVal(csTalkInfoLstID, talkID.ToString());
         if (tmpRow != null) {
             string roleLst = tmpRow.GetString(csSayRoleIDLst); //获得roleID列表
             res = hasRole(roleID, roleLst);
@@ -59,7 +59,7 @@ public class talkInfoGetTab : CsdTTable
     }
 
     public void addSayRoleToLst(int talkID, int roleID) {
-        CSVRow tmpRow = GetRowFromKeyVal(csTalkID, talkID.ToString());
+        CSVRow tmpRow = GetRowFromKeyVal(csTalkInfoLstID, talkID.ToString());
         if (tmpRow != null)
         {
             string roleLst = tmpRow.GetString(csSayRoleIDLst); //获得roleID列表
@@ -82,7 +82,7 @@ public class talkInfoGetTab : CsdTTable
         string[] tmpLst = new string[3];
         //this.data.m_columnNameIndexer.ColumnCount = 4
         tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csID)] = newID.ToString();
-        tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csTalkID)] = lTalkID.ToString();
+        tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csTalkInfoLstID)] = lTalkID.ToString();
         tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csSayRoleIDLst)] = "";
        
         this.AddCSVRow(tmpLst);

@@ -145,10 +145,8 @@ public class StoryScene : MonoBehaviour
 
     }
 
-    private void getClueInStory() {
-        //根据当前章节及角色自动获得线索
-        //gameDataManager.instance.chaptID;
-        //gameDataManager.instance.roleID;
+    private void getClueAndTalkLstInStory() {
+        //根据当前章节及角色自动获得线索及 主动聊天话题
         List<int> tmpClueLst = clueLstTab._instance().getClueLst(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
         for (int i = 0; i < tmpClueLst.Count; i++) {
             int tmpID = tmpClueLst[i];
@@ -157,6 +155,9 @@ public class StoryScene : MonoBehaviour
         clueLstGetTab._instance().SaveFile();
         noteMsg.instance.noteUI.msgNoteBottom("你获得新的线索");
     }
+
+
+
     
     //显示剧情内容
     public void showContentText(int nowStoryid) {
@@ -167,7 +168,7 @@ public class StoryScene : MonoBehaviour
             {
                 chaptInit = true;
 
-                getClueInStory();
+                getClueAndTalkLstInStory();
                 toolBarManager.instance.topBar.showMission(true);
                 roleAIManager.instance.talkSelfStart(); //自述完成后，开始自由PK
                 // roleAIManager.instance.startFreeTime();

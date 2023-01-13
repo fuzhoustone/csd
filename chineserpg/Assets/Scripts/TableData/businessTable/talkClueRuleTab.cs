@@ -1,11 +1,11 @@
-﻿public class talkInfoRuleTab : CsdTTable
+﻿public class talkClueRuleTab : CsdTTable
 {
-    private static talkInfoRuleTab instance = null;
-    public static talkInfoRuleTab _instance()
+    private static talkClueRuleTab instance = null;
+    public static talkClueRuleTab _instance()
     {
         if (instance == null)
         {
-            instance = new talkInfoRuleTab();
+            instance = new talkClueRuleTab();
             instance.initParam();
         }
         return instance;

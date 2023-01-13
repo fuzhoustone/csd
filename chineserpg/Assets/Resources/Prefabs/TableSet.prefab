@@ -49,18 +49,12 @@ MonoBehaviour:
   roleFacePic: {fileID: 4900000, guid: 4d6783ff01e647a4d87567c9ab506855, type: 3}
   talkOption: {fileID: 4900000, guid: 66a00703bc5fb63439acb213eccd1c2c, type: 3}
   roleNameLst: {fileID: 4900000, guid: 9920ca0711258764a91d177accdaf454, type: 3}
-  storyVideo: {fileID: 4900000, guid: ba33a40c67af49b469f53655a139c704, type: 3}
-  roleProperty: {fileID: 4900000, guid: 94865b2d8c18f0e4a906a04c9e76f574, type: 3}
-  roleTrust: {fileID: 4900000, guid: 4a36920dace32d241a933469743de858, type: 3}
-  eventDamage: {fileID: 4900000, guid: dcde54ab3f5fd4e44a4b3c6841c28140, type: 3}
-  eventList: {fileID: 4900000, guid: e81c2107e68944344ab51b0696762cb5, type: 3}
-  eventSystemType: {fileID: 4900000, guid: 5493d044eb63aa24a9bc7a7689fdc1d2, type: 3}
   clueLst: {fileID: 4900000, guid: 0cf1d97ceb7d8e447a81ec51d93921f2, type: 3}
   missionLst: {fileID: 4900000, guid: 650c00d238f8fdc42baf7e58ce5cebb0, type: 3}
   talkInfoLst: {fileID: 4900000, guid: 3eabe1d772cf39247ae1b6ab794bfe2a, type: 3}
   talkInfoOptionLst: {fileID: 4900000, guid: 6f5bc0bec912fd24b895ea529d967b79, type: 3}
   roleStoryStartRel: {fileID: 4900000, guid: 23da04badcb602245b568c42ade46118, type: 3}
-  talkInfoRule: {fileID: 4900000, guid: 9872f895aaa7e1f49b52b677189a1c82, type: 3}
+  talkclueRule: {fileID: 4900000, guid: 9872f895aaa7e1f49b52b677189a1c82, type: 3}
   roleRelChange: {fileID: 4900000, guid: 82e38026ee234a44cbd50583a8323180, type: 3}
   talkRoleInfo: {fileID: 4900000, guid: f0cf31cd210fe38449347cdb75677c8d, type: 3}
   talkStory: {fileID: 4900000, guid: be5a2c72b3dcbe448866b5b6ee4487e3, type: 3}

@@ -105,8 +105,8 @@ public class StartScene : MonoBehaviour
         clueLstGetTab._instance().checkAndNewFile();
         clueLstGetTab._instance().LoadFile();
 
-        talkInfoGetTab._instance().checkAndNewFile();
-        talkInfoGetTab._instance().LoadFile();
+        talkInfoLstGetTab._instance().checkAndNewFile();
+        talkInfoLstGetTab._instance().LoadFile();
 
         roleFriendTab._instance().checkAndNewFile();
         roleFriendTab._instance().LoadFile();

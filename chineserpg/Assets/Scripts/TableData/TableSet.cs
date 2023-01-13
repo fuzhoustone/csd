@@ -29,13 +29,13 @@ public class TableSet : MonoBehaviour
     public TextAsset roleFacePic;
     public TextAsset talkOption;
     public TextAsset roleNameLst;
-    public TextAsset storyVideo;
+  //  public TextAsset storyVideo;
 
-    public TextAsset roleProperty;
-    public TextAsset roleTrust;
-    public TextAsset eventDamage;
-    public TextAsset eventList;
-    public TextAsset eventSystemType;
+  //  public TextAsset roleProperty;
+  //  public TextAsset roleTrust;
+  //  public TextAsset eventDamage;
+  //  public TextAsset eventList;
+//    public TextAsset eventSystemType;
     public TextAsset clueLst;
   //  public TextAsset clueLstGet;
     public TextAsset missionLst;
@@ -44,7 +44,7 @@ public class TableSet : MonoBehaviour
     public TextAsset roleStoryStartRel;
 
     //public TextAsset talkInfoGet;
-    public TextAsset talkInfoRule;
+    public TextAsset talkclueRule;
 
     public TextAsset roleRelChange;
 
@@ -88,48 +88,42 @@ public class TableSet : MonoBehaviour
         {
             storyOptionTab._instance().Load(stream);
         }
+        /*
+                using (var stream = new MemoryStream(storyVideo.bytes))
+                {
+                    StoryVideoTab._instance().Load(stream);
+                }
 
-        using (var stream = new MemoryStream(storyVideo.bytes))
-        {
-            StoryVideoTab._instance().Load(stream);
-        }
 
-        /**********/
-        using (var stream = new MemoryStream(roleProperty.bytes))
-        {
-            rolePropertyTab._instance().Load(stream);
-        }
+                using (var stream = new MemoryStream(roleProperty.bytes))
+                {
+                    rolePropertyTab._instance().Load(stream);
+                }
 
-        using (var stream = new MemoryStream(roleTrust.bytes))
-        {
-            roleTrustTab._instance().Load(stream);
-        }
+                using (var stream = new MemoryStream(roleTrust.bytes))
+                {
+                    roleTrustTab._instance().Load(stream);
+                }
+                
+          using (var stream = new MemoryStream(eventDamage.bytes))
+          {
+              eventDamageTab._instance().Load(stream);
+          }
 
-        using (var stream = new MemoryStream(eventDamage.bytes))
-        {
-            eventDamageTab._instance().Load(stream);
-        }
+          using (var stream = new MemoryStream(eventList.bytes))
+          {
+              eventListTab._instance().Load(stream);
+          }
 
-        using (var stream = new MemoryStream(eventList.bytes))
-        {
-            eventListTab._instance().Load(stream);
-        }
-
-        using (var stream = new MemoryStream(eventSystemType.bytes))
-        {
-            eventSystemTypeTab._instance().Load(stream);
-        }
-
+          using (var stream = new MemoryStream(eventSystemType.bytes))
+          {
+              eventSystemTypeTab._instance().Load(stream);
+          }
+        */
         using (var stream = new MemoryStream(clueLst.bytes))
         {
             clueLstTab._instance().Load(stream);
         }
-
-        //using (var stream = new MemoryStream(clueLstGet.bytes))
-        //{
-        
-           
-        //}
 
         using (var stream = new MemoryStream(missionLst.bytes))
         {
@@ -151,9 +145,9 @@ public class TableSet : MonoBehaviour
             roleStoryStartRelTab._instance().Load(stream);
         }
 
-        using (var stream = new MemoryStream(talkInfoRule.bytes))
+        using (var stream = new MemoryStream(talkclueRule.bytes))
         {
-            talkInfoRuleTab._instance().Load(stream);
+            talkClueRuleTab._instance().Load(stream);
         }
 
 
@@ -165,7 +159,7 @@ public class TableSet : MonoBehaviour
         }
 
         clueLstGetTab._instance().InifDefFile();
-        talkInfoGetTab._instance().InifDefFile();
+        talkInfoLstGetTab._instance().InifDefFile();
         roleFriendTab._instance().InifDefFile();
         roleActTab._instance().InifDefFile();
         talkRoleInfoGetTab._instance().InifDefFile();
