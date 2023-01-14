@@ -79,14 +79,16 @@ public class StartScene : MonoBehaviour
     }
 
     //切换到游戏场景
-    private void changeGameScene(int roleID) { 
-
+    private void changeGameScene(int roleID) {
+        //noteMsg.instance.noteUI.msgNoteBottom("newGameDataInit start roleid="+roleID.ToString());
         newGameDataInit(roleID);
-
+        //noteMsg.instance.noteUI.msgNoteBottom("newGameDataInit end");
         // toolBarManager.instance.hideSelRoleDlg();
         sceneName.instance.changeSceneSingle(sceneName.csStoryScene);
+       // noteMsg.instance.noteUI.msgNoteBottom("storyScene finish");
         toolBarManager.instance.showTopBar();
         toolBarManager.instance.topBar.setBackBtnVisible(false);
+       // noteMsg.instance.noteUI.msgNoteBottom("toolBarManager finish");
     }
 
     /// <summary>
@@ -117,10 +119,12 @@ public class StartScene : MonoBehaviour
         talkRoleInfoGetTab._instance().checkAndNewFile();
         talkRoleInfoGetTab._instance().LoadFile();
 
+        //noteMsg.instance.noteUI.msgNoteBottom("newGameDataInit filefinish");
 
         talkRoleInfoChaptGetRuleTab._instance().getTalkRoleInfoFromChapt(gameDataManager.instance.chaptID);
-
-        //LoadDefFile  saveFile
+        talkInfoLstGetRuleTab._instance().getTalkLstFromChapt(gameDataManager.instance.chaptID);
+        //noteMsg.instance.noteUI.msgNoteBottom("newGameDataInit finish");
+        
     }
 
 

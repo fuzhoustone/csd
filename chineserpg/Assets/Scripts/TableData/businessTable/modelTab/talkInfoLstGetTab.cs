@@ -44,7 +44,7 @@ public class talkInfoLstGetTab : CsdTTable
 
     private bool hasRole(int roleID, string roleLst) {
         bool res = false;
-        if (roleLst.Equals("") != false) {
+        if (roleLst.Equals("") != true) {
             string[] tmpLst = roleLst.Split(csSplitID.ToCharArray());
             for (int i = 0; i < tmpLst.Length; i++) {
                 if (int.Parse(tmpLst[i]) == roleID) {
@@ -76,13 +76,13 @@ public class talkInfoLstGetTab : CsdTTable
         return res;
     }
 
-    public void AddRow(int lTalkID)
+    public void AddRow(int lTalkLstID)
     {
         int newID = GetTableLength();
         string[] tmpLst = new string[3];
         //this.data.m_columnNameIndexer.ColumnCount = 4
         tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csID)] = newID.ToString();
-        tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csTalkInfoLstID)] = lTalkID.ToString();
+        tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csTalkInfoLstID)] = lTalkLstID.ToString();
         tmpLst[this.data.m_columnNameIndexer.GetColumnIndex(csSayRoleIDLst)] = "";
        
         this.AddCSVRow(tmpLst);

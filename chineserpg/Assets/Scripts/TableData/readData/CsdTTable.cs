@@ -176,7 +176,10 @@ public class CsdTTable
 
     public void checkAndNewFile() //检查并覆盖新建文件
     {
-
+        if (File.Exists(modeFileName) == false) { 
+            
+        }
+        else
        // if (File.Exists(csvFileName) == false)
        // {
             File.Copy(modeFileName, csvFileName, true); //覆盖模式
@@ -191,7 +194,8 @@ public class CsdTTable
             Directory.CreateDirectory(tarPath);
         }
 
-        modeFileName = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
+        //modeFileName = Application.dataPath + "/Resources/Items/modelItems/" + pFileName;
+        modeFileName = Application.streamingAssetsPath+ "/Resources/Items/modelItems/" + pFileName;
         csvFileName = tarPath + "/" + pFileName;
         
     }

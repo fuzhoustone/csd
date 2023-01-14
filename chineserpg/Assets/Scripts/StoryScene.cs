@@ -54,7 +54,7 @@ public class StoryScene : MonoBehaviour
     }
 
     public void initParam() {
-        TableSet.instance.initData();
+       // TableSet.instance.initData();
         toolBarManager.instance.showTopBar();
 
         // Debug.LogWarning("storyscene start");

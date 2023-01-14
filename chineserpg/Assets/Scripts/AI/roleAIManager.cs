@@ -219,6 +219,7 @@ public class roleAIManager
         int tmpTalkStoryID = talkRoleInfoTab._instance().GetValueFromID<int>(tmpTalkID, talkRoleInfoTab.csTalkStortyID, -1);
         //某个话题被提到引发新的话题
         talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(tmpTalkStoryID);
+        talkInfoLstGetRuleTab._instance().checkAddTalkLst(tmpTalkStoryID);
 
         //UI展现话题， 等UI上的onclick事件触发后续
         CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(tmpTalkStoryID);
@@ -271,6 +272,7 @@ public class roleAIManager
         else {
             //某个话题被提到引发新的话题
             talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(nextID);
+            talkInfoLstGetRuleTab._instance().checkAddTalkLst(nextID);
 
             //UI展现当前话题
             CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(nextID);

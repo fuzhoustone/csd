@@ -52,6 +52,7 @@ MonoBehaviour:
   clueLst: {fileID: 4900000, guid: 0cf1d97ceb7d8e447a81ec51d93921f2, type: 3}
   missionLst: {fileID: 4900000, guid: 650c00d238f8fdc42baf7e58ce5cebb0, type: 3}
   talkInfoLst: {fileID: 4900000, guid: 3eabe1d772cf39247ae1b6ab794bfe2a, type: 3}
+  talkInfoLstGetRule: {fileID: 4900000, guid: 7dcc6d7e5bf1b8443b727f5b2c39be28, type: 3}
   talkInfoOptionLst: {fileID: 4900000, guid: 6f5bc0bec912fd24b895ea529d967b79, type: 3}
   roleStoryStartRel: {fileID: 4900000, guid: 23da04badcb602245b568c42ade46118, type: 3}
   talkclueRule: {fileID: 4900000, guid: 9872f895aaa7e1f49b52b677189a1c82, type: 3}

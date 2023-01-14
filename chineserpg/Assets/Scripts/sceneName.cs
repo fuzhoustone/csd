@@ -14,7 +14,10 @@ public class sceneName
     {
         get {
             if (_instance == null)
+            {
                 _instance = new sceneName();
+                _instance.initParam();
+            }
             return _instance;
         }
     }
