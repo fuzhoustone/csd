@@ -80,15 +80,13 @@ public class StartScene : MonoBehaviour
 
     //切换到游戏场景
     private void changeGameScene(int roleID) {
-        //noteMsg.instance.noteUI.msgNoteBottom("newGameDataInit start roleid="+roleID.ToString());
         newGameDataInit(roleID);
-        //noteMsg.instance.noteUI.msgNoteBottom("newGameDataInit end");
-        // toolBarManager.instance.hideSelRoleDlg();
+
         sceneName.instance.changeSceneSingle(sceneName.csStoryScene);
-       // noteMsg.instance.noteUI.msgNoteBottom("storyScene finish");
         toolBarManager.instance.showTopBar();
-        toolBarManager.instance.topBar.setBackBtnVisible(false);
-       // noteMsg.instance.noteUI.msgNoteBottom("toolBarManager finish");
+        toolBarManager.instance.topBar.StorySceneTopBtnConfig();
+        
+
     }
 
     /// <summary>

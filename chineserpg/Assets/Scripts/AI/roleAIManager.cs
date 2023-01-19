@@ -6,6 +6,17 @@ using UnityEngine.UI;
 
 public class roleAIManager 
 {
+    public enum talkState { 
+       storyShow, //固定剧情
+       selOption,  //固定剧情出选项时
+       talkStory,  //非原创剧情
+       talkSelfAI, //AI自述时
+       talkSelfPlayer, //玩家自述时
+       talkPKAI,  //AIPK时
+       talkPKPlayer,  //玩家公聊PK时
+       talkPlayerFreedom  //玩家自由行动时
+    }
+
     private static roleAIManager _instance;
     public static roleAIManager instance
     {
@@ -37,13 +48,27 @@ public class roleAIManager
 
     private int roleOrdAct = 0;
     private bool saySelf = false;
-    
+
+    private talkState nowTalkState;
+
     public delegate void storyBtnClick(List<storyOptionTab.optionObj> optionLst,
                                           Action<int, int> pAction);
 
     private storyBtnClick optBtnClick;
     private Action hideOpt;
     private Action showTalkSel;
+
+    public void setTalkState(talkState lState) {
+        if (nowTalkState != lState) {
+            nowTalkState = lState;
+
+            toolBarManager.instance.topBar.StorySceneTopBtnConfig();
+        }
+    }
+
+    public talkState getTalkState() {
+        return nowTalkState;
+    }
 
     public bool isAITimeNow() {
         if (InFreeTime || saySelf)
@@ -139,20 +164,21 @@ public class roleAIManager
     }
 
 
-    public void chaptExec() { //AI自由PK的执行
+    public void chaptExec() { //公聊
         //UI展现选项， 玩家不行动  或 玩家行动
         //玩家行动，则调用talkScene
         if (freeTime % talkSelTime == 0)
         {
-            showTalkSel();
+            setTalkState(talkState.talkPKPlayer);
+            showTalkSel(); //玩家出选项，是否参与公聊
         }
         else {
-            //不行动，则AI行动 AITurn();
-            AITurn();
+            AITurn(); //AI公聊
         }
     }
 
     public void AITurn() {
+        setTalkState(talkState.talkPKAI);
         int tarRoleID = -1;
         int tmpRoleID =  getAIRoleTurn(ref tarRoleID);  //获取要行动的AIrole
         doThing(tmpRoleID, tarRoleID);
@@ -209,7 +235,7 @@ public class roleAIManager
     }
 
     //传入 talkRoleInfoGetTab的某一行, 说话人的ID
-    private void talkGetDoThing(CSVRow tmpRoleGet,int lRoleID) {
+    public void talkGetDoThing(CSVRow tmpRoleGet,int lRoleID) {
         tmpRoleGet.SetBool(talkRoleInfoGetTab.csIsUse, true); //设置某个话题已说
         talkRoleInfoGetTab._instance().SaveFile();
 
@@ -217,13 +243,8 @@ public class roleAIManager
         int tmpTalkID = tmpRoleGet.GetInt(talkRoleInfoGetTab.csTalkRoleInfoID);
         //获得talkstoryID
         int tmpTalkStoryID = talkRoleInfoTab._instance().GetValueFromID<int>(tmpTalkID, talkRoleInfoTab.csTalkStortyID, -1);
-        //某个话题被提到引发新的话题
-        talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(tmpTalkStoryID);
-        talkInfoLstGetRuleTab._instance().checkAddTalkLst(tmpTalkStoryID);
-
-        //UI展现话题， 等UI上的onclick事件触发后续
-        CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(tmpTalkStoryID);
-        talkStoryUI(tmpStoryRow, lRoleID);
+        
+        talkStoryUI(tmpTalkStoryID, lRoleID);
     }
 
     private void doThing(int lRoleID, int lTarRoleID)
@@ -241,7 +262,15 @@ public class roleAIManager
     }
 
     //lRoleID：说话人的ID
-    public void talkStoryUI(CSVRow talkStoryRow, int lRoleID = -1) {
+    public void talkStoryUI(int lTalkStoryID,int lRoleID = -1) {
+        //某个话题被提到引发新的话题
+        talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(lTalkStoryID);
+        talkInfoLstGetRuleTab._instance().checkAddTalkLst(lTalkStoryID);
+
+        //UI展现当前话题
+        CSVRow talkStoryRow = talkStoryTab._instance().GetRowFromID(lTalkStoryID);
+
+
         string msg = talkStoryRow.GetString(talkStoryTab.csContentCn);
         UIContxt.setContext(msg);
 
@@ -270,13 +299,7 @@ public class roleAIManager
             }
         }
         else {
-            //某个话题被提到引发新的话题
-            talkRoleInfoTalkingGetRuleTab._instance().checkAddTalkRoleInfo(nextID);
-            talkInfoLstGetRuleTab._instance().checkAddTalkLst(nextID);
-
-            //UI展现当前话题
-            CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(nextID);
-            talkStoryUI(tmpStoryRow);
+            talkStoryUI(nextID);
         }
     }
 
@@ -313,17 +336,19 @@ public class roleAIManager
             startFreeTime(); //切换成相互PK
         }
         else {
+            
             int tmpRoleID = roleChaptActOrdTab._instance().GetValueFromKey<int, int>
                           (roleChaptActOrdTab.csActOrder, roleOrdAct, roleChaptActOrdTab.csRoleID, 0);
             roleOrdAct++;
 
             if (tmpRoleID == gameDataManager.instance.roleID)
             {  //玩家自己的
-                //talkSelf();  //暂时当作玩家自己已说
+                setTalkState(talkState.talkSelfPlayer);
                 showOptLst(); //UI展现，由玩家选择自述话题
             }
             else
-            {
+            { //AI自述
+                setTalkState(talkState.talkSelfAI);
                 doThing(tmpRoleID, -1);
             }
         }

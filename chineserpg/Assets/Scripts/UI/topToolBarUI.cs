@@ -12,7 +12,13 @@ public class topToolBarUI : MonoBehaviour
    // private roleInfoDlgUI infoDlg;
 
     [SerializeField]
-    private Button backBtn;
+    private Button backBtn; //返回按扭
+
+    [SerializeField]
+    private Button talkBtn; //公聊私聊按扭
+
+    [SerializeField]
+    private Button roleInfoBtn; //角色信息按扭
 
     [SerializeField]
     private Text chartTxt;
@@ -71,16 +77,20 @@ public class topToolBarUI : MonoBehaviour
     //显示角色信息
     public void showRoleInfo()
     {
-        //infoDlg.showUI();
         toolBarManager.instance.showRoleInfoDlg();
         setBackBtnVisible(true);
-        //if (infoDlg.activeSelf == false) {
-        //    infoDlg.SetActive(true);
-        //}
     }
 
     public void setBackBtnVisible(bool isVisible) {
         backBtn.gameObject.SetActive(isVisible);
+    }
+
+    public void setRoleInfoBtnVisible(bool isVis) {
+        roleInfoBtn.gameObject.SetActive(isVis);
+    }
+
+    public void setTalkBtnVisible(bool isVis) {
+        talkBtn.gameObject.SetActive(isVis);
     }
 
     //私聊界面
@@ -98,21 +108,26 @@ public class topToolBarUI : MonoBehaviour
     }
 
     public void changeToStartScene() {
-        hideAllDlg();
-        toolBarManager.instance.hidoTopBar();
+     //   hideAllDlg();
+        toolBarManager.instance.hideTopBar();
         sceneName.instance.changeSceneSingle(sceneName.csStartScene);
     }
 
-    private void hideAllDlg() {
-        //infoDlg.UIClose();
+    public void hideAllDlg() {
         toolBarManager.instance.hideRoleInfoDlg();
-        setBackBtnVisible(false);
+        
     }
 
     public void backBtnClick() {
         hideAllDlg();
         sceneName.instance.changeScene(sceneName.csStoryScene); //切换上一个场景，如果上一个场景不为空
-        
+        StorySceneTopBtnConfig();
+    }
+
+    public void StorySceneTopBtnConfig() {
+        setBackBtnVisible(false);
+        setTalkBtnVisible(gameDataManager.instance.isShowTalkBtn());
+        setRoleInfoBtnVisible(gameDataManager.instance.isShowRoleInfoBtn());
     }
 
 }

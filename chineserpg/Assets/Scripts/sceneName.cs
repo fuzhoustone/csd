@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,9 +24,10 @@ public class sceneName
     }
 
     private string oldSceneName;
-
+    public Action<int> pSceneCloseAction;
     private void initParam() {
         oldSceneName = "";
+        pSceneCloseAction = null;
     }
 
     private void setSceneActive(Scene tmpSce,bool pActive) {
@@ -41,6 +43,10 @@ public class sceneName
     public void changeSceneSingle(string sceName) {
         oldSceneName = sceName;
         SceneManager.LoadScene(sceName, LoadSceneMode.Single);
+    }
+
+    public void setSceneChangeAction(Action<int> lSceneAct = null) {
+        pSceneCloseAction = lSceneAct;
     }
 
     public void changeScene(string sceName) {

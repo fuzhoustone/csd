@@ -55,7 +55,7 @@ public class StoryScene : MonoBehaviour
 
     public void initParam() {
        // TableSet.instance.initData();
-        toolBarManager.instance.showTopBar();
+       // toolBarManager.instance.showTopBar();
 
         // Debug.LogWarning("storyscene start");
         if (btnLst != null)
@@ -96,7 +96,7 @@ public class StoryScene : MonoBehaviour
                                                   showOptionSel, btnInit, showTalkSel);
     }
 
-    private void btnClick(int lStoryID,int lVideoID) {
+    private void btnClick(int lStoryID,int lVideoID) { //选项点击
         autoSaveData.instance().saveKeyData(lStoryID);
         autoSaveData.instance().saveData(lStoryID);
 
@@ -176,6 +176,7 @@ public class StoryScene : MonoBehaviour
         }
         else
         {
+            roleAIManager.instance.setTalkState(roleAIManager.talkState.storyShow); 
 
             toolBarManager.instance.topBar.showMission(false);
             contextPanel.SetActive(true);
@@ -184,6 +185,10 @@ public class StoryScene : MonoBehaviour
 
 
             CSVRow tmpRow = StoryRelationTab._instance().GetRowFromID(nowStoryid);
+            if (tmpRow == null) {
+                noteMsg.instance.noteUI.msgNoteBottom("not find storyID:" + nowStoryid.ToString());
+                return ;
+            }
             string msg = tmpRow.GetString(StoryRelationTab.csContentCN);
             contentTextPut.setContext(msg);
 
@@ -266,13 +271,28 @@ public class StoryScene : MonoBehaviour
     private void showTalkSel(int talkID) {
         List<storyOptionTab.optionObj> optionLst = storyOptionTab._instance().getOptionLst(talkID);
         showOptionSel(optionLst, btnClick);
+
+        roleAIManager.instance.setTalkState(roleAIManager.talkState.selOption);
     }
 
 
     public void btnTalkRole() {  //发表言论
         btnTalkSelPal.SetActive(false);
-        //新增talkScene场景，选择话题
+        roleAIManager.instance.setTalkState(roleAIManager.talkState.selOption);
+        //进入talkScene场景，选择话题
         sceneName.instance.changeScene(sceneName.csTalkScene);
+        sceneName.instance.setSceneChangeAction(talkSceneOptSel);
+    }
+
+    private void talkSceneOptSel(int lTalkStoryId) {
+        sceneName.instance.changeScene(sceneName.csStoryScene);
+        toolBarManager.instance.topBar.StorySceneTopBtnConfig();
+
+       // CSVRow tmpStoryRow = talkStoryTab._instance().GetRowFromID(lTalkStoryId);
+       // (tmpStoryRow, lRoleID);
+        roleAIManager.instance.talkStoryUI(lTalkStoryId, gameDataManager.instance.roleID);
+        
+        // toolBarManager.instance.topBar.showMission(true);
     }
 
     public void btnNoTalkRole() { //不发表言论

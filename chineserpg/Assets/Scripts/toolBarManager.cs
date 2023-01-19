@@ -42,7 +42,8 @@ public class toolBarManager
             topBar.gameObject.SetActive(true);
     }
 
-    public void hidoTopBar() {
+    public void hideTopBar() {
+        topBar.hideAllDlg();
         topBar.gameObject.SetActive(false);
     }
 
@@ -79,6 +80,8 @@ public class toolBarManager
         }
 
         roleInfoDlg.showUI();
+        topBar.setRoleInfoBtnVisible(false);
+        topBar.setTalkBtnVisible(false);
     }
 
     public void hideRoleInfoDlg() {

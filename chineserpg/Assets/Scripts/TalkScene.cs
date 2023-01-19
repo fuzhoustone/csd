@@ -35,17 +35,22 @@ public class TalkScene : MonoBehaviour
         showUI();
     }
 
-    public void UIClose() {
-        clueLst.Clear();
-    }
+   // public void UIClose() {
+   //     clueLst.Clear();
+   // }
 
     public void showUI() {
         initData();
+        toolBarManager.instance.topBar.setRoleInfoBtnVisible(true);
+        toolBarManager.instance.topBar.setTalkBtnVisible(false);
     }
 
     public void initData(int lSayRoleID = -1)
     {
-        clueLst = new List<clueBtnUI>();
+        if (clueLst != null)
+            clueLst.Clear();
+        else
+            clueLst = new List<clueBtnUI>();
 
         int nCount = talkInfoLstGetTab._instance().GetTableLength();
         for (int i = 1; i <= nCount; i++) {
@@ -161,17 +166,22 @@ public class TalkScene : MonoBehaviour
             tmpTog.gameObject.SetActive(true);
 
             string tmpStr = tmpOptObj.optionStrCn;
-            tmpTog.setTxt(tmpStr, tmpOptObj.optionID);
+            tmpTog.setTxt(tmpStr, tmpOptObj.stroyID);
         }
     }
 
-    public void optionBtnChange(Toggle t) {
+    public void optionBtnChange(Toggle t) { //玩家公聊或私聊的选项
         if (t.isOn)
         {
            talkOptionUI tmpUI = t.gameObject.GetComponent<talkOptionUI>();
            int tmpID = tmpUI.getOptionID(); //talkstoryID
 
-           noteMsg.instance.noteUI.msgNoteBottom("optionID:"+tmpID.ToString());
+            // noteMsg.instance.noteUI.msgNoteBottom("optionID:"+tmpID.ToString());
+            roleAIManager.instance.setTalkState(roleAIManager.talkState.talkStory);
+            if (sceneName.instance.pSceneCloseAction != null)
+            {
+                sceneName.instance.pSceneCloseAction(tmpID);
+            }
         }
     }
 

@@ -176,15 +176,11 @@ public class CsdTTable
 
     public void checkAndNewFile() //检查并覆盖新建文件
     {
-        if (File.Exists(modeFileName) == false) { 
-            
+        if (File.Exists(modeFileName) == false) {
+            Debug.LogError("File not find:"+ modeFileName);            
         }
         else
-       // if (File.Exists(csvFileName) == false)
-       // {
             File.Copy(modeFileName, csvFileName, true); //覆盖模式
-       // }
-      //  return csvFileName;
     }
 
     public void InitFileName(string pFileName) {
