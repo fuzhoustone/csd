@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 public class missionLstTab : CsdTTable
 {
     private static missionLstTab instance = null;
@@ -27,19 +29,20 @@ public class missionLstTab : CsdTTable
 
     }
 
-    public CSVRow getMission(int lroleID, int lChartID) {
+    public List<CSVRow> getMission(int lroleID, int lChartID) {
+        List<CSVRow> res = new List<CSVRow>();
         CSVRow resRow = null;
         int nCount = this.GetTableLength();
         for (int i = 1; i <= nCount; i++) {
-            CSVRow tmpRow = this.GetRowFromIndex(i-1);
+            CSVRow tmpRow = GetRowFromIndex(i-1);
             int tmpRoleID = tmpRow.GetInt(csRoleID);
             int tmpChartID = tmpRow.GetInt(csChartID);
             if ((tmpRoleID == lroleID) && (tmpChartID == lChartID)) {
                 resRow = tmpRow;
-                break;
+                res.Add(resRow);
             }
         }
-        return resRow;
+        return res;
     }
 
 }

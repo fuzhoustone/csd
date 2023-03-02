@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,12 +30,24 @@ public class roleInfoDlgUI : MonoBehaviour
 
     [SerializeField]
     private CanvasScaler canBg;
+
+    [SerializeField]
+    private Slider scrViewSlider;
+
+    [SerializeField]
+    private ScrollRect scrRect;
+
+    private bool conSlider = true; //是否响应onValueChange
+    private bool conRect = true;   //是否响应onValueChange
+
     // [SerializeField]
     // private CanvasScaler canBg;
 
     void Start()
     {
        canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
+       conSlider = true;
+       conRect = true;
     }
 
     public void showUI() {
@@ -104,6 +117,34 @@ public class roleInfoDlgUI : MonoBehaviour
         }
     }
 
+
+    public void OnScrViewChange(Vector2 lValue) {
+        if (conSlider)
+        {
+            conSlider = false;
+            conRect = true;
+            scrViewSlider.value = lValue.y;
+        }
+        else {
+            conSlider = true;
+        }
+    }
+
+    public void OnSliderValueChange(float lValue) {
+        if (conRect)
+        {
+            conRect = false;
+            conSlider = true;
+            scrRect.normalizedPosition = new Vector2(scrRect.normalizedPosition.x, lValue);
+        }
+        else {
+            conRect = true;
+        }
+        
+        
+        
+    }
+
     private void clearInfoMsg() {
         for (int i = infoViewLst.childCount; i >= 1; i--) {
             Transform tmpTs = infoViewLst.GetChild(i-1);
@@ -134,6 +175,7 @@ public class roleInfoDlgUI : MonoBehaviour
         
 
         int nCount = clueLstTab._instance().GetTableLength();
+        int dataCount = 0;
         //nowChaptID = 1;
         for (int i = 1; i <= nCount; i++) 
         {
@@ -156,10 +198,15 @@ public class roleInfoDlgUI : MonoBehaviour
                     roleInfoMsgUI tmpUIData = tmpObj.GetComponent<roleInfoMsgUI>();
                     string testMsg = tmpClueRow.GetString(clueLstTab.csContentCn);
                     tmpUIData.setData(clueGetID, testMsg, isLook, isPub);
+                    dataCount++;
                 }
             }
 
         }
 
+        if (dataCount > 2) 
+            scrViewSlider.gameObject.SetActive(true);
+        else
+            scrViewSlider.gameObject.SetActive(false);
     }
 }

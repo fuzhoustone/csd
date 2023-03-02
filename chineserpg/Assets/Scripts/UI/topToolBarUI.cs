@@ -25,21 +25,26 @@ public class topToolBarUI : MonoBehaviour
 
     [SerializeField]
     private GameObject missionPal;
-    //private string csRoleInfoDlgPre = "Prefabs/UI/roleNameBtn/roleInfoDialog";
-    [SerializeField]
-    private Text missionTitle;
-    [SerializeField]
-    private Text missionContext;
 
-    //[SerializeField]
-    //private CanvasScaler canBg;
+    [SerializeField]
+    private GameObject missionItem1;
+
+    [SerializeField]
+    private GameObject missionItem2;
+
+    [SerializeField]
+    private GameObject missionItem3;
+
+    [SerializeField]
+    private Animation missPalAni;
+    private const string csAniMissionShow = "missionShow";
+    private const string csAniMissionHide = "missionHide";
+
 
     private int lChartID = 0;
+    private bool isShowMission = false;
+   // private bool isRefreshMissionLst = false;
 
-    //private void Start()
-    //{
-    //    canBg.matchWidthOrHeight = canAdvapt.instance.bgMatchWidHeight;
-    //}
 
     public void setChartName(int chartID) {
         string tmpChart = "";
@@ -60,19 +65,63 @@ public class topToolBarUI : MonoBehaviour
 
     }
 
+    public void setMissionAni(bool isShow) {
+        if (isShow)
+        {
+            missPalAni.clip = missPalAni.GetClip(csAniMissionShow);
+        }
+        else {
+            missPalAni.clip = missPalAni.GetClip(csAniMissionHide);
+        }
+        missPalAni.Play();
+
+
+    }
+
+
     //显示当前任务
     public void showMission(bool isShow) {
-        if (missionPal.activeSelf != isShow)
+        if (isShowMission != isShow)
         {
-            missionPal.SetActive(isShow);
+            isShowMission = isShow;
+           // missionPal.SetActive(isShow);
             if (isShow) {
-                CSVRow tmpRow = missionLstTab._instance().getMission(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
-                string tmpMission = tmpRow.GetString(missionLstTab.csContentCn);
-                missionContext.text = tmpMission;
+               // isRefreshMissionLst = true;
+                missionItem1.SetActive(false);
+                missionItem2.SetActive(false);
+                missionItem3.SetActive(false);
+                List<CSVRow> tmpMissionLst = missionLstTab._instance().getMission(gameDataManager.instance.roleID, gameDataManager.instance.chaptID);
+                for (int i = 0; i < tmpMissionLst.Count; i++) { //最多三条任务
+                    CSVRow tmpRow = tmpMissionLst[i];
+                    string tmpMission = tmpRow.GetString(missionLstTab.csContentCn);
+                    missionItem tmpItem = null;
+                    if (i == 0)
+                    {
+                        missionItem1.SetActive(true);
+                        tmpItem = missionItem1.GetComponent<missionItem>();
+                    }
+                    else if (i == 1)
+                    {
+                        missionItem2.SetActive(true);
+                        tmpItem = missionItem2.GetComponent<missionItem>();
+                    }
+                    else {
+                        missionItem3.SetActive(true);
+                        tmpItem = missionItem3.GetComponent<missionItem>();
+                    }
+                    tmpItem.setText(tmpMission);
+                    
+                    float width = tmpItem.transform.GetComponent<RectTransform>().sizeDelta.x;
+                    float height = tmpItem.getTxtHeight();
+                    tmpItem.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+                    
+                }
 
+                setMissionAni(true);
             }
         }
     }
+
 
     //显示角色信息
     public void showRoleInfo()

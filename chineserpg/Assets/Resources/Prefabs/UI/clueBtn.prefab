@@ -116,7 +116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 337, y: 61}
+  m_SizeDelta: {x: 340, y: 114}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4109141073670082806
 CanvasRenderer:
@@ -216,4 +216,4 @@ MonoBehaviour:
   pDisSelTextCol: {r: 0.61960787, g: 0.61960787, b: 0.61960787, a: 1}
   pSelBg: {fileID: 2800000, guid: 234ce4d310383f84b92d4042d66624c0, type: 3}
   pUnSelBg: {fileID: 2800000, guid: da675407ef81f50498f782b95bfc6352, type: 3}
-  pId: 0
+  pTalkInfoLstId: 0
